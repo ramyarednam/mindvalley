@@ -1,0 +1,957 @@
+<title>The Email Lead Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#ECEEEA; --surface:#F7F8F6; --surface-2:#E3E7E2;
+  --ink:#10201E; --ink-2:#4C5C59; --ink-3:#6E7E7A;
+  --rule:#D2D8D1; --rule-2:#BCC5BB;
+  --accent:#0E5F5C; --accent-2:#0A8F7E; --accent-wash:#DCE9E5;
+  --warn:#A84D19; --warn-wash:#F2E4D8;
+  --good:#2C6B4B; --good-wash:#DDE9E0;
+  --bad:#8E3345; --bad-wash:#F0DEE1;
+  --shadow:0 1px 2px rgba(16,32,30,.06), 0 8px 24px -16px rgba(16,32,30,.25);
+  --measure:68ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1413; --surface:#161E1D; --surface-2:#1F2A28;
+    --ink:#E4EAE6; --ink-2:#A3B2AE; --ink-3:#7E8D89;
+    --rule:#28332F; --rule-2:#374440;
+    --accent:#5FD0C0; --accent-2:#6FE0CB; --accent-wash:#16302C;
+    --warn:#E08B4F; --warn-wash:#332315;
+    --good:#69C08F; --good-wash:#15291D;
+    --bad:#DD7E90; --bad-wash:#2E181D;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1413; --surface:#161E1D; --surface-2:#1F2A28;
+  --ink:#E4EAE6; --ink-2:#A3B2AE; --ink-3:#7E8D89;
+  --rule:#28332F; --rule-2:#374440;
+  --accent:#5FD0C0; --accent-2:#6FE0CB; --accent-wash:#16302C;
+  --warn:#E08B4F; --warn-wash:#332315;
+  --good:#69C08F; --good-wash:#15291D;
+  --bad:#DD7E90; --bad-wash:#2E181D;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:1.5rem}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.62; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px; margin:0 auto; padding-inline:20px; padding-block:0}
+
+/* ---------- masthead ---------- */
+.masthead{padding-block:56px 40px; border-bottom:1px solid var(--rule)}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.7rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+  display:flex; flex-wrap:wrap; gap:.5rem 1.1rem; margin:0 0 1.4rem;
+}
+.eyebrow span{white-space:nowrap}
+h1{
+  font-family:Newsreader,Georgia,serif; font-weight:500;
+  font-size:clamp(2.4rem,6vw,4.1rem); line-height:1.02; letter-spacing:-.02em;
+  margin:0 0 1rem; text-wrap:balance; max-width:16ch;
+}
+h1 em{font-style:italic; color:var(--accent)}
+.standfirst{
+  font-family:Newsreader,Georgia,serif; font-size:clamp(1.1rem,2.2vw,1.35rem);
+  line-height:1.5; color:var(--ink-2); max-width:56ch; margin:0 0 2rem;
+}
+.meta{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px; background:var(--rule); border:1px solid var(--rule);
+}
+.meta div{background:var(--surface); padding:.85rem 1rem}
+.meta dt{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 .3rem;
+}
+.meta dd{margin:0; font-size:.93rem; font-weight:500}
+
+/* ---------- layout ---------- */
+.shell{display:grid; grid-template-columns:230px minmax(0,1fr); gap:56px; padding-block:44px 72px; align-items:start}
+@media (max-width:900px){.shell{grid-template-columns:1fr; gap:32px}}
+
+nav.toc{position:sticky; top:24px}
+@media (max-width:900px){
+  nav.toc{position:static; border:1px solid var(--rule); background:var(--surface); padding:1rem 1.1rem}
+}
+.toc h2{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 .9rem; font-weight:500;
+}
+.toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.1rem}
+.toc a{
+  display:grid; grid-template-columns:1.9rem 1fr; align-items:baseline;
+  text-decoration:none; color:var(--ink-2); font-size:.875rem; line-height:1.35;
+  padding:.34rem .5rem .34rem 0; border-left:2px solid transparent; padding-left:.55rem;
+}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--accent); border-left-color:var(--accent); font-weight:500}
+.toc .n{font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--ink-3)}
+.toc a.on .n{color:var(--accent)}
+.toc a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+main{min-width:0; max-width:var(--measure)}
+section{padding-block:14px 52px; scroll-margin-top:24px}
+section + section{border-top:1px solid var(--rule); padding-top:46px}
+
+h2.sec{
+  font-family:Newsreader,Georgia,serif; font-weight:500;
+  font-size:clamp(1.7rem,3.4vw,2.3rem); line-height:1.12; letter-spacing:-.015em;
+  margin:0 0 1.1rem; text-wrap:balance;
+}
+h2.sec .n{
+  font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+  color:var(--accent); display:block; margin-bottom:.55rem; font-weight:500;
+}
+h3{
+  font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:1.05rem;
+  letter-spacing:.005em; margin:2.2rem 0 .7rem; text-wrap:balance;
+}
+h4{
+  font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.72rem;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
+  margin:1.8rem 0 .6rem;
+}
+p{margin:0 0 1rem}
+a{color:var(--accent)}
+strong{font-weight:600}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.86em}
+code{background:var(--surface-2); padding:.1em .35em; border-radius:2px; word-break:break-word}
+pre{
+  background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--accent);
+  padding:.95rem 1.1rem; overflow-x:auto; margin:0 0 1.2rem; font-size:.82rem; line-height:1.65;
+}
+pre code{background:none; padding:0}
+ul,ol{margin:0 0 1.1rem; padding-left:1.3rem}
+li{margin-bottom:.42rem}
+li::marker{color:var(--ink-3)}
+hr{border:0; border-top:1px solid var(--rule); margin:2rem 0}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; margin:0 0 1.4rem; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.855rem; min-width:440px}
+th,td{text-align:left; padding:.6rem .8rem; border-bottom:1px solid var(--rule); vertical-align:top}
+thead th{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); font-weight:500;
+  background:var(--surface-2); border-bottom:1px solid var(--rule-2); white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right; font-variant-numeric:tabular-nums; font-family:"IBM Plex Mono",monospace; font-size:.8rem; white-space:nowrap}
+td.k{font-weight:600; white-space:nowrap}
+
+/* ---------- callouts ---------- */
+.rule-box{
+  background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--accent);
+  padding:1.1rem 1.25rem; margin:0 0 1.4rem; box-shadow:var(--shadow);
+}
+.rule-box.warn{border-left-color:var(--warn); background:var(--warn-wash)}
+.rule-box p:last-child{margin-bottom:0}
+.rule-box .lede{
+  font-family:Newsreader,Georgia,serif; font-size:1.18rem; line-height:1.38;
+  margin:0 0 .5rem;
+}
+blockquote{
+  margin:0 0 1.4rem; padding:.2rem 0 .2rem 1.2rem; border-left:2px solid var(--rule-2);
+  font-family:Newsreader,Georgia,serif; font-size:1.1rem; line-height:1.5; color:var(--ink-2);
+}
+blockquote p{margin-bottom:.6rem}
+blockquote p:last-child{margin-bottom:0}
+
+/* never / always */
+.na{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin:0 0 1.4rem}
+.na > div{background:var(--surface); padding:1rem 1.1rem}
+.na h4{margin-top:0}
+.na.never h4{color:var(--bad)}
+.na.always h4{color:var(--good)}
+.na ul{margin:0; padding-left:1.1rem; font-size:.9rem}
+
+/* pipeline */
+.flow{display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; margin:0 0 1.3rem; font-family:"IBM Plex Mono",monospace; font-size:.74rem}
+.flow b{
+  background:var(--surface); border:1px solid var(--rule-2); padding:.42rem .7rem;
+  font-weight:500; letter-spacing:.02em; white-space:nowrap;
+}
+.flow b.live{background:var(--accent); color:var(--ground); border-color:var(--accent)}
+.flow i{color:var(--ink-3); font-style:normal}
+
+/* benchmark measure bars */
+.bm{display:flex; flex-direction:column; gap:1.15rem; margin:0 0 1.5rem}
+.bm .row{display:grid; grid-template-columns:minmax(84px,auto) minmax(0,1fr) minmax(78px,auto); gap:.5rem .9rem; align-items:center}
+.bm .lbl{font-size:.82rem; font-weight:600}
+.bm .val{
+  font-family:"IBM Plex Mono",monospace; font-size:.8rem; text-align:right;
+  font-variant-numeric:tabular-nums; color:var(--ink-2);
+}
+.track{position:relative; height:26px; background:var(--surface-2); border:1px solid var(--rule)}
+.band{position:absolute; top:0; bottom:0; background:var(--accent-wash); border-left:1px solid var(--accent); border-right:1px solid var(--accent)}
+.mark{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--ink)}
+.mark.under{background:var(--warn)}
+.bm .scale{
+  grid-column:2; display:flex; justify-content:space-between;
+  font-family:"IBM Plex Mono",monospace; font-size:.62rem; color:var(--ink-3);
+  margin-top:-.55rem; font-variant-numeric:tabular-nums;
+}
+.legend{display:flex; flex-wrap:wrap; gap:1.1rem; font-size:.74rem; color:var(--ink-3); margin:-.6rem 0 1.5rem}
+.legend span{display:flex; align-items:center; gap:.4rem}
+.sw{width:20px; height:10px; display:inline-block; border:1px solid var(--accent); background:var(--accent-wash)}
+.sw.m{width:2px; height:14px; background:var(--ink); border:0}
+
+/* checklist */
+.check{list-style:none; padding:0; margin:0 0 1.4rem; border:1px solid var(--rule); background:var(--surface)}
+.check li{display:flex; gap:.7rem; align-items:flex-start; margin:0; padding:.55rem .95rem; border-bottom:1px solid var(--rule); font-size:.9rem}
+.check li:last-child{border-bottom:0}
+.check input{margin:.34rem 0 0; accent-color:var(--accent); flex:none; width:15px; height:15px}
+.check label{cursor:pointer}
+.check input:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* phase cards */
+.phases{display:flex; flex-direction:column; gap:1px; background:var(--rule); border:1px solid var(--rule); margin:0 0 1.5rem}
+.phase{background:var(--surface); padding:1.15rem 1.25rem}
+.phase .hd{display:flex; flex-wrap:wrap; align-items:baseline; gap:.4rem .8rem; margin-bottom:.2rem}
+.phase .wk{
+  font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ground); background:var(--accent);
+  padding:.2rem .5rem; white-space:nowrap;
+}
+.phase .nm{font-family:Newsreader,Georgia,serif; font-size:1.3rem; line-height:1.2}
+.phase .goal{font-size:.85rem; color:var(--ink-2); margin:.15rem 0 .75rem; font-style:italic}
+.phase ul{margin:0; font-size:.9rem; padding-left:1.15rem}
+.phase .ship{
+  margin-top:.75rem; padding-top:.7rem; border-top:1px dashed var(--rule-2);
+  font-size:.87rem;
+}
+.phase .ship b{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:.2rem}
+
+/* segment sizes */
+.segs{display:flex; flex-direction:column; gap:.55rem; margin:0 0 1.4rem}
+.seg{display:grid; grid-template-columns:minmax(96px,auto) minmax(0,1fr) 62px; gap:.8rem; align-items:center; font-size:.85rem}
+.seg .bar{height:14px; background:var(--accent); opacity:.85}
+.seg .bar.cold{background:var(--warn)}
+.seg .sz{font-family:"IBM Plex Mono",monospace; font-size:.75rem; text-align:right; color:var(--ink-2); font-variant-numeric:tabular-nums}
+.seg .nm{font-weight:500}
+
+/* one-pager */
+.onepage{background:var(--surface); border:1px solid var(--rule-2); box-shadow:var(--shadow); padding:1.5rem 1.6rem}
+.onepage dl{margin:0; display:flex; flex-direction:column; gap:.85rem}
+.onepage dt{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:.2rem;
+}
+.onepage dd{margin:0; font-size:.9rem; line-height:1.55}
+.kicker{
+  font-family:Newsreader,Georgia,serif; font-size:1.25rem; line-height:1.4;
+  border-top:1px solid var(--rule); margin-top:1.3rem; padding-top:1.1rem;
+}
+footer{border-top:1px solid var(--rule); padding-block:28px 60px; font-size:.8rem; color:var(--ink-3)}
+
+@media print{
+  nav.toc{display:none}
+  .shell{grid-template-columns:1fr; padding-block:0}
+  body{background:#fff; color:#000; font-size:11pt}
+  section{page-break-inside:avoid}
+}
+</style>
+
+<div class="wrap">
+<header class="masthead">
+  <p class="eyebrow"><span>Mindvalley</span><span>Marketing / Email</span><span>Role handover</span><span>September 2026</span></p>
+  <h1>The Email&nbsp;Lead <em>Handbook</em></h1>
+  <p class="standfirst">Everything the role actually is — the audience, the voice, the machine, the numbers — and a twelve-week plan for taking it over.</p>
+  <dl class="meta">
+    <div><dt>Written for</dt><dd>Zin Hnin Su Aung</dd></div>
+    <div><dt>Handing over</dt><dd>Ramya Rednam</dd></div>
+    <div><dt>Live campaign</dt><dd>Expert to Authority Summit, Sep 18–20</dd></div>
+    <div><dt>Full ownership by</dt><dd>Week 12</dd></div>
+  </dl>
+</header>
+
+<div class="shell">
+<nav class="toc" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#s1"><span class="n">01</span><span>The role</span></a></li>
+    <li><a href="#s2"><span class="n">02</span><span>The audience</span></a></li>
+    <li><a href="#s3"><span class="n">03</span><span>Tone of voice</span></a></li>
+    <li><a href="#s4"><span class="n">04</span><span>Coming up with emails</span></a></li>
+    <li><a href="#s5"><span class="n">05</span><span>Adding emails</span></a></li>
+    <li><a href="#s6"><span class="n">06</span><span>Governance</span></a></li>
+    <li><a href="#s7"><span class="n">07</span><span>The AI stack</span></a></li>
+    <li><a href="#s8"><span class="n">08</span><span>Performance</span></a></li>
+    <li><a href="#s9"><span class="n">09</span><span>Calendar rhythm</span></a></li>
+    <li><a href="#s10"><span class="n">10</span><span>Who's who</span></a></li>
+    <li><a href="#s11"><span class="n">11</span><span>Access checklist</span></a></li>
+    <li><a href="#s12"><span class="n">12</span><span>Transition plan</span></a></li>
+    <li><a href="#s13"><span class="n">13</span><span>One page</span></a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="s1">
+  <h2 class="sec"><span class="n">01</span>What this role owns</h2>
+  <p>Mindvalley is a 22-year-old personal growth education company. It sells transformation — Quests, Membership, Masteries, Certifications, Summits — to a global consumer audience, with Vishen Lakhiani as the founder and primary voice.</p>
+  <div class="rule-box">
+    <p class="lede">Email is not a support function here. It is a primary revenue channel.</p>
+    <p>One lifecycle journey — Member Onboarding, L3 — has produced <strong>$1,436,316</strong> in attributed revenue off 32,562 deliveries. A single summit announcement reaches <strong>5M+ sends</strong> across segments.</p>
+  </div>
+  <h3>You own</h3>
+  <ul>
+    <li><strong>The email calendar</strong> — what goes out, to whom, when, in what language. Nothing ships that isn't on it.</li>
+    <li><strong>Copy quality and brand voice</strong> — the last line between a draft and five million inboxes.</li>
+    <li><strong>The governance process</strong> — you are the mandatory reviewer.</li>
+    <li><strong>Vishen's weekly newsletter</strong> — the highest-leverage recurring send in the company.</li>
+    <li><strong>Campaign sequences</strong> — Invite, Show-up and Sales for every launch.</li>
+    <li><strong>Lifecycle journeys</strong> — onboarding, reactivation, upsell, trial, churn.</li>
+    <li><strong>Performance reporting</strong> — the weekly read, the MOW dashboard, campaign retros.</li>
+  </ul>
+  <h3>You don't own</h3>
+  <p>Transactional email (receipts, confirmations), cohort-start logistics, customer support comms, ad creative and paid media, the product roadmap.</p>
+</section>
+
+<section id="s2">
+  <h2 class="sec"><span class="n">02</span>The audience</h2>
+  <p>Mindvalley's database splits by <strong>comms preference</strong> — how often someone opted to hear from us — and by <strong>relationship</strong> — what they've bought. You select these on every send.</p>
+
+  <div class="segs">
+    <div class="seg"><span class="nm">Daily</span><span class="bar" style="width:100%"></span><span class="sz">~950K</span></div>
+    <div class="seg"><span class="nm">Coach</span><span class="bar cold" style="width:47%"></span><span class="sz">~444K</span></div>
+    <div class="seg"><span class="nm">Highlights</span><span class="bar cold" style="width:40%"></span><span class="sz">~382K</span></div>
+    <div class="seg"><span class="nm">Weekly</span><span class="bar cold" style="width:35%"></span><span class="sz">~334K</span></div>
+    <div class="seg"><span class="nm">Members</span><span class="bar" style="width:22%"></span><span class="sz">~212K</span></div>
+    <div class="seg"><span class="nm">Events</span><span class="bar" style="width:5.3%"></span><span class="sz">~50K</span></div>
+    <div class="seg"><span class="nm">German (DE)</span><span class="bar" style="width:3.4%"></span><span class="sz">~32K</span></div>
+    <div class="seg"><span class="nm">Vishen's list</span><span class="bar" style="width:1.2%"></span><span class="sz">~7K</span></div>
+    <div class="seg"><span class="nm">Mastery</span><span class="bar" style="width:1.1%"></span><span class="sz">~6.7K</span></div>
+  </div>
+  <p class="legend"><span><span class="sw" style="background:var(--accent);border-color:var(--accent)"></span>Warm / engaged</span><span><span class="sw" style="background:var(--warn);border-color:var(--warn)"></span>Broad or cold — segment further</span></p>
+
+  <div class="rule-box">
+    <p class="lede">Warm, transacted audiences outperform cold audiences by 2–3× on open rate and 5–10× on click rate.</p>
+    <p>This is the single most important pattern in the business. Never judge a campaign by raw open rate until you know which list it went to. 22% on Highlights is normal. 22% on Mastery Customers is a fire.</p>
+  </div>
+
+  <h3>Highest and lowest performing lists</h3>
+  <div class="tw"><table>
+    <thead><tr><th>List</th><th class="num">OR</th><th class="num">CTR</th><th class="num">CTOR</th><th>Read</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Spiritual Mastery (2025) Customers</td><td class="num">82.66%</td><td class="num">12.19%</td><td class="num">14.66%</td><td>Highly engaged paying customers</td></tr>
+      <tr><td class="k">Future Human — Virtual Tickets</td><td class="num">70.60%</td><td class="num">23.44%</td><td class="num">32.69%</td><td>Event ticket holders</td></tr>
+      <tr><td class="k">CLC Deposit Purchases — Members</td><td class="num">63.87%</td><td class="num">14.84%</td><td class="num">22.80%</td><td>Enrolled, actively learning</td></tr>
+      <tr><td class="k">MVU Virtual 2025 Tickets</td><td class="num">60.46%</td><td class="num">19.66%</td><td class="num">32.85%</td><td>Highest CTR on the list</td></tr>
+      <tr><td class="k">Mindvalley Coach — Non Members</td><td class="num">13.49%</td><td class="num">0.16%</td><td class="num">1.16%</td><td>Cold — needs a warming sequence</td></tr>
+      <tr><td class="k">Highlights (General)</td><td class="num">21.66%</td><td class="num">0.18%</td><td class="num">0.81%</td><td>Too broad — segment further</td></tr>
+      <tr><td class="k">Weekly</td><td class="num">21.04%</td><td class="num">0.26%</td><td class="num">1.17%</td><td>Too generic — add personalization</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The person behind the list</h3>
+  <p>Behind every segment is one person. Internally we call her <strong>Julie</strong>.</p>
+  <ul>
+    <li>38–52. Solopreneur, freelancer, consultant, coach or small-team founder.</li>
+    <li>Knows the topic matters. Feels behind. Working late. Kids growing up.</li>
+    <li>Has bought courses she didn't finish, and carries guilt about it.</li>
+    <li>Brilliant and exhausted. <strong>Not technical.</strong></li>
+    <li><strong>Not</strong> exclusively an entrepreneur — 72% of the list are non-founders. A listicle aimed at "10 founders" lost its test for exactly this reason.</li>
+  </ul>
+  <blockquote>
+    <p><strong>The 7am test.</strong> Julie is making coffee. Her teenager just left for school. She has 47 emails. She sees yours.</p>
+    <p>Would she open it? Read every word? Feel something? Click?</p>
+    <p>If any sentence breaks that flow — cut it.</p>
+  </blockquote>
+
+  <h3>Lifecycle levels</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Level</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td class="k">L0</td><td>Lead — has not signed up for a Mindvalley account</td></tr>
+      <tr><td class="k">L1</td><td>Signed up for an MV account (push eligible)</td></tr>
+      <tr><td class="k">L2</td><td>Membership upsell target — push + in-app + email</td></tr>
+      <tr><td class="k">L3</td><td>Member / customer</td></tr>
+      <tr><td class="k">L4</td><td>Deep-inactive member (reactivation)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Live journeys you inherit: Onboarding (L0/L1) · Member Onboarding (L3) · Membership Upsell (L2) · Freemium Retargeting (L1/L2) · Reactivation, members (L3/L4, at 14/28/49 days inactive) · Reactivation, non-members (L1/L2, at 28/49 days) · 7-day Trial Onboarding · Art of Manifesting funnel onboarding · Quest Recommendation journey · NPS Survey via Sprig · Cancellation, monthly and annual.</p>
+</section>
+
+<section id="s3">
+  <h2 class="sec"><span class="n">03</span>Mindvalley tone of voice</h2>
+  <p>Mindvalley emails are <strong>one human writing to one human</strong>. Usually that human is Vishen. The voice is raw and personal, story-first, outcome-led, generous, and uncynical — we genuinely believe people can change, so we never sell with fear.</p>
+  <p>This is the register to aim for, from the Expert to Authority sequence:</p>
+  <blockquote><p>I was sitting at Soho House in Stockholm. I came to Stockholm to attend a longevity conference. I assembled people around me: founders, a few Mindvalley authors, close friends. I asked them an important question. I'd gathered them because I was confused. And I wanted the truth from people who wouldn't flatter me.</p></blockquote>
+  <p>Specific place. Specific discomfort. No adjectives doing the work.</p>
+
+  <h3>The six principles every email is built on</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Principle</th><th>Source</th><th>In practice</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Starving Crowd</td><td>Halbert</td><td>Don't convince her the problem matters — she knows. Show her this was built <em>specifically</em> for her.</td></tr>
+      <tr><td class="k">Slippery Slide</td><td>Sugarman</td><td>Every element has one job: get the next sentence read. Short paragraphs. White space.</td></tr>
+      <tr><td class="k">Results in Advance</td><td>Kern</td><td>Give a real, usable result before asking. A 90-second exercise she can do today.</td></tr>
+      <tr><td class="k">Sideways Sales Letter</td><td>Walker</td><td>Each email is one chapter. By email 10 she registers because she's already changed a little.</td></tr>
+      <tr><td class="k">Emotional Resonance First</td><td>Boggs</td><td>Connect emotionally before leading logically. Mirror her life, then offer the path.</td></tr>
+      <tr><td class="k">One Belief, Every Email</td><td>Bari</td><td>Not 12 topics. One belief proven 12 ways. Compounding conviction.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The four emotional stages</h3>
+  <p>Every email in a sequence sits in exactly one stage:</p>
+  <ol>
+    <li><strong>Seen</strong> (emails 1–2) — "Someone understands my life." No solutions yet. Just the mirror.</li>
+    <li><strong>Hope</strong> (3–5) — "Maybe this time is different." Tiny wins. A student story. A 90-second demo.</li>
+    <li><strong>Trust</strong> (6–8) — "These people know what they're doing." Method reveal, credibility, objection killing.</li>
+    <li><strong>Committed</strong> (9–12) — Stop selling. Cement. Help her clear her calendar.</li>
+  </ol>
+
+  <h3>The locked rules</h3>
+  <div class="na never">
+    <div>
+      <h4>Never say</h4>
+      <ul>
+        <li>"Productivity" → say <strong>time freedom</strong> or <strong>free your Friday</strong></li>
+        <li>Fear of job loss, or AI replacing humans</li>
+        <li>Jargon: MCP, n8n, agentic workflows, vibe coding, RAG</li>
+        <li>"Master prompting" — creates false expectations</li>
+        <li>"Entrepreneurs" or "founders" exclusively</li>
+        <li>"Pitch" → always <strong>invitation</strong></li>
+        <li>"We're excited to announce…"</li>
+        <li>"Don't miss this incredible opportunity!"</li>
+        <li>More than one CTA in a single email</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:var(--good)">Always</h4>
+      <ul>
+        <li>"For the first time" for genuine first-ever reveals</li>
+        <li>Lead with outcomes, not mechanisms</li>
+        <li>"No replays. No recordings." from email 7 on live events</li>
+        <li><strong>One CTA per email</strong></li>
+        <li>At least one specific name, number or sensory detail</li>
+        <li>250–350 words for pre-event emails</li>
+        <li>Under 1,000 characters for WhatsApp</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Anatomy of a single email</h3>
+  <ol>
+    <li><strong>Subject line</strong> — one job: get opened. <em>Would you text this to a friend?</em> If no, rewrite.</li>
+    <li><strong>First sentence</strong> — short, unexpected, personal. A scene, a question, a confession.<br>
+      ✓ "I almost didn't send this email." &nbsp; ✓ "Last Tuesday at 11pm, my phone buzzed." &nbsp; ✗ "I'm excited to announce…"</li>
+    <li><strong>Story or scene</strong> — 2–4 short paragraphs. Mirror, then shift.</li>
+    <li><strong>The bridge</strong> — one sentence that reframes. An insight, not a lesson.</li>
+    <li><strong>CTA</strong> — one action, framed as service: <em>"If this resonated, I made something for you."</em></li>
+  </ol>
+
+  <h3>Pre-send checklist</h3>
+  <ul class="check">
+    <li><input type="checkbox" id="c1"><label for="c1">Reinforces the one core belief of this campaign?</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2">Passes the 7am test?</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3">Does sentence 1 create an itch to read sentence 2?</label></li>
+    <li><input type="checkbox" id="c4"><label for="c4">No wall of text?</label></li>
+    <li><input type="checkbox" id="c5"><label for="c5">Sounds like Vishen talking to a friend, not a campaign?</label></li>
+    <li><input type="checkbox" id="c6"><label for="c6">Only ONE CTA?</label></li>
+    <li><input type="checkbox" id="c7"><label for="c7">At least one specific name, number or sensory detail?</label></li>
+    <li><input type="checkbox" id="c8"><label for="c8">Gives something before asking for something?</label></li>
+    <li><input type="checkbox" id="c9"><label for="c9">Passes the locked rules — no productivity, no fear, no jargon?</label></li>
+    <li><input type="checkbox" id="c10"><label for="c10">Under 400 words, or 1,000 characters for WhatsApp?</label></li>
+  </ul>
+</section>
+
+<section id="s4">
+  <h2 class="sec"><span class="n">04</span>How to come up with emails</h2>
+  <p>Ideas are not invented at the keyboard. They are harvested from five standing sources.</p>
+  <ol>
+    <li><strong>Message of the Week</strong> — the Monday 16:30 meeting sets the company's single message for the week, and every channel aligns behind it. Your week's emails start here.</li>
+    <li><strong>Vishen directly</strong> — the weekly Newsletter Sync and Strategy Deep Dive. His raw stories are the highest-performing asset we have. Capture them verbatim; don't smooth them out.</li>
+    <li><strong>The campaign calendar</strong> — every launch has a fixed sequence architecture. You're filling known slots, not inventing structure.</li>
+    <li><strong>Performance data</strong> — last week's winners tell you what angle to run again.</li>
+    <li><strong>The audience's own words</strong> — summit transcripts, onboarding surveys, support tickets, NPS verbatims. Full of Julie's exact phrasing. Steal it.</li>
+  </ol>
+
+  <h3>The seven subject-line formulas</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Formula</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td class="k">The Confession</td><td>"I wasted 3 years doing AI wrong"</td></tr>
+      <tr><td class="k">The Specific Number</td><td>"2 hours. That's what changed."</td></tr>
+      <tr><td class="k">The Pattern Interrupt</td><td>"I photographed my fridge. Then something weird happened."</td></tr>
+      <tr><td class="k">The "You" Mirror</td><td>"Still checking email at your kid's game?"</td></tr>
+      <tr><td class="k">The Reframe</td><td>"Stop trying to learn AI."</td></tr>
+      <tr><td class="k">The Whisper</td><td>"quick question" / "something I almost didn't share"</td></tr>
+      <tr><td class="k">The Social Proof Surge</td><td>"150,000 founders. 3 days. No replays."</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Proven winners:</strong> "Big Freakin' Announcement (Open Up)" · "Is ChatGPT really everything AI has to offer?" · "Free Your Friday" · "OPEN: To unlock a 22-year old secret"</p>
+  <div class="rule-box warn">
+    <p><strong>Never reuse:</strong> "The 4-letter F word that still raises eyebrows" (the list has seen it) · "Don't let AI overwhelm you" (negative framing) · <strong>any subject line from a prior year. The list remembers.</strong></p>
+  </div>
+
+  <h3>What we've learned the hard way</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Approach</th><th class="num">Result</th><th>Lesson</th></tr></thead>
+    <tbody>
+      <tr><td class="k">"Free Your Friday" — raw Vishen voice plus an action (take the oath)</td><td class="num" style="color:var(--good)">+98%</td><td>Active participation = identity shift = conversion</td></tr>
+      <tr><td class="k">The "Possibilities Mirror" email</td><td class="num" style="color:var(--good)">+25%</td><td>Mirror principle. No persuasion needed.</td></tr>
+      <tr><td class="k">Agenda email (specific outcomes)</td><td class="num">baseline</td><td>Specificity works but doesn't excite</td></tr>
+      <tr><td class="k">Generic social proof quotes</td><td class="num" style="color:var(--bad)">−64%</td><td>Wrong proof — needs program-specific stories</td></tr>
+      <tr><td class="k">Pain / survey angle</td><td class="num" style="color:var(--bad)">lost</td><td>She already knows the problem</td></tr>
+      <tr><td class="k">Listicle — "10 founders"</td><td class="num" style="color:var(--bad)">lost</td><td>72% of the list are non-founders</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="rule-box">
+    <p class="lede">The biggest lever we have found</p>
+    <p>When Vishen gives people something to <em>do</em>, they become active participants rather than passive recipients. Put an action inside the email. Example — the Freedom Audit:</p>
+    <ol style="margin-bottom:0">
+      <li>Write down every task you did last week.</li>
+      <li>Next to each, write H (human only), A (AI could do this), or B (between).</li>
+      <li>Count your A's and B's. Estimate the hours. That's your Freedom Number.</li>
+    </ol>
+    <p style="margin-top:.7rem;margin-bottom:0">The reader produces her own conversion argument. Never explain why it works. Just give it.</p>
+  </div>
+</section>
+
+<section id="s5">
+  <h2 class="sec"><span class="n">05</span>How to add emails</h2>
+
+  <h3>The stack</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Tool</th><th>What it's for</th><th>Needed by</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Braze</td><td>The ESP. Emails built, segmented and scheduled here.</td><td>Day 1</td></tr>
+      <tr><td class="k">Airtable</td><td>System of record. If it's not in Airtable, it does not exist.</td><td>Day 1</td></tr>
+      <tr><td class="k">Email Calendar &amp; Performance</td><td>The master tracking sheet</td><td>Day 1</td></tr>
+      <tr><td class="k">Claude (premium)</td><td>Copy drafting, translation, analysis</td><td>Day 1</td></tr>
+      <tr><td class="k">Metabase / BigQuery</td><td>Analytics, dashboards, revenue attribution</td><td>Week 1</td></tr>
+      <tr><td class="k">Blinklife</td><td>Mindvalley's own AI platform</td><td>Week 1</td></tr>
+      <tr><td class="k">Atlassian Service Desk</td><td>Tickets to the creative teams for assets</td><td>Week 1</td></tr>
+      <tr><td class="k">Storyblok</td><td>CMS for landing pages</td><td>Week 2</td></tr>
+      <tr><td class="k">Figma / Dropbox</td><td>Email banners and design assets</td><td>Week 2</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Naming convention</h3>
+  <p>Get this wrong and the email silently disappears from reporting.</p>
+  <pre><code>YYYY-MM-DD - LANG - Campaign Identifier - Campaign Type - List - Subject line</code></pre>
+  <pre><code>2026-06-27 - EN - AIM2026 - Program Updates - Mastery - Missed a Session? Catch Up on This Week's Lessons
+2026-05-01 - ES - Negotiate with Confidence Spanish - Quest Release - Daily - La conversación de $500,000 que has estado evitando</code></pre>
+  <div class="rule-box warn">
+    <p>The dropdown values are wired into the weekly email reporting system. <strong>Do not invent new values.</strong> If nothing fits, select "other". Adding a value without telling Monique breaks the report — the campaign vanishes from the weekly numbers without an error.</p>
+  </div>
+  <p>Lifecycle and journey campaigns are named after their Airtable record instead: <code>Topic - Locale - Sequence - Subject line</code>, e.g. <code>Member Onboarding - DE - email 4 - subject line</code>.</p>
+
+  <h3>UTM and otag tagging</h3>
+  <pre><code>https://www.mindvalley.com/summit/expert
+  ?utm_source=email_campaign_daily_email_1
+  &amp;utm_campaign=launch_EAS_sep_2026
+  &amp;utm_content=content_ann
+  &amp;utm_medium=lp
+  &amp;otag=email_campaign_daily_email_1
+  &amp;otag=launch_EAS_sep_2026</code></pre>
+  <div class="tw"><table>
+    <thead><tr><th>Parameter</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td class="k">utm_source</td><td><code>campaign_{sequence}_{list}_{n}</code> — e.g. <code>campaign_inseq_daily_1</code>. Append <code>_TestA</code> / <code>_TestB</code> for split tests.</td></tr>
+      <tr><td class="k">utm_campaign</td><td><code>launch_{IDENTIFIER}_{mon}_{year}</code> — e.g. <code>launch_EAS_sep_2026</code></td></tr>
+      <tr><td class="k">utm_content</td><td><code>content_{angle}</code> — e.g. <code>content_ann</code>, <code>content_offer</code>, <code>content_VIP</code></td></tr>
+      <tr><td class="k">utm_medium</td><td><code>email</code>, <code>lp</code> or <code>sp</code>, depending on destination</td></tr>
+      <tr><td class="k">otag ×2</td><td><strong>Two otags, mirroring utm_source and utm_campaign.</strong> These drive revenue attribution in <code>bridge_email_revenue</code>. Wrong otags means the revenue never lands against your email.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Sequence codes: <code>INSEQ</code> · <code>showup</code> · <code>sales_sequence</code> · <code>vishen_newsletter</code> · <code>promo</code> · <code>registration</code> · <code>retargeting</code> · <code>masterclass_registration_sequence</code> · <code>masterclass_showup_sequence</code> · <code>masterclass_sales_sequence</code> · <code>lifecycle_onboarding</code> · <code>lifecycle_reactivation</code> · <code>lifecycle_churn</code> · <code>lifecycle_activation</code> · <code>lifecycle_referral</code> · <code>lifecycle_renewal</code> · <code>transactional</code></p>
+  <p>Lead custom attribute: <code>lead_{campaign_name}_{month}_{year}_{acquisition_source}</code> — e.g. <code>lead_ai_summit_mar_2026_social-ig</code></p>
+
+  <h3>Sequence architecture</h3>
+  <p>Every launch runs three sequences. Know which one you're in — the benchmarks and the tone differ.</p>
+  <h4>A · Invite sequence — 12 emails, day −14 to day 0. Goal: registrations</h4>
+  <div class="tw"><table>
+    <thead><tr><th class="num">#</th><th class="num">Day</th><th>Stage</th><th>The job</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="num">−14</td><td>Seen</td><td>Vishen's origin story. Not a pitch. End on a question.</td></tr>
+      <tr><td class="num">2</td><td class="num">−13</td><td>Seen</td><td>The Julie mirror. Name the exhaustion. No solution yet.</td></tr>
+      <tr><td class="num">3</td><td class="num">−11</td><td>Hope</td><td>The tiny result. A 90-second exercise she can do now.</td></tr>
+      <tr><td class="num">4</td><td class="num">−10</td><td>Hope</td><td>The belief shift. Pattern interrupt. First mention of the summit.</td></tr>
+      <tr><td class="num">5</td><td class="num">−9</td><td>Hope</td><td>The student story — someone who looks like her, <em>not</em> Vishen.</td></tr>
+      <tr><td class="num">6</td><td class="num">−7</td><td>Trust</td><td>The method reveal. That a method exists — not the method itself.</td></tr>
+      <tr><td class="num">7</td><td class="num">−6</td><td>Trust</td><td>The credibility anchor. Authority without over-explaining.</td></tr>
+      <tr><td class="num">8</td><td class="num">−5</td><td>Trust</td><td>The objection killer. "But I'm not a tech person."</td></tr>
+      <tr><td class="num">9</td><td class="num">−3</td><td>Committed</td><td>FOMO accelerator. Real numbers. "No replays."</td></tr>
+      <tr><td class="num">10</td><td class="num">−2</td><td>Committed</td><td>The calendar clear. Social proof of commitment.</td></tr>
+      <tr><td class="num">11</td><td class="num">−1</td><td>Committed</td><td>The eve. Short. Intimate. No CTA except "see you tomorrow."</td></tr>
+      <tr><td class="num">12</td><td class="num">0</td><td>Committed</td><td>The door opens. Link only. Clean, urgent, warm.</td></tr>
+    </tbody>
+  </table></div>
+  <h4>B · Show-up sequence — day −2 through the event. Goal: attendance</h4>
+  <p>Carries the Zoom links, calendar links, WhatsApp channel, VIP upgrade and share-with-a-friend. The highest-performing sequence we run (45% OR) because the audience already said yes.</p>
+  <h4>C · Sales sequence — during and after the event. Goal: revenue</h4>
+  <p>Action-focused copy against a high-intention audience.</p>
+  <h4>D · Vishen's newsletter — weekly</h4>
+  <p>Goes to Daily, Highlights, Weekly, Members, Coach, Events, Vishen's list and Mastery, with translated versions roughly a day later. A standalone recurring slot, routinely used to carry the week's campaign message.</p>
+
+  <h3>Getting one email live</h3>
+  <ol>
+    <li><strong>Create the Airtable record</strong> under Emails. All mandatory fields, or it won't be reviewed: Campaign Name · Email Type · Target Audience · Objective · Subject Line · Preview Text · Email Copy · CTA · Send Date &amp; Time · Owner.</li>
+    <li><strong>Status → Ready for Review.</strong> This notifies the reviewer in Slack.</li>
+    <li><strong>Review</strong> — messaging clarity, campaign alignment, brand voice, conversion optimisation, CTA clarity, segmentation relevance. Outcome: Approved, or Changes Required.</li>
+    <li><strong>Status → Approved for Execution.</strong> Only now can the email be built, assets finalised, scheduling begun.</li>
+    <li><strong>Build in Braze.</strong> QA links, personalization tokens, segmentation, tracking (UTMs and both otags), formatting on mobile <em>and</em> desktop.</li>
+    <li><strong>Status → Scheduled</strong>, then <strong>Live</strong> once sent.</li>
+    <li><strong>Log it in the master tracker</strong> — one row per segment.</li>
+  </ol>
+  <div class="rule-box">
+    <p><strong>Suppression discipline.</strong> Always suppress people who already converted. The Expert to Authority WhatsApp DM went to "non-members and members who did not click the invite emails or the Sep 9 newsletter — suppress the summit sign-ups." Sending a registration invite to someone who already registered is the fastest way to burn trust and inflate unsubscribes.</p>
+  </div>
+</section>
+
+<section id="s6">
+  <h2 class="sec"><span class="n">06</span>Governance — the non-negotiables</h2>
+  <div class="rule-box warn">
+    <p class="lede">No email goes live without review status approved.</p>
+    <p>If it is not in Airtable → it does not exist.<br>If it is not reviewed → it does not go live.</p>
+  </div>
+
+  <div class="flow">
+    <b>Draft</b><i>→</i><b>Ready for Review</b><i>→</i><b>Approved</b><i>→</i><b>In Execution</b><i>→</i><b>Scheduled</b><i>→</i><b class="live">Live</b>
+  </div>
+  <p>No skipping stages. No direct Draft → Live.</p>
+
+  <h3>The five rules</h3>
+  <ol>
+    <li><strong>Airtable is the source of truth.</strong> No Slack approvals. No WhatsApp approvals. No verbal approvals.</li>
+    <li><strong>Review is mandatory.</strong> If it's not marked Approved, it is not approved.</li>
+    <li><strong>Late changes.</strong> Inside 2 hours of send, the requester updates directly in the ESP — or the email is postponed.</li>
+    <li><strong>Ownership clarity.</strong> Every email has exactly one Owner (accountable) and one Reviewer (approver).</li>
+    <li><strong>No shadow emails.</strong> Nothing built outside Airtable, sent without a record, or executed ad hoc.</li>
+  </ol>
+
+  <p><strong>Scope:</strong> all promotional, campaign, lifecycle, automated and broadcast email — anything influencing revenue or engagement. Exempt: pure transactional, cohort logistics, support comms. If unclear, include it.</p>
+  <p><strong>Enforcement:</strong> emails sent outside this process get flagged, reviewed retroactively, and can cost the sender their execution access.</p>
+
+  <blockquote><p>Zin — the hardest part of this job is not writing. It is holding this line when a senior stakeholder wants to skip it. The SOP is what makes that a process decision rather than a personal one. Use it.</p></blockquote>
+</section>
+
+<section id="s7">
+  <h2 class="sec"><span class="n">07</span>The AI stack</h2>
+  <p>Mindvalley is AI-first, and this is one of the most AI-leveraged roles in the company. Translation for international newsletters has already been fully transitioned to Claude with persistent skill files, removing a human dependency from the workflow.</p>
+  <div class="tw"><table>
+    <thead><tr><th>When you're doing this</th><th>Use</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Any Mindvalley email, subject line, WhatsApp message or sequence</td><td><code>mindvalley-email</code></td><td><strong>The house skill and your default.</strong> Avatar, six principles, locked rules, performance data, 12-email architecture, subject-line swipe file.</td></tr>
+      <tr><td class="k">Deep copy craft and critique</td><td><code>email-copywriting-masters</code></td><td>Halbert, Ogilvy, Caples, Sugarman, Bencivenga, Settle, Schwartz — the laws and the never-dos.</td></tr>
+      <tr><td class="k">Generic marketing email outside the MV frame</td><td><code>email</code></td><td>Sequences, launches, nurture, re-engagement.</td></tr>
+      <tr><td class="k">Vishen's newsletter, founder-voice long-form</td><td><code>signature-engine</code></td><td>Positioning, pillars, story bank, editorial calendar, issue drafting and QA.</td></tr>
+      <tr><td class="k">Short-form video scripts in Vishen's voice</td><td><code>vishen-reel-scripts</code></td><td>For when email and social must carry the same Message of the Week.</td></tr>
+      <tr><td class="k">Your daily brief</td><td><code>morning</code></td><td>Calendar and priorities, rendered.</td></tr>
+      <tr><td class="k">Decks, docs, spreadsheets, PDFs</td><td><code>pptx</code> <code>docx</code> <code>xlsx</code> <code>pdf</code></td><td>Campaign retros, reporting decks, data pulls.</td></tr>
+      <tr><td class="k">A workflow you keep repeating</td><td><code>skill-creator</code></td><td>Turn the repeated prompt into a skill.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Claude also has live access to Gmail, Google Calendar, Drive, Slack, <strong>Metabase</strong> and Figma — so it can pull last week's campaign performance and write the read, find last year's sequence before you write this year's, draft the weekly report from the tracker, or handle the DE/ES translation pass.</p>
+
+  <h3>Using it well</h3>
+  <ol>
+    <li><strong>Always load <code>mindvalley-email</code> first.</strong> Without it you get generic SaaS copy — "I'm excited to announce" — which fails the locked rules.</li>
+    <li><strong>Feed it real material.</strong> Vishen's transcript, actual survey verbatims, last campaign's numbers. The skill is the framework; the raw material is what makes it sound like us.</li>
+    <li><strong>Never ship the first draft.</strong> Claude gets you to 80% in three minutes. The last 20% — the specific detail, the one true sentence — is yours.</li>
+    <li><strong>Run the pre-send checklist on the output</strong>, not on your feelings about it.</li>
+    <li><strong>When a prompt works twice, make it a skill.</strong></li>
+  </ol>
+</section>
+
+<section id="s8">
+  <h2 class="sec"><span class="n">08</span>Documenting, reading and reporting performance</h2>
+
+  <h3>Documenting</h3>
+  <p>The master tracker is the <strong>Email Calendar &amp; Performance</strong> sheet. Every send gets one row per segment:</p>
+  <pre><code>Date · Day · Campaign · Sequence · Email name · Send time (PST) · Segment ·
+Suppression · UTM link · Braze campaign link · Subject line ·
+Sends · Delivered · Delivery % · Opens · Clicks · CTR · CTOR · Leads · Lead %</code></pre>
+  <ul>
+    <li><strong>One row per segment</strong>, not per email. A newsletter to nine segments is nine rows.</li>
+    <li>Always fill the Braze campaign link — it's how anyone re-derives your numbers.</li>
+    <li>Log sends <em>before</em> they go out, from the calendar. Backfill results after.</li>
+    <li>Campaign rollups live in per-campaign sheets, e.g. "Expert to Authority Summit Sept 2026 — leads breakdown".</li>
+  </ul>
+
+  <h3>Reading — start with the right benchmark</h3>
+  <p>Benchmarks differ by sequence type. The band is the target; the line is where we currently land.</p>
+
+  <div class="bm">
+    <div class="row">
+      <span class="lbl">Invite · OR</span>
+      <span class="track"><span class="band" style="left:58.3%;right:33.3%"></span><span class="mark under" style="left:54.8%"></span></span>
+      <span class="val">32.89%</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Show-up · OR</span>
+      <span class="track"><span class="band" style="left:66.7%;right:16.7%"></span><span class="mark" style="left:75.4%"></span></span>
+      <span class="val">45.22%</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Sales · OR</span>
+      <span class="track"><span class="band" style="left:63.3%;right:25%"></span><span class="mark" style="left:69.2%"></span></span>
+      <span class="val">41.49%</span>
+    </div>
+    <div class="scale"><span>0%</span><span>30%</span><span>60%</span></div>
+  </div>
+  <p class="legend"><span><span class="sw"></span>Target band</span><span><span class="sw m"></span>Current actual</span><span style="color:var(--warn)">Invite OR is currently below band</span></p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Sequence</th><th class="num">Target OR</th><th class="num">Target CTR</th><th class="num">Target CTOR</th><th class="num">Max unsub</th><th class="num">Actual</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Invite</td><td class="num">35–40%</td><td class="num">0.8–1.2%</td><td class="num">2.5–3.5%</td><td class="num">0.09%</td><td class="num">32.89 / 1.17 / 3.00 / 0.09</td></tr>
+      <tr><td class="k">Show-up</td><td class="num">40–50%</td><td class="num">5–8%</td><td class="num">12–18%</td><td class="num">0.08%</td><td class="num">45.22 / 7.78 / 15.50 / 0.12</td></tr>
+      <tr><td class="k">Sales</td><td class="num">38–45%</td><td class="num">1.5–3%</td><td class="num">4–6%</td><td class="num">0.13%</td><td class="num">41.49 / 2.52 / 5.49 / 0.16</td></tr>
+      <tr><td class="k">Overall</td><td class="num">35.92%</td><td class="num">2.81%</td><td class="num">5.48%</td><td class="num">0.10%</td><td class="num">—</td></tr>
+    </tbody>
+  </table></div>
+  <p>Hitting these means you met standard expectations. It does not mean you won.</p>
+
+  <h3>Reading — the metrics in order</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Metric</th><th>What it actually tells you</th><th>If it's low, fix…</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Delivery %</td><td>List health, sender reputation</td><td>suppression hygiene, list cleaning — escalate below ~98%</td></tr>
+      <tr><td class="k">Open rate</td><td>The subject line <em>and</em> the list temperature</td><td>subject line, send time, segment choice</td></tr>
+      <tr><td class="k">CTR</td><td>Whole-email effectiveness</td><td>the offer, the CTA</td></tr>
+      <tr><td class="k">CTOR</td><td><strong>Body copy quality — the purest read on your writing</strong></td><td>the story, the bridge, the CTA framing</td></tr>
+      <tr><td class="k">Leads</td><td>The actual job on invite sequences</td><td>landing page match, CTA clarity</td></tr>
+      <tr><td class="k">Revenue</td><td>The actual job on sales sequences</td><td>offer, timing, segment</td></tr>
+      <tr><td class="k">Unsub rate</td><td>Whether you're burning the list</td><td>frequency, relevance, suppression</td></tr>
+    </tbody>
+  </table></div>
+  <div class="rule-box">
+    <p><strong>Obsess over CTOR.</strong> Open rate is largely the subject line and the list temperature. CTOR is your copy, isolated from both.</p>
+  </div>
+
+  <h3>Reading — always ask "compared to what?"</h3>
+  <p>Structural differences distort everything. A real example from this month: Expert to Authority Email 1 looked far bigger than the Speaking &amp; Influence equivalent — ~5.2M vs ~2.1M sends — but only because EAS Email 1 was a <em>combined</em> send: the Sep 7 announcement across 6 segments <strong>plus</strong> the Sep 9 Vishen newsletter across 12 segments including Spanish, German, Events and VL. EAS won on reach. SIS won on engagement rate. Both are true — say both.</p>
+  <p>Then diagnose rather than describe. Cold lists at 13–14% OR are <em>expected</em> for awareness. Broad unsegmented lists at 20–23% mean <em>segment further</em>. A just-announced summit at 22% means <em>the remind sequence hasn't run yet</em>. Name the cause, not just the number.</p>
+
+  <h3>Reporting — the cadence</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Cadence</th><th>Forum</th><th>What you bring</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Daily</td><td>Launch Daily Huddle 13:30 · Daily Huddle 15:00</td><td>Yesterday's sends — leads, OR/CTR vs benchmark, anything broken. In launch weeks, cumulative leads against target.</td></tr>
+      <tr><td class="k">Weekly</td><td>Campaign Weekly Mon 12:30 · Managers Weekly Marketing Update Mon 15:30 · MVU Weekly Reporting</td><td>Week's sends vs benchmark, winners and losers with the reason, next week's calendar.</td></tr>
+      <tr><td class="k">Weekly</td><td><strong>Message of the Week, Mon 16:30</strong></td><td>The Email Dashboard for MOW — the numbers that set next week's message.</td></tr>
+      <tr><td class="k">Weekly</td><td>Email × Lifecycle × WhatsApp Sync · Lifecycle &amp; WhatsApp Review</td><td>Journey-level performance, cross-channel overlap, suppression conflicts.</td></tr>
+      <tr><td class="k">Per campaign</td><td>Campaign retro</td><td>Full funnel — sends → leads → revenue, by segment and by email.</td></tr>
+      <tr><td class="k">Monthly / quarterly</td><td>OKRs &amp; Calendar Review</td><td>OKR attainment, list health trend, revenue per campaign.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Where the numbers come from</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Metabase / BigQuery asset</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Dashboard: Email Campaign Performance</td><td>Official, BI collection. The primary weekly read.</td></tr>
+      <tr><td class="k">Dashboard: Summit Leads</td><td>Official. Leads on summit, cert and accelerator pages.</td></tr>
+      <tr><td class="k">Collection: Email Campaign</td><td>Rev / Campaign · Revenue by List Type · Revenue by Campaign List</td></tr>
+      <tr><td class="k"><code>l3_leads.fact_email_engagement</code></td><td>Per-recipient opens, clicks, interactions</td></tr>
+      <tr><td class="k"><code>l3_leads.dim_email_campaign</code></td><td>Campaign metadata — <strong>this is why naming conventions matter</strong></td></tr>
+      <tr><td class="k"><code>l3_leads.bridge_email_revenue</code></td><td>Order-level revenue attributed via <strong>otag match</strong></td></tr>
+      <tr><td class="k"><code>l3_leads.fact_lead_monetization</code></td><td>Windowed revenue, 7d–90d, for value-per-lead</td></tr>
+      <tr><td class="k"><code>l3_leads.daily_email_audience_activity</code></td><td>Reachable audience and list health over time</td></tr>
+      <tr><td class="k"><code>l3_leads.dim_email_canvas_step</code></td><td>Lifecycle journey step performance</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="rule-box">
+    <p class="lede">How to write the read — four lines, every time</p>
+    <ol style="margin-bottom:0">
+      <li><strong>What happened</strong> — the number, against the right benchmark for that sequence type.</li>
+      <li><strong>Why</strong> — the diagnosis, not the description.</li>
+      <li><strong>What it means for next week</strong> — the decision it should change.</li>
+      <li><strong>What you're doing about it</strong> — the specific action, with an owner and a date.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="s9">
+  <h2 class="sec"><span class="n">09</span>The calendar rhythm</h2>
+  <p>The calendar <em>is</em> the job — roughly twenty standing meetings a week. You cannot attend all of them well, so learn which you drive and which you merely attend.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Day</th><th>Shape</th><th>Standing meetings</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Monday</td><td>The week gets set</td><td>Calendar &amp; Vishen's Newsletter 10:00 · MVU Weekly Reporting 11:00 · Campaign emails 11:30 · <strong>Campaign Weekly 12:30</strong> · Launch Daily Huddle 13:30 · Daily Huddle 15:00 · Managers Weekly Marketing Update 15:30 · <strong>Message of the Week 16:30</strong> · Wrap up 17:30</td></tr>
+      <tr><td class="k">Tuesday</td><td>Cross-channel alignment</td><td>Launch Daily Huddle · <strong>Email × Lifecycle × WhatsApp Sync 14:00</strong> · Daily Huddle · VL Podcast Weekly · Weekly Content Calendar Comms Sync 16:30 · Requirements &amp; Prioritization · Lifecycle &amp; WhatsApp Review · VL LinkedIn Weekly · VL YouTube Weekly · Vishen Strategy Deep Dive</td></tr>
+      <tr><td class="k">Wednesday</td><td>Build day</td><td>Lighter. <strong>Vishen — Newsletter Sync 18:30.</strong> Protect the morning for writing.</td></tr>
+      <tr><td class="k">Thursday</td><td>Newsletter and campaigns</td><td><strong>Vishen's Newsletter Distribution Review 10:00</strong> · Campaigns 11:00</td></tr>
+      <tr><td class="k">Friday</td><td>Documentation and review</td><td><strong>Documentation time 10:00</strong> · Acquire Weekly Priorities · MV Voice · Campaigns · <strong>Email Dashboard for MOW 14:00</strong> · Daily Huddle · a protected "do not book" block</td></tr>
+    </tbody>
+  </table></div>
+  <p>Also recurring: OKRs &amp; Calendar Review · MOW review · Email Team Sync · Airtables &amp; reporting sheets review · States Weekly email · Content Facetime · a daily 1:1 with Ranjini on international emails.</p>
+
+  <h3>How to actually manage it</h3>
+  <ol>
+    <li><strong>Protect two writing blocks a week and defend them.</strong> Ramya's calendar carries "Documentation time" and "Do not book" for exactly this reason. Copy the habit.</li>
+    <li><strong>Know your three non-negotiables:</strong> Message of the Week, the Vishen Newsletter Sync, and the Friday MOW dashboard prep. Everything else can be delegated, made async, or skipped in a crunch.</li>
+    <li><strong>Let AI take the notes.</strong> Meeting notes already run automatically on most of these. Extract action steps afterwards instead of writing during.</li>
+    <li><strong>Keep the action-steps docs alive.</strong> The MOW Action Steps doc and the Marketing Communications Meeting Notes are the running memory of decisions.</li>
+    <li><strong>In launch weeks the rhythm collapses.</strong> During a summit like Sep 18–20, the Launch Daily Huddle becomes the only meeting that matters.</li>
+  </ol>
+</section>
+
+<section id="s10">
+  <h2 class="sec"><span class="n">10</span>Who you'll work with</h2>
+  <p>The working map, not an org chart — confirm exact scope with Ramya in week 1.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Person</th><th>What you'll work on together</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Vishen Lakhiani</td><td>Newsletter, campaign messaging, strategy deep dives, video requests</td></tr>
+      <tr><td class="k">Marisha Lakhiani</td><td>Marketing leadership, Message of the Week, campaign direction</td></tr>
+      <tr><td class="k">Ranjini Yeshwanth</td><td>International and translated emails — daily sync</td></tr>
+      <tr><td class="k">Monique Schuldt</td><td><strong>Naming conventions and reporting values — always tell her before adding a dropdown value</strong></td></tr>
+      <tr><td class="k">Sadaf Wasti · Rafay Korai · Pavel Luzanov · Palak Varma</td><td>Lifecycle journeys, onboarding, member data</td></tr>
+      <tr><td class="k">Glen Chittur · Gareth Winter · Ishaan Jaiswal · Moniek van Waaijenburg</td><td>Content calendar, comms sync, video and social assets</td></tr>
+      <tr><td class="k">Jaideep Chagger · Wendy Boo</td><td>Summit curriculum and launch alignment</td></tr>
+      <tr><td class="k">Kristin Hollmann</td><td>International / German</td></tr>
+      <tr><td class="k">BI team</td><td>Metabase dashboards, attribution questions</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="s11">
+  <h2 class="sec"><span class="n">11</span>Week 1 access checklist</h2>
+  <p>Get these before anything else. A blocked login on day 3 costs a week.</p>
+  <ul class="check">
+    <li><input type="checkbox" id="a1"><label for="a1">Claude — premium account</label></li>
+    <li><input type="checkbox" id="a2"><label for="a2">Braze — campaign build and send permissions</label></li>
+    <li><input type="checkbox" id="a3"><label for="a3">Airtable — Content &amp; Communications base, Campaigns &amp; Emails base</label></li>
+    <li><input type="checkbox" id="a4"><label for="a4">Google Drive — Email Calendar &amp; Performance, campaign folders, Governance SOP</label></li>
+    <li><input type="checkbox" id="a5"><label for="a5">Metabase — Business Intelligence and Email Campaign collections</label></li>
+    <li><input type="checkbox" id="a6"><label for="a6">Blinklife — sign in with MV email</label></li>
+    <li><input type="checkbox" id="a7"><label for="a7">Atlassian Service Desk — creative team tickets</label></li>
+    <li><input type="checkbox" id="a8"><label for="a8">Slack — campaign and review channels</label></li>
+    <li><input type="checkbox" id="a9"><label for="a9">Storyblok, Figma, Dropbox — landing pages and email banners</label></li>
+    <li><input type="checkbox" id="a10"><label for="a10">Calendar invites transferred to all standing meetings</label></li>
+    <li><input type="checkbox" id="a11"><label for="a11">Zoom and the WhatsApp Business channel</label></li>
+  </ul>
+</section>
+
+<section id="s12">
+  <h2 class="sec"><span class="n">12</span>The transition plan</h2>
+  <p>The design principle: <strong>Zin ships something real in week 1 and owns the highest-stakes recurring send by week 6.</strong> Learning happens by doing under supervision, not by reading.</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="hd"><span class="wk">Week 1</span><span class="nm">Immersion</span></div>
+      <p class="goal">Understand the audience and the voice. Ship one small thing.</p>
+      <ul>
+        <li>Vishen's high-performance session and culture onboarding. Not optional fluff — the voice in the emails <em>is</em> this philosophy, and it can't be faked without doing it.</li>
+        <li>Read this handbook, the Email Governance SOP, the master tracker.</li>
+        <li>Read three full past sequences end to end: Expert to Authority 2026 (invite and show-up), AI Summit 2025 invite, Speaking &amp; Influence 2025 invite. Note what emails 1, 6 and 11 each do differently.</li>
+        <li>Shadow: Message of the Week, Campaign Weekly, Vishen Newsletter Sync, one Daily Huddle.</li>
+        <li>Set up all access and get Claude running with <code>mindvalley-email</code> loaded.</li>
+      </ul>
+      <p class="ship"><b>Ships</b>Ten subject lines for a live campaign. Ramya picks one and sends it. She sees her words reach a real list in week one.</p>
+    </div>
+    <div class="phase">
+      <div class="hd"><span class="wk">Week 2</span><span class="nm">Shadow the pipeline</span></div>
+      <p class="goal">Know how an email physically gets out the door.</p>
+      <ul>
+        <li>Walk one email through Airtable → review → Braze → QA → send, with Ramya narrating.</li>
+        <li>Build one email in Braze herself; Ramya does the QA.</li>
+        <li>Learn naming and tagging by tagging five real emails and having them checked.</li>
+        <li>Log a full week of sends into the master tracker.</li>
+      </ul>
+      <p class="ship"><b>Ships</b>One complete lifecycle or newsletter email, written and built solo, reviewed before send.</p>
+    </div>
+    <div class="phase">
+      <div class="hd"><span class="wk">Weeks 3–4</span><span class="nm">Co-pilot</span></div>
+      <p class="goal">Write to benchmark.</p>
+      <ul>
+        <li>Write a full 3–4 email mini-sequence, reviewed by Ramya.</li>
+        <li>Own the weekly performance read: pull Metabase, fill the tracker, write the four-line read, present at Campaign Weekly.</li>
+        <li>Run the Friday MOW dashboard prep alongside Ramya.</li>
+        <li>Start the daily Ranjini sync on international emails.</li>
+      </ul>
+      <p class="ship"><b>Checkpoint</b>Can she write an email that passes the pre-send checklist without edits? Can she read a result and say <em>why</em>, not just <em>what</em>?</p>
+    </div>
+    <div class="phase">
+      <div class="hd"><span class="wk">Weeks 5–8</span><span class="nm">Lead with a net</span></div>
+      <p class="goal">Own the recurring sends.</p>
+      <ul>
+        <li><strong>Owns Vishen's weekly newsletter</strong> end to end — sync, draft, review, distribution, translation handoff. Ramya reviews but does not rewrite.</li>
+        <li><strong>Owns one full campaign sequence</strong> for the next launch — invite, show-up, sales.</li>
+        <li><strong>Becomes the reviewer</strong> for other teams' emails, with Ramya as second reviewer. This is the hardest skill to transfer: saying "not yet, this doesn't meet the bar" to a senior stakeholder. Practise it while Ramya is still there to back her up.</li>
+        <li>Runs the MOW email dashboard solo; takes over the Airtables and reporting sheets review.</li>
+      </ul>
+      <p class="ship"><b>Checkpoint</b>Runs a full campaign retro herself.</p>
+    </div>
+    <div class="phase">
+      <div class="hd"><span class="wk">Weeks 9–12</span><span class="nm">Own it</span></div>
+      <p class="goal">Full ownership. Ramya on call only.</p>
+      <ul>
+        <li>Owns the calendar, the governance process, the reviews and the reporting.</li>
+        <li>Ramya moves to a weekly 1:1. No pre-review of routine sends.</li>
+        <li>Zin presents performance at Managers Weekly Marketing Update.</li>
+      </ul>
+      <p class="ship"><b>Final handover</b>Zin updates this document with what she learned, and rewrites anything she found wrong or unclear. That rewrite is the real proof she owns it.</p>
+    </div>
+  </div>
+
+  <h3>Five things to over-invest in during handover</h3>
+  <ol>
+    <li><strong>Vishen's voice.</strong> Don't delegate this to a document. Get Zin in the room for newsletter syncs and strategy deep dives from week 1. The voice is caught, not taught.</li>
+    <li><strong>The relationships.</strong> Personally introduce her to Monique, Ranjini, Sadaf, Glen, Marisha and the BI team — each with the specific reason she'll need them. A warm intro saves a month.</li>
+    <li><strong>The judgement calls, not the rules.</strong> Rules are in this doc. What isn't: when to break the one-CTA rule, when a send is worth delaying, when to push back on Vishen. Narrate your reasoning out loud for 60 days so she inherits the thinking, not just the process.</li>
+    <li><strong>The authority to say no.</strong> Hand over the reviewer role publicly, in a group setting, so the org sees the transfer. Governance only works if people know who holds it.</li>
+    <li><strong>The failure library.</strong> Walk her through the losers, not just the winners — the −64% social proof email, the listicle that missed the avatar, the reused subject line. Knowing what has already failed is worth more than knowing what worked.</li>
+  </ol>
+</section>
+
+<section id="s13">
+  <h2 class="sec"><span class="n">13</span>The one-page version</h2>
+  <div class="onepage">
+    <dl>
+      <div><dt>Audience</dt><dd>Julie — 38–52, solopreneur, coach or consultant. Brilliant and exhausted. Not technical. Lists: Daily 950K · Coach 444K · Highlights 382K · Weekly 334K · Members 212K · Events 50K · Vishen's 7K · Mastery 6.7K. <strong>Warm beats cold 2–3× on opens, 5–10× on clicks.</strong></dd></div>
+      <div><dt>Voice</dt><dd>One human to one human. Story-first. Outcome-led. Give before you ask. Never: productivity, fear, jargon, "excited to announce", two CTAs. Always: one CTA, one specific detail, the 7am test.</dd></div>
+      <div><dt>Process</dt><dd>Airtable → Ready for Review → Approved → Braze → QA → Scheduled → Live. Nothing skips. Nothing ships unreviewed. Nothing exists outside Airtable.</dd></div>
+      <div><dt>Naming</dt><dd><span class="mono">YYYY-MM-DD - LANG - Identifier - Type - List - Subject</span>. Never invent dropdown values.</dd></div>
+      <div><dt>Tagging</dt><dd>utm_source + utm_campaign + utm_content + utm_medium + <strong>two otags</strong>. Wrong otags means lost revenue attribution.</dd></div>
+      <div><dt>Benchmarks</dt><dd>Invite 35–40% OR / 2.5–3.5% CTOR · Show-up 40–50% OR / 12–18% CTOR · Sales 38–45% OR / 4–6% CTOR · unsub under 0.1%.</dd></div>
+      <div><dt>Reading</dt><dd>CTOR is your copy. Open rate is your subject line and your list. Always ask "compared to what?"</dd></div>
+      <div><dt>AI</dt><dd>Load <span class="mono">mindvalley-email</span> first, every time. Feed it real material. Never ship draft one.</dd></div>
+    </dl>
+    <p class="kicker">The line you hold: no email goes live without review status approved.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>Maintained by the Email Lead · Last updated September 2026 · If you change the process, change this document the same day.</footer>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var secs = Array.prototype.slice.call(document.querySelectorAll('main section'));
+  if(!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){ l.classList.remove('on'); });
+        var a = map[e.target.id];
+        if(a) a.classList.add('on');
+      }
+    });
+  }, {rootMargin:'-10% 0px -75% 0px', threshold:0});
+  secs.forEach(function(s){ io.observe(s); });
+})();
+</script>
