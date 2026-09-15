@@ -37,17 +37,26 @@ Mindvalley is a 22-year-old personal growth education company. It sells transfor
 1. **The email calendar** — what goes out, to whom, when, in what language. Nothing ships that isn't on it.
 2. **Copy quality and brand voice** — you are the last line between a draft and 5 million inboxes.
 3. **The governance process** — you are the mandatory reviewer. No email goes live without your approval (§6).
-4. **Vishen's weekly newsletter** — the single highest-leverage recurring send.
+4. **The daily broadcast slot** — the everyday send to the broadcast list.
 5. **Campaign sequences** — Invite, Show-up, Sales for every summit/launch.
 6. **Lifecycle journeys** — onboarding, reactivation, upsell, trial, churn (shared with the Lifecycle team).
 7. **Performance reporting** — the weekly read, the MOW dashboard, campaign retros.
 
 ### What you do NOT own
+- **Vishen's weekly newsletter — Ramya retains this.** See the carve-out below.
 - Purely transactional email (receipts, confirmations)
 - Cohort-start logistics emails
 - Customer support comms
 - Ad creative and paid media
 - The platform/product roadmap
+
+### The newsletter carve-out
+
+Ramya continues to own Vishen's weekly newsletter after the handover — the sync, the draft, the distribution and the translation handoff. It is the one email that does not route through the Email Lead. Three things follow from that, and all three need saying out loud rather than discovering later:
+
+1. **Review authority has one exception.** You are the mandatory reviewer for every email at Mindvalley *except* the newsletter, which Ramya owns and approves. Anyone unsure which applies should ask, not guess.
+2. **The calendar still has one owner: you.** The newsletter occupies a slot on your calendar like anything else. When a campaign send and the newsletter collide on a day, segment or suppression list, you flag it and Ramya decides. This happens more than you'd expect — the Sep 7 Expert to Authority announcement and the Sep 9 newsletter ended up as one combined send across 18 segment-sends.
+3. **Frequency capping is a shared problem.** The newsletter reaches nearly every segment weekly. Your campaign volume sits on top of it. Watch total weekly touches per segment, not just your own.
 
 ---
 
@@ -428,7 +437,7 @@ Mindvalley is AI-first, and this role is one of the most AI-leveraged in the com
 | **Any Mindvalley email, subject line, WhatsApp message, sequence or campaign** | **`mindvalley-email`** | The house skill. Contains the avatar, the six principles, the locked rules, performance data, the 12-email architecture and the subject-line swipe file. **This is your default. Start here every time.** |
 | Deep copy craft, critique, persuasion frameworks | `email-copywriting-masters` | Halbert, Ogilvy, Caples, Sugarman, Bencivenga, Settle, Chaperon, Schwartz, Makepeace — the laws and the never-dos. |
 | Generic marketing email outside the Mindvalley frame | `email` | Sequences, launches, nurture, re-engagement, transactional. |
-| Vishen's newsletter / founder-voice long-form | `signature-engine` | Positioning, content pillars, story bank, editorial calendar, issue drafting and QA. |
+| Founder-voice long-form (Ramya's newsletter; yours if you ever cover) | `signature-engine` | Positioning, content pillars, story bank, editorial calendar, issue drafting and QA. |
 | Short-form video scripts in Vishen's voice | `vishen-reel-scripts` | Reels/TikTok/Shorts, hooks, CTAs, captions. Useful when email and social must carry the same MOW. |
 | Your daily brief | `morning` | Calendar + priorities, rendered. |
 | Decks, docs, spreadsheets, PDFs | `pptx` / `docx` / `xlsx` / `pdf` | Campaign retros, reporting decks, data pulls. |
@@ -560,7 +569,7 @@ The calendar *is* the job. Roughly 20+ standing meetings a week — you cannot a
 ### 9.2 How to actually manage it
 
 1. **Protect two writing blocks a week and defend them.** Ramya's calendar has "Documentation time" and "Do not book" blocks for exactly this reason. Copy the habit.
-2. **Know your three non-negotiables:** MOW (Monday), the Vishen Newsletter Sync, and the Friday MOW dashboard prep. Everything else can be delegated, async'd or skipped in a crunch.
+2. **Know your three non-negotiables:** MOW (Monday), Campaign Weekly, and the Friday MOW dashboard prep. Everything else can be delegated, async'd or skipped in a crunch.
 3. **Let AI take the notes.** Gemini/Claude meeting notes already run on most of these. Don't hand-write notes — extract action steps afterwards.
 4. **Maintain the action-steps doc.** The MOW Meeting Action Steps doc and the Marketing Communications Meeting Notes doc are the running memory of decisions. Keep them alive.
 5. **During a launch week, the daily huddle rhythm takes over.** Summit weeks (like Sep 18–20) collapse the normal calendar — expect the Launch Daily Huddle to become the only meeting that matters.
@@ -573,7 +582,7 @@ Confirm exact scope with Ramya in week 1 — this is the working map, not an org
 
 | Person | You'll work with them on |
 |---|---|
-| **Vishen Lakhiani** | Newsletter, campaign messaging, strategy deep dives, video requests |
+| **Vishen Lakhiani** | Campaign messaging, strategy deep dives, video requests. (Newsletter stays with Ramya.) |
 | **Marisha Lakhiani** | Marketing leadership, MOW, campaign direction |
 | **Ranjini Yeshwanth** | International/translated emails — daily sync |
 | **Monique Schuldt** | **Naming convention + reporting values — always tell her before adding a new dropdown value** |
@@ -613,7 +622,7 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 - Vishen's high-performance session + Mindvalley culture onboarding. This is not optional fluff — the voice in the emails *is* this philosophy. She can't fake it without doing it.
 - Read: this handbook, the Email Governance SOP, the master tracker.
 - Read **3 full past sequences** end to end: Expert to Authority 2026 (invite + show-up), AI Summit 2025 invite, Speaking & Influence 2025 invite. Note what emails 1, 6 and 11 each do differently.
-- Shadow: MOW, Campaign Weekly, Vishen Newsletter Sync, one Daily Huddle.
+- Shadow: MOW, Campaign Weekly, one Daily Huddle, and — even though she won't own it — the Vishen Newsletter Sync. She's there for the voice, not the task.
 - Set up all access (§11) and get Claude working with `mindvalley-email` loaded.
 - **Ship:** draft 10 subject lines for a live campaign. Ramya picks and sends one. *She sees her words go to a real list in week 1.*
 
@@ -624,7 +633,7 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 - Build one email in Braze herself, with Ramya doing the QA.
 - Learn naming conventions and UTM/otag tagging by tagging 5 real emails and having them checked.
 - Log a full week of sends into the master tracker.
-- **Ship:** one complete lifecycle or newsletter email, written and built solo, reviewed by Ramya before send.
+- **Ship:** one complete lifecycle or broadcast email, written and built solo, reviewed by Ramya before send.
 
 ### Weeks 3–4 — Co-pilot (learn the craft)
 **Goal: write to benchmark.**
@@ -638,7 +647,7 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 ### Weeks 5–8 — Lead with a net (learn the judgement)
 **Goal: own the recurring sends.**
 
-- **Owns Vishen's weekly newsletter** end to end — sync, draft, review, distribution, translation handoff. Ramya reviews but does not rewrite.
+- **Owns the daily broadcast slot** end to end — planning, copy, build, send, and the numbers that come back. Ramya reviews but does not rewrite.
 - **Owns one full campaign sequence** for the next launch — invite, show-up, sales. Ramya reviews each email before send.
 - **Becomes the reviewer** for other teams' emails, with Ramya as second reviewer. *This is the hardest skill to transfer: saying "not yet, this doesn't meet the bar" to a senior stakeholder.* Practise it while Ramya is still there to back her up.
 - Runs the MOW email dashboard solo.
@@ -655,7 +664,7 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 
 ### The five things to over-invest in during handover
 
-1. **Vishen's voice.** Do not delegate this to a document. Get Zin in the room for the newsletter syncs and the strategy deep dives from week 1. The voice is caught, not taught.
+1. **Vishen's voice — and this gets harder, not easier, because Ramya keeps the newsletter.** The newsletter would have been the natural apprenticeship in that voice; without it, exposure has to be engineered deliberately. Get Zin into the newsletter syncs and strategy deep dives as an observer from week 1, have her read every newsletter draft before it ships, and send her the raw Vishen transcripts. The voice is caught, not taught, and she now has fewer chances to catch it.
 2. **The relationships.** Personally introduce her to Monique, Ranjini, Sadaf, Glen, Marisha and the BI team — with the specific reason she'll need each of them. A warm intro saves her a month.
 3. **The judgement calls, not the rules.** Rules are in this doc. What isn't: when to break the one-CTA rule, when a send is worth delaying, when to push back on Vishen. Narrate your reasoning out loud for 60 days — *"here's why I'm saying no to this"* — so she inherits the thinking, not just the process.
 4. **The authority to say no.** Publicly hand over the reviewer role in a group setting so the org sees the transfer. Governance only works if people know who holds it.
