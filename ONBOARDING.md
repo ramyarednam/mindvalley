@@ -30,7 +30,7 @@ The transition plan is §12. Start there if you only have five minutes.
 
 Mindvalley is a 22-year-old personal growth education company. It sells transformation — Quests (courses), Membership, Masteries, Certifications, Summits and live events — to a global consumer audience, with Vishen Lakhiani as the founder and primary voice.
 
-**Email is not a support function here. It is a primary revenue channel.** A single lifecycle journey (Member Onboarding, L3) has produced **$1,436,316** in attributed revenue off 32,562 deliveries. A summit invite sequence reaches **5M+ sends** across segments in a single launch email.
+**Email is not a support function here. It is a primary revenue channel.** A single always-on lifecycle journey has produced seven figures in attributed revenue. A summit invite sequence reaches millions of sends across segments in one launch email.
 
 ### What the Email Lead owns
 
@@ -55,7 +55,7 @@ Mindvalley is a 22-year-old personal growth education company. It sells transfor
 Ramya continues to own Vishen's weekly newsletter after the handover — the sync, the draft, the distribution and the translation handoff. It is the one email that does not route through the Email Lead. Three things follow from that, and all three need saying out loud rather than discovering later:
 
 1. **Review authority has one exception.** You are the mandatory reviewer for every email at Mindvalley *except* the newsletter, which Ramya owns and approves. Anyone unsure which applies should ask, not guess.
-2. **The calendar still has one owner: you.** The newsletter occupies a slot on your calendar like anything else. When a campaign send and the newsletter collide on a day, segment or suppression list, you flag it and Ramya decides. This happens more than you'd expect — the Sep 7 Expert to Authority announcement and the Sep 9 newsletter ended up as one combined send across 18 segment-sends.
+2. **The calendar still has one owner: you.** The newsletter occupies a slot on your calendar like anything else. When a campaign send and the newsletter collide on a day, segment or suppression list, you flag it and Ramya decides. This happens more than you'd expect — a recent summit announcement and that week's newsletter ended up merged into one very large combined send.
 3. **Frequency capping is a shared problem.** The newsletter reaches nearly every segment weekly. Your campaign volume sits on top of it. Watch total weekly touches per segment, not just your own.
 
 ---
@@ -66,40 +66,34 @@ Ramya continues to own Vishen's weekly newsletter after the handover — the syn
 
 Mindvalley's database is split by **comms preference** — how often a person opted to hear from us — and by **relationship** — what they've bought. These are the segments you will select for every single send.
 
-| Segment | Rough size | Who they are | Typical OR |
+| Segment | Relative scale | Who they are | Engagement |
 |---|---|---|---|
-| **Daily** | ~950K | Opted into daily email. Largest, most responsive broad list. | 30–35% |
-| **Highlights** | ~382K | Opted into "highlights only" — less frequent. | 20–27% |
-| **Weekly** | ~334K | Opted into weekly digest only. | 18–21% |
-| **Members** (`mvm`) | ~212K | Active Mindvalley Membership holders. | 30–35% |
-| **Coach** | ~444K | Mindvalley Coach / certification audience. Large but cold at the non-member end. | 13–20% |
-| **Events** | ~50K | Live/virtual event attendees. Small, high intent. | 30%+ |
-| **Vishen's list** (`vlnl`) | ~7K | Vishen's personal list. Tiny, extremely warm. | 30–35%, CTOR 4.5% |
-| **All Mastery Customers** (`mas`) | ~6.7K | Paying Mastery students. Smallest, hottest. | 40%+, CTOR 5.8% |
-| **Language lists** | DE ~32K, ES, plus others | Translated sends, usually offset by a day. | varies |
-| **Campaign sublists** | varies | e.g. "Social Media Summit 2026 Signups", "Manifesting Summit Virtual Sales" | varies |
+| **Daily** | Largest | Opted into daily email. Broadest, most responsive general list. | Mid |
+| **Highlights** | Large | Opted into "highlights only" — less frequent. | Low |
+| **Weekly** | Large | Opted into a weekly digest only. | Lowest |
+| **Members** (`mvm`) | Medium | Active Mindvalley Membership holders. | Mid |
+| **Coach** | Large | Mindvalley Coach / certification audience. Cold at the non-member end. | Low |
+| **Events** | Small | Live and virtual event attendees. High intent. | High |
+| **Vishen's list** (`vlnl`) | Very small | Vishen's personal list. Extremely warm. | High |
+| **All Mastery Customers** (`mas`) | Very small | Paying Mastery students. Hottest list we have. | Highest |
+| **Language lists** | Varies | DE, ES and others. Translated sends, usually offset by a day. | Varies |
+| **Campaign sublists** | Varies | e.g. summit sign-ups, virtual ticket purchasers | Varies |
+
+*Exact list sizes and per-list rates live in the internal tracker, not here.*
 
 **The single most important pattern in the whole business:**
 
-> Warm, transacted audiences outperform cold audiences by **2–3× on open rate and 5–10× on click rate.**
+> Warm, transacted audiences outperform cold audiences by a wide margin on open rate — and by far more on click rate.
 
-Proof, from the live benchmark sheet:
+The pattern holds across every list we run. Ranked by engagement:
 
-| Highest performing | OR | CTR | CTOR |
-|---|---|---|---|
-| Spiritual Mastery (2025) Customers | 82.66% | 12.19% | 14.66% |
-| Future Human — Virtual Tickets | 70.60% | 23.44% | 32.69% |
-| CLC Deposit Purchases — Members | 63.87% | 14.84% | 22.80% |
-| MVU Virtual 2025 Tickets Purchased | 60.46% | 19.66% | 32.85% |
-| 7 Sacred States Challenge Sign-ups | 61.54% | 10.70% | 17.30% |
+| Tier | Typical list |
+|---|---|
+| **Exceptional** | Mastery customers · virtual event ticket holders · enrolled certification students · challenge participants |
+| **Strong** | Paid in-person event attendees · active buyers on a live campaign |
+| **Needs attention** | Cold non-member lists (awareness-stage, needs a warming sequence) · broad unsegmented lists like Highlights and Weekly (need further segmentation and personalization) · newly-announced summit sign-ups (normal early in a campaign) |
 
-| Needs attention | OR | CTR | CTOR | Why |
-|---|---|---|---|---|
-| Mindvalley Coach — Non Members | 13.49% | 0.16% | 1.16% | Cold list, needs a warming sequence |
-| Highlights (General) | 21.66% | 0.18% | 0.81% | Too broad — segment further |
-| Weekly | 21.04% | 0.26% | 1.17% | Too generic — add personalization |
-
-**What to do with that:** don't judge a campaign by raw OR until you know which list it went to. A 22% OR on Highlights is normal. A 22% OR on Mastery Customers is a fire.
+**What to do with that:** never judge a campaign by raw open rate until you know which list it went to. The same number can be perfectly healthy on a broad list and an emergency on a customer list.
 
 ### 2.2 The person (the avatar)
 
@@ -109,7 +103,7 @@ Behind every list is one person. Internally we call her **Julie.**
 - Knows the topic matters. Feels behind. Working late. Kids growing up.
 - Has bought courses she didn't finish. Carries guilt about that.
 - Brilliant and exhausted. **Not technical.**
-- **Not** exclusively an entrepreneur — 72% of the list are non-founders. A listicle aimed at "10 founders" lost its test for exactly this reason.
+- **Not** exclusively an entrepreneur — most of the list are non-founders. A listicle aimed at "10 founders" lost its test for exactly this reason.
 
 **The 7am test — apply it to every email you write:**
 
@@ -250,12 +244,12 @@ Seven repeatable patterns (Halbert's):
 
 | Approach | Result | Lesson |
 |---|---|---|
-| "Free Your Friday" — raw Vishen voice + an action (take the oath) | **+98%** | Active participation = identity shift = conversion |
-| The "Possibilities Mirror" email | **+25%** | Mirror principle. No persuasion needed. |
+| "Free Your Friday" — raw Vishen voice plus an action (take the oath) | **Large win** | Active participation = identity shift = conversion |
+| The "Possibilities Mirror" email | **Clear win** | Mirror principle. No persuasion needed. |
 | Agenda email (specific outcomes) | baseline | Specificity works but doesn't excite |
-| Generic social proof quotes | **−64%** | Wrong proof — needs program-specific stories |
+| Generic social proof quotes | **Large loss** | Wrong proof — needs program-specific stories |
 | Pain/survey angle | lost test | She already knows the problem |
-| Listicle ("10 founders") | lost test | 72% of the list are non-founders |
+| Listicle ("10 founders") | lost test | Most of the list are non-founders |
 
 **The single biggest lever:** when Vishen gives people something to *do*, they become active participants rather than passive recipients. Give the reader an action inside the email.
 
@@ -288,15 +282,8 @@ Never explain why it works. Just give it.
 | **Figma / Dropbox** | Email banners and design assets | Week 2 |
 | **Slack** | Review notifications, campaign coordination | Day 1 |
 
-**Key Airtable bases to bookmark:**
-- Emails (system of record) — `app9YRZOVeE65fJPA/tblGeywttHc77AY1b`
-- Campaigns — `app9YRZOVeE65fJPA/tblh135cnaM5X81QR`
-- Planning Calendar — `app9YRZOVeE65fJPA/tblUUVMKdSrLVhTx8`
-- Official Calendar (Ramya/Vishen) — `app9SSYzpUiFmc9QH/tblgbY2OofnOiJ7vs`
-- Message of the Day — `app9YRZOVeE65fJPA/tblNG7H2UdJHulh1i`
-- Email autoresponders — `apphefvdUiNyBLit1/tbls1QJyRdUfutYlp`
-- Video requests with Vishen — `appvBtCYdaSrD1y11/tblcqpctTr76RQsQT`
-- GIMs / Key Initiatives / Academy sales — see the master tracker's Management tab
+**Key Airtable bases to bookmark** (URLs are in the Management tab of the master tracker):
+Emails (system of record) · Campaigns · Planning Calendar · Official Calendar · Message of the Day · Email autoresponders · Video requests with Vishen · GIMs, Key Initiatives and Academy sales
 
 ### 5.2 The naming convention (get this wrong and the email disappears from reporting)
 
@@ -312,7 +299,7 @@ Real examples:
 2026-05-01 - ES - Negotiate with Confidence Spanish - Quest Release - Daily - La conversación de $500,000 que has estado evitando
 ```
 
-> ⚠️ **The dropdown values are linked to the weekly email reporting system. Do not invent new values.** If nothing fits, select "other". Adding new values without telling Monique breaks the report — the campaign silently vanishes from the weekly numbers.
+> ⚠️ **The dropdown values are linked to the weekly email reporting system. Do not invent new values.** If nothing fits, select "other". Adding new values without checking with the reporting owner breaks the report — the campaign silently vanishes from the weekly numbers.
 
 **Journey/lifecycle campaigns** are named after their Airtable record instead:
 ```
@@ -372,7 +359,7 @@ The canonical 12-email arc, mapped to Julie's emotional stages:
 | 11 | −1 | Committed | The eve. Short. Intimate. No CTA except "see you tomorrow." |
 | 12 | 0 | Committed | The door opens. Link only. Clean, urgent, warm. |
 
-**B. Show-up Sequence** (day −2 through the event). Goal: attendance. Contains the Zoom links, calendar links, WhatsApp channel, VIP upgrade, share-with-a-friend. Highest-performing sequence we run (45% OR) because the audience already said yes.
+**B. Show-up Sequence** (day −2 through the event). Goal: attendance. Contains the Zoom links, calendar links, WhatsApp channel, VIP upgrade, share-with-a-friend. The highest-performing sequence we run, because the audience already said yes.
 
 **C. Sales Sequence** (during/after the event). Goal: revenue. Action-focused.
 
@@ -391,7 +378,7 @@ The canonical 12-email arc, mapped to Julie's emotional stages:
 6. **Status → Scheduled**, then **Live** once sent.
 7. **Log it in the master tracker** (§8.1) — date, day, campaign, sequence, email name, send time, segment, suppression list, UTM link, Braze campaign link, subject line.
 
-**Suppression discipline:** always suppress people who already converted. For the Expert to Authority WhatsApp DM the audience was explicitly "non-members and members who did not click on the invite emails or the Sep 9 newsletter — suppress the summit sign-ups." Sending a registration invite to someone who already registered is the fastest way to burn trust and inflate unsubs.
+**Suppression discipline:** always suppress people who already converted. A live summit WhatsApp DM, for instance, targeted only non-members and members who had not clicked the invite emails or that week's newsletter, with all summit sign-ups suppressed. Sending a registration invite to someone who already registered is the fastest way to burn trust and inflate unsubs.
 
 ---
 
@@ -481,22 +468,17 @@ The same workbook holds the Management tab (OKRs, GIMs, Key Initiatives, action 
 
 ### 8.2 How we READ performance
 
-**Step 1 — compare against the right benchmark, by sequence type.**
+**Step 1 — compare against the right benchmark, by sequence type.** Each sequence type has its own target band for open rate, CTR, CTOR and a maximum unsubscribe rate. The current bands and where we actually land against them are maintained on the Benchmarks tab of the master tracker — check there, not from memory, because they move.
 
-| Sequence | Target OR | Target CTR | Target CTOR | Max unsub | Current actual |
-|---|---|---|---|---|---|
-| **Invite** | 35–40% | 0.8–1.2% | 2.5–3.5% | 0.09% | 32.89% / 1.17% / 3.00% / 0.09% |
-| **Show-up** | 40–50% | 5–8% | 12–18% | 0.08% | 45.22% / 7.78% / 15.50% / 0.12% |
-| **Sales** | 38–45% | 1.5–3% | 4–6% | 0.13% | 41.49% / 2.52% / 5.49% / 0.16% |
-| **Overall benchmark** | 35.92% | 2.81% | 5.48% | 0.10% | — |
+Show-up sequences run far ahead of invite sequences on every metric, because the audience has already said yes. Never compare across sequence types.
 
-Hitting these means you met standard expectations. It does not mean you won.
+Hitting the band means you met standard expectations. It does not mean you won.
 
 **Step 2 — read the metrics in the right order.**
 
 | Metric | What it actually tells you | If it's low, fix… |
 |---|---|---|
-| **Delivery %** | List health, sender reputation | suppression hygiene, list cleaning — escalate below ~98% |
+| **Delivery %** | List health, sender reputation | suppression hygiene, list cleaning — escalate if it dips below the tracker's floor |
 | **Open rate** | The subject line **and the list temperature** | subject line, send time, segment choice |
 | **CTR** (clicks/delivered) | Whole-email effectiveness | the offer, the CTA |
 | **CTOR** (clicks/opens) | **Body copy quality.** The purest read on your writing. | the story, the bridge, the CTA framing |
@@ -506,9 +488,9 @@ Hitting these means you met standard expectations. It does not mean you won.
 
 **CTOR is the metric to obsess over.** OR is largely the subject line and the list. CTOR is your copy, isolated.
 
-**Step 3 — always ask "compared to what?"** Structural differences distort everything. Real example from this month: the Expert to Authority Email 1 looked far bigger than the Speaking & Influence equivalent (~5.2M vs ~2.1M sends) — but only because EAS Email 1 was a *combined* send (the Sep 7 announcement across 6 segments **plus** the Sep 9 Vishen newsletter across 12 segments including Spanish, German, Events and VL). EAS won on reach; SIS won on engagement rate. Both true. Say both.
+**Step 3 — always ask "compared to what?"** Structural differences distort everything. A worked example: one summit's Email 1 looked far bigger than a comparable summit's — but only because it was a *combined* send, pairing the announcement with that week's newsletter across many more segments, including the translated ones. The first won on reach; the second won on engagement rate. Both are true. Say both.
 
-**Step 4 — diagnose, don't just describe.** The benchmark sheet models this well: cold lists at 13–14% OR are *expected* for awareness campaigns; broad unsegmented lists at 20–23% mean *segment further*; a just-announced summit at 22% means *the remind sequence hasn't run yet*. Name the cause, not just the number.
+**Step 4 — diagnose, don't just describe.** The benchmark sheet models this well: a low open rate on a cold list is *expected* for an awareness campaign; a mediocre one on a broad unsegmented list means *segment further*; a soft number on a just-announced summit means *the remind sequence hasn't run yet*. Name the cause, not just the number.
 
 ### 8.3 How we REPORT performance
 
@@ -521,19 +503,21 @@ Hitting these means you met standard expectations. It does not mean you won.
 | **Per campaign** | Campaign retro | Full funnel: sends → leads → revenue, by segment and by email. Model: the "Mastery Retro Deck" and the per-summit leads breakdowns. |
 | **Monthly / quarterly** | OKRs & Calendar Review | OKR attainment, list health trend, revenue per campaign. |
 
-**Where the numbers come from — Metabase (MV BigQuery):**
+**Where the numbers come from — Metabase, over the warehouse:**
 
 | Asset | Use |
 |---|---|
-| **Dashboard: Email Campaign Performance** (official, BI collection) | The primary weekly read |
-| **Dashboard: Summit Leads** (official) | Leads on summit / cert / accelerator pages |
-| Collection: **Email Campaign** | "Rev / Campaign", "Revenue by List Type", "Revenue by Campaign List" |
-| `l3_leads.fact_email_engagement` | Per-recipient opens, clicks, interactions |
-| `l3_leads.dim_email_campaign` | Campaign metadata — **this is why naming conventions matter** |
-| `l3_leads.bridge_email_revenue` | Order-level revenue attributed via **otag match** — why both otags must be right |
-| `l3_leads.fact_lead` / `fact_lead_monetization` | Leads and windowed revenue (7d–90d) for value-per-lead |
-| `l3_leads.daily_email_audience_activity` | Reachable audience and list health over time |
-| `l3_leads.dim_email_canvas` / `dim_email_canvas_step` | Lifecycle journey step performance |
+| Email Campaign Performance dashboard | The primary weekly read |
+| Summit Leads dashboard | Leads on summit, cert and accelerator pages |
+| Email Campaign collection | Revenue per campaign, revenue by list type, revenue by campaign list |
+| Email engagement tables | Per-recipient opens, clicks, interactions |
+| Campaign metadata tables | **This is why naming conventions matter** — a bad campaign name breaks the join |
+| Revenue attribution bridge | Order-level revenue matched via **otag** — why both otags must be right |
+| Lead and lead-monetization tables | Leads and windowed revenue for value-per-lead |
+| Audience activity tables | Reachable audience and list health over time |
+| Canvas step tables | Lifecycle journey step performance |
+
+Exact schema and table names are in Metabase — ask the BI team for a walkthrough in week 1.
 
 **How to write the read (four lines, every time):**
 1. **What happened** — the number, against the benchmark, for the right sequence type.
@@ -564,7 +548,7 @@ The calendar *is* the job. Roughly 20+ standing meetings a week — you cannot a
 **Friday — documentation and review**
 - **Documentation time (10:00)** · Acquire Weekly Priorities (10:30) · MV Voice (11:00) · Campaigns · **Email Dashboard for MOW (14:00)** · Daily Huddle · a protected "Do not book" block
 
-**Also recurring:** OKRs & Calendar Review · MOW review · Email Team Sync · Airtables & reporting sheets review · States Weekly email · Supplement Weekly · Content Facetime · a daily 1:1 with Ranjini (international emails).
+**Also recurring:** OKRs & Calendar Review · MOW review · Email Team Sync · Airtables & reporting sheets review · States Weekly email · Supplement Weekly · Content Facetime · a daily 1:1 with the international email lead.
 
 ### 9.2 How to actually manage it
 
@@ -580,17 +564,18 @@ The calendar *is* the job. Roughly 20+ standing meetings a week — you cannot a
 
 Confirm exact scope with Ramya in week 1 — this is the working map, not an org chart.
 
-| Person | You'll work with them on |
+| Function | You'll work with them on |
 |---|---|
-| **Vishen Lakhiani** | Campaign messaging, strategy deep dives, video requests. (Newsletter stays with Ramya.) |
-| **Marisha Lakhiani** | Marketing leadership, MOW, campaign direction |
-| **Ranjini Yeshwanth** | International/translated emails — daily sync |
-| **Monique Schuldt** | **Naming convention + reporting values — always tell her before adding a new dropdown value** |
-| **Sadaf Wasti, Rafay Korai, Pavel Luzanov, Palak Varma** | Lifecycle journeys, onboarding, member data |
-| **Glen Jason Chittur, Gareth Winter, Ishaan Jaiswal, Moniek van Waaijenburg** | Content calendar, comms sync, video/social assets |
-| **Jaideep Chagger, Wendy Boo** | Summit curriculum and launch alignment |
-| **Kristin Hollmann** | International/DE |
-| **BI team** | Metabase dashboards, attribution questions |
+| **Vishen Lakhiani** (founder) | Campaign messaging, strategy deep dives, video requests. (Newsletter stays with Ramya.) |
+| Marketing leadership | Message of the Week, campaign direction |
+| International email lead | Translated and regional emails — daily sync |
+| Marketing ops / reporting owner | **Naming conventions and reporting values — always check before adding a dropdown value** |
+| Lifecycle and product marketing | Lifecycle journeys, onboarding, member data |
+| Content and comms team | Content calendar, comms sync, video and social assets |
+| Summit / launch leads | Curriculum and launch alignment |
+| BI team | Metabase dashboards, attribution questions |
+
+*Named contacts for each function are in the internal version of this doc.*
 
 ---
 
@@ -599,7 +584,7 @@ Confirm exact scope with Ramya in week 1 — this is the working map, not an org
 Get these before anything else — a blocked login on day 3 costs a week.
 
 - [ ] Claude (premium account)
-- [ ] Braze — dashboard-01, campaign build + send permissions
+- [ ] Braze — campaign build and send permissions
 - [ ] Airtable — Content & Communications base, Campaigns & Emails base
 - [ ] Google Drive — Email Calendar & Performance, campaign folders, Governance SOP
 - [ ] Metabase — Business Intelligence collection, Email Campaign collection
@@ -641,7 +626,7 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 - Write a full 3–4 email mini-sequence (a promo or a lifecycle journey), reviewed by Ramya.
 - Own the weekly performance read: pull Metabase, fill the tracker, write the four-line read, present it at Campaign Weekly.
 - Run the Friday MOW dashboard prep with Ramya.
-- Start the daily Ranjini sync on international emails.
+- Start the daily sync with the international email lead.
 - **Checkpoint (end of week 4):** can she write an email that passes the pre-send checklist without edits? Can she read a result and say *why*, not just *what*?
 
 ### Weeks 5–8 — Lead with a net (learn the judgement)
@@ -665,16 +650,16 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 ### The five things to over-invest in during handover
 
 1. **Vishen's voice — and this gets harder, not easier, because Ramya keeps the newsletter.** The newsletter would have been the natural apprenticeship in that voice; without it, exposure has to be engineered deliberately. Get Zin into the newsletter syncs and strategy deep dives as an observer from week 1, have her read every newsletter draft before it ships, and send her the raw Vishen transcripts. The voice is caught, not taught, and she now has fewer chances to catch it.
-2. **The relationships.** Personally introduce her to Monique, Ranjini, Sadaf, Glen, Marisha and the BI team — with the specific reason she'll need each of them. A warm intro saves her a month.
+2. **The relationships.** Personally introduce her to every counterpart in the table above — with the specific reason she'll need each of them. A warm intro saves her a month.
 3. **The judgement calls, not the rules.** Rules are in this doc. What isn't: when to break the one-CTA rule, when a send is worth delaying, when to push back on Vishen. Narrate your reasoning out loud for 60 days — *"here's why I'm saying no to this"* — so she inherits the thinking, not just the process.
 4. **The authority to say no.** Publicly hand over the reviewer role in a group setting so the org sees the transfer. Governance only works if people know who holds it.
-5. **The failure library.** Walk her through the losers, not just the winners: the −64% social proof email, the listicle that missed the avatar, the reused subject line. Knowing what has already failed is worth more than knowing what worked.
+5. **The failure library.** Walk her through the losers, not just the winners: the social proof email that lost badly, the listicle that missed the avatar, the reused subject line. Knowing what has already failed is worth more than knowing what worked.
 
 ---
 
 ## 13. The one-page version (print this)
 
-**Audience:** Julie — 38–52, solopreneur/coach/consultant, brilliant and exhausted, not technical. Lists: Daily (950K) · Highlights (382K) · Weekly (334K) · Members (212K) · Coach (444K) · Events (50K) · Vishen's (7K) · Mastery (6.7K). **Warm beats cold 2–3× on OR, 5–10× on CTR.**
+**Audience:** Julie — 38–52, solopreneur/coach/consultant, brilliant and exhausted, not technical. Lists, largest to smallest: Daily · Coach · Highlights · Weekly · Members · Events · Vishen's · Mastery. **Warm beats cold by a wide margin on opens, and by far more on clicks.**
 
 **Voice:** One human to one human. Story-first. Outcome-led. Give before you ask. Never: productivity, fear, jargon, "excited to announce", two CTAs. Always: one CTA, one specific detail, the 7am test.
 
@@ -684,7 +669,7 @@ The design principle: **Zin ships something real in week 1 and owns the highest-
 
 **Tagging:** utm_source + utm_campaign + utm_content + utm_medium + **two otags**. Wrong otags = lost revenue attribution.
 
-**Benchmarks:** Invite 35–40% OR / 2.5–3.5% CTOR · Show-up 40–50% OR / 12–18% CTOR · Sales 38–45% OR / 4–6% CTOR · unsub under 0.1%.
+**Benchmarks:** Every sequence type has its own band — check the Benchmarks tab, never compare across types.
 
 **Read:** CTOR is your copy. OR is your subject line and your list. Always ask "compared to what?"
 
