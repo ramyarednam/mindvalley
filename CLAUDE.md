@@ -4,71 +4,20 @@
 
 ## Repository Status
 
-**Current State:** Empty/Uninitialized Repository
+**Current State:** Pre-Watch MVP (pre-release audience attention testing for long-form video). See `README.md`.
 
-This is a freshly initialized Git repository under the `mindvalley` namespace. No project files, source code, or configuration have been added yet.
+## Project Overview
 
-## Repository Information
-
-- **Repository Name:** mindvalley
-- **Remote URL:** Configured via local proxy
-- **Primary Development Branch:** `claude/claude-md-mktiw4wik5zldpeg-BXXz3`
-
-## For AI Assistants: Getting Started
-
-### When Initializing This Repository
-
-If tasked with setting up this project, follow these conventions:
-
-1. **Determine Project Type First**
-   - Ask the user what type of project this should be (web app, API, library, etc.)
-   - Identify the technology stack requirements
-
-2. **Recommended Project Structure Patterns**
-
-   For a **Node.js/TypeScript project**:
-   ```
-   mindvalley/
-   ├── src/                  # Source code
-   │   ├── index.ts          # Main entry point
-   │   ├── types/            # TypeScript type definitions
-   │   ├── utils/            # Utility functions
-   │   └── lib/              # Core library code
-   ├── tests/                # Test files
-   ├── docs/                 # Documentation
-   ├── package.json          # Dependencies and scripts
-   ├── tsconfig.json         # TypeScript configuration
-   ├── .gitignore            # Git ignore rules
-   ├── .eslintrc.js          # ESLint configuration
-   ├── .prettierrc           # Prettier configuration
-   ├── README.md             # Project documentation
-   └── CLAUDE.md             # This file (AI assistant guide)
-   ```
-
-   For a **Python project**:
-   ```
-   mindvalley/
-   ├── src/
-   │   └── mindvalley/       # Main package
-   │       ├── __init__.py
-   │       └── main.py
-   ├── tests/
-   ├── requirements.txt      # Dependencies
-   ├── setup.py              # Package setup
-   ├── pyproject.toml        # Modern Python config
-   ├── .gitignore
-   ├── README.md
-   └── CLAUDE.md
-   ```
-
-### Essential Files to Create
-
-When initializing, always create these files:
-
-1. **`.gitignore`** - Prevent committing sensitive/generated files
-2. **`README.md`** - Project documentation
-3. **Package manifest** - `package.json`, `requirements.txt`, `Cargo.toml`, etc.
-4. **Configuration files** - Linting, formatting, build tools
+- **Stack:** Node.js 22.18+ running TypeScript directly (type stripping), built-in `node:sqlite`, no runtime
+  dependencies. Front ends are plain ES modules in `public/` with hls.js and MediaPipe loaded from jsDelivr.
+- **Layout:**
+  - `src/` server: `app.ts` (routes), `db.ts` (SQLite), `scoring.ts`, `quality.ts`, `exports.ts`, `hlsProxy.ts`,
+    `sources/` (Dropbox Replay resolver), `simulate.ts` (synthetic panel)
+  - `public/studio/` internal studio app; `public/watch/` panelist app (`tracker.js` = on-device gaze tracking)
+  - `tests/` node:test suites; `scripts/simulate.ts` CLI
+- **Commands:** `npm start`, `npm run dev`, `npm test`, `npm run typecheck`, `npm run simulate -- <testId> [n]`
+- **Rules:** TypeScript must stay erasable (no enums, namespaces or parameter properties) and imports use `.ts`
+  extensions. Webcam frames must never leave the browser; only derived yes/no signals are uploaded.
 
 ## Development Conventions
 
@@ -144,5 +93,4 @@ When the project is initialized and has actual content, update this CLAUDE.md to
 
 ---
 
-*Last updated: 2026-01-25*
-*Status: Awaiting project initialization*
+*Last updated: 2026-09-30*

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Pre-Watch</title>
+  <link rel="stylesheet" href="/shared/base.css" />
+  <link rel="stylesheet" href="/watch/watch.css" />
+</head>
+<body>
+  <main id="app">
+    <!-- 1. Consent -->
+    <section id="step-consent" class="step card">
+      <p class="eyebrow">Pre-Watch screening</p>
+      <h1 id="test-title">Loading…</h1>
+      <p id="preview-note" class="notice hidden">Studio preview: this test is not live, so your viewing is not counted in quotas.</p>
+      <p>You are invited to watch an unreleased episode before anyone else. While you watch, your webcam helps us see which moments hold attention.</p>
+      <div class="facts">
+        <div><h3>What we record</h3><p class="muted small">Whether a face is looking at the screen (yes or no), four times a second. When you press the spacebar or B. Your answers to a short survey at the end.</p></div>
+        <div><h3>What we never record</h3><p class="muted small">Video or photos of you. The camera image is analysed on your own computer and never uploaded.</p></div>
+        <div><h3>How long</h3><p class="muted small"><span id="duration-label">The full episode</span>, plus about 3 minutes for setup and survey. You can pause.</p></div>
+        <div><h3>Confidential</h3><p class="muted small">This episode is not public. Please don't record, share or discuss it. Your viewer ID is shown on the video.</p></div>
+      </div>
+      <p class="muted small">Signal data is kept for up to 90 days, then deleted; only totals across all viewers are kept. You can stop at any time by closing this tab.</p>
+      <label class="check"><input type="checkbox" id="consent" /> I agree to take part, to webcam attention tracking on this device, and to keep the episode confidential.</label>
+      <p id="device-error" class="error hidden"></p>
+      <div class="actions"><button id="consent-next" class="primary" disabled>Continue</button></div>
+    </section>
+
+    <!-- 2. About you -->
+    <section id="step-about" class="step card hidden">
+      <h2>A little about you</h2>
+      <p class="muted">This helps us compare how different audiences react. It is not linked to your name.</p>
+      <div class="grid-2">
+        <div class="field"><label for="d-age">Age</label><select id="d-age"><option value="">Choose…</option><option>18-24</option><option>25-34</option><option>35-44</option><option>45-54</option><option>55+</option></select></div>
+        <div class="field"><label for="d-gender">Gender</label><select id="d-gender"><option value="">Choose…</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other / prefer to self-describe</option></select></div>
+        <div class="field"><label for="d-country">Country</label><select id="d-country"><option value="">Choose…</option><option value="US">United States</option><option value="UK">United Kingdom</option><option value="IN">India</option><option value="AU">Australia</option><option value="CA">Canada</option><option value="DE">Germany</option><option value="MY">Malaysia</option><option value="other">Other</option></select></div>
+        <div class="field"><label for="d-member">Are you a Mindvalley member?</label><select id="d-member"><option value="">Choose…</option><option value="member">Yes</option><option value="non-member">No</option></select></div>
+      </div>
+      <p id="about-error" class="error hidden"></p>
+      <div class="actions"><button id="about-next" class="primary">Continue</button></div>
+    </section>
+
+    <!-- 3. Camera + calibration -->
+    <section id="step-camera" class="step card hidden">
+      <h2>Set up your camera</h2>
+      <p class="muted">Sit about an arm's length from the screen, with light on your face (not behind you). Glasses are fine.</p>
+      <div class="cam-wrap">
+        <video id="cam" playsinline muted></video>
+        <div id="cam-status" class="cam-status">Starting camera…</div>
+      </div>
+      <p id="cam-error" class="error hidden"></p>
+      <div class="actions"><button id="calib-start" class="primary" disabled>Start calibration</button></div>
+      <p class="muted small">Calibration shows 9 dots, one at a time. Look straight at each dot until it disappears. It takes about 15 seconds.</p>
+    </section>
+
+    <!-- 4. Instructions -->
+    <section id="step-brief" class="step card hidden">
+      <h2>You're set up</h2>
+      <ol class="brief">
+        <li><strong>Press the spacebar</strong> whenever something is interesting, surprising or valuable. Press as often as you like.</li>
+        <li><strong>Press B</strong> if a part feels boring or confusing (optional).</li>
+        <li>A few times, a message will ask you to <strong>press A</strong>. Please do it within 8 seconds.</li>
+        <li>You can pause, but you can't skip ahead. Watch as you normally would.</li>
+      </ol>
+      <div class="actions"><button id="brief-next" class="primary">Start watching</button></div>
+    </section>
+
+    <!-- 5. Player -->
+    <section id="step-player" class="step hidden">
+      <div id="stage" class="stage">
+        <video id="player" playsinline></video>
+        <div id="watermark" class="watermark"></div>
+        <div id="pulse" class="pulse">Interesting</div>
+        <div id="pulse-b" class="pulse bored">Boring</div>
+        <div id="check" class="check-overlay hidden"><div>Attention check: press <kbd>A</kbd> now</div><div class="bar"><span></span></div></div>
+        <div id="player-msg" class="player-msg hidden"></div>
+      </div>
+      <div class="controls">
+        <button id="play" class="primary">Play</button>
+        <span id="time" class="num muted">0:00 / 0:00</span>
+        <div class="progress"><span id="progress"></span></div>
+        <input id="volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume" />
+        <button id="fullscreen" aria-label="Fullscreen">Fullscreen</button>
+        <span id="track-dot" class="track-dot" title="Attention tracking"></span>
+      </div>
+      <p class="muted small hint-keys"><kbd>Space</kbd> interesting &nbsp; <kbd>B</kbd> boring &nbsp; <kbd>P</kbd> or the button to pause</p>
+    </section>
+
+    <!-- 6. Survey -->
+    <section id="step-survey" class="step card hidden">
+      <h2>Last step: a few questions</h2>
+      <form id="survey"></form>
+      <p id="survey-error" class="error hidden"></p>
+      <div class="actions"><button id="survey-submit" class="primary">Submit</button></div>
+    </section>
+
+    <!-- 7. Done / blocked -->
+    <section id="step-done" class="step card hidden">
+      <h2 id="done-title">Thank you!</h2>
+      <p id="done-body"></p>
+      <p id="done-code" class="code hidden"></p>
+    </section>
+  </main>
+
+  <div id="calib-layer" class="calib-layer hidden"><div id="calib-dot" class="calib-dot"></div><div id="calib-text" class="calib-text"></div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js"></script>
+  <script type="module" src="/watch/watch.js"></script>
+</body>
+</html>

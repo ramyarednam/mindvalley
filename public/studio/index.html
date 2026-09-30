@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Pre-Watch Studio</title>
+  <link rel="stylesheet" href="/shared/base.css" />
+  <link rel="stylesheet" href="/studio/studio.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand">Pre-Watch <span class="muted">Studio</span></a>
+    <nav class="row">
+      <a href="#/new" class="btn primary" id="nav-new">New test</a>
+      <button id="logout" class="hidden">Sign out</button>
+    </nav>
+  </header>
+  <main id="view"></main>
+
+  <template id="tpl-login">
+    <section class="card narrow">
+      <h1>Sign in</h1>
+      <p class="muted">Studio access for the production, editing and growth teams.</p>
+      <form id="login-form">
+        <div class="field"><label for="pw">Studio password</label><input id="pw" type="password" autocomplete="current-password" required /></div>
+        <p id="login-error" class="error hidden"></p>
+        <button class="primary" type="submit">Sign in</button>
+      </form>
+    </section>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js"></script>
+  <script type="module" src="/studio/studio.js"></script>
+</body>
+</html>
