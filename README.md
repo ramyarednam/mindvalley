@@ -21,6 +21,29 @@ STUDIO_PASSWORD=change-me npm start
 
 To let panelists reach it, deploy behind HTTPS (webcam access requires HTTPS on any host except localhost).
 
+## Put it online
+
+**Try it in GitHub Codespaces (quickest, uses your GitHub account)**
+
+1. Open https://codespaces.new/ramyarednam/mindvalley?ref=claude/bold-carson-foqch2 and click **Create codespace**.
+2. Wait for setup; the server starts by itself and the **Ports** tab shows port 3000 ("Pre-Watch").
+   Open its address (`https://<name>-3000.app.github.dev`) and add `/studio/`. Password: `prewatch`.
+3. The address is private to your GitHub login by default. To let panelists in, right-click the port →
+   **Port visibility → Public**, and first set a real password: stop the server (Ctrl+C in the terminal) and run
+   `STUDIO_PASSWORD=your-password npm start`.
+
+A codespace stops when idle and its data is tied to that codespace, so use it for demos and small pilots.
+
+**Permanent deploy on Render**
+
+1. In Render: **New → Blueprint**, connect GitHub, pick this repo and the branch `claude/bold-carson-foqch2`.
+2. Render reads `render.yaml`: a Node web service with a 1 GB disk for the database (Starter plan, needed for the
+   disk) and a generated `STUDIO_PASSWORD`, which you can read under the service's **Environment** tab.
+3. The service gets an `https://prewatch-….onrender.com` address; the studio is at `/studio/`.
+
+**Any Docker host** (Fly.io, Railway, Cloud Run, a VM): the `Dockerfile` runs the server on port 3000 and keeps
+data in `/data`; mount a volume there and set `STUDIO_PASSWORD`.
+
 ## Workflow
 
 1. **New test** in the studio. Paste a Dropbox Replay share link (for example

@@ -1,0 +1,23 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: prewatch
+    runtime: node
+    plan: starter
+    branch: claude/bold-carson-foqch2
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/me
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: STUDIO_PASSWORD
+        generateValue: true
+      - key: PREWATCH_SECRET
+        generateValue: true
+      - key: PREWATCH_DATA_DIR
+        value: /var/data
+    disk:
+      name: prewatch-data
+      mountPath: /var/data
+      sizeGB: 1
