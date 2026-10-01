@@ -1,5 +1,5 @@
 import type { Store } from './db.ts';
-import type { Cue, CutRow, DemographicKey, SessionRow, SurveyQuestion, TestRow } from './types.ts';
+import type { Cue, CutRow, DemographicKey, TestRow } from './types.ts';
 import { DEMOGRAPHIC_KEYS } from './types.ts';
 import { rangeFor } from './quality.ts';
 import { excerpt } from './transcript.ts';
@@ -217,22 +217,6 @@ export function buildCurve(store: Store, cutId: string, range: { start: number; 
   return { curve, validViewers };
 }
 
-function surveyResults(questions: SurveyQuestion[], sessions: SessionRow[]) {
-  const answers = sessions.map((s) => (s.survey ? (JSON.parse(s.survey) as Record<string, unknown>) : {}));
-  return questions.map((q) => {
-    const vals = answers.map((a) => a[q.id]).filter((v) => v !== undefined && v !== null && v !== '');
-    if (q.kind === 'text') return { ...q, n: vals.length, responses: vals.map(String).slice(0, 200) };
-    if (q.kind === 'yesno') {
-      const yes = vals.filter((v) => v === true || v === 'yes').length;
-      return { ...q, n: vals.length, yesShare: vals.length ? yes / vals.length : null };
-    }
-    const nums = vals.map(Number).filter((v) => Number.isFinite(v));
-    const dist: Record<string, number> = {};
-    for (const v of nums) dist[v] = (dist[v] ?? 0) + 1;
-    return { ...q, n: nums.length, mean: nums.length ? nums.reduce((a, b) => a + b, 0) / nums.length : null, distribution: dist };
-  });
-}
-
 function withTranscript(moments: Omit<Moment, 'transcript'>[], cues: Cue[]): Moment[] {
   return moments.slice(0, SCORING.topN).map((m) => ({ ...m, transcript: excerpt(cues, m.start, m.end) }));
 }
@@ -286,6 +270,7 @@ export function buildReport(store: Store, test: TestRow, cut: CutRow, opts: { in
       sessions: all.length,
       completed: all.filter((s) => s.status === 'completed').length,
       inProgress: all.filter((s) => s.status === 'started' || s.status === 'watching').length,
+      awaitingFeedback: all.filter((s) => s.status === 'watched').length,
       screenedOut: all.filter((s) => s.status === 'screened_out').length,
       valid: validViewers,
       excluded,
@@ -296,7 +281,6 @@ export function buildReport(store: Store, test: TestRow, cut: CutRow, opts: { in
     dropoffs,
     peaks,
     segments,
-    survey: surveyResults(test.config.survey, valid),
   };
 }
 

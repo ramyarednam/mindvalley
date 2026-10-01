@@ -41,6 +41,7 @@ export type ResolvedSource = {
 export type TestRow = {
   id: string;
   title: string;
+  description: string;
   status: 'draft' | 'live' | 'closed';
   created_at: number;
   config: TestConfig;
@@ -67,7 +68,8 @@ export type SessionRow = {
   gender: string | null;
   country: string | null;
   member: string | null;
-  status: 'started' | 'watching' | 'completed' | 'screened_out' | 'abandoned';
+  /** started → watching → watched (video done, feedback pending) → completed (feedback sent). */
+  status: 'started' | 'watching' | 'watched' | 'completed' | 'screened_out' | 'abandoned';
   calib_passed: number;
   calibration: string | null;
   max_pt: number;
@@ -80,6 +82,8 @@ export type SessionRow = {
   valid: number | null;
   exclude_reason: string | null;
   completion_code: string | null;
+  resume_key: string | null;
+  feedback_at: number | null;
   created_at: number;
   last_seen: number;
   completed_at: number | null;
@@ -89,8 +93,37 @@ export type SessionRow = {
 export type Sample = [pt: number, face: 0 | 1, attentive: 0 | 1, visible: 0 | 1];
 
 export type ViewerEvent = {
-  type: 'interest' | 'bored' | 'pause' | 'play' | 'seek_blocked' | 'tab_hidden' | 'tab_visible' | 'fullscreen_exit' | 'check_shown' | 'check_passed' | 'check_missed' | 'rate_blocked';
+  type: 'interest' | 'bored' | 'save_later' | 'pause' | 'play' | 'seek_blocked' | 'tab_hidden' | 'tab_visible' | 'fullscreen_exit' | 'check_shown' | 'check_passed' | 'check_missed' | 'rate_blocked';
   pt: number;
   ts: number;
   data?: Record<string, unknown>;
+};
+
+export type Role = 'admin' | 'member';
+
+export type UserRow = {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
+  pass_hash: string;
+  created_at: number;
+  last_login: number | null;
+};
+
+export type Liked = 'loved' | 'liked' | 'okay' | 'not_for_me';
+
+/** The post-watch questionnaire. Every field is optional so viewers can save part-way and come back. */
+export type Feedback = {
+  feeling?: number; // 1-5
+  relevance?: number; // 1-5
+  liked?: Liked;
+  recommend?: number; // 0-10
+  standoutLines?: number[]; // transcript cue indices
+  standoutWhy?: string;
+  momentNotes?: Record<string, string>; // player second -> what grabbed them
+  oneLiner?: string;
+  titleIdea?: string;
+  wouldCut?: string;
+  custom?: Record<string, string | number | null>;
 };

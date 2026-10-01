@@ -11,12 +11,18 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
-      - key: STUDIO_PASSWORD
-        generateValue: true
       - key: PREWATCH_SECRET
         generateValue: true
       - key: PREWATCH_DATA_DIR
         value: /var/data
+      # First admin account. Fill these in when you create the service.
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      # Optional: enables "Write AI summary" (Claude).
+      - key: ANTHROPIC_API_KEY
+        sync: false
     disk:
       name: prewatch-data
       mountPath: /var/data

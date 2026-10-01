@@ -1,111 +1,123 @@
 # Pre-Watch
 
-Pre-release audience attention testing for long-form video, modelled on the PreWatch tool The Diary of a CEO uses.
-A panel watches an uncut episode in the browser. Their webcam measures whether they are looking at the screen, and
-they press the spacebar when something is interesting. Editors get a per-second attention curve, the top peaks and
-drop-offs, audience splits and markers they can import into Premiere Pro or DaVinci Resolve.
+Pre-release screening for long-form video, modelled on the PreWatch tool The Diary of a CEO uses. A panel watches an
+uncut episode in the browser while their webcam measures, on their own device, whether they are looking at the
+screen. They press the spacebar when something grabs them, can stop and come back later, and finish with a short,
+fun questionnaire. The team gets second-by-second attention, the moments and transcript lines viewers loved, what
+they'd cut, the titles they'd click, and a written summary.
 
 The product spec is the PRD doc: https://claude.ai/code/artifact/518ddc60-8d84-4429-967f-7431948328a3
 
+## Who does what
+
+| | Admin | Member (editors, marketers) |
+| --- | --- | --- |
+| See every screening, its summary, attention, feedback, hooks, audience and responses | Yes | Yes |
+| Export markers to Premiere Pro / DaVinci Resolve / CSV | Yes | Yes |
+| Write an AI summary with Claude | Yes | Yes |
+| Create screenings, go live, edit, upload transcripts, add synthetic viewers, delete | Yes | No |
+| Add people, change roles, reset passwords | Yes | No |
+| See panel vendor IDs | Yes | No |
+
+## The viewer's journey
+
+1. **Welcome**: what is measured (and that no video of them is recorded), the length, consent.
+2. **About you**: age, gender, country, member or not (used for quotas and audience splits).
+3. **Camera check** and a 15-second, 9-dot calibration.
+4. **Watch**: locked player (no skipping, no speed change). Spacebar = interesting, B = boring, A = answer the
+   occasional attention check.
+5. **Save & finish later**: one click pauses, saves their spot and gives them a personal link (copy or email it to
+   themselves). The same browser also remembers them. They have 7 days.
+6. **Feedback**, one question per screen, autosaved, and can also be finished later on any device:
+   how it made them feel, topic relevance, did they like it, notes on the moments they marked, the transcript lines
+   that stood out and why, a one-sentence pitch, a title they'd click, what they'd cut, would they recommend it,
+   plus up to 5 questions of your own.
+7. **Done**: a thank-you with confetti and a completion code for panel vendors.
+
+## The team app
+
+- **Dashboard**: every screening as a card with its poster, live status, attention, liked share and responses.
+- **Summary**: a verdict, six headline numbers, key findings, what worked, what to fix, and hook candidates.
+  Rule-based by default; **Write AI summary** asks Claude (model `claude-opus-5-5`) to write it from the data when
+  `ANTHROPIC_API_KEY` is set. If Claude is unavailable, the automatic summary stays.
+- **Attention**: the episode player synced to the attention curve, peaks, drop-offs and marker exports.
+- **Feedback**: rating distributions and every answer, grouped by question.
+- **Hooks & packaging**: transcript lines ranked by how many viewers picked them, title and thumbnail ideas,
+  viewers' own titles and one-liners, and the words they use.
+- **Audience**: attention, liking and relevance by age, gender, country and member status.
+- **Responses**: every viewer, filterable, with their full answers in a side panel.
+- **Manage** (admins): status, panel link, details, transcript upload, extra questions, synthetic viewers, delete.
+
 ## Run it
 
-Requires Node.js 22.18 or newer (it runs TypeScript directly and uses the built-in SQLite). No runtime dependencies.
+Requires Node.js 22.18 or newer.
 
 ```bash
-npm install          # dev tools only (TypeScript for type checking)
-STUDIO_PASSWORD=change-me npm start
+npm install
+npm start
 ```
 
-- Studio: http://localhost:3000/studio/ (password from `STUDIO_PASSWORD`, default `prewatch`)
-- Panel link for a test: `http://localhost:3000/watch/<testId>?pid=<participant id>`
+Open http://localhost:3000/app/. On first run the server log prints a **setup code**; enter it to create the
+first admin account. (Or set `ADMIN_EMAIL` and `ADMIN_PASSWORD` and the admin is created automatically.)
+Add teammates under **Team**; each gets a temporary password to share with them.
 
-To let panelists reach it, deploy behind HTTPS (webcam access requires HTTPS on any host except localhost).
+Panel link for a screening: `https://<your-host>/watch/<testId>?pid=<participant id>`. Viewers need HTTPS for the
+webcam on any host except localhost.
 
 ## Put it online
 
-**Try it in GitHub Codespaces (quickest, uses your GitHub account)**
+**GitHub Codespaces** (quickest): open
+https://codespaces.new/ramyarednam/mindvalley?ref=claude/bold-carson-foqch2, wait for the server to start, open
+the forwarded port 3000 address and add `/app/`. The setup code is in the terminal. Make the port public
+(Ports tab → right-click → Port visibility → Public) before sending the panel link to viewers.
 
-1. Open https://codespaces.new/ramyarednam/mindvalley?ref=claude/bold-carson-foqch2 and click **Create codespace**.
-2. Wait for setup; the server starts by itself and the **Ports** tab shows port 3000 ("Pre-Watch").
-   Open its address (`https://<name>-3000.app.github.dev`) and add `/studio/`. Password: `prewatch`.
-3. The address is private to your GitHub login by default. To let panelists in, right-click the port →
-   **Port visibility → Public**, and first set a real password: stop the server (Ctrl+C in the terminal) and run
-   `STUDIO_PASSWORD=your-password npm start`.
+**Render** (permanent): New → Blueprint → this repo and branch. `render.yaml` sets up a Node service with a disk
+for the database and asks for `ADMIN_EMAIL`, `ADMIN_PASSWORD` and, optionally, `ANTHROPIC_API_KEY`.
 
-A codespace stops when idle and its data is tied to that codespace, so use it for demos and small pilots.
-
-**Permanent deploy on Render**
-
-1. In Render: **New → Blueprint**, connect GitHub, pick this repo and the branch `claude/bold-carson-foqch2`.
-2. Render reads `render.yaml`: a Node web service with a 1 GB disk for the database (Starter plan, needed for the
-   disk) and a generated `STUDIO_PASSWORD`, which you can read under the service's **Environment** tab.
-3. The service gets an `https://prewatch-….onrender.com` address; the studio is at `/studio/`.
-
-**Any Docker host** (Fly.io, Railway, Cloud Run, a VM): the `Dockerfile` runs the server on port 3000 and keeps
-data in `/data`; mount a volume there and set `STUDIO_PASSWORD`.
-
-## Workflow
-
-1. **New test** in the studio. Paste a Dropbox Replay share link (for example
-   `https://replay.dropbox.com/share/qxsXZ0hahSv4hgSx`). The title, length, resolution and frame rate are read
-   automatically. Direct `.m3u8` or `.mp4` links also work if you enter the duration. Add up to 4 cuts for an A/B test;
-   viewers are split evenly.
-2. Set the panel size, quotas, attention checks, an optional chapter range, survey questions and an optional SRT/VTT
-   transcript.
-3. Set the test to **Live** and send the panel link to your vendor (Prolific, Cint, etc.) or community. Use the
-   completion redirect with `{code}` and `{pid}` to hand viewers back to the vendor.
-4. Viewers: consent, a few audience questions, camera check, 9-dot calibration, then the locked player
-   (no seeking, no speed change). Spacebar = interesting, B = boring, A = answer an attention check. Survey at the end.
-5. **Report**: attention curve with 95% band, rolling baseline, still-watching line, interest lane, drop-off bands,
-   ranked peaks and drop-offs with transcript text, audience overlays, survey results and panel quality.
-   Click the chart to jump the player; drag to zoom.
-6. **Export** markers: Premiere Pro (FCP7 XML), DaVinci Resolve (EDL with coloured markers) or CSV.
-
-Use **Add synthetic viewers** on a test to see a full report before real viewers arrive. Synthetic rows are labelled
-and can be deleted; `npm run simulate -- <testId> 500` does the same from the command line.
-
-## How it works
-
-| Part | Where | Notes |
-| --- | --- | --- |
-| Gaze tracking | `public/watch/tracker.js` | MediaPipe Face Landmarker runs in the browser. Head pose and iris position are compared with the calibrated envelope. Frames never leave the device. |
-| Viewer app | `public/watch/` | 4 samples a second `[time, face, attentive, tabVisible]`, events for key presses and pauses; uploaded every 10 s with retry. |
-| Video | `src/hlsProxy.ts`, `src/sources/` | Replay links resolve to Dropbox's HLS playlist. The server proxies it so panelists never see the source URL; every segment URL is HMAC-signed and tied to that viewer's expiring token. |
-| Storage | `src/db.ts` | SQLite. Samples are stored as per-second totals per viewer. |
-| Quality | `src/quality.ts` | Excludes failed calibration, under 70% watched, face visible under 50%, failed attention checks, key mashing. |
-| Scoring | `src/scoring.ts` | Attention = share of valid viewers looking at the screen each second. Interest = presses per 100 viewers in a 5 s window. Drop-off = 20 s or more at least 10 points under a 5-minute rolling baseline. Peak = top 5% of interest. |
-| Exports | `src/exports.ts` | CSV, CMX3600 EDL with Resolve marker colours, FCP7 XML for Premiere. |
-
-### Dropbox Replay
-
-Replay has no public API for resolving a share link. The server makes the same request the Replay web player makes for
-an anonymous viewer, using the public web-client key that Replay ships in its JavaScript bundle. The key is discovered
-at runtime, so nothing is committed. To pin it, set `DROPBOX_REPLAY_CLIENT_AUTH="id:secret"`. If Dropbox changes
-its web app, this resolver is the part that may need updating; direct HLS/MP4 links keep working.
+**Any Docker host**: the `Dockerfile` serves port 3000 and keeps data in `/data`.
 
 ## Configuration
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `PORT` / `HOST` | `3000` / `0.0.0.0` | Listen address |
-| `STUDIO_PASSWORD` | `prewatch` | Studio sign-in; change it before sharing the server |
-| `PREWATCH_DATA_DIR` | `./data` | SQLite database and signing secret |
-| `PREWATCH_SECRET` | random, saved in the data dir | HMAC key for sessions and stream URLs |
-| `MIN_SEGMENT_VIEWERS` | `50` | Audience splits with fewer valid viewers are hidden |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` | unset | Create the first admin on start-up instead of using the setup code |
+| `SETUP_CODE` | random, printed in the log | One-time code for creating the first admin in the browser |
+| `ANTHROPIC_API_KEY` | unset | Enables AI summaries |
+| `SUMMARY_MODEL` | `claude-opus-5-5` | Model for AI summaries |
+| `PREWATCH_DATA_DIR` | `./data` | Database, posters, signing secret |
+| `PREWATCH_SECRET` | random, saved in the data dir | Signs sessions and stream links |
+| `MIN_SEGMENT_VIEWERS` | `50` | Smaller audience groups are left off charts |
 | `STREAM_TOKEN_TTL_SEC` | `21600` | Lifetime of a viewer's stream link |
-| `ALLOWED_MEDIA_HOSTS` | Dropbox preview hosts | Hosts the video proxy may fetch from |
+| `ALLOWED_MEDIA_HOSTS` | Dropbox preview hosts | Hosts the video and poster proxy may fetch from |
+
+## How it works
+
+| Part | Where | Notes |
+| --- | --- | --- |
+| Gaze tracking | `public/watch/tracker.js` | MediaPipe Face Landmarker in the browser compares head pose and iris position with the calibration. Frames never leave the device. |
+| Viewer app | `public/watch/` | 4 samples a second plus key presses, uploaded every 10 s; resume link; autosaved questionnaire. |
+| Video | `src/hlsProxy.ts`, `src/sources/` | Replay links resolve to Dropbox's HLS stream, proxied with per-viewer signed links so viewers never see the source. |
+| Accounts | `src/auth.ts`, `src/routes/auth.ts` | scrypt-hashed passwords, signed session cookie, login rate limiting. |
+| Scoring | `src/scoring.ts`, `src/quality.ts` | Attention per second, interest, drop-offs and peaks; low-quality sessions are excluded. |
+| Feedback | `src/feedback.ts`, `src/summary.ts` | Validation, aggregation, rule-based and Claude summaries. |
+| Storage | `src/db.ts` | SQLite with in-place migrations. |
+
+The Dropbox Replay resolver makes the same request Replay's web player makes for an anonymous viewer, with the
+public web-client key it discovers in Replay's JavaScript (override with `DROPBOX_REPLAY_CLIENT_AUTH`). If Dropbox
+changes its web app, that resolver may need updating; direct HLS/MP4 links keep working.
 
 ## Development
 
 ```bash
-npm test         # unit + API integration tests (Dropbox is mocked)
+npm test           # unit + API tests (Dropbox and Claude are mocked)
 npm run typecheck
-npm run dev      # restart on file changes
+npm run dev        # restart on changes
+npm run simulate -- <testId> 300
 ```
 
 ## Not built yet
 
-These PRD items are not in this version: automatic speech-to-text (upload an SRT/VTT instead), LLM summaries of
-open-text answers, transcript-aligned cut comparison (cuts are compared side by side in the report), paid thumbnail
-and title testing (V2), panel-vendor API integration and payouts (use the completion redirect), SSO (single studio
-password for now), and automatic deletion of raw signal data after 90 days.
+Automatic speech-to-text (upload an SRT/VTT; Premiere, Descript and YouTube export these), email delivery of resume
+links and invites (copy and share them for now), SSO, paid thumbnail/title testing, panel-vendor payouts, and
+automatic deletion of raw signals after 90 days.

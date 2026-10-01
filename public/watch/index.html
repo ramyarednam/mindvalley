@@ -4,107 +4,181 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <title>Pre-Watch</title>
+  <title>Pre-Watch screening</title>
   <link rel="stylesheet" href="/shared/base.css" />
   <link rel="stylesheet" href="/watch/watch.css" />
 </head>
-<body>
+<body class="viewer">
+  <div class="backdrop" id="backdrop"></div>
+  <header class="vbar">
+    <div class="brand"><span class="logo-dot"></span> Pre-Watch <span class="faint">screening</span></div>
+    <div id="vbar-right" class="row"></div>
+  </header>
+
   <main id="app">
-    <!-- 1. Consent -->
-    <section id="step-consent" class="step card">
-      <p class="eyebrow">Pre-Watch screening</p>
-      <h1 id="test-title">Loading…</h1>
-      <p id="preview-note" class="notice hidden">Studio preview: this test is not live, so your viewing is not counted in quotas.</p>
-      <p>You are invited to watch an unreleased episode before anyone else. While you watch, your webcam helps us see which moments hold attention.</p>
-      <div class="facts">
-        <div><h3>What we record</h3><p class="muted small">Whether a face is looking at the screen (yes or no), four times a second. When you press the spacebar or B. Your answers to a short survey at the end.</p></div>
-        <div><h3>What we never record</h3><p class="muted small">Video or photos of you. The camera image is analysed on your own computer and never uploaded.</p></div>
-        <div><h3>How long</h3><p class="muted small"><span id="duration-label">The full episode</span>, plus about 3 minutes for setup and survey. You can pause.</p></div>
-        <div><h3>Confidential</h3><p class="muted small">This episode is not public. Please don't record, share or discuss it. Your viewer ID is shown on the video.</p></div>
+    <!-- Loading -->
+    <section id="step-loading" class="step center"><div class="spinner"></div></section>
+
+    <!-- Message (closed, full, errors) -->
+    <section id="step-message" class="step hidden">
+      <div class="panel center">
+        <div class="big-emoji" id="msg-emoji">🎬</div>
+        <h1 id="msg-title"></h1>
+        <p class="muted" id="msg-body"></p>
       </div>
-      <p class="muted small">Signal data is kept for up to 90 days, then deleted; only totals across all viewers are kept. You can stop at any time by closing this tab.</p>
-      <label class="check"><input type="checkbox" id="consent" /> I agree to take part, to webcam attention tracking on this device, and to keep the episode confidential.</label>
-      <p id="device-error" class="error hidden"></p>
-      <div class="actions"><button id="consent-next" class="primary" disabled>Continue</button></div>
+    </section>
+
+    <!-- 1. Welcome + consent -->
+    <section id="step-consent" class="step hidden">
+      <div class="panel hero-panel">
+        <div class="hero-media" id="hero-media"><span class="badge-exclusive">Before anyone else</span></div>
+        <div class="hero-body">
+          <p class="eyebrow">You're invited to a private screening</p>
+          <h1 id="test-title">Loading…</h1>
+          <p class="muted" id="test-desc"></p>
+          <div class="chips" id="test-chips"></div>
+          <p id="preview-note" class="notice hidden">Team preview: this screening is not live, so your viewing is not counted in quotas.</p>
+          <div class="facts">
+            <div class="fact"><span class="fact-ic">👀</span><div><strong>We only measure attention</strong><p>Your webcam checks whether you're looking at the screen. The image is analysed on your computer and never uploaded or recorded.</p></div></div>
+            <div class="fact"><span class="fact-ic">⏸️</span><div><strong>Pause or stop any time</strong><p>Something came up? Save your spot and come back within 7 days with your personal link.</p></div></div>
+            <div class="fact"><span class="fact-ic">💬</span><div><strong>Then tell us what you think</strong><p>A quick, fun set of questions at the end. Your answers shape how this episode is edited and packaged.</p></div></div>
+            <div class="fact"><span class="fact-ic">🤫</span><div><strong>Keep it between us</strong><p>This episode isn't public yet. Please don't record or share it. Your viewer ID is shown on the video.</p></div></div>
+          </div>
+          <label class="check"><input type="checkbox" id="consent" /> <span>I agree to take part, to webcam attention tracking on this device, and to keep the episode confidential. Signal data is deleted within 90 days.</span></label>
+          <p id="device-error" class="error hidden"></p>
+          <div class="actions"><button id="consent-next" class="btn-grad btn-lg" disabled>Let's go</button></div>
+        </div>
+      </div>
     </section>
 
     <!-- 2. About you -->
-    <section id="step-about" class="step card hidden">
-      <h2>A little about you</h2>
-      <p class="muted">This helps us compare how different audiences react. It is not linked to your name.</p>
-      <div class="grid-2">
-        <div class="field"><label for="d-age">Age</label><select id="d-age"><option value="">Choose…</option><option>18-24</option><option>25-34</option><option>35-44</option><option>45-54</option><option>55+</option></select></div>
-        <div class="field"><label for="d-gender">Gender</label><select id="d-gender"><option value="">Choose…</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other / prefer to self-describe</option></select></div>
-        <div class="field"><label for="d-country">Country</label><select id="d-country"><option value="">Choose…</option><option value="US">United States</option><option value="UK">United Kingdom</option><option value="IN">India</option><option value="AU">Australia</option><option value="CA">Canada</option><option value="DE">Germany</option><option value="MY">Malaysia</option><option value="other">Other</option></select></div>
-        <div class="field"><label for="d-member">Are you a Mindvalley member?</label><select id="d-member"><option value="">Choose…</option><option value="member">Yes</option><option value="non-member">No</option></select></div>
+    <section id="step-about" class="step hidden">
+      <div class="panel narrow">
+        <p class="eyebrow">Step 1 of 3</p>
+        <h1>A little about you</h1>
+        <p class="muted">So we can see how different people react. It's never linked to your name.</p>
+        <div class="field"><label>Your age</label><div class="choice-row" data-name="age_band"><button type="button" data-v="18-24">18–24</button><button type="button" data-v="25-34">25–34</button><button type="button" data-v="35-44">35–44</button><button type="button" data-v="45-54">45–54</button><button type="button" data-v="55+">55+</button></div></div>
+        <div class="field"><label>Gender</label><div class="choice-row" data-name="gender"><button type="button" data-v="female">Female</button><button type="button" data-v="male">Male</button><button type="button" data-v="other">Another / prefer not to say</button></div></div>
+        <div class="field"><label for="d-country">Where do you live?</label><select id="d-country"><option value="">Choose a country…</option><option value="US">United States</option><option value="UK">United Kingdom</option><option value="IN">India</option><option value="AU">Australia</option><option value="CA">Canada</option><option value="DE">Germany</option><option value="MY">Malaysia</option><option value="other">Somewhere else</option></select></div>
+        <div class="field"><label>Are you a Mindvalley member?</label><div class="choice-row" data-name="member"><button type="button" data-v="member">Yes</button><button type="button" data-v="non-member">Not yet</button></div></div>
+        <p id="about-error" class="error hidden"></p>
+        <div class="actions"><button id="about-next" class="btn-grad btn-lg">Continue</button></div>
       </div>
-      <p id="about-error" class="error hidden"></p>
-      <div class="actions"><button id="about-next" class="primary">Continue</button></div>
+    </section>
+
+    <!-- Welcome back -->
+    <section id="step-welcome-back" class="step hidden">
+      <div class="panel narrow center">
+        <div class="big-emoji">👋</div>
+        <h1>Welcome back!</h1>
+        <p class="muted" id="wb-text"></p>
+        <div class="progress-lg"><span id="wb-progress"></span></div>
+        <p class="faint small" id="wb-meta"></p>
+        <div class="actions center"><button id="wb-go" class="btn-grad btn-lg"></button></div>
+      </div>
     </section>
 
     <!-- 3. Camera + calibration -->
-    <section id="step-camera" class="step card hidden">
-      <h2>Set up your camera</h2>
-      <p class="muted">Sit about an arm's length from the screen, with light on your face (not behind you). Glasses are fine.</p>
-      <div class="cam-wrap">
-        <video id="cam" playsinline muted></video>
-        <div id="cam-status" class="cam-status">Starting camera…</div>
+    <section id="step-camera" class="step hidden">
+      <div class="panel narrow">
+        <p class="eyebrow" id="cam-eyebrow">Step 2 of 3</p>
+        <h1>Quick camera check</h1>
+        <p class="muted">Sit about an arm's length away with light on your face, not behind you. Glasses are fine.</p>
+        <div class="cam-wrap">
+          <video id="cam" playsinline muted></video>
+          <div class="cam-frame" id="cam-frame"></div>
+          <div id="cam-status" class="cam-status">Starting camera…</div>
+        </div>
+        <p id="cam-error" class="error hidden"></p>
+        <p class="muted small">Next, 9 dots appear one at a time. Look straight at each one until it shrinks. It takes 15 seconds.</p>
+        <div class="actions"><button id="calib-start" class="btn-grad btn-lg" disabled>Start calibration</button></div>
       </div>
-      <p id="cam-error" class="error hidden"></p>
-      <div class="actions"><button id="calib-start" class="primary" disabled>Start calibration</button></div>
-      <p class="muted small">Calibration shows 9 dots, one at a time. Look straight at each dot until it disappears. It takes about 15 seconds.</p>
     </section>
 
-    <!-- 4. Instructions -->
-    <section id="step-brief" class="step card hidden">
-      <h2>You're set up</h2>
-      <ol class="brief">
-        <li><strong>Press the spacebar</strong> whenever something is interesting, surprising or valuable. Press as often as you like.</li>
-        <li><strong>Press B</strong> if a part feels boring or confusing (optional).</li>
-        <li>A few times, a message will ask you to <strong>press A</strong>. Please do it within 8 seconds.</li>
-        <li>You can pause, but you can't skip ahead. Watch as you normally would.</li>
-      </ol>
-      <div class="actions"><button id="brief-next" class="primary">Start watching</button></div>
+    <!-- 4. How it works -->
+    <section id="step-brief" class="step hidden">
+      <div class="panel narrow">
+        <p class="eyebrow">Step 3 of 3</p>
+        <h1>You're all set. Here's how it works</h1>
+        <div class="howto">
+          <div class="how"><kbd class="kbd-big">Space</kbd><strong>Something grabs you?</strong><span>Tap the spacebar whenever a moment is interesting, surprising or useful. As often as you like.</span></div>
+          <div class="how"><kbd class="kbd-big">B</kbd><strong>Getting boring?</strong><span>Tap B if a part drags or confuses you. Optional, but really helpful.</span></div>
+          <div class="how"><kbd class="kbd-big">A</kbd><strong>Quick check-ins</strong><span>A few times a message asks you to press A. Just press it within 8 seconds.</span></div>
+          <div class="how"><span class="kbd-big">⏸️</span><strong>Need a break?</strong><span>Pause any time, or use "Save & finish later" to come back within 7 days.</span></div>
+        </div>
+        <div class="actions"><button id="brief-next" class="btn-grad btn-lg">Start watching</button></div>
+      </div>
     </section>
 
     <!-- 5. Player -->
-    <section id="step-player" class="step hidden">
+    <section id="step-player" class="step wide hidden">
       <div id="stage" class="stage">
         <video id="player" playsinline></video>
         <div id="watermark" class="watermark"></div>
-        <div id="pulse" class="pulse">Interesting</div>
-        <div id="pulse-b" class="pulse bored">Boring</div>
-        <div id="check" class="check-overlay hidden"><div>Attention check: press <kbd>A</kbd> now</div><div class="bar"><span></span></div></div>
+        <div id="pulse" class="pulse">✨ Interesting</div>
+        <div id="pulse-b" class="pulse bored">😴 Boring</div>
+        <div id="check" class="check-overlay hidden"><div>Quick check: press <kbd>A</kbd> now</div><div class="bar"><span></span></div></div>
         <div id="player-msg" class="player-msg hidden"></div>
       </div>
       <div class="controls">
-        <button id="play" class="primary">Play</button>
-        <span id="time" class="num muted">0:00 / 0:00</span>
+        <button id="play" class="btn-grad">Play</button>
+        <span id="time" class="num time">0:00 / 0:00</span>
         <div class="progress"><span id="progress"></span></div>
         <input id="volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume" />
-        <button id="fullscreen" aria-label="Fullscreen">Fullscreen</button>
+        <button id="fullscreen" class="btn-ghost" aria-label="Fullscreen">⛶</button>
         <span id="track-dot" class="track-dot" title="Attention tracking"></span>
+        <button id="save-later" class="btn-save">⏸ Save &amp; finish later</button>
       </div>
-      <p class="muted small hint-keys"><kbd>Space</kbd> interesting &nbsp; <kbd>B</kbd> boring &nbsp; <kbd>P</kbd> or the button to pause</p>
+      <div class="key-hints"><span><kbd>Space</kbd> interesting</span><span><kbd>B</kbd> boring</span><span><kbd>P</kbd> pause</span><span id="press-count" class="faint"></span></div>
     </section>
 
-    <!-- 6. Survey -->
-    <section id="step-survey" class="step card hidden">
-      <h2>Last step: a few questions</h2>
-      <form id="survey"></form>
-      <p id="survey-error" class="error hidden"></p>
-      <div class="actions"><button id="survey-submit" class="primary">Submit</button></div>
+    <!-- Saved for later -->
+    <section id="step-saved" class="step hidden">
+      <div class="panel narrow center">
+        <div class="big-emoji">🔖</div>
+        <h1>Your spot is saved</h1>
+        <p class="muted" id="saved-text"></p>
+        <div class="resume-box">
+          <input type="text" id="resume-link" readonly />
+          <button id="copy-link" class="btn-primary">Copy link</button>
+        </div>
+        <div class="row center-row">
+          <a class="btn" id="email-link">✉️ Email it to myself</a>
+          <button id="continue-now" class="btn">Continue now</button>
+        </div>
+        <p class="faint small">This browser also remembers your spot, so you can simply reopen your invite link here.</p>
+      </div>
     </section>
 
-    <!-- 7. Done / blocked -->
-    <section id="step-done" class="step card hidden">
-      <h2 id="done-title">Thank you!</h2>
-      <p id="done-body"></p>
-      <p id="done-code" class="code hidden"></p>
+    <!-- 6. Feedback flow -->
+    <section id="step-feedback" class="step hidden">
+      <div class="panel narrow fb-panel">
+        <div class="fb-top">
+          <div class="fb-progress"><span id="fb-progress"></span></div>
+          <button id="fb-later" class="btn-ghost btn-sm">Finish later</button>
+        </div>
+        <div id="fb-body" class="fb-body"></div>
+        <p id="fb-error" class="error hidden"></p>
+        <div class="fb-nav">
+          <button id="fb-back" class="btn-ghost">← Back</button>
+          <div class="row"><button id="fb-skip" class="btn-ghost">Skip</button><button id="fb-next" class="btn-grad btn-lg">Next</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Done -->
+    <section id="step-done" class="step hidden">
+      <div class="panel narrow center">
+        <div class="big-emoji">🎉</div>
+        <h1>Thank you!</h1>
+        <p class="muted" id="done-body">Your viewing and feedback are in. You've just helped shape how this episode is edited and shared.</p>
+        <div id="done-code-wrap" class="hidden"><p class="small faint">If a panel provider sent you, enter this completion code there:</p><p id="done-code" class="code"></p></div>
+      </div>
     </section>
   </main>
 
   <div id="calib-layer" class="calib-layer hidden"><div id="calib-dot" class="calib-dot"></div><div id="calib-text" class="calib-text"></div></div>
+  <canvas id="confetti" class="confetti"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.6.15/dist/hls.min.js"></script>
   <script type="module" src="/watch/watch.js"></script>

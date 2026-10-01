@@ -1,7 +1,7 @@
 import type { Store } from './db.ts';
 import { newId } from './db.ts';
 import { evaluateSession, rangeFor } from './quality.ts';
-import type { CutRow, TestRow } from './types.ts';
+import type { CutRow, Feedback, TestRow } from './types.ts';
 
 /**
  * Synthetic panel generator. It lets the studio see a full report before real viewers arrive and is used in tests.
@@ -57,11 +57,32 @@ export function storyFor(cutId: string, start: number, end: number): Story {
   return { dips, peaks };
 }
 
-/** Answers keyed by the test's own question ids; free text is left empty rather than invented. */
-function syntheticSurvey(test: TestRow, r: () => number): Record<string, string | number | null> {
-  const out: Record<string, string | number | null> = {};
-  for (const q of test.config.survey) out[q.id] = q.kind === 'scale' ? 5 + Math.round(r() * 5) : q.kind === 'yesno' ? (r() < 0.6 ? 'yes' : 'no') : null;
-  return out;
+// Placeholder answers for synthetic viewers only. Reports label synthetic data, so these never pass as real quotes.
+const SIM_WHY = ['[synthetic] The personal story made it feel real', '[synthetic] Practical tips I can use this week', '[synthetic] The science explained simply', '[synthetic] Surprising and honest answer'];
+const SIM_ONE_LINER = ['[synthetic] A practical guide to living longer and feeling better', '[synthetic] Ben Greenfield on habits that actually move the needle'];
+const SIM_TITLES = ['[synthetic] The 5 Habits That Changed My Health', '[synthetic] What Nobody Tells You About Longevity'];
+const SIM_CUT = ['[synthetic] The middle section felt long', '[synthetic] Too much detail on supplements'];
+
+/** Structured feedback for a synthetic viewer, shaped like the real questionnaire. */
+function syntheticFeedback(test: TestRow, r: () => number, likesIt: number): Feedback {
+  const pickOne = <T>(list: T[]) => list[Math.floor(r() * list.length)];
+  const scale5 = () => Math.min(5, Math.max(1, Math.round(2.6 + likesIt * 2.4 + (r() - 0.5) * 1.6)));
+  const lines = test.transcript.length ? Array.from({ length: 1 + Math.floor(r() * 3) }, () => Math.floor(Math.pow(r(), 2) * test.transcript.length)) : [];
+  const f: Feedback = {
+    feeling: scale5(),
+    relevance: scale5(),
+    liked: likesIt > 0.75 ? 'loved' : likesIt > 0.5 ? 'liked' : likesIt > 0.3 ? 'okay' : 'not_for_me',
+    recommend: Math.min(10, Math.max(0, Math.round(4 + likesIt * 6 + (r() - 0.5) * 3))),
+    standoutLines: lines.length ? [...new Set(lines)] : undefined,
+    standoutWhy: r() < 0.6 ? pickOne(SIM_WHY) : undefined,
+    oneLiner: r() < 0.5 ? pickOne(SIM_ONE_LINER) : undefined,
+    titleIdea: r() < 0.4 ? pickOne(SIM_TITLES) : undefined,
+    wouldCut: r() < 0.3 ? pickOne(SIM_CUT) : undefined,
+  };
+  if (test.config.survey.length) {
+    f.custom = Object.fromEntries(test.config.survey.map((q) => [q.id, q.kind === 'scale' ? 5 + Math.round(r() * 5) : q.kind === 'yesno' ? (r() < 0.6 ? 'yes' : 'no') : null]));
+  }
+  return Object.fromEntries(Object.entries(f).filter(([, v]) => v !== undefined)) as Feedback;
 }
 
 export function simulatePanel(store: Store, test: TestRow, cut: CutRow, viewers: number, seed = `${Date.now()}`): number {
@@ -112,15 +133,19 @@ export function simulatePanel(store: Store, test: TestRow, cut: CutRow, viewers:
 
     const checks = test.config.attentionChecks;
     const passed = failsChecks ? 0 : checks;
+    const finished = leaveAt >= end;
+    // Most finishers fill in the questionnaire; some are still "to do", as with real panels.
+    const gaveFeedback = finished && r() < 0.85;
     store.updateSession(session.id, {
-      status: leaveAt >= end ? 'completed' : 'abandoned',
+      status: finished ? (gaveFeedback ? 'completed' : 'watched') : 'abandoned',
       calib_passed: calibFails ? 0 : 1,
       max_pt: leaveAt,
       checks_total: checks,
       checks_passed: passed,
       pauses: Math.floor(r() * 3),
-      completed_at: leaveAt >= end ? now : null,
-      survey: leaveAt >= end ? JSON.stringify(syntheticSurvey(test, r)) : null,
+      completed_at: gaveFeedback ? now : null,
+      feedback_at: gaveFeedback ? now : null,
+      survey: gaveFeedback ? JSON.stringify(syntheticFeedback(test, r, Math.min(1, Math.max(0, 0.65 + offset * 3 + (r() - 0.5) * 0.5)))) : null,
     });
     evaluateSession(store, store.getSession(session.id)!, test.config, duration);
     created++;

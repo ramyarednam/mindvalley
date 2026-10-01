@@ -8,12 +8,16 @@
 
 ## Project Overview
 
-- **Stack:** Node.js 22.18+ running TypeScript directly (type stripping), built-in `node:sqlite`, no runtime
-  dependencies. Front ends are plain ES modules in `public/` with hls.js and MediaPipe loaded from jsDelivr.
+- **Stack:** Node.js 22.18+ running TypeScript directly (type stripping), built-in `node:sqlite`. Runtime
+  dependencies: `@anthropic-ai/sdk` and `zod` (AI summaries only). Front ends are plain ES modules in `public/`
+  with hls.js and MediaPipe loaded from jsDelivr.
 - **Layout:**
-  - `src/` server: `app.ts` (routes), `db.ts` (SQLite), `scoring.ts`, `quality.ts`, `exports.ts`, `hlsProxy.ts`,
-    `sources/` (Dropbox Replay resolver), `simulate.ts` (synthetic panel)
-  - `public/studio/` internal studio app; `public/watch/` panelist app (`tracker.js` = on-device gaze tracking)
+  - `src/` server: `app.ts` (dispatcher, streaming, posters), `routes/` (auth + team, tests, viewer), `db.ts`
+    (SQLite + migrations), `auth.ts`, `feedback.ts`, `summary.ts` (rule-based + Claude), `scoring.ts`, `quality.ts`,
+    `exports.ts`, `hlsProxy.ts`, `sources/` (Dropbox Replay resolver), `simulate.ts` (synthetic panel)
+  - `public/app/` team app (admins and members); `public/watch/` viewer app (`tracker.js` = on-device gaze
+    tracking, `player.js`, `feedback.js`); `public/shared/` design system, icons, charts
+- **Roles:** admins create and manage screenings and the team; members see every screening's results.
   - `tests/` node:test suites; `scripts/simulate.ts` CLI
 - **Commands:** `npm start`, `npm run dev`, `npm test`, `npm run typecheck`, `npm run simulate -- <testId> [n]`
 - **Rules:** TypeScript must stay erasable (no enums, namespaces or parameter properties) and imports use `.ts`

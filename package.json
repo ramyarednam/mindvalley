@@ -4,7 +4,9 @@
   "private": true,
   "description": "Pre-Watch: pre-release audience attention testing for long-form video",
   "type": "module",
-  "engines": { "node": ">=22.18" },
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "start": "node --disable-warning=ExperimentalWarning src/server.ts",
     "dev": "node --disable-warning=ExperimentalWarning --watch src/server.ts",
@@ -15,5 +17,9 @@
   "devDependencies": {
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "zod": "^4.6.5"
   }
 }

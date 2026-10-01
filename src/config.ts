@@ -24,8 +24,6 @@ export const config = {
   port: Number(process.env.PORT ?? 3000),
   host: process.env.HOST ?? '0.0.0.0',
   secret: loadSecret(),
-  /** Studio (internal team) password. Change it in any shared deployment. */
-  studioPassword: process.env.STUDIO_PASSWORD ?? 'prewatch',
   /** Segment splits with fewer valid viewers than this are hidden (PRD SQ-7). */
   minSegmentViewers: Number(process.env.MIN_SEGMENT_VIEWERS ?? 50),
   /** Stream URLs handed to viewers expire after this many seconds. */

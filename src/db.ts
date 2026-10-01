@@ -1,6 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import { randomBytes } from 'node:crypto';
-import type { Cue, CutRow, ResolvedSource, Sample, SessionRow, SourceType, TestConfig, TestRow, ViewerEvent } from './types.ts';
+import type { Cue, CutRow, ResolvedSource, Role, Sample, SessionRow, SourceType, TestConfig, TestRow, UserRow, ViewerEvent } from './types.ts';
 
 const SCHEMA = `
 PRAGMA journal_mode = WAL;
@@ -71,7 +71,33 @@ CREATE TABLE IF NOT EXISTS events (
   data TEXT
 );
 CREATE INDEX IF NOT EXISTS events_session ON events(session_id, type);
+
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL,
+  pass_hash TEXT NOT NULL,
+  created_at INTEGER NOT NULL,
+  last_login INTEGER
+);
+
+-- Cached Claude-written summaries, keyed by "<cutId>:<all|real>".
+CREATE TABLE IF NOT EXISTS summaries (
+  cut_key TEXT PRIMARY KEY,
+  source TEXT NOT NULL,
+  responses INTEGER NOT NULL,
+  content TEXT NOT NULL,
+  created_at INTEGER NOT NULL
+);
 `;
+
+/** Columns added after the first release; added in place so existing databases keep their data. */
+const MIGRATIONS: [table: string, column: string, ddl: string][] = [
+  ['tests', 'description', "ALTER TABLE tests ADD COLUMN description TEXT NOT NULL DEFAULT ''"],
+  ['sessions', 'resume_key', 'ALTER TABLE sessions ADD COLUMN resume_key TEXT'],
+  ['sessions', 'feedback_at', 'ALTER TABLE sessions ADD COLUMN feedback_at INTEGER'],
+];
 
 export function newId(prefix: string, bytes = 9): string {
   return `${prefix}_${randomBytes(bytes).toString('base64url')}`;
@@ -85,6 +111,11 @@ export class Store {
   constructor(path: string) {
     this.db = new DatabaseSync(path);
     this.db.exec(SCHEMA);
+    for (const [table, column, ddl] of MIGRATIONS) {
+      const cols = this.db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+      if (!cols.some((c) => c.name === column)) this.db.exec(ddl);
+    }
+    this.db.exec('CREATE UNIQUE INDEX IF NOT EXISTS sessions_resume ON sessions(resume_key)');
   }
 
   close(): void {
@@ -105,12 +136,12 @@ export class Store {
 
   // ---- tests & cuts ----
 
-  createTest(input: { title: string; config: TestConfig; transcript: Cue[]; cuts: { label: string; sourceType: SourceType; sourceUrl: string; resolved: ResolvedSource }[] }): TestRow {
+  createTest(input: { title: string; description?: string; config: TestConfig; transcript: Cue[]; cuts: { label: string; sourceType: SourceType; sourceUrl: string; resolved: ResolvedSource }[] }): TestRow {
     const id = newId('t', 6);
     this.tx(() => {
       this.db
-        .prepare('INSERT INTO tests (id, title, status, created_at, config, transcript) VALUES (?, ?, ?, ?, ?, ?)')
-        .run(id, input.title, 'draft', Date.now(), JSON.stringify(input.config), JSON.stringify(input.transcript));
+        .prepare('INSERT INTO tests (id, title, description, status, created_at, config, transcript) VALUES (?, ?, ?, ?, ?, ?, ?)')
+        .run(id, input.title, input.description ?? '', 'draft', Date.now(), JSON.stringify(input.config), JSON.stringify(input.transcript));
       for (const cut of input.cuts) {
         this.db
           .prepare('INSERT INTO cuts (id, test_id, label, source_type, source_url, resolved) VALUES (?, ?, ?, ?, ?, ?)')
@@ -129,15 +160,16 @@ export class Store {
     return (this.db.prepare('SELECT * FROM tests ORDER BY created_at DESC').all() as Raw[]).map(parseTest);
   }
 
-  updateTest(id: string, patch: { title?: string; status?: TestRow['status']; config?: TestConfig; transcript?: Cue[] }): void {
+  updateTest(id: string, patch: { title?: string; description?: string; status?: TestRow['status']; config?: TestConfig; transcript?: Cue[] }): void {
     const cur = this.getTest(id);
     if (!cur) return;
     this.db
-      .prepare('UPDATE tests SET title = ?, status = ?, config = ?, transcript = ? WHERE id = ?')
-      .run(patch.title ?? cur.title, patch.status ?? cur.status, JSON.stringify(patch.config ?? cur.config), JSON.stringify(patch.transcript ?? cur.transcript), id);
+      .prepare('UPDATE tests SET title = ?, description = ?, status = ?, config = ?, transcript = ? WHERE id = ?')
+      .run(patch.title ?? cur.title, patch.description ?? cur.description, patch.status ?? cur.status, JSON.stringify(patch.config ?? cur.config), JSON.stringify(patch.transcript ?? cur.transcript), id);
   }
 
   deleteTest(id: string): void {
+    for (const c of this.getCuts(id)) this.db.prepare("DELETE FROM summaries WHERE cut_key LIKE ?").run(`${c.id}:%`);
     this.db.prepare('DELETE FROM tests WHERE id = ?').run(id);
   }
 
@@ -180,7 +212,11 @@ export class Store {
     return this.getSession(id)!;
   }
 
-  updateSession(id: string, patch: Partial<Pick<SessionRow, 'status' | 'calib_passed' | 'calibration' | 'max_pt' | 'pauses' | 'pause_sec' | 'checks_total' | 'checks_passed' | 'survey' | 'valid' | 'exclude_reason' | 'completion_code' | 'completed_at' | 'last_seen'>>): void {
+  findSessionByResumeKey(key: string): SessionRow | undefined {
+    return this.db.prepare('SELECT * FROM sessions WHERE resume_key = ?').get(key) as SessionRow | undefined;
+  }
+
+  updateSession(id: string, patch: Partial<Pick<SessionRow, 'status' | 'calib_passed' | 'calibration' | 'max_pt' | 'pauses' | 'pause_sec' | 'checks_total' | 'checks_passed' | 'survey' | 'valid' | 'exclude_reason' | 'completion_code' | 'completed_at' | 'last_seen' | 'resume_key' | 'feedback_at'>>): void {
     const keys = Object.keys(patch) as (keyof typeof patch)[];
     if (!keys.length) return;
     const sql = `UPDATE sessions SET ${keys.map((k) => `${k} = ?`).join(', ')} WHERE id = ?`;
@@ -208,6 +244,58 @@ export class Store {
   deleteSyntheticSessions(testId: string): number {
     const r = this.db.prepare('DELETE FROM sessions WHERE test_id = ? AND synthetic = 1').run(testId);
     return Number(r.changes);
+  }
+
+  /** Player seconds where this viewer pressed the spacebar, for the "your moments" feedback step. */
+  interestMoments(sessionId: string): number[] {
+    return (this.db.prepare(`SELECT pt FROM events WHERE session_id = ? AND type = 'interest' ORDER BY pt`).all(sessionId) as { pt: number }[]).map((r) => r.pt);
+  }
+
+  // ---- users ----
+
+  countUsers(): number {
+    return (this.db.prepare('SELECT COUNT(*) AS n FROM users').get() as { n: number }).n;
+  }
+
+  createUser(u: { email: string; name: string; role: Role; passHash: string }): UserRow {
+    const id = newId('u', 8);
+    this.db.prepare('INSERT INTO users (id, email, name, role, pass_hash, created_at) VALUES (?, ?, ?, ?, ?, ?)').run(id, u.email.toLowerCase(), u.name, u.role, u.passHash, Date.now());
+    return this.getUser(id)!;
+  }
+
+  getUser(id: string): UserRow | undefined {
+    return this.db.prepare('SELECT * FROM users WHERE id = ?').get(id) as UserRow | undefined;
+  }
+
+  getUserByEmail(email: string): UserRow | undefined {
+    return this.db.prepare('SELECT * FROM users WHERE email = ?').get(email.toLowerCase()) as UserRow | undefined;
+  }
+
+  listUsers(): UserRow[] {
+    return this.db.prepare('SELECT * FROM users ORDER BY role, name').all() as UserRow[];
+  }
+
+  updateUser(id: string, patch: Partial<Pick<UserRow, 'name' | 'role' | 'pass_hash' | 'last_login'>>): void {
+    const keys = Object.keys(patch) as (keyof typeof patch)[];
+    if (!keys.length) return;
+    this.db.prepare(`UPDATE users SET ${keys.map((k) => `${k} = ?`).join(', ')} WHERE id = ?`).run(...keys.map((k) => (patch[k] ?? null) as string | number | null), id);
+  }
+
+  deleteUser(id: string): void {
+    this.db.prepare('DELETE FROM users WHERE id = ?').run(id);
+  }
+
+  // ---- summaries ----
+
+  getSummary(key: string): { source: string; responses: number; content: unknown; created_at: number } | undefined {
+    const row = this.db.prepare('SELECT * FROM summaries WHERE cut_key = ?').get(key) as { source: string; responses: number; content: string; created_at: number } | undefined;
+    return row ? { ...row, content: JSON.parse(row.content) } : undefined;
+  }
+
+  saveSummary(key: string, source: string, responses: number, content: unknown): void {
+    this.db
+      .prepare('INSERT INTO summaries (cut_key, source, responses, content, created_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(cut_key) DO UPDATE SET source = excluded.source, responses = excluded.responses, content = excluded.content, created_at = excluded.created_at')
+      .run(key, source, responses, JSON.stringify(content), Date.now());
   }
 
   // ---- signals ----
@@ -253,6 +341,7 @@ function parseTest(row: Raw): TestRow {
   return {
     id: row.id as string,
     title: row.title as string,
+    description: (row.description as string) ?? '',
     status: row.status as TestRow['status'],
     created_at: row.created_at as number,
     config: JSON.parse(row.config as string) as TestConfig,

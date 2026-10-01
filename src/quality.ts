@@ -7,7 +7,8 @@ export const QUALITY = {
   minCheckPassShare: 2 / 3,
   /** More than one press every 3 s on average looks like key mashing or a bot. */
   maxPressesPerSec: 1 / 3,
-  abandonAfterMs: 24 * 3600 * 1000,
+  /** Viewers can save and come back for a week before an unfinished session counts as abandoned. */
+  abandonAfterMs: 7 * 24 * 3600 * 1000,
 };
 
 export type QualityInput = {
@@ -57,7 +58,7 @@ export function evaluateSession(store: Store, session: SessionRow, cfg: TestConf
   return reason;
 }
 
-/** Marks sessions idle for 24 h as abandoned and scores what they watched (PRD PX-8 resume window). */
+/** Marks sessions idle for 7 days as abandoned and scores what they watched (PRD PX-8 resume window). */
 export function sweepAbandoned(store: Store, testId: string, cfg: TestConfig, durationOf: (cutId: string) => number): void {
   const cutoff = Date.now() - QUALITY.abandonAfterMs;
   for (const s of store.listSessions(testId)) {

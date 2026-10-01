@@ -265,7 +265,7 @@ export class TimelineChart {
     path(c.retention, text2, 1.25, [2, 3]);
     path(c.baseline, text2, 1, [6, 4]);
     for (const o of this.overlays) path(smooth(o.values, this.smoothSec), o.color, 1.5);
-    path(smooth(c.attention, this.smoothSec), css('--accent'), 2);
+    path(smooth(c.attention, this.smoothSec), css('--primary'), 2);
 
     // Interest lane: bars per second (max-pooled per pixel column).
     g.fillStyle = text2;
