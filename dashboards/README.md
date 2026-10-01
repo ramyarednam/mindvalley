@@ -2,15 +2,17 @@
 
 ## WildFit Oct 2026 launch (`wildfit-oct-2026.html`)
 
-Snapshot dashboard for the WildFit live webinar launch (`launch_wf_oct_2026`, webinar Tue 6 Oct 2026),
-compared with the WildFit live webinars of Jul 2023, Jul 2024 and Mar 2025. Live webinar pages only, all languages.
+Live dashboard for the WildFit live webinar launch (`launch_wf_oct_2026`, webinar Tue 6 Oct 2026),
+compared day by day with the WildFit live webinars of Mar 2025, Jul 2024 and Jul 2023.
+Live webinar pages only, all languages.
 
-To refresh:
+Published at https://claude.ai/artifact/XPu7WpWUgczfZziTqLfjt9 with the Metabase connector
+(`execute_sql`, `query`). The page runs its queries when it opens, using the viewer's own
+Metabase connection; **Refresh data** re-runs them. Nothing needs rebuilding for new data.
 
-1. Run the three queries in `scripts/wildfit-launch.sql` through the Metabase connector (database 35).
-2. Save each result as JSON (`leads.json`, `orders.json`, `emails.json`) in one folder.
-3. `python3 scripts/wildfit-build-data.py <that folder>` → writes `docs/wildfit-oct-2026-data.json`.
-4. `python3 scripts/build-wildfit-dashboard.py` → embeds the data into `dashboards/wildfit-oct-2026.html`.
-5. Republish the HTML to the same artifact link.
+- Sign-ups, orders and email lists: `scripts/wildfit-live/{leads,orders,emails}.sql` (MV BigQuery, database 35).
+  Launch dates and pages live in `scripts/wildfit-live/launches.sql`.
+- Sessions: GA4 `l2_user_behavior.ga4_web_session_event` (MV DE Layer), built in the template's `sessionsQuery`.
 
-Edit `wildfit-oct-2026.template.html`, never the built HTML.
+To change the page: edit `wildfit-oct-2026.template.html` or the SQL files, run
+`python3 scripts/build-wildfit-dashboard.py`, then republish the built HTML to the same artifact.

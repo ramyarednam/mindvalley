@@ -3,14 +3,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one launch-desk column — status hero, pace vs past webinars, side-by-side launch table, channel bars, email lists, sales curves, then definitions. Follows the team's Expert-to-Authority dashboard system (Manrope / Plex Mono / Mindvalley purple). */
+/* Layout: live launch desk. Three headline numbers, then the day-by-day channel comparison against past webinars, then pace, launch table, revenue, email lists and definitions. Team dashboard system: Manrope / Plex Mono / Mindvalley purple. */
 :root{
   --bg:#ffffff; --surface:#f7f6fb; --surface-2:#efebf8; --ink:#1a1033; --muted:#5c5470; --faint:#8a82a0;
   --line:#e6e1f2; --line-strong:#d3cbe6;
-  --accent:#752CE8; --accent-ink:#5b1fc0; --accent-soft:#efe7fd;
-  --good:#15803d; --good-soft:#e7f6ec; --warn:#b45309; --warn-soft:#fdf1df;
+  --accent:#752CE8; --accent-ink:#5b1fc0; --accent-soft:#efe7fd; --on-accent:#ffffff;
+  --up:#15803d; --up-soft:#e3f5e9; --down:#b91c1c; --down-soft:#fdecec; --warn:#b45309; --warn-soft:#fdf1df;
   --y23:#c9c2d9; --y24:#9a91b0; --y25:#5f567a;
-  --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a; --c4:#eda100; --c5:#e87ba4; --c6:#008300; --c7:#8a8794;
   --tip-bg:#1a1033; --tip-fg:#ffffff;
   --sans:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -20,10 +19,9 @@
   :root:not([data-theme="light"]){
     --bg:#13101c; --surface:#1c1828; --surface-2:#251f36; --ink:#f2effa; --muted:#b4acc8; --faint:#8b84a0;
     --line:#2d2740; --line-strong:#3d3554;
-    --accent:#9b6bff; --accent-ink:#c3a6ff; --accent-soft:#2c2245;
-    --good:#4ade80; --good-soft:#163222; --warn:#f2a64a; --warn-soft:#3a2a14;
+    --accent:#9b6bff; --accent-ink:#c3a6ff; --accent-soft:#2c2245; --on-accent:#13101c;
+    --up:#4ade80; --up-soft:#15301f; --down:#f87171; --down-soft:#3a1717; --warn:#f2a64a; --warn-soft:#3a2a14;
     --y23:#4a4460; --y24:#736b8c; --y25:#a59dbd;
-    --c1:#3987e5; --c2:#d95926; --c3:#199e70; --c4:#c98500; --c5:#d55181; --c6:#008300; --c7:#77747f;
     --tip-bg:#f2effa; --tip-fg:#13101c;
     color-scheme:dark;
   }
@@ -31,10 +29,9 @@
 :root[data-theme="dark"]{
   --bg:#13101c; --surface:#1c1828; --surface-2:#251f36; --ink:#f2effa; --muted:#b4acc8; --faint:#8b84a0;
   --line:#2d2740; --line-strong:#3d3554;
-  --accent:#9b6bff; --accent-ink:#c3a6ff; --accent-soft:#2c2245;
-  --good:#4ade80; --good-soft:#163222; --warn:#f2a64a; --warn-soft:#3a2a14;
+  --accent:#9b6bff; --accent-ink:#c3a6ff; --accent-soft:#2c2245; --on-accent:#13101c;
+  --up:#4ade80; --up-soft:#15301f; --down:#f87171; --down-soft:#3a1717; --warn:#f2a64a; --warn-soft:#3a2a14;
   --y23:#4a4460; --y24:#736b8c; --y25:#a59dbd;
-  --c1:#3987e5; --c2:#d95926; --c3:#199e70; --c4:#c98500; --c5:#d55181; --c6:#008300; --c7:#77747f;
   --tip-bg:#f2effa; --tip-fg:#13101c;
   color-scheme:dark;
 }
@@ -46,56 +43,77 @@ a{color:var(--accent-ink)}
 code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);padding:1px 5px;border-radius:4px;word-break:break-word}
 .num,td.n,th.n{font-variant-numeric:tabular-nums}
 
-header.top{display:flex;flex-wrap:wrap;gap:18px 32px;align-items:flex-start;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid var(--line)}
+header.top{display:flex;flex-wrap:wrap;gap:18px 32px;align-items:flex-start;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 8px}
 h1{font-size:34px;line-height:1.1;margin:0 0 8px;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
 .sub{margin:0;color:var(--muted);max-width:64ch}
 .sub b{color:var(--ink);font-weight:600}
-.hdr-right{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.hdr-right{display:flex;flex-direction:column;gap:10px;align-items:flex-end;min-width:0}
 @media (max-width:720px){.hdr-right{align-items:flex-start}}
-.countdown{display:flex;align-items:baseline;gap:10px;background:var(--accent);color:#fff;border-radius:var(--r);padding:12px 18px}
+.countdown{display:flex;align-items:baseline;gap:10px;background:var(--accent);color:var(--on-accent);border-radius:var(--r);padding:12px 18px}
 .countdown .n{font-size:32px;font-weight:800;line-height:1;letter-spacing:-.02em}
-.countdown .l{font-size:13px;line-height:1.25;opacity:.92}
-.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px 5px 9px}
-.pill i{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block}
+.countdown .l{font-size:13px;line-height:1.25}
+.refresh-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+button.refresh{font:inherit;font-weight:700;font-size:13.5px;color:var(--accent-ink);background:var(--accent-soft);border:1px solid transparent;border-radius:999px;padding:7px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+button.refresh:hover{border-color:var(--accent)}
+button.refresh[disabled]{opacity:.6;cursor:default}
+button.refresh .spin{width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;display:none}
+button.refresh[disabled] .spin{display:inline-block;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+@media (max-width:720px){.pills,.refresh-row{justify-content:flex-start}}
+.pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 10px 4px 8px;white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block;flex:none}
+.pill.live i{background:var(--up);box-shadow:0 0 0 3px var(--up-soft)}
+.pill.busy i{background:var(--warn);box-shadow:0 0 0 3px var(--warn-soft)}
+.pill.err i{background:var(--down);box-shadow:0 0 0 3px var(--down-soft)}
+.banner{margin-top:16px;padding:12px 16px;border-radius:var(--r);background:var(--warn-soft);color:var(--ink);font-size:14px}
+.banner b{font-weight:700}
 
-.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:24px 0 0;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-@media (max-width:980px){.ladder{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:520px){.ladder{grid-template-columns:1fr}}
-.rung{background:var(--bg);padding:18px 20px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.rung .k{font-size:12.5px;font-weight:600;color:var(--muted)}
-.rung .v{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
-.rung .v small{font-size:16px;font-weight:600;color:var(--muted);letter-spacing:0;margin-left:4px}
-.rung .d{font-size:13px;color:var(--muted)}
-.rung .d b{color:var(--ink);font-weight:600}
-.chip{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 6px;margin-right:4px;vertical-align:1px}
-.chip.good{color:var(--good);background:var(--good-soft)}
-.chip.warn{color:var(--warn);background:var(--warn-soft)}
-.chip.info{color:var(--accent-ink);background:var(--accent-soft)}
-
-.reads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
-@media (max-width:900px){.reads{grid-template-columns:1fr}}
-.read{background:var(--surface);border-radius:var(--r);padding:14px 16px;font-size:14px;min-width:0}
-.read h3{margin:0 0 4px;font-size:14px;font-weight:700}
-.read p{margin:0;color:var(--muted)}
-.read p b{color:var(--ink)}
+/* headline tiles */
+.heads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+@media (max-width:900px){.heads{grid-template-columns:1fr}}
+.head{background:var(--surface);border-radius:14px;padding:18px 20px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.head .k{font-size:13px;font-weight:700;color:var(--muted)}
+.head .v{font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.head .d{font-size:13px;color:var(--muted)}
+.head .d b{color:var(--ink)}
+.cmp-list{display:grid;gap:6px;margin-top:6px;padding-top:10px;border-top:1px solid var(--line)}
+.cmp-row{display:grid;grid-template-columns:76px 1fr auto;gap:8px;align-items:baseline;font-size:13px}
+.cmp-row .y{color:var(--muted);font-weight:600}
+.cmp-row .bv{font-variant-numeric:tabular-nums;color:var(--muted)}
+.delta{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:500;border-radius:5px;padding:1px 7px;white-space:nowrap}
+.delta.up{color:var(--up);background:var(--up-soft)}
+.delta.down{color:var(--down);background:var(--down-soft)}
+.delta.flat{color:var(--muted);background:var(--surface-2)}
+.skel{color:var(--faint)}
 
 section{margin-top:44px}
 .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;margin-bottom:14px}
 .sec-head h2{font-size:22px;margin:0;letter-spacing:-.015em;font-weight:800;text-wrap:balance}
 .sec-head p{margin:0;color:var(--muted);font-size:13.5px;max-width:70ch}
 .card{background:var(--surface);border-radius:var(--r);padding:18px 20px;min-width:0}
-.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.card + .card{margin-top:16px}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .card h3{font-size:15px;margin:0;font-weight:700}
 .hint{font-size:12.5px;color:var(--muted);margin:2px 0 0}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
 @media (max-width:900px){.grid2{grid-template-columns:1fr}}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-@media (max-width:900px){.grid3{grid-template-columns:1fr}}
+.sec-err{font-size:13px;color:var(--down);margin:0 0 10px}
+.sec-stale{font-size:12.5px;color:var(--warn);margin:0 0 10px}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{font:inherit;font-size:13px;font-weight:600;color:var(--muted);background:transparent;border:0;border-radius:7px;padding:5px 11px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible,button.refresh:focus-visible,button.tbl:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg button small{font-weight:500;opacity:.75;margin-left:3px}
+.ctl-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
 button.tbl{font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);background:transparent;border:1px solid var(--line-strong);border-radius:6px;padding:3px 9px;cursor:pointer}
 button.tbl[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-button.tbl:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:0 0 10px}
+
+.legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:0 0 8px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px}
 .legend i.ln{height:3px;width:16px;border-radius:2px}
@@ -104,8 +122,10 @@ button.tbl:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .chart svg{display:block;width:100%;height:auto;overflow:visible}
 .chart .gl{stroke:var(--line);stroke-width:1}
 .chart .ax{fill:var(--muted);font-size:11px;font-family:var(--mono)}
-.chart .lb{fill:var(--ink);font-size:12px;font-weight:600;font-family:var(--sans)}
-.chart .lb.m{fill:var(--muted);font-weight:500}
+.chart .lb{fill:var(--ink);font-size:12px;font-weight:700;font-family:var(--sans)}
+.chart .lb.m{fill:var(--muted);font-weight:600}
+.chart .vl{fill:var(--ink);font-size:11.5px;font-weight:700;font-family:var(--sans)}
+.chart .vl.m{fill:var(--muted);font-weight:600}
 .chart .web{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:3 3}
 .chart .webt{fill:var(--accent-ink);font-size:11px;font-family:var(--mono)}
 .tip{position:absolute;pointer-events:none;background:var(--tip-bg);color:var(--tip-fg);font-size:12px;line-height:1.4;padding:7px 10px;border-radius:7px;white-space:nowrap;transform:translate(-50%,calc(-100% - 12px));opacity:0;transition:opacity .1s;z-index:5}
@@ -118,19 +138,22 @@ th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);verti
 th{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
 td.n,th.n{text-align:right;white-space:nowrap}
 th small,td small{display:block;color:var(--muted);font-size:11px;font-family:var(--mono);font-weight:400}
-tr.cur td,td.cur,th.cur{background:var(--accent-soft)}
+td.cur,th.cur{background:var(--accent-soft)}
 th.cur{color:var(--accent-ink)}
 tr.sum td{font-weight:700;border-top:1px solid var(--line-strong)}
+tr.sub td{color:var(--muted);font-size:13px}
 .cmp td:first-child{font-weight:600;min-width:180px}
 .dim{color:var(--faint)}
 .bar-inline{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-left:6px;opacity:.8}
+.webcell{box-shadow:inset 0 -2px 0 var(--accent)}
 
 .notes{font-size:14px;color:var(--muted)}
 .notes p{margin:0 0 10px;max-width:90ch}
 .notes b{color:var(--ink)}
 footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--faint)}
-.empty{display:flex;align-items:center;justify-content:center;text-align:center;min-height:140px;color:var(--muted);font-size:13.5px;border:1px dashed var(--line-strong);border-radius:8px;padding:16px}
-@media (prefers-reduced-motion: reduce){.tip{transition:none}}
+.empty{display:flex;align-items:center;justify-content:center;text-align:center;min-height:120px;color:var(--muted);font-size:13.5px;border:1px dashed var(--line-strong);border-radius:8px;padding:16px}
+.empty b{color:var(--ink)}
+@media (prefers-reduced-motion: reduce){.tip{transition:none}button.refresh[disabled] .spin{animation:none}}
 </style>
 
 <div class="wrap">
@@ -138,63 +161,86 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     <div style="min-width:0">
       <p class="eyebrow">Live webinar launch · launch_wf_oct_2026</p>
       <h1>WildFit Oct 2026 launch</h1>
-      <p class="sub">Sign-ups and revenue for the <b>live webinar</b> on <a href="https://www.mindvalley.com/wildfit/invite" target="_blank" rel="noopener">mindvalley.com/wildfit/invite</a>, compared with the WildFit live webinars of <b>Jul 2023</b>, <b>Jul 2024</b> and <b>Mar 2025</b>. All languages. Masterclass sign-ups are left out.</p>
+      <p class="sub">Live sign-ups, landing page sessions and revenue for the <b>live webinar</b> on <a href="https://www.mindvalley.com/wildfit/invite" target="_blank" rel="noopener">mindvalley.com/wildfit/invite</a>, compared day by day with the WildFit live webinars of <b>Mar 2025</b>, <b>Jul 2024</b> and <b>Jul 2023</b>. All languages. Masterclass sign-ups are left out.</p>
     </div>
     <div class="hdr-right">
       <div class="countdown" id="countdown"><span class="n">–</span><span class="l">days to the webinar<br>Tue 6 Oct 2026</span></div>
-      <span class="pill" id="pulled"><i></i>Snapshot</span>
+      <div class="refresh-row">
+        <button class="refresh" id="refresh" type="button"><span class="spin" aria-hidden="true"></span><span class="t">Refresh data</span></button>
+      </div>
+      <div class="pills" id="pills"></div>
     </div>
   </header>
+  <div id="banner"></div>
 
-  <div class="ladder" id="hero"></div>
-  <div class="reads" id="reads"></div>
+  <div class="heads" id="heads">
+    <div class="head"><div class="k">Sign-ups</div><div class="v skel">…</div><div class="d skel">Loading from Metabase</div></div>
+    <div class="head"><div class="k">Landing page sessions</div><div class="v skel">…</div><div class="d skel">Loading from GA4</div></div>
+    <div class="head"><div class="k">Landing page sign-up rate</div><div class="v skel">…</div><div class="d skel">Sign-ups ÷ sessions</div></div>
+  </div>
+
+  <section id="days">
+    <div class="sec-head">
+      <h2>Day by day, channel by channel</h2>
+      <p>Pick a campaign day. Day 1 is each launch's first promo day. Every 2026 number is compared with the same day of each past launch.</p>
+    </div>
+    <div class="card">
+      <div class="controls">
+        <span class="ctl-label">Day</span><div class="seg" id="day-seg" role="group" aria-label="Campaign day"></div>
+        <span class="ctl-label">Show</span><div class="seg" id="mode-seg" role="group" aria-label="Single day or cumulative">
+          <button type="button" data-mode="day" aria-pressed="true">That day</button>
+          <button type="button" data-mode="cum" aria-pressed="false">Day 1 to that day</button>
+        </div>
+      </div>
+      <div id="day-err"></div>
+      <div class="tw" id="day-table"><div class="empty">Loading sign-ups from Metabase…</div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><h3 id="day-chart-title">Sign-ups by channel</h3><p class="hint">Number on each bar. Bars show the selected day.</p></div></div>
+      <div class="legend" id="day-legend"></div>
+      <div class="chart" id="day-chart"></div>
+    </div>
+  </section>
 
   <section id="pace">
     <div class="sec-head">
-      <h2>Sign-up pace against past webinars</h2>
-      <p>Cumulative people signed up, lined up by days to each webinar. Each line starts on its own promo start date.</p>
+      <h2>Sign-ups by campaign day</h2>
+      <p>People signed up each day, with landing page sessions and sign-up rate underneath. The underlined day is webinar day.</p>
     </div>
+    <div class="card"><div class="tw" id="cday-table"><div class="empty">Loading…</div></div></div>
     <div class="card">
-      <div class="card-head">
-        <div><h3>Cumulative sign-ups</h3><p class="hint">Day 0 is webinar day. The Oct 2026 line stops at today's pull.</p></div>
-        <button class="tbl" type="button" data-toggle="pace" aria-pressed="false">Table</button>
-      </div>
+      <div class="card-head"><div><h3>Cumulative sign-ups</h3><p class="hint">Lined up by days to each webinar. Day 0 is webinar day.</p></div></div>
       <div class="legend" id="pace-legend"></div>
       <div class="chart" id="pace-chart"></div>
-      <div class="tw" id="pace-table" hidden></div>
-    </div>
-    <div class="card" style="margin-top:16px">
-      <div class="card-head"><div><h3>Sign-ups by campaign day</h3><p class="hint">Day 1 is the first promo day. The webinar falls on Day 3 in 2023, Day 4 in 2024 and Day 7 in 2025 and 2026.</p></div></div>
-      <div class="tw" id="day-table"></div>
     </div>
   </section>
 
   <section id="compare">
     <div class="sec-head">
       <h2>Launch by launch</h2>
-      <p>Each launch window runs from its promo start to 7 days after its webinar. Orders count once each.</p>
+      <p>Each launch window runs from its promo start to 7 days after its webinar. Oct 2026 is still running.</p>
     </div>
-    <div class="card"><div class="tw" id="cmp-table"></div></div>
+    <div class="card"><div class="tw" id="cmp-table"><div class="empty">Loading…</div></div></div>
   </section>
 
-  <section id="channels">
+  <section id="revenue">
     <div class="sec-head">
-      <h2>Leads and revenue by channel</h2>
-      <p>Lead channel comes from the sign-up's tracking tags. Revenue channel uses the company's unified order attribution.</p>
+      <h2>Revenue</h2>
+      <p>Gross revenue in each launch window. Sales for Oct 2026 open with the webinar on Tue 6 Oct.</p>
     </div>
     <div class="grid2">
       <div class="card">
-        <div class="card-head"><div><h3>Sign-ups by channel</h3><p class="hint">People, same scale for every launch</p></div><button class="tbl" type="button" data-toggle="lch" aria-pressed="false">Table</button></div>
-        <div class="legend ch-legend"></div>
-        <div class="chart" id="lch-chart"></div>
-        <div class="tw" id="lch-table" hidden></div>
+        <div class="card-head"><div><h3>Gross revenue by launch</h3><p class="hint">USD, launch window</p></div></div>
+        <div class="chart" id="rev-chart"><div class="empty">Loading orders from Metabase…</div></div>
       </div>
       <div class="card">
-        <div class="card-head"><div><h3>Gross revenue by channel</h3><p class="hint">USD, launch window, same scale for every launch</p></div><button class="tbl" type="button" data-toggle="rch" aria-pressed="false">Table</button></div>
-        <div class="legend ch-legend"></div>
-        <div class="chart" id="rch-chart"></div>
-        <div class="tw" id="rch-table" hidden></div>
+        <div class="card-head"><div><h3>Revenue by channel</h3><p class="hint">USD, launch window, with share of each launch's total</p></div></div>
+        <div class="tw" id="rev-table"></div>
       </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><h3>Revenue per day around the webinar</h3><p class="hint">USD per campaign day. The purple bar is webinar day.</p></div></div>
+      <div class="grid2" id="sales-grid"></div>
     </div>
   </section>
 
@@ -203,319 +249,465 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <h2>Email lists</h2>
       <p>Sign-ups from each email list across the launch window. List names changed between years, so rows group sends by their tracking code.</p>
     </div>
-    <div class="card"><div class="tw" id="email-table"></div></div>
-  </section>
-
-  <section id="sales">
-    <div class="sec-head">
-      <h2>Sales around the webinar</h2>
-      <p>Gross revenue per day in each launch window. Day 0 is webinar day.</p>
-    </div>
-    <div class="grid2" id="sales-grid"></div>
+    <div class="card"><div class="tw" id="email-table"><div class="empty">Loading…</div></div></div>
   </section>
 
   <section id="notes">
     <div class="sec-head"><h2>How these numbers are built</h2></div>
-    <div class="card notes" id="notes-body">
-      <p><b>Live webinar only.</b> Sign-ups come from <code>l3_leads.fact_lead</code> on each launch's live webinar page, in every language: <code>/wildfit/transformation90</code> for Jul 2023 and Jul 2024, <code>/wildfit/health90</code> for Mar 2025 and <code>/wildfit/invite</code> for Oct 2026, including <code>/es/</code>, <code>/de/</code> and other language versions. Masterclass pages (<code>/wildfit/masterclass</code>, <code>/wildfit/content</code>) are never counted.</p>
-      <p><b>Sign-ups are people, not form submits.</b> Each person counts once per launch, on their first sign-up from promo start to 7 days after the webinar. Mindvalley staff accounts are removed. Members means an active membership at the moment of sign-up.</p>
-      <p><b>Launch dates.</b> Promo start and webinar: 31 Jul → 2 Aug 2023, 27 Jul → 30 Jul 2024, 5 Mar → 11 Mar 2025, 30 Sep → 6 Oct 2026. Sign-ups on a webinar page before its promo start are left out.</p>
-      <p><b>Revenue.</b> Orders from <code>l3_sales.fact_sales_order</code> for the WildFit programme (every language) plus anything sold through a WildFit funnel. The Mar 2025 webinar sold Membership through the WildFit funnel, so it is included. Each order counts once by <code>order_id</code>. Membership renewals in the window are left out because they aren't new sales. Gross revenue is <code>order_amount</code>. Refunds are refunded to date.</p>
-      <p><b>Masterclass vs live webinar.</b> Revenue before a launch's promo start counts as masterclass and is left out of launch revenue. The Jul 2023 and Jul 2024 webinars ran while the masterclass cart was still open, so launch-window revenue in those years includes buyers who never registered for the webinar. The "bought by webinar registrants" row shows the part that came from people on the webinar list.</p>
-      <p><b>Channels.</b> Email covers every Braze or newsletter send. Platform is the Mindvalley app, mindvalley.com banners and internal links. Paid ads is paid social and paid search. Other / untagged is traffic with no usable tracking tag (plus SMS and Telegram for sign-ups). Revenue channel comes from <code>l3_sales.fact_sales_attribution</code>. Never add the channel figures to other reports' totals.</p>
-      <p><b>Days are UTC</b>, which is 8am in Malaysia. This page is a snapshot with no live connection. Every figure carries the pull time at the top. To update it, re-run <code>scripts/wildfit-launch.sql</code> and republish to the same link.</p>
+    <div class="card notes">
+      <p><b>Live data.</b> Every number on this page comes straight from Metabase when the page opens, using your own Metabase connection. <b>Refresh data</b> re-runs every query. Sign-ups and orders come from MV BigQuery. Sessions come from GA4 (<code>l2_user_behavior.ga4_web_session_event</code>), read live so today shows up without the daily table's two-day lag. Each source shows its last update time at the top.</p>
+      <p><b>Live webinar only, all languages.</b> Sign-ups come from <code>l3_leads.fact_lead</code> on each launch's live webinar page and its language versions: <code>/wildfit/transformation90</code> for Jul 2023 and Jul 2024, <code>/wildfit/health90</code> for Mar 2025 and <code>/wildfit/invite</code> for Oct 2026. Masterclass pages are never counted.</p>
+      <p><b>Sign-ups are people, not form submits.</b> Each person counts once per launch, on the day of their first sign-up, from promo start to 7 days after the webinar. Mindvalley staff accounts are removed. Members means an active membership at the moment of sign-up.</p>
+      <p><b>Sessions</b> are GA4 visits that loaded the webinar page, thank-you and replay pages excluded. Visitors who declined analytics cookies send no session ID, so they're counted from their session-start ping. Cookie-declined visits weren't recorded before 2024, so Jul 2023 sessions run slightly low and its sign-up rate slightly high. <b>Sign-up rate</b> is sign-ups ÷ sessions. The headline compares complete days only, because the two sources refresh on different schedules during the day.</p>
+      <p><b>Launch dates.</b> Promo start and webinar: 31 Jul → 2 Aug 2023 (webinar on Day 3), 27 Jul → 30 Jul 2024 (Day 4), 5 Mar → 11 Mar 2025 (Day 7), 30 Sep → 6 Oct 2026 (Day 7). Sign-ups before a promo start are left out.</p>
+      <p><b>Revenue.</b> Orders from <code>l3_sales.fact_sales_order</code> for the WildFit programme (every language) plus anything sold through a WildFit funnel. The Mar 2025 webinar sold Membership through the WildFit funnel, so it is included. Each order counts once by <code>order_id</code>. Membership renewals are left out. Revenue before a promo start counts as masterclass and is left out. The Jul 2023 and Jul 2024 webinars ran while the masterclass cart was still open, so launch-window revenue in those years includes buyers who never registered for the webinar; the launch table shows how much came from registrants.</p>
+      <p><b>Channels.</b> Email is any Braze or newsletter send. Platform is the Mindvalley app, mindvalley.com banners and internal links. Paid ads is paid social and paid search. Other is traffic with no usable tracking tag, plus SMS and Telegram. Sign-up channel comes from the sign-up's tracking tags; revenue channel from <code>l3_sales.fact_sales_attribution</code>.</p>
+      <p><b>Differences</b> are 2026 minus the past launch, as a percentage of the past launch, for the same campaign day. Green means 2026 is higher, red means lower. Days are UTC, which is 8am in Malaysia.</p>
     </div>
   </section>
   <footer id="foot"></footer>
 </div>
 
-<script type="application/json" id="data">__DATA__</script>
 <script>
 (function(){
 "use strict";
-var D = JSON.parse(document.getElementById("data").textContent);
-var LA = D.launches; // 2023, 2024, 2025, 2026
-var CUR = LA[LA.length-1];
-var BASES = LA.slice(0,-1);
-var CHANNELS = ["Email","Platform","Organic social","Paid ads","Affiliate","Direct & search","Other / untagged"];
-var CH_VAR = {"Email":"--c1","Platform":"--c2","Organic social":"--c3","Paid ads":"--c4","Affiliate":"--c5","Direct & search":"--c6","Other / untagged":"--c7"};
-var YR_VAR = {"2023":"--y23","2024":"--y24","2025":"--y25","2026":"--accent"};
-var LIST_NAME = {daily:"Daily newsletter",mvm:"Members (MVM)",highlights:"Highlights",weekly:"Weekly",spanish_nonmvm:"Spanish non-members",spanish_mvm:"Spanish members",coach:"Coach list",vl:"VL list",vllist:"VL list",events:"Events list",mas:"MAS list",holobody:"Holobody",alumni:"Alumni",newslettertest_daily:"Daily newsletter test",sublist:"Sub-list",digest:"Digest",retargeting:"Retargeting",retargeting_a:"Retargeting",mvmpro:"Members Pro",members:"Members list","daily-es":"Spanish daily",engaged:"Engaged",wf_alumni_es:"WildFit alumni (ES)",newslettertest:"Daily newsletter test",newsletter_digest_july:"Newsletter digest",newsletter_digest_new_july:"Newsletter digest (new)",newsletter_digest:"Newsletter digest",mvmes:"Spanish members"};
+/* ---------- launches ---------- */
+var LAUNCHES = [
+  {yr:"2026", label:"Oct 2026", d1:"2026-09-30", web:"2026-10-06", page:"/wildfit/invite", ga:"/wildfit/invite"},
+  {yr:"2025", label:"Mar 2025", d1:"2025-03-05", web:"2025-03-11", page:"/wildfit/health90", ga:"/wildfit/health90"},
+  {yr:"2024", label:"Jul 2024", d1:"2024-07-27", web:"2024-07-30", page:"/wildfit/transformation90", ga:"/wildfit/transformation90"},
+  {yr:"2023", label:"Jul 2023", d1:"2023-07-31", web:"2023-08-02", page:"/wildfit/transformation90", ga:"/wildfit/transformation90"}
+];
+var DAY = 864e5;
+function dms(iso){return Date.parse(iso+"T00:00:00Z");}
+LAUNCHES.forEach(function(l){ l.webDay = Math.round((dms(l.web)-dms(l.d1))/DAY)+1; l.endDay = l.webDay+7; });
+var CUR = LAUNCHES[0], BASES = LAUNCHES.slice(1);
+var COLOR = {"2026":"var(--accent)","2025":"var(--y25)","2024":"var(--y24)","2023":"var(--y23)"};
+var CHANNELS = ["Email","Platform","Organic social","Paid ads","Affiliate","Direct & search","Other"];
+var LIST_NAME = {daily:"Daily newsletter",mvm:"Members (MVM)",highlights:"Highlights",weekly:"Weekly",spanish_nonmvm:"Spanish non-members",spanish_mvm:"Spanish members",coach:"Coach list",vl:"VL list",vllist:"VL list",events:"Events list",mas:"MAS list",holobody:"Holobody",alumni:"Alumni",newslettertest_daily:"Daily newsletter test",newslettertest:"Daily newsletter test",sublist:"Sub-list",digest:"Digest",retargeting:"Retargeting",retargeting_a:"Retargeting",mvmpro:"Members Pro",members:"Members list","daily-es":"Spanish daily",engaged:"Engaged",wf_alumni_es:"WildFit alumni (ES)",newsletter_digest:"Newsletter digest",newsletter_digest_july:"Newsletter digest",newsletter_digest_new_july:"Newsletter digest (new)",mvmes:"Spanish members"};
 
+/* ---------- queries (single source: scripts/wildfit-live/*.sql) ---------- */
+var SERVER = "Metabase";
+var LEADS_SQL = __LEADS_SQL__;
+var ORDERS_SQL = __ORDERS_SQL__;
+var EMAILS_SQL = __EMAILS_SQL__;
+var GA = ["MV DE Layer (mv-etl-staging)","l2_user_behavior","ga4_web_session_event"];
+function F(col){return ["field",{},GA.concat([col])];}
+function addD(iso,n){return new Date(dms(iso)+n*DAY).toISOString().slice(0,10);}
+function sessionsQuery(l){
+  return {"lib/type":"mbql/query","stages":[{"lib/type":"mbql.stage/mbql","source-table":GA,
+    "aggregation":[["distinct",{"name":"consented_sessions","display-name":"consented_sessions"},F("ga_session_id")],
+      ["count-where",{"name":"denied_sessions","display-name":"denied_sessions"},["and",{},["=",{},F("event_name"),"session_start"],["is-null",{},F("ga_session_id")]]]],
+    "breakout":[["field",{"temporal-unit":"day"},GA.concat(["event_timestamp"])]],
+    "filters":[[">=",{},F("event_date"),addD(l.d1,-1)],["<=",{},F("event_date"),addD(l.d1,l.endDay)],
+      ["contains",{},F("page_location"),l.ga],["does-not-contain",{},F("page_location"),"thank-you"],["does-not-contain",{},F("page_location"),"/replay"]]}]};
+}
+var SOURCES = [
+  {key:"leads", label:"Sign-ups", tool:"execute_sql", input:{database_id:35, sql:LEADS_SQL}},
+  {key:"orders", label:"Orders", tool:"execute_sql", input:{database_id:35, sql:ORDERS_SQL}},
+  {key:"emails", label:"Email lists", tool:"execute_sql", input:{database_id:35, sql:EMAILS_SQL}}
+].concat(LAUNCHES.map(function(l){return {key:"sess"+l.yr, label:"GA4 "+l.label, ga:true, tool:"query", input:{query:sessionsQuery(l), query_handle:null, continuation_token:null}};}));
+
+/* ---------- state ---------- */
+var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}};
+
+/* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 function fmt(n){return (n==null||isNaN(n))?"–":Math.round(n).toLocaleString("en-US");}
 function usd(n){return (n==null||isNaN(n))?"–":"$"+Math.round(n).toLocaleString("en-US");}
-function usdK(n){if(n==null)return"–";if(Math.abs(n)>=1e6)return"$"+(n/1e6).toFixed(1).replace(/\.0$/,"")+"M";if(Math.abs(n)>=1000)return"$"+(n/1000).toFixed(n>=100000?0:1).replace(/\.0$/,"")+"k";return"$"+Math.round(n);}
-function pct(a,b,dp){if(!b)return"–";return (a/b*100).toFixed(dp==null?0:dp)+"%";}
-function css(v){return "var("+v+")";}
-function dShort(iso){var d=new Date(iso+"T00:00:00Z");return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"});}
-function dLong(iso){var d=new Date(iso+"T00:00:00Z");return d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});}
-function tsLabel(ts){var d=new Date(ts);return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"})+", "+d.toISOString().slice(11,16)+" UTC";}
-function dayTotal(l,dw){var o=l.leads.by_day[String(dw)];if(!o)return 0;var s=0;for(var k in o)s+=o[k];return s;}
-function webDayOffset(l){return -l.d1w;} // campaign day index of webinar (0-based)
-function sumObj(o){var s=0;for(var k in o)s+=o[k];return s;}
-
-/* ---------- time context ---------- */
-var pulledLeads = D.pulled.leads, pulledOrders = D.pulled.orders;
-var pullDate = pulledLeads.slice(0,10);
-var curDw = Math.round((Date.parse(pullDate+"T00:00:00Z")-Date.parse(CUR.web+"T00:00:00Z"))/864e5); // today vs webinar
-var daysTo = -curDw;
-var cdEl = document.getElementById("countdown");
-if(daysTo>0){cdEl.querySelector(".n").textContent=daysTo;cdEl.querySelector(".l").innerHTML=(daysTo===1?"day":"days")+" to the webinar<br>Tue 6 Oct 2026";}
-else if(daysTo===0){cdEl.querySelector(".n").textContent="Today";cdEl.querySelector(".l").innerHTML="webinar day<br>Tue 6 Oct 2026";}
-else{cdEl.querySelector(".n").textContent="+"+(-daysTo);cdEl.querySelector(".l").innerHTML="days since the webinar<br>Tue 6 Oct 2026";}
-document.getElementById("pulled").innerHTML='<i></i>Snapshot · pulled '+esc(tsLabel(pulledLeads));
-document.getElementById("foot").textContent="Sign-ups pulled "+tsLabel(pulledLeads)+" · Orders pulled "+tsLabel(pulledOrders)+" · Email lists pulled "+tsLabel(D.pulled.emails)+" · Source: Metabase, MV BigQuery";
-
-/* ---------- hero ---------- */
-var curLeads = CUR.leads.total;
-var curDay1 = dayTotal(CUR, CUR.d1w);
-var campaignDay = curDw - CUR.d1w + 1; // 1-based
-var day1s = LA.map(function(l){return {yr:l.yr,label:l.label,n:dayTotal(l,l.d1w)};});
-var bestBaseDay1 = BASES.reduce(function(a,l){var n=dayTotal(l,l.d1w);return n>a.n?{n:n,l:l}:a;},{n:0,l:null});
-var emailLeads = CUR.leads.by_channel["Email"]||0;
-var memLeads = CUR.leads.members;
-var curRev = CUR.revenue.total;
-var base25 = LA[2];
-var hero = [
-  {k:"Sign-ups so far", v:fmt(curLeads), d:'<b>'+fmt(curDay1)+'</b> on Day 1 (30 Sep). Day '+campaignDay+' of 7 is still running.', tag: curDay1>bestBaseDay1.n?'<span class="chip good">Best Day 1</span>':''},
-  {k:"From email", v:pct(emailLeads,curLeads), d:'<b>'+fmt(emailLeads)+'</b> people from one email send across '+Object.keys(CUR.email_lists).length+' lists'},
-  {k:"Members at sign-up", v:pct(memLeads,curLeads), d:'<b>'+fmt(memLeads)+'</b> members · <b>'+fmt(curLeads-memLeads)+'</b> non-members'},
-  {k:"Launch revenue so far", v:usd(curRev.rev), d:'<b>'+fmt(curRev.orders)+'</b> order'+(curRev.orders===1?'':'s')+'. Sales open with the webinar on 6 Oct. Mar 2025 made <b>'+usd(base25.revenue.total.rev)+'</b>.'}
-];
-document.getElementById("hero").innerHTML = hero.map(function(h){return '<div class="rung"><div class="k">'+h.k+'</div><div class="v num">'+h.v+'</div><div class="d">'+(h.tag||'')+h.d+'</div></div>';}).join("");
-
-/* ---------- reads ---------- */
-var share25 = curLeads/base25.leads.total;
-var finals = BASES.map(function(l){return l.leads.total;});
-var reads = [
-  {h:"Day 1 was the biggest of any WildFit webinar", p:'<b>'+fmt(curDay1)+'</b> people signed up on 30 Sep. Day 1 brought '+day1s.slice(0,3).map(function(x){return fmt(x.n)+' in '+x.label.replace("WildFit ","");}).join(", ")+'. The first email went to every list at once this time.'},
-  {h:"Already "+Math.round(share25*100)+"% of the Mar 2025 total", p:'Mar 2025 finished with <b>'+fmt(base25.leads.total)+'</b> sign-ups, Jul 2024 with <b>'+fmt(LA[1].leads.total)+'</b> and Jul 2023 with <b>'+fmt(LA[0].leads.total)+'</b>. In 2025, sign-ups from email were <b>'+fmt(base25.leads.by_channel["Email"])+'</b> and from paid ads <b>'+fmt(base25.leads.by_channel["Paid ads"])+'</b>. Oct 2026 has no paid ads so far.'},
-  {h:"Revenue depends on what the webinar sells", p:'Jul 2023 and Jul 2024 sold the WildFit programme: <b>'+usd(LA[0].revenue.total.rev)+'</b> and <b>'+usd(LA[1].revenue.total.rev)+'</b> in the launch window, of which webinar registrants bought <b>'+usd((LA[0].revenue.by_reg.registrant||{}).rev)+'</b> and <b>'+usd((LA[1].revenue.by_reg.registrant||{}).rev)+'</b>. Mar 2025 sold Membership and made <b>'+usd(base25.revenue.total.rev)+'</b>.'}
-];
-document.getElementById("reads").innerHTML = reads.map(function(r){return '<div class="read"><h3>'+r.h+'</h3><p>'+r.p+'</p></div>';}).join("");
-
-/* ---------- tooltip helper ---------- */
-function attachTip(box){
-  var tip=document.createElement("div");tip.className="tip";box.appendChild(tip);
-  return {show:function(html,x,y){tip.innerHTML=html;tip.style.left=x+"px";tip.style.top=y+"px";tip.style.opacity=1;},hide:function(){tip.style.opacity=0;}};
+function usdK(n){if(n==null||isNaN(n))return"–";var a=Math.abs(n);if(a>=1e6)return"$"+(n/1e6).toFixed(1).replace(/\.0$/,"")+"M";if(a>=1000)return"$"+(n/1000).toFixed(a>=100000?0:1).replace(/\.0$/,"")+"k";return"$"+Math.round(n);}
+function pctS(a,b,dp){if(!b)return"–";return (a/b*100).toFixed(dp==null?1:dp)+"%";}
+function timeLabel(ms){var d=new Date(ms);return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})+" "+d.toISOString().slice(11,16)+" UTC";}
+function niceMax(v){if(!(v>0))return 1;var p=Math.pow(10,Math.floor(Math.log10(v)));var m=v/p;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p;}
+function delta(a,b,isRate){
+  if(a==null||b==null||isNaN(a)||isNaN(b)) return '<span class="dim">–</span>';
+  if(isRate){var pp=(a-b)*100; var c=Math.abs(pp)<0.05?"flat":(pp>0?"up":"down"); return '<span class="delta '+c+'">'+(pp>0?"▲ +":pp<0?"▼ ":"")+pp.toFixed(1)+' pts</span>';}
+  if(b===0) return a>0?'<span class="delta up">▲ new</span>':'<span class="dim">–</span>';
+  var p=(a-b)/b*100, cl=Math.abs(p)<0.5?"flat":(p>0?"up":"down");
+  return '<span class="delta '+cl+'">'+(p>0?"▲ +":p<0?"▼ ":"")+Math.round(p).toLocaleString("en-US")+'%</span>';
 }
-function svgEl(w,h){return '<svg viewBox="0 0 '+w+' '+h+'" role="img" preserveAspectRatio="xMidYMid meet">';}
-function niceMax(v){var p=Math.pow(10,Math.floor(Math.log10(v)));var m=v/p;var n=m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10;return n*p;}
+function findTable(o,depth){ // {cols:[names], rows:[[...]]} anywhere in a Metabase payload
+  if(!o||typeof o!=="object"||depth>6) return null;
+  if(Array.isArray(o.rows)&&Array.isArray(o.cols)) return {cols:o.cols.map(function(c){return typeof c==="string"?c:(c.name||c.display_name);}), rows:o.rows};
+  if(o.data&&typeof o.data==="object"){var t=findTable(o.data,depth+1); if(t) return t;}
+  for(var k in o){ if(k==="data") continue; var v=o[k]; if(v&&typeof v==="object"){var r=findTable(v,depth+1); if(r) return r;} }
+  return null;
+}
+function asObjects(t){return t.rows.map(function(r){var o={};t.cols.forEach(function(c,i){o[c]=r[i];});return o;});}
+function num(v){var n=Number(v);return isNaN(n)?0:n;}
+function bool(v){return v===true||v==="true";}
 
-/* ---------- pace chart ---------- */
-(function(){
-  var X0=-6, X1=7, W=900, H=340, ml=56, mr=118, mt=18, mb=36;
-  var series = LA.map(function(l){
-    var pts=[], c=0;
-    for(var dw=l.d1w; dw<=7; dw++){
-      if(l===CUR && dw>curDw) break;
-      c+=dayTotal(l,dw); pts.push({dw:dw,c:c,n:dayTotal(l,dw)});
-    }
-    return {l:l,pts:pts};
+/* ---------- fetching ---------- */
+var ERR_COPY = {
+  needs_reauth:"Your Metabase connection has expired. Reconnect Metabase in claude.ai Settings → Connectors, then refresh.",
+  server_not_connected:"This page reads from your Metabase connector. Add Metabase in claude.ai Settings → Connectors, then refresh.",
+  selection_required:"You have more than one Metabase connector. Choose one when claude.ai asks, then refresh.",
+  not_in_manifest:"Metabase is turned off for this page. Allow it from the page's connector prompt, then refresh.",
+  blocked_by_policy:"Your organization's policy blocks this Metabase query for your account.",
+  approval_required:"This Metabase tool needs approval that artifacts can't ask for yet.",
+  not_granted:"This view can't use connectors. Open the page in claude.ai to see live data.",
+  capability_disabled:"This view can't use connectors. Open the page in claude.ai to see live data.",
+  capability_removed:"This view can't use connectors. Open the page in claude.ai to see live data."
+};
+function errText(e){ if(!e) return ""; return ERR_COPY[e.code] || ((e.code==="tool_error"?"Metabase returned an error: ":"Metabase didn't answer: ")+(e.message||e.code)); }
+function call(src, fresh, retried){
+  var opts={cache: fresh?{staleTime:0,gcTime:86400000,refresh:true}:{staleTime:300000,gcTime:86400000}};
+  return S.mcp.callTool(SERVER, src.tool, src.input, opts).then(function(res){
+    var t=findTable(res&&res.payload) || findTable(res);
+    if(!t) throw {code:"bad_shape", message:"Unexpected result from Metabase for "+src.label+"."};
+    S.raw[src.key]=asObjects(t); S.at[src.key]=(res.cache&&res.cache.storedAt)||Date.now(); S.err[src.key]=null;
+  }).catch(function(e){
+    if(e&&e.retryable&&!retried){ return new Promise(function(r){setTimeout(r,(e.retryAfterMs||1200)+Math.random()*800);}).then(function(){return call(src,fresh,true);}); }
+    S.err[src.key]=e||{code:"upstream_error",message:"Unknown error"};
+    if(e&&/needs_reauth|server_not_connected|not_in_manifest|blocked_by_policy/.test(e.code)) delete S.raw[src.key];
   });
-  var ymax = niceMax(Math.max.apply(null, series.map(function(s){return s.pts.length?s.pts[s.pts.length-1].c:0;})));
-  var x=function(dw){return ml+(dw-X0)/(X1-X0)*(W-ml-mr);};
-  var y=function(v){return mt+(1-v/ymax)*(H-mt-mb);};
-  var s=svgEl(W,H);
+}
+function loadAll(fresh){
+  if(!S.mcp||S.busy) return;
+  S.busy=true; renderChrome();
+  var pending=SOURCES.map(function(src){ return call(src,fresh).then(function(){ renderAll(); }); });
+  Promise.all(pending).then(function(){ S.busy=false; renderAll(); });
+}
+
+/* ---------- derive ---------- */
+function todayCday(){ return Math.floor((Date.now()-dms(CUR.d1))/DAY)+1; }
+function derive(){
+  var D={leads:null, sess:{}, orders:null, emails:null};
+  if(S.raw.leads){
+    var L={}; LAUNCHES.forEach(function(l){L[l.yr]={days:{},total:0,mem:0,first:0,nonEn:0,byCh:{},last:null};});
+    S.raw.leads.forEach(function(r){
+      var x=L[r.yr]; if(!x) return; var d=num(r.cday), n=num(r.people), ch=r.channel||"Other";
+      var dd=x.days[d]||(x.days[d]={total:0,byCh:{}});
+      dd.total+=n; dd.byCh[ch]=(dd.byCh[ch]||0)+n; x.total+=n; x.byCh[ch]=(x.byCh[ch]||0)+n;
+      if(bool(r.member)) x.mem+=n; if(bool(r.first_ever)) x.first+=n; if(bool(r.non_en)) x.nonEn+=n;
+      if(r.last_signup && (!x.last||r.last_signup>x.last)) x.last=r.last_signup;
+    });
+    D.leads=L;
+  }
+  LAUNCHES.forEach(function(l){
+    var raw=S.raw["sess"+l.yr]; if(!raw) return;
+    var m={}, tot=0;
+    raw.forEach(function(r){
+      var ts=r.event_timestamp||r[Object.keys(r)[0]]; var day=String(ts).slice(0,10);
+      var cd=Math.round((dms(day)-dms(l.d1))/DAY)+1; if(cd<1||cd>l.endDay) return;
+      var n=num(r.consented_sessions)+num(r.denied_sessions); m[cd]=(m[cd]||0)+n; tot+=n;
+    });
+    D.sess[l.yr]={days:m,total:tot};
+  });
+  if(S.raw.orders){
+    var O={}; LAUNCHES.forEach(function(l){O[l.yr]={orders:0,rev:0,ref:0,byCh:{},byProd:{},byDay:{},reg:{orders:0,rev:0},pre:{orders:0,rev:0}};});
+    S.raw.orders.forEach(function(r){
+      var x=O[r.yr]; if(!x) return; var n=num(r.orders), v=num(r.revenue), f=num(r.refunds);
+      if(r.phase==="pre"){x.pre.orders+=n;x.pre.rev+=v;return;}
+      x.orders+=n; x.rev+=v; x.ref+=f;
+      var c=x.byCh[r.channel]||(x.byCh[r.channel]={orders:0,rev:0}); c.orders+=n; c.rev+=v;
+      var p=x.byProd[r.product]||(x.byProd[r.product]={orders:0,rev:0}); p.orders+=n; p.rev+=v;
+      var d=x.byDay[r.cday]||(x.byDay[r.cday]={orders:0,rev:0}); d.orders+=n; d.rev+=v;
+      if(bool(r.registrant)){x.reg.orders+=n;x.reg.rev+=v;}
+    });
+    D.orders=O;
+  }
+  if(S.raw.emails){
+    var E={}; LAUNCHES.forEach(function(l){E[l.yr]={};});
+    S.raw.emails.forEach(function(r){ var x=E[r.yr]; if(!x) return; var f=famOf(r.src); var o=x[f]||(x[f]={people:0,members:0,sends:0}); o.people+=num(r.people); o.members+=num(r.members); o.sends+=1; });
+    D.emails=E;
+  }
+  return D;
+}
+function famOf(src){
+  var s=String(src||"").replace(/^email_campaign_/,"");
+  s=s.split(/_(?:email|vlnl)(?:_|$)/)[0].replace(/[-_]?\d+$/,"");
+  return s||"other";
+}
+function leadsDay(D,yr,d,ch){var x=D.leads&&D.leads[yr]; if(!x) return null; var dd=x.days[d]; if(!dd) return 0; return ch?(dd.byCh[ch]||0):dd.total;}
+function leadsCum(D,yr,d,ch){var s=0; for(var i=1;i<=d;i++){var v=leadsDay(D,yr,i,ch); if(v==null) return null; s+=v;} return s;}
+function sessDay(D,yr,d){var x=D.sess[yr]; if(!x) return null; return x.days[d]||0;}
+function sessCum(D,yr,d){var x=D.sess[yr]; if(!x) return null; var s=0; for(var i=1;i<=d;i++) s+=(x.days[i]||0); return s;}
+function capDay(l,d){return Math.min(d,l.endDay);}
+
+/* ---------- chrome ---------- */
+function renderChrome(){
+  var btn=document.getElementById("refresh");
+  btn.disabled=S.busy||!S.mcp; btn.querySelector(".t").textContent=S.busy?"Refreshing…":"Refresh data";
+  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders"]},{label:"Metabase · email lists",keys:["emails"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;})}];
+  document.getElementById("pills").innerHTML = groups.map(function(g){
+    var err=g.keys.map(function(k){return S.err[k];}).filter(Boolean)[0];
+    var ats=g.keys.map(function(k){return S.at[k];}).filter(Boolean);
+    var cls = S.noMcp?"":(err?"err":(S.busy?"busy":(ats.length===g.keys.length?"live":"busy")));
+    var txt = S.noMcp?"not connected":(err&&!ats.length?"error":(ats.length?timeLabel(Math.min.apply(null,ats)):"loading"));
+    return '<span class="pill '+cls+'" title="'+esc(err?errText(err):"")+'"><i></i>'+esc(g.label)+' · '+esc(txt)+'</span>';
+  }).join("");
+  var codes=SOURCES.map(function(s){return S.err[s.key]&&S.err[s.key].code;}).filter(Boolean);
+  var b=document.getElementById("banner");
+  if(S.noMcp) b.innerHTML='<div class="banner"><b>Live data needs Metabase.</b> Open this page in claude.ai with the Metabase connector added (claude.ai Settings → Connectors). The numbers load as soon as it is connected.</div>';
+  else if(codes.length===SOURCES.length && codes.every(function(c){return c===codes[0];})) b.innerHTML='<div class="banner"><b>Couldn\'t load data.</b> '+esc(errText(S.err[SOURCES[0].key]))+'</div>';
+  else b.innerHTML='';
+  // countdown
+  var td=todayCday(), toWeb=CUR.webDay-td;
+  var cd=document.getElementById("countdown");
+  if(toWeb>0){cd.querySelector(".n").textContent=toWeb;cd.querySelector(".l").innerHTML=(toWeb===1?"day":"days")+" to the webinar<br>Tue 6 Oct 2026 · Day "+td+" of 7";}
+  else if(toWeb===0){cd.querySelector(".n").textContent="Today";cd.querySelector(".l").innerHTML="webinar day<br>Tue 6 Oct 2026";}
+  else{cd.querySelector(".n").textContent="+"+(-toWeb);cd.querySelector(".l").innerHTML="days since the webinar<br>Tue 6 Oct 2026";}
+  var ts=Object.keys(S.at).map(function(k){return S.at[k];});
+  document.getElementById("foot").textContent = ts.length?("Oldest data on this page: "+timeLabel(Math.min.apply(null,ts))+" · Newest: "+timeLabel(Math.max.apply(null,ts))+" · Source: Metabase (MV BigQuery, GA4)"):"Waiting for Metabase…";
+}
+function secErr(keys){
+  var out=""; keys.forEach(function(k){ var e=S.err[k]; if(!e) return; out+= S.raw[k]?'<p class="sec-stale">Couldn\'t refresh: '+esc(errText(e))+' Showing data from '+esc(timeLabel(S.at[k]))+'.</p>':'<p class="sec-err">'+esc(errText(e))+'</p>'; });
+  return out;
+}
+
+/* ---------- headline ---------- */
+function renderHeads(D){
+  var td=capDay(CUR,todayCday()), K=Math.max(td-1,0); // complete days
+  var el=document.getElementById("heads");
+  var curL=D.leads?D.leads[CUR.yr].total:null, curS=D.sess[CUR.yr]?D.sess[CUR.yr].total:null;
+  var todayL=D.leads?leadsDay(D,CUR.yr,td):null, todayS=D.sess[CUR.yr]?sessDay(D,CUR.yr,td):null;
+  var kL=D.leads?leadsCum(D,CUR.yr,K):null, kS=D.sess[CUR.yr]?sessCum(D,CUR.yr,K):null;
+  var rate=(kL!=null&&kS)?kL/kS:null, todayRate=(todayL!=null&&todayS)?todayL/todayS:null;
+  function rows(fn,isRate){
+    if(K<1) return '<div class="cmp-list"><div class="hint">Comparisons start once Day 1 is complete.</div></div>';
+    return '<div class="cmp-list"><div class="hint">'+(K===1?'Day 1':'Day 1–'+K)+' (complete '+(K===1?'day':'days')+') vs the same '+(K===1?'day':'days')+' of:</div>'+BASES.map(function(l){
+      var kk=capDay(l,K), cur=fn(CUR,K), b=fn(l,kk);
+      return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'…':(isRate?pctS(b,1):fmt(b)))+'</span>'+delta(cur,b,isRate)+'</div>';
+    }).join("")+'</div>';
+  }
+  var hL='<div class="head"><div class="k">Sign-ups</div><div class="v num">'+(curL==null?'<span class="skel">…</span>':fmt(curL))+'</div>'+
+    '<div class="d">'+(curL==null?(secErr(["leads"])||'Loading from Metabase'):'<b>'+fmt(kL)+'</b> on complete days · <b>'+fmt(todayL)+'</b> so far today (Day '+td+')')+'</div>'+
+    (D.leads?rows(function(l,d){return leadsCum(D,l.yr,d);}):'')+'</div>';
+  var sessOK=D.sess[CUR.yr]&&BASES.every(function(l){return D.sess[l.yr];});
+  var hS='<div class="head"><div class="k">Landing page sessions</div><div class="v num">'+(curS==null?'<span class="skel">…</span>':fmt(curS))+'</div>'+
+    '<div class="d">'+(curS==null?(secErr(["sess"+CUR.yr])||'Loading from GA4'):'<b>'+fmt(kS)+'</b> on complete days · <b>'+fmt(todayS)+'</b> so far today')+'</div>'+
+    (D.sess[CUR.yr]?rows(function(l,d){return sessCum(D,l.yr,d);}):'')+'</div>';
+  var hR='<div class="head"><div class="k">Landing page sign-up rate</div><div class="v num">'+(rate==null?'<span class="skel">…</span>':pctS(rate,1))+'</div>'+
+    '<div class="d">'+(rate==null?'Sign-ups ÷ sessions':'Complete days · today so far <b>'+(todayRate==null?'–':pctS(todayRate,1))+'</b>')+'</div>'+
+    ((D.leads&&sessOK)?rows(function(l,d){var a=leadsCum(D,l.yr,d), b=sessCum(D,l.yr,d); return (a!=null&&b)?a/b:null;},true):'')+'</div>';
+  el.innerHTML=hL+hS+hR;
+}
+
+/* ---------- day-by-day ---------- */
+function renderDaySeg(){
+  var td=capDay(CUR,todayCday()), maxD=Math.max(td,1);
+  if(S.sel.day==null) S.sel.day=Math.max(td-1,1);
+  var h="";
+  for(var d=1; d<=Math.min(CUR.endDay, Math.max(maxD,CUR.webDay)); d++){
+    var future=d>td, lab='Day '+d+(d===CUR.webDay?'<small>webinar</small>':'')+(d===td?'<small>today</small>':'');
+    h+='<button type="button" data-day="'+d+'" aria-pressed="'+(d===S.sel.day)+'"'+(future?' disabled style="opacity:.4;cursor:default"':'')+'>'+lab+'</button>';
+  }
+  document.getElementById("day-seg").innerHTML=h;
+}
+function renderDay(D){
+  renderDaySeg();
+  var d=S.sel.day, cum=S.sel.mode==="cum", td=capDay(CUR,todayCday());
+  var errs=secErr(["leads","sess"+CUR.yr]);
+  document.getElementById("day-err").innerHTML=errs;
+  if(!D.leads){ return; }
+  function lv(l,ch){var dd=capDay(l,d); if(d>l.endDay&&!cum) return null; return cum?leadsCum(D,l.yr,dd,ch):leadsDay(D,l.yr,d,ch);}
+  function sv(l){if(!D.sess[l.yr]) return null; if(d>l.endDay&&!cum) return null; return cum?sessCum(D,l.yr,capDay(l,d)):sessDay(D,l.yr,d);}
+  var chans=CHANNELS.filter(function(c){return LAUNCHES.some(function(l){return (lv(l,c)||0)>0;});});
+  var heads='<tr><th>'+(cum?'Day 1 to Day '+d:'Day '+d)+'</th>'+LAUNCHES.map(function(l){
+    var wd=d===l.webDay?' · webinar':(d>l.webDay&&d<=l.endDay?' · after webinar':'');
+    return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>'+dateOf(l,d)+wd+'</small></th>';}).join("")+
+    BASES.map(function(l){return '<th class="n">2026 vs '+esc(l.label.slice(-4))+'</th>';}).join("")+'</tr>';
+  function row(name,getter,fmtF,isRate,cls){
+    var vals=LAUNCHES.map(getter);
+    return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+name+'</td>'+vals.map(function(v,i){return '<td class="n'+(i===0?' cur':'')+'">'+(v==null?'<span class="dim">–</span>':fmtF(v))+'</td>';}).join("")+
+      BASES.map(function(l,i){return '<td class="n">'+delta(vals[0],vals[i+1],isRate)+'</td>';}).join("")+'</tr>';
+  }
+  var t='<table><thead>'+heads+'</thead><tbody>';
+  chans.forEach(function(c){t+=row(c,function(l){return lv(l,c);},fmt);});
+  t+=row("All sign-ups",function(l){return lv(l);},fmt,false,"sum");
+  t+=row("Landing page sessions",sv,fmt,false,"sub");
+  t+=row("Sign-up rate",function(l){var a=lv(l),b=sv(l);return (a!=null&&b)?a/b:null;},function(v){return pctS(v,1);},true,"sub");
+  t+='</tbody></table>';
+  if(d===td) t+='<p class="hint" style="margin-top:8px">Day '+d+' is still running for Oct 2026, so it is compared with complete days of past launches.</p>';
+  document.getElementById("day-table").innerHTML=t;
+  // chart: grouped bars per channel, numbers on top
+  document.getElementById("day-chart-title").textContent="Sign-ups by channel · "+(cum?"Day 1 to Day "+d:"Day "+d);
+  document.getElementById("day-legend").innerHTML=LAUNCHES.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
+  var groups=chans.map(function(c){return {name:c, vals:LAUNCHES.map(function(l){return lv(l,c)||0;})};});
+  groupedBars("day-chart", groups, fmt);
+}
+function dateOf(l,d){var x=new Date(dms(l.d1)+(d-1)*DAY);return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});}
+
+/* ---------- charts ---------- */
+function attachTip(box){var tip=document.createElement("div");tip.className="tip";box.appendChild(tip);return{show:function(h,x,y){tip.innerHTML=h;tip.style.left=x+"px";tip.style.top=y+"px";tip.style.opacity=1;},hide:function(){tip.style.opacity=0;}};}
+function groupedBars(id, groups, fmtV){
+  var box=document.getElementById(id);
+  if(!groups.length){box.innerHTML='<div class="empty">No sign-ups on this day yet.</div>';return;}
+  var W=Math.max(560,groups.length*150), H=260, ml=10, mr=10, mt=22, mb=40;
+  var max=niceMax(Math.max.apply(null,groups.map(function(g){return Math.max.apply(null,g.vals);})));
+  var gw=(W-ml-mr)/groups.length, bw=Math.min(30,(gw-24)/LAUNCHES.length);
+  var y=function(v){return mt+(1-v/max)*(H-mt-mb);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Grouped bar chart">';
+  s+='<line class="gl" x1="'+ml+'" x2="'+(W-mr)+'" y1="'+y(0)+'" y2="'+y(0)+'"/>';
+  var marks=[];
+  groups.forEach(function(g,gi){
+    var gx=ml+gi*gw+(gw-bw*LAUNCHES.length-2*(LAUNCHES.length-1))/2;
+    g.vals.forEach(function(v,i){
+      var x=gx+i*(bw+2), top=y(v), h=y(0)-top;
+      marks.push({g:g.name,l:LAUNCHES[i],v:v});
+      if(h>0.5) s+='<path data-i="'+(marks.length-1)+'" d="M'+x+' '+y(0)+' V'+(top+3)+' q0 -3 3 -3 H'+(x+bw-3)+' q3 0 3 3 V'+y(0)+' Z" fill="'+COLOR[LAUNCHES[i].yr]+'"/>';
+      s+='<text class="vl'+(i===0?'':' m')+'" x="'+(x+bw/2)+'" y="'+(top-5)+'" text-anchor="middle" font-size="'+(bw<22?10:11.5)+'">'+fmtV(v)+'</text>';
+      s+='<rect data-i="'+(marks.length-1)+'" x="'+x+'" y="'+mt+'" width="'+bw+'" height="'+(H-mt-mb)+'" fill="transparent"/>';
+    });
+    s+='<text class="lb" x="'+(ml+gi*gw+gw/2)+'" y="'+(H-mb+18)+'" text-anchor="middle">'+esc(g.name)+'</text>';
+  });
+  s+='</svg>';
+  box.innerHTML='<div class="tw">'+s+'</div>';
+  var svg=box.querySelector("svg"); box.querySelector(".tw").style.minWidth="0";
+  svg.style.minWidth=(groups.length>4?W*0.8:0)+"px";
+  var tip=attachTip(box);
+  svg.addEventListener("pointermove",function(ev){var t=ev.target;if(!t.dataset||t.dataset.i==null){tip.hide();return;}var m=marks[+t.dataset.i];var r=box.getBoundingClientRect(),b=t.getBoundingClientRect();tip.show('<div class="m">'+esc(m.g)+'</div><b>'+esc(m.l.label)+'</b> '+fmtV(m.v),b.left-r.left+b.width/2,b.top-r.top+20);});
+  svg.addEventListener("pointerleave",function(){tip.hide();});
+}
+function renderPace(D){
+  var box=document.getElementById("pace-chart");
+  document.getElementById("pace-legend").innerHTML=LAUNCHES.map(function(l){return '<span><i class="ln" style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
+  if(!D.leads){box.innerHTML='<div class="empty">Loading sign-ups from Metabase…</div>';return;}
+  var X0=-6,X1=7,W=900,H=340,ml=56,mr=128,mt=22,mb=36, td=todayCday();
+  var series=LAUNCHES.map(function(l){var pts=[],c=0;for(var d=1;d<=l.endDay;d++){if(l===CUR&&d>td)break;c+=leadsDay(D,l.yr,d)||0;pts.push({dw:d-l.webDay,c:c});}return{l:l,pts:pts};});
+  var ymax=niceMax(Math.max.apply(null,series.map(function(s){return s.pts.length?s.pts[s.pts.length-1].c:0;})));
+  var x=function(dw){return ml+(dw-X0)/(X1-X0)*(W-ml-mr);}, y=function(v){return mt+(1-v/ymax)*(H-mt-mb);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Cumulative sign-ups">';
   for(var i=0;i<=4;i++){var v=ymax*i/4;s+='<line class="gl" x1="'+ml+'" x2="'+(W-mr)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text class="ax" x="'+(ml-8)+'" y="'+(y(v)+4)+'" text-anchor="end">'+fmt(v)+'</text>';}
-  for(var d=X0; d<=X1; d++){s+='<text class="ax" x="'+x(d)+'" y="'+(H-mb+18)+'" text-anchor="middle">'+(d===0?"0":(d>0?"+"+d:d))+'</text>';}
-  s+='<line class="web" x1="'+x(0)+'" x2="'+x(0)+'" y1="'+mt+'" y2="'+(H-mb)+'"/><text class="webt" x="'+(x(0)+6)+'" y="'+(mt+10)+'">webinar</text>';
+  for(var dw=X0;dw<=X1;dw++) s+='<text class="ax" x="'+x(dw)+'" y="'+(H-mb+18)+'" text-anchor="middle">'+(dw>0?"+"+dw:dw)+'</text>';
+  s+='<line class="web" x1="'+x(0)+'" x2="'+x(0)+'" y1="'+mt+'" y2="'+(H-mb)+'"/><text class="webt" x="'+(x(0)+6)+'" y="'+(mt+4)+'">webinar</text>';
   s+='<text class="ax" x="'+((ml+W-mr)/2)+'" y="'+(H-2)+'" text-anchor="middle">days to webinar</text>';
-  // label positions: avoid collisions at right edge
   var labels=[];
   series.forEach(function(se){
-    var col=css(YR_VAR[se.l.yr]); var isCur=se.l===CUR;
-    var d=se.pts.map(function(p,i){return (i?"L":"M")+x(p.dw).toFixed(1)+" "+y(p.c).toFixed(1);}).join(" ");
-    s+='<path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="'+(isCur?3:2)+'" stroke-linejoin="round" stroke-linecap="round"/>';
-    var last=se.pts[se.pts.length-1];
-    s+='<circle cx="'+x(last.dw)+'" cy="'+y(last.c)+'" r="'+(isCur?5:3.5)+'" fill="'+col+'" stroke="var(--surface)" stroke-width="2"/>';
-    labels.push({y:y(last.c),x:x(last.dw),t:se.l.label.replace("WildFit ","")+" · "+fmt(last.c),cur:isCur});
+    var col=COLOR[se.l.yr], cur=se.l===CUR; if(!se.pts.length) return;
+    s+='<path d="'+se.pts.map(function(p,i){return(i?"L":"M")+x(p.dw).toFixed(1)+" "+y(p.c).toFixed(1);}).join(" ")+'" fill="none" stroke="'+col+'" stroke-width="'+(cur?3:2)+'" stroke-linejoin="round" stroke-linecap="round"/>';
+    se.pts.forEach(function(p,i){ if(cur||p.dw===0){ s+='<circle cx="'+x(p.dw)+'" cy="'+y(p.c)+'" r="'+(cur?4:3)+'" fill="'+col+'" stroke="var(--surface)" stroke-width="2"/>'; if(cur&&i<se.pts.length-1) s+='<text class="vl" x="'+x(p.dw)+'" y="'+(y(p.c)-9)+'" text-anchor="middle">'+fmt(p.c)+'</text>'; } });
+    var last=se.pts[se.pts.length-1]; labels.push({x:x(last.dw),y:y(last.c),t:se.l.label+" · "+fmt(last.c),cur:cur});
   });
-  labels.sort(function(a,b){return a.y-b.y;});
-  for(var j=1;j<labels.length;j++){ if(labels[j].y-labels[j-1].y<15) labels[j].y=labels[j-1].y+15; }
-  labels.forEach(function(lb){ s+='<text class="lb'+(lb.cur?'':' m')+'" x="'+(lb.x+10)+'" y="'+(lb.y+4)+'">'+esc(lb.t)+'</text>'; });
-  s+='<rect id="pace-hit" x="'+ml+'" y="'+mt+'" width="'+(W-ml-mr)+'" height="'+(H-mt-mb)+'" fill="transparent"/>';
-  s+='<line id="pace-cross" x1="0" x2="0" y1="'+mt+'" y2="'+(H-mb)+'" stroke="var(--line-strong)" stroke-width="1" visibility="hidden"/>';
-  s+='</svg>';
-  var box=document.getElementById("pace-chart"); box.innerHTML=s;
-  var tip=attachTip(box), svg=box.querySelector("svg"), cross=svg.querySelector("#pace-cross");
-  function move(ev){
-    var r=svg.getBoundingClientRect(); var px=(ev.clientX-r.left)/r.width*W;
-    var dw=Math.round(X0+(px-ml)/(W-ml-mr)*(X1-X0)); dw=Math.max(X0,Math.min(X1,dw));
-    cross.setAttribute("x1",x(dw));cross.setAttribute("x2",x(dw));cross.setAttribute("visibility","visible");
-    var rows=series.map(function(se){var p=se.pts.filter(function(q){return q.dw===dw;})[0];return p?'<div><b>'+esc(se.l.label.replace("WildFit ",""))+'</b> '+fmt(p.c)+' <span class="m">(+'+fmt(p.n)+' that day)</span></div>':'';}).join("");
-    if(!rows){tip.hide();return;}
-    tip.show('<div class="m">'+(dw===0?"Webinar day":(dw<0?(-dw)+" days before webinar":dw+" days after webinar"))+'</div>'+rows, x(dw)/W*r.width, mt/H*r.height+40);
-  }
-  svg.addEventListener("pointermove",move); svg.addEventListener("pointerleave",function(){tip.hide();cross.setAttribute("visibility","hidden");});
-  document.getElementById("pace-legend").innerHTML=LA.map(function(l){return '<span><i class="ln" style="background:'+css(YR_VAR[l.yr])+'"></i>'+esc(l.label)+'</span>';}).join("");
-  // table
-  var t='<table><thead><tr><th>Days to webinar</th>'+LA.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label.replace("WildFit ",""))+'</th>';}).join("")+'</tr></thead><tbody>';
-  for(var dd=X0; dd<=X1; dd++){
-    t+='<tr><td>'+(dd===0?"Webinar day":(dd<0?dd:"+"+dd))+'</td>'+series.map(function(se){var p=se.pts.filter(function(q){return q.dw===dd;})[0];return '<td class="n'+(se.l===CUR?' cur':'')+'">'+(p?fmt(p.c):'<span class="dim">–</span>')+'</td>';}).join("")+'</tr>';
-  }
-  document.getElementById("pace-table").innerHTML=t+'</tbody></table>';
-})();
+  labels.sort(function(a,b){return a.y-b.y;}); for(var j=1;j<labels.length;j++) if(labels[j].y-labels[j-1].y<15) labels[j].y=labels[j-1].y+15;
+  labels.forEach(function(lb){s+='<text class="lb'+(lb.cur?'':' m')+'" x="'+(lb.x+9)+'" y="'+(lb.y+4)+'">'+esc(lb.t)+'</text>';});
+  box.innerHTML=s+'</svg>';
+}
+function vbars(id, items, fmtV, opts){ // items: [{label, v, color, strong}]
+  var box=document.getElementById(id); opts=opts||{};
+  var W=opts.W||520,H=opts.H||220,ml=8,mr=8,mt=22,mb=30;
+  var max=niceMax(opts.max||Math.max.apply(null,items.map(function(i){return i.v;}))||1);
+  var bw=(W-ml-mr)/items.length, y=function(v){return mt+(1-v/max)*(H-mt-mb);};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(opts.aria||"Bar chart")+'"><line class="gl" x1="'+ml+'" x2="'+(W-mr)+'" y1="'+y(0)+'" y2="'+y(0)+'"/>';
+  items.forEach(function(it,i){
+    var pad=Math.min(14,bw*0.18), x=ml+i*bw+pad, w=bw-2*pad, top=y(it.v), h=y(0)-top;
+    if(h>0.5) s+='<path d="M'+x+' '+y(0)+' V'+(top+3)+' q0 -3 3 -3 H'+(x+w-3)+' q3 0 3 3 V'+y(0)+' Z" fill="'+it.color+'"><title>'+esc(it.label+": "+fmtV(it.v))+'</title></path>';
+    if(opts.labelAll||it.v>0) s+='<text class="vl'+(it.strong?'':' m')+'" x="'+(x+w/2)+'" y="'+(top-5)+'" text-anchor="middle" font-size="'+(w<30?10:12)+'">'+fmtV(it.v)+'</text>';
+    if(it.label) s+='<text class="ax" x="'+(x+w/2)+'" y="'+(H-mb+16)+'" text-anchor="middle">'+esc(it.label)+'</text>';
+  });
+  box.innerHTML=s+'</svg>';
+}
 
 /* ---------- campaign-day table ---------- */
-(function(){
-  var maxDays=14;
+function renderCdayTable(D){
+  var el=document.getElementById("cday-table"); if(!D.leads){el.innerHTML='<div class="empty">'+(secErr(["leads"])||'Loading sign-ups from Metabase…')+'</div>';return;}
+  var maxD=Math.max.apply(null,LAUNCHES.map(function(l){return l.endDay;})), td=todayCday();
   var t='<table><thead><tr><th>Launch</th>';
-  for(var d=1; d<=maxDays; d++) t+='<th class="n">Day '+d+'</th>';
-  t+='<th class="n">Total</th></tr></thead><tbody>';
-  LA.map(function(l){return l;}).reverse().forEach(function(l){
-    var isCur=l===CUR; t+='<tr'+(isCur?' class="cur"':'')+'><td>'+esc(l.label)+'<small>'+dShort(l.d1)+' → webinar '+dShort(l.web)+'</small></td>';
-    for(var d=1; d<=maxDays; d++){
-      var dw=l.d1w+d-1;
-      if(dw>7 || (isCur && dw>curDw)){t+='<td class="n dim">'+(isCur&&dw<=7?'':'')+'</td>';continue;}
-      var n=dayTotal(l,dw); var web=dw===0;
-      t+='<td class="n"'+(web?' style="box-shadow:inset 0 -2px 0 var(--accent)"':'')+' title="'+(web?'Webinar day':'')+'">'+fmt(n)+(isCur&&dw===curDw?'<small>so far</small>':'')+(web?'<small>webinar</small>':'')+'</td>';
+  for(var d=1;d<=maxD;d++) t+='<th class="n">Day '+d+'</th>'; t+='<th class="n">Total</th></tr></thead><tbody>';
+  LAUNCHES.forEach(function(l){
+    var cur=l===CUR, rowL='', rowS='', rowR='';
+    for(var d=1; d<=maxD; d++){
+      var out=d>l.endDay||(cur&&d>td), web=d===l.webDay?' webcell':'';
+      if(out){rowL+='<td class="n dim"></td>';rowS+='<td class="n dim"></td>';rowR+='<td class="n dim"></td>';continue;}
+      var n=leadsDay(D,l.yr,d), s=sessDay(D,l.yr,d);
+      rowL+='<td class="n'+web+'"><b>'+fmt(n)+'</b>'+(cur&&d===td?'<small>so far</small>':(d===l.webDay?'<small>webinar</small>':''))+'</td>';
+      rowS+='<td class="n">'+(s==null?'…':fmt(s))+'</td>'; rowR+='<td class="n">'+(s?pctS(n,s,0):'–')+'</td>';
     }
-    t+='<td class="n"><b>'+fmt(l.leads.total)+'</b></td></tr>';
+    var st=D.sess[l.yr]?D.sess[l.yr].total:null, lt=D.leads[l.yr].total;
+    t+='<tr><td><b>'+esc(l.label)+'</b><small>Sign-ups</small></td>'+rowL+'<td class="n"><b>'+fmt(lt)+'</b></td></tr>';
+    t+='<tr class="sub"><td><small>Sessions</small></td>'+rowS+'<td class="n">'+(st==null?'…':fmt(st))+'</td></tr>';
+    t+='<tr class="sub"><td><small>Sign-up rate</small></td>'+rowR+'<td class="n">'+(st?pctS(lt,st,0):'–')+'</td></tr>';
   });
-  document.getElementById("day-table").innerHTML=t+'</tbody></table>';
-})();
-
-/* ---------- comparison table ---------- */
-(function(){
-  function reg(l,k){return (l.revenue.by_reg.registrant||{})[k]||0;}
-  function mainProd(l){var bp=l.revenue.by_product,best=null;for(var k in bp){if(!best||bp[k].rev>bp[best].rev)best=k;}return best||"–";}
-  var rows=[
-    ["Promo start", function(l){return dLong(l.d1);}],
-    ["Live webinar", function(l){return dLong(l.web);}],
-    ["Promo days before webinar", function(l){return fmt(-l.d1w);}],
-    ["Webinar page", function(l){return '<code>'+esc(l.page)+'</code>';}],
-    ["Sign-ups (people)", function(l){return '<b>'+fmt(l.leads.total)+'</b>'+(l===CUR?'<small>so far</small>':'');}],
-    ["Members at sign-up", function(l){return pct(l.leads.members,l.leads.total)+'<small>'+fmt(l.leads.members)+'</small>';}],
-    ["First-ever Mindvalley sign-up", function(l){return pct(l.leads.first_ever,l.leads.total)+'<small>'+fmt(l.leads.first_ever)+'</small>';}],
-    ["Non-English pages", function(l){var o=l.leads.by_lang,n=0;for(var k in o)if(k!=="en")n+=o[k];return pct(n,l.leads.total)+'<small>'+fmt(n)+'</small>';}],
-    ["Sign-ups from email", function(l){return fmt(l.leads.by_channel["Email"]||0)+'<small>'+pct(l.leads.by_channel["Email"]||0,l.leads.total)+'</small>';}],
-    ["Sign-ups from paid ads", function(l){return fmt(l.leads.by_channel["Paid ads"]||0);}],
-    ["Sign-ups from organic social", function(l){return fmt(l.leads.by_channel["Organic social"]||0);}],
-    ["What the webinar sold", function(l){return l===CUR?'<span class="dim">Sales open 6 Oct</span>':esc(mainProd(l));}],
-    ["Orders", function(l){return fmt(l.revenue.total.orders);}],
-    ["Gross revenue", function(l){return '<b>'+usd(l.revenue.total.rev)+'</b>';}],
-    ["Refunded to date", function(l){return usd(l.revenue.total.refunds)+'<small>'+pct(l.revenue.total.refunds,l.revenue.total.rev)+'</small>';}],
-    ["Net revenue", function(l){return usd(l.revenue.total.rev-l.revenue.total.refunds);}],
-    ["Gross revenue per sign-up", function(l){return l.leads.total?"$"+(l.revenue.total.rev/l.leads.total).toFixed(2):"–";}],
-    ["Bought by webinar registrants", function(l){return usd(reg(l,"rev"))+'<small>'+fmt(reg(l,"orders"))+' orders · '+pct(reg(l,"rev"),l.revenue.total.rev)+' of revenue</small>';}],
-    ["Registrant conversion", function(l){return pct(reg(l,"orders"),l.leads.total,1)+'<small>orders ÷ sign-ups</small>';}],
-    ["Masterclass revenue, 7 days before promo", function(l){return '<span class="dim">'+usd(l.revenue.masterclass_pre_promo.rev)+'</span><small>left out</small>';}]
-  ];
-  var t='<table class="cmp"><thead><tr><th></th>'+LA.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
-  rows.forEach(function(r){t+='<tr><td>'+r[0]+'</td>'+LA.map(function(l){return '<td class="n'+(l===CUR?' cur':'')+'">'+r[1](l)+'</td>';}).join("")+'</tr>';});
-  document.getElementById("cmp-table").innerHTML=t+'</tbody></table>';
-})();
-
-/* ---------- channel stacked bars ---------- */
-document.querySelectorAll(".ch-legend").forEach(function(el){el.innerHTML=CHANNELS.map(function(c){return '<span><i style="background:'+css(CH_VAR[c])+'"></i>'+c+'</span>';}).join("");});
-function stacked(id, getVal, fmtV, unit){
-  var W=560, rowH=44, ml=96, mr=70, mt=6, H=mt+LA.length*rowH+24;
-  var tots=LA.map(function(l){var s=0;CHANNELS.forEach(function(c){s+=getVal(l,c);});return s;});
-  var max=niceMax(Math.max.apply(null,tots)||1);
-  var x=function(v){return ml+v/max*(W-ml-mr);};
-  var s=svgEl(W,H);
-  for(var i=0;i<=4;i++){var v=max*i/4;s+='<line class="gl" x1="'+x(v)+'" x2="'+x(v)+'" y1="'+mt+'" y2="'+(H-22)+'"/><text class="ax" x="'+x(v)+'" y="'+(H-6)+'" text-anchor="'+(i===0?'start':i===4?'end':'middle')+'">'+fmtV(v,true)+'</text>';}
-  var segs=[];
-  LA.slice().reverse().forEach(function(l,ri){
-    var y0=mt+ri*rowH+10, bh=22, acc=0, isCur=l===CUR;
-    s+='<text class="lb'+(isCur?'':' m')+'" x="0" y="'+(y0+15)+'">'+esc(l.label.replace("WildFit ",""))+'</text>';
-    CHANNELS.forEach(function(c){
-      var v=getVal(l,c); if(!v)return;
-      var x0=x(acc), x1=x(acc+v); acc+=v;
-      var w=Math.max(x1-x0-2,1);
-      segs.push({l:l,c:c,v:v});
-      s+='<rect data-i="'+(segs.length-1)+'" x="'+x0.toFixed(1)+'" y="'+y0+'" width="'+w.toFixed(1)+'" height="'+bh+'" rx="3" fill="'+css(CH_VAR[c])+'"/>';
-    });
-    s+='<text class="lb" x="'+(x(acc)+6)+'" y="'+(y0+15)+'">'+fmtV(acc)+'</text>';
-  });
-  s+='</svg>';
-  var box=document.getElementById(id+"-chart"); box.innerHTML=s;
-  var tip=attachTip(box), svg=box.querySelector("svg");
-  svg.addEventListener("pointermove",function(ev){
-    var t=ev.target; if(!t.dataset||t.dataset.i==null){tip.hide();return;}
-    var sg=segs[+t.dataset.i], tot=0; CHANNELS.forEach(function(c){tot+=getVal(sg.l,c);});
-    var r=svg.getBoundingClientRect(), b=t.getBoundingClientRect();
-    tip.show('<div class="m">'+esc(sg.l.label)+'</div><b>'+esc(sg.c)+'</b> '+fmtV(sg.v)+' <span class="m">'+pct(sg.v,tot)+'</span>', b.left-r.left+b.width/2, b.top-r.top);
-  });
-  svg.addEventListener("pointerleave",function(){tip.hide();});
-  var tb='<table><thead><tr><th>Channel</th>'+LA.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label.replace("WildFit ",""))+'</th>';}).join("")+'</tr></thead><tbody>';
-  CHANNELS.forEach(function(c){tb+='<tr><td>'+c+'</td>'+LA.map(function(l,i){var v=getVal(l,c);return '<td class="n'+(l===CUR?' cur':'')+'">'+(v?fmtV(v):'<span class="dim">–</span>')+'<small>'+(v?pct(v,tots[i]):'')+'</small></td>';}).join("")+'</tr>';});
-  tb+='<tr class="sum"><td>Total</td>'+LA.map(function(l,i){return '<td class="n'+(l===CUR?' cur':'')+'">'+fmtV(tots[i])+'</td>';}).join("")+'</tr>';
-  document.getElementById(id+"-table").innerHTML=tb+'</tbody></table>';
+  el.innerHTML=t+'</tbody></table>';
 }
-stacked("lch", function(l,c){return l.leads.by_channel[c]||0;}, function(v,ax){return fmt(v);});
-stacked("rch", function(l,c){return (l.revenue.by_channel[c]||{}).rev||0;}, function(v,ax){return ax?usdK(v):usd(v);});
 
-/* ---------- email lists ---------- */
-(function(){
-  var fams={};
-  LA.forEach(function(l){for(var k in l.email_lists){fams[k]=fams[k]||{};fams[k][l.yr]=l.email_lists[k];}});
-  var keys=Object.keys(fams).sort(function(a,b){
-    var ca=(fams[a][CUR.yr]||{}).leads||0, cb=(fams[b][CUR.yr]||{}).leads||0;
-    if(cb!==ca) return cb-ca;
-    var ta=0,tb=0; LA.forEach(function(l){ta+=((fams[a][l.yr]||{}).leads||0);tb+=((fams[b][l.yr]||{}).leads||0);}); return tb-ta;
+/* ---------- launch table ---------- */
+function renderCompare(D){
+  var el=document.getElementById("cmp-table"); if(!D.leads){el.innerHTML='<div class="empty">Loading…</div>';return;}
+  function o(l){return D.orders&&D.orders[l.yr];}
+  function mainProd(x){var best=null;for(var k in x.byProd)if(!best||x.byProd[k].rev>x.byProd[best].rev)best=k;return best||"–";}
+  function dl(iso){return new Date(dms(iso)).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});}
+  var rows=[
+    ["Promo start → webinar",function(l){return dl(l.d1)+'<small>webinar '+dl(l.web)+' · Day '+l.webDay+'</small>';}],
+    ["Webinar page",function(l){return '<code>'+esc(l.page)+'</code>';}],
+    ["Sign-ups (people)",function(l){return '<b>'+fmt(D.leads[l.yr].total)+'</b>'+(l===CUR?'<small>so far</small>':'');}],
+    ["Landing page sessions",function(l){var s=D.sess[l.yr];return s?fmt(s.total):'…';}],
+    ["Sign-up rate",function(l){var s=D.sess[l.yr];return s&&s.total?pctS(D.leads[l.yr].total/s.total,1):'–';}],
+    ["Members at sign-up",function(l){var x=D.leads[l.yr];return pctS(x.mem,x.total,0)+'<small>'+fmt(x.mem)+'</small>';}],
+    ["First-ever Mindvalley sign-up",function(l){var x=D.leads[l.yr];return pctS(x.first,x.total,0)+'<small>'+fmt(x.first)+'</small>';}],
+    ["Non-English pages",function(l){var x=D.leads[l.yr];return pctS(x.nonEn,x.total,0)+'<small>'+fmt(x.nonEn)+'</small>';}],
+    ["Sign-ups from email",function(l){var x=D.leads[l.yr];return fmt(x.byCh.Email||0)+'<small>'+pctS(x.byCh.Email||0,x.total,0)+'</small>';}],
+    ["Sign-ups from paid ads",function(l){return fmt(D.leads[l.yr].byCh["Paid ads"]||0);}],
+    ["Sign-ups from organic social",function(l){return fmt(D.leads[l.yr].byCh["Organic social"]||0);}],
+    ["What the webinar sold",function(l){var x=o(l);if(!x)return'…';return l===CUR&&x.orders<5?'<span class="dim">Sales open 6 Oct</span>':esc(mainProd(x));}],
+    ["Orders",function(l){var x=o(l);return x?fmt(x.orders):'…';}],
+    ["Gross revenue",function(l){var x=o(l);return x?'<b>'+usd(x.rev)+'</b>':'…';}],
+    ["Refunded to date",function(l){var x=o(l);return x?usd(x.ref)+'<small>'+pctS(x.ref,x.rev,0)+'</small>':'…';}],
+    ["Net revenue",function(l){var x=o(l);return x?usd(x.rev-x.ref):'…';}],
+    ["Gross revenue per sign-up",function(l){var x=o(l),n=D.leads[l.yr].total;return x&&n?"$"+(x.rev/n).toFixed(2):'–';}],
+    ["Bought by webinar registrants",function(l){var x=o(l);return x?usd(x.reg.rev)+'<small>'+fmt(x.reg.orders)+' orders · '+pctS(x.reg.rev,x.rev,0)+' of revenue</small>':'…';}],
+    ["Masterclass revenue, 7 days before promo",function(l){var x=o(l);return x?'<span class="dim">'+usd(x.pre.rev)+'</span><small>left out</small>':'…';}]
+  ];
+  var t='<table class="cmp"><thead><tr><th></th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
+  rows.forEach(function(r){t+='<tr><td>'+r[0]+'</td>'+LAUNCHES.map(function(l){return '<td class="n'+(l===CUR?' cur':'')+'">'+r[1](l)+'</td>';}).join("")+'</tr>';});
+  el.innerHTML=secErr(["orders"])+t+'</tbody></table>';
+}
+
+/* ---------- revenue ---------- */
+function renderRevenue(D){
+  if(!D.orders){var e=secErr(["orders"]);document.getElementById("rev-chart").innerHTML='<div class="empty">'+(e||'Loading orders from Metabase…')+'</div>';document.getElementById("rev-table").innerHTML='';document.getElementById("sales-grid").innerHTML='';return;}
+  var O=D.orders;
+  vbars("rev-chart", LAUNCHES.slice().reverse().map(function(l){return {label:l.label, v:O[l.yr].rev, color:COLOR[l.yr], strong:l===CUR};}), usd, {W:520, H:300, aria:"Gross revenue by launch", labelAll:true});
+  var chans=CHANNELS.filter(function(c){return LAUNCHES.some(function(l){return (O[l.yr].byCh[c]||{}).rev>0;});});
+  var t='<table><thead><tr><th>Channel</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
+  chans.forEach(function(c){t+='<tr><td>'+c+'</td>'+LAUNCHES.map(function(l){var v=(O[l.yr].byCh[c]||{}).rev||0;return '<td class="n'+(l===CUR?' cur':'')+'">'+(v?usd(v):'<span class="dim">–</span>')+'<small>'+(v?pctS(v,O[l.yr].rev,0):'')+'</small></td>';}).join("")+'</tr>';});
+  t+='<tr class="sum"><td>Total</td>'+LAUNCHES.map(function(l){return '<td class="n'+(l===CUR?' cur':'')+'">'+usd(O[l.yr].rev)+'<small>'+fmt(O[l.yr].orders)+' orders</small></td>';}).join("")+'</tr>';
+  document.getElementById("rev-table").innerHTML=secErr(["orders"])+t+'</tbody></table><p class="hint" style="margin-top:8px">Other is orders with no usable tracking tag. In Jul 2023 that was nearly half of revenue.</p>';
+  var grid=document.getElementById("sales-grid"); grid.innerHTML="";
+  var max=0; LAUNCHES.forEach(function(l){for(var k in O[l.yr].byDay)max=Math.max(max,O[l.yr].byDay[k].rev);});
+  LAUNCHES.forEach(function(l){
+    var div=document.createElement("div"); div.style.minWidth="0";
+    div.innerHTML='<h3 style="font-size:14px;margin:0 0 2px">'+esc(l.label)+'</h3><p class="hint" style="margin:0 0 6px">'+usd(O[l.yr].rev)+' · '+fmt(O[l.yr].orders)+' order'+(O[l.yr].orders===1?'':'s')+'</p><div class="chart" id="sales-'+l.yr+'"></div>';
+    grid.appendChild(div);
+    if(l===CUR&&O[l.yr].orders<5){document.getElementById("sales-"+l.yr).innerHTML='<div class="empty"><div>Sales open with the webinar on <b>Tue 6 Oct</b> (Day 7).</div></div>';return;}
+    var items=[]; for(var d=1;d<=l.endDay;d++){var x=O[l.yr].byDay[d]||{rev:0}; items.push({label:"D"+d, v:x.rev, color:d===l.webDay?"var(--accent)":"var(--y25)", strong:d===l.webDay});}
+    vbars("sales-"+l.yr, items, usdK, {W:600, H:220, max:max, aria:"Revenue per day, "+l.label});
   });
-  var maxPer=0; keys.forEach(function(k){LA.forEach(function(l){var o=fams[k][l.yr];if(o)maxPer=Math.max(maxPer,o.leads/o.sends);});});
-  var t='<table><thead><tr><th>List</th>'+LA.slice().reverse().map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label.replace("WildFit ",""))+'<small>sign-ups · per send</small></th>';}).join("")+'</tr></thead><tbody>';
+}
+
+/* ---------- email ---------- */
+function renderEmail(D){
+  var el=document.getElementById("email-table"); if(!D.emails){el.innerHTML='<div class="empty">'+(secErr(["emails"])||'Loading email lists from Metabase…')+'</div>';return;}
+  var E=D.emails, fams={};
+  LAUNCHES.forEach(function(l){for(var k in E[l.yr]){(fams[k]=fams[k]||{})[l.yr]=E[l.yr][k];}});
+  var keys=Object.keys(fams).sort(function(a,b){var ca=(fams[a][CUR.yr]||{}).people||0,cb=(fams[b][CUR.yr]||{}).people||0;if(cb!==ca)return cb-ca;var ta=0,tb=0;LAUNCHES.forEach(function(l){ta+=(fams[a][l.yr]||{}).people||0;tb+=(fams[b][l.yr]||{}).people||0;});return tb-ta;});
+  var maxPer=0; keys.forEach(function(k){LAUNCHES.forEach(function(l){var o=fams[k][l.yr];if(o)maxPer=Math.max(maxPer,o.people/o.sends);});});
+  var t='<table><thead><tr><th>List</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>sign-ups · per send</small></th>';}).join("")+'<th class="n">2026 vs 2025</th></tr></thead><tbody>';
   keys.forEach(function(k){
     t+='<tr><td>'+esc(LIST_NAME[k]||k)+'<small>'+esc(k)+'</small></td>';
-    LA.slice().reverse().forEach(function(l){
-      var o=fams[k][l.yr]; var cur=l===CUR?' cur':'';
-      if(!o){t+='<td class="n'+cur+'"><span class="dim">–</span></td>';return;}
-      var per=o.leads/o.sends;
-      t+='<td class="n'+cur+'">'+fmt(o.leads)+'<small>'+fmt(per)+' × '+o.sends+' send'+(o.sends>1?'s':'')+'<span class="bar-inline" style="width:'+Math.max(2,Math.round(per/maxPer*48))+'px"></span></small></td>';
-    });
-    t+='</tr>';
+    LAUNCHES.forEach(function(l){var o=fams[k][l.yr],c=l===CUR?' cur':'';if(!o){t+='<td class="n'+c+'"><span class="dim">–</span></td>';return;}var per=o.people/o.sends;t+='<td class="n'+c+'">'+fmt(o.people)+'<small>'+fmt(per)+' × '+o.sends+' send'+(o.sends>1?'s':'')+'<span class="bar-inline" style="width:'+Math.max(2,Math.round(per/maxPer*48))+'px"></span></small></td>';});
+    var a=fams[k][CUR.yr], b=fams[k]["2025"]; t+='<td class="n">'+(a&&b?delta(a.people/a.sends,b.people/b.sends)+'<small>per send</small>':'<span class="dim">–</span>')+'</td></tr>';
   });
-  t+='<tr class="sum"><td>All email</td>'+LA.slice().reverse().map(function(l){var s=0,n=0;for(var k in l.email_lists){s+=l.email_lists[k].leads;n+=l.email_lists[k].sends;}return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(s)+'<small>'+n+' sends · revenue '+usd((l.revenue.by_channel["Email"]||{}).rev||0)+'</small></td>';}).join("")+'</tr>';
-  document.getElementById("email-table").innerHTML=t+'</tbody></table><p class="hint" style="margin-top:10px">A send is one tracking code (one email to one list). Email sign-ups here count people whose first sign-up came from an email tag, so the total can differ slightly from the channel chart. Opens and clicks are not in this snapshot.</p>';
-})();
+  t+='<tr class="sum"><td>All email</td>'+LAUNCHES.map(function(l){var s=0,n=0;for(var k in E[l.yr]){s+=E[l.yr][k].people;n+=E[l.yr][k].sends;}return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(s)+'<small>'+n+' sends</small></td>';}).join("")+'<td></td></tr>';
+  el.innerHTML=secErr(["emails"])+t+'</tbody></table><p class="hint" style="margin-top:10px">A send is one tracking code (one email to one list). Sign-ups count people whose first sign-up came from an email tag.</p>';
+}
 
-/* ---------- sales small multiples ---------- */
-(function(){
-  var grid=document.getElementById("sales-grid");
-  var max=0; LA.forEach(function(l){for(var k in l.revenue.by_day)max=Math.max(max,l.revenue.by_day[k].rev);});
-  max=niceMax(max);
-  LA.slice().reverse().forEach(function(l){
-    var card=document.createElement("div"); card.className="card";
-    var id="sales-"+l.yr;
-    card.innerHTML='<div class="card-head"><div><h3>'+esc(l.label)+'</h3><p class="hint">'+usd(l.revenue.total.rev)+' gross · '+fmt(l.revenue.total.orders)+' order'+(l.revenue.total.orders===1?'':'s')+'</p></div></div><div class="chart" id="'+id+'"></div>';
-    grid.appendChild(card);
-    var box=card.querySelector(".chart");
-    if(l===CUR && l.revenue.total.orders<5){box.innerHTML='<div class="empty"><div>Sales open with the webinar on <b>Tue 6 Oct</b>.<br>'+fmt(l.revenue.total.orders)+' order'+(l.revenue.total.orders===1?'':'s')+' so far ('+usd(l.revenue.total.rev)+').</div></div>';return;}
-    var W=520,H=200,ml=48,mr=8,mt=10,mb=28, X0=l.d1w, X1=7, n=X1-X0+1;
-    var bw=(W-ml-mr)/n;
-    var y=function(v){return mt+(1-v/max)*(H-mt-mb);};
-    var s=svgEl(W,H);
-    for(var i=0;i<=2;i++){var v=max*i/2;s+='<line class="gl" x1="'+ml+'" x2="'+(W-mr)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text class="ax" x="'+(ml-6)+'" y="'+(y(v)+4)+'" text-anchor="end">'+usdK(v)+'</text>';}
-    var bars=[];
-    for(var dw=X0; dw<=X1; dw++){
-      var o=l.revenue.by_day[String(dw)]||{rev:0,orders:0}; var x0=ml+(dw-X0)*bw;
-      bars.push({dw:dw,o:o});
-      var h=Math.max(0,y(0)-y(o.rev));
-      if(h>0) s+='<path data-i="'+(bars.length-1)+'" d="M'+(x0+2)+' '+y(0)+' V'+(y(o.rev)+3)+' q0 -3 3 -3 H'+(x0+bw-5)+' q3 0 3 3 V'+y(0)+' Z" fill="'+(dw===0?'var(--accent)':'var(--y25)')+'"/>';
-      s+='<rect data-i="'+(bars.length-1)+'" x="'+x0+'" y="'+mt+'" width="'+bw+'" height="'+(H-mt-mb)+'" fill="transparent"/>';
-      if(dw===X0||dw===0||dw===X1||(dw%2===0)) s+='<text class="ax" x="'+(x0+bw/2)+'" y="'+(H-mb+16)+'" text-anchor="middle">'+(dw===0?"0":(dw>0?"+"+dw:dw))+'</text>';
-    }
-    s+='</svg>'; box.innerHTML=s;
-    var tip=attachTip(box), svg=box.querySelector("svg");
-    svg.addEventListener("pointermove",function(ev){var t=ev.target;if(!t.dataset||t.dataset.i==null){tip.hide();return;}var b=bars[+t.dataset.i];var r=svg.getBoundingClientRect(),bb=t.getBoundingClientRect();
-      var date=new Date(Date.parse(l.web+"T00:00:00Z")+b.dw*864e5).toISOString().slice(0,10);
-      tip.show('<div class="m">'+dShort(date)+' · '+(b.dw===0?"webinar day":(b.dw<0?(-b.dw)+" days before":"+"+b.dw+" days"))+'</div><b>'+usd(b.o.rev)+'</b> · '+fmt(b.o.orders)+' orders', bb.left-r.left+bb.width/2, y(b.o.rev)/H*r.height);});
-    svg.addEventListener("pointerleave",function(){tip.hide();});
-  });
-})();
+/* ---------- render ---------- */
+function renderAll(){
+  renderChrome();
+  var D=derive();
+  renderHeads(D); renderDay(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
+}
 
-/* ---------- table toggles ---------- */
-document.querySelectorAll("button[data-toggle]").forEach(function(btn){
-  btn.addEventListener("click",function(){
-    var id=btn.dataset.toggle, on=btn.getAttribute("aria-pressed")!=="true";
-    btn.setAttribute("aria-pressed",on?"true":"false"); btn.textContent=on?"Chart":"Table";
-    document.getElementById(id+"-chart").hidden=on; document.getElementById(id+"-table").hidden=!on;
-    var lg=btn.closest(".card").querySelector(".legend"); if(lg) lg.hidden=on;
-  });
-});
+/* ---------- events ---------- */
+document.getElementById("refresh").addEventListener("click",function(){loadAll(true);});
+document.getElementById("day-seg").addEventListener("click",function(e){var b=e.target.closest("button[data-day]");if(!b||b.disabled)return;S.sel.day=+b.dataset.day;renderAll();});
+document.getElementById("mode-seg").addEventListener("click",function(e){var b=e.target.closest("button[data-mode]");if(!b)return;S.sel.mode=b.dataset.mode;document.querySelectorAll("#mode-seg button").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});renderAll();});
+
+/* ---------- boot ---------- */
+renderAll();
+var useP=(window.claude&&typeof window.claude.use==="function")?window.claude.use("mcp"):Promise.resolve(null);
+useP.then(function(m){ if(!m){S.noMcp=true;renderAll();return;} S.mcp=m; loadAll(false); }, function(){S.noMcp=true;renderAll();});
 })();
 </script>
