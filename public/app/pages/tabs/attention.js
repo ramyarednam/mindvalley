@@ -60,7 +60,12 @@ export async function render(el, test, vs) {
   let hls;
   onCleanup(() => hls?.destroy());
   const stream = await api(`/api/tests/${test.id}/stream?${qs(vs)}`);
-  if (stream.kind === 'hls' && window.Hls?.isSupported()) {
+  if (!stream.src) {
+    // No playable stream (for example in the shareable preview): show the poster instead.
+    const cut = test.cuts.find((c) => c.id === vs.cut) || test.cuts[0];
+    if (cut?.posterUrl) video.poster = cut.posterUrl;
+    video.controls = false;
+  } else if (stream.kind === 'hls' && window.Hls?.isSupported()) {
     hls = new window.Hls({ capLevelToPlayerSize: true });
     hls.loadSource(stream.src);
     hls.attachMedia(video);

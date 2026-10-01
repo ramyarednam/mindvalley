@@ -1,6 +1,17 @@
 import { esc, fmtDuration, icon } from '/shared/ui.js';
 import { api, isAdmin } from '/app/app.js';
 
+// A fixed list (not a computed path) so bundlers and the preview build can follow every tab.
+const TAB_MODULES = {
+  summary: () => import('/app/pages/tabs/summary.js'),
+  attention: () => import('/app/pages/tabs/attention.js'),
+  feedback: () => import('/app/pages/tabs/feedback.js'),
+  hooks: () => import('/app/pages/tabs/hooks.js'),
+  audience: () => import('/app/pages/tabs/audience.js'),
+  responses: () => import('/app/pages/tabs/responses.js'),
+  manage: () => import('/app/pages/tabs/manage.js'),
+};
+
 const TABS = [
   { key: 'summary', label: 'Summary', ic: 'sparkles' },
   { key: 'attention', label: 'Attention', ic: 'chart' },
@@ -72,6 +83,6 @@ export async function render(view, id, tab) {
 
   const el = document.getElementById('tab');
   el.innerHTML = '<div class="card skeleton" style="height:260px"></div>';
-  const mod = await import(`/app/pages/tabs/${tab}.js`);
+  const mod = await TAB_MODULES[tab]();
   await mod.render(el, test, vs, () => render(view, id, tab));
 }

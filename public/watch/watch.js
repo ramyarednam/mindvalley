@@ -161,6 +161,8 @@ async function join() {
   try {
     state.session = await api(`/api/public/tests/${testId}/join`, { pid: pid(), consent: true, demographics: d });
     save({ demographics: d, resumeKey: state.session.resumeKey });
+    // The shareable preview has no camera or video, so it goes straight to the questionnaire.
+    if (window.__PW_PREVIEW__) return startFeedback(true);
     if (state.session.stage !== 'watch' || state.session.resumeAt > state.session.range.start + 5) return welcomeBack();
     show('camera');
     setupCamera();
