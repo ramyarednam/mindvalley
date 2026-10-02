@@ -174,3 +174,35 @@
 .cols.tight .col-label { font-size: 0.78rem; font-weight: 700; color: var(--text-2); }
 .player-box + .card { aspect-ratio: auto; }
 .two > .player-box { align-self: start; }
+
+/* Viewers dashboard */
+.viewers { display: grid; gap: 6px; }
+.vrow { display: grid; grid-template-columns: minmax(130px, 1.1fr) minmax(200px, 2.2fr) 110px minmax(160px, 2fr) 130px; gap: 16px; align-items: center; width: 100%; text-align: left; white-space: normal; padding: 12px 14px; border-radius: 14px; border: 1px solid transparent; background: transparent; font-weight: 400; }
+.vrow:hover { background: var(--surface-2); border-color: var(--border); }
+@media (max-width: 1000px) { .vrow { grid-template-columns: 1fr 1fr; } .vquote { grid-column: 1 / -1; } }
+.vwho, .vjourney, .vstatus { display: grid; gap: 3px; min-width: 0; }
+.vreact { font-size: 1.25rem; display: flex; gap: 4px; align-items: center; }
+.vquote { color: var(--text-2); min-width: 0; }
+.vlegend { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 10px 14px; }
+.vlegend span { display: inline-flex; align-items: center; gap: 6px; }
+.vlegend .jm { position: static; transform: none; }
+.journey { position: relative; height: 10px; border-radius: 999px; background: var(--surface-3); }
+.journey.tall { height: 16px; }
+.jfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--primary-2), var(--primary)); opacity: 0.55; }
+.jstop { position: absolute; top: -3px; bottom: -3px; width: 3px; border-radius: 2px; background: var(--drop); transform: translateX(-50%); }
+.jstop-key { display: inline-block; width: 3px; height: 12px; border-radius: 2px; background: var(--drop); }
+.jm { position: absolute; top: 50%; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%, -50%); border: 1.5px solid var(--surface); display: inline-block; }
+.jm.int { background: var(--peak); }
+.jm.bor { background: var(--text-3); }
+.jm.sav { background: var(--warn); border-radius: 2px; }
+
+/* Drop-offs */
+.drops { display: grid; gap: 12px; }
+.drop { border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; }
+.drop-head { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.drop-stats { display: flex; gap: 8px; }
+.drop-stats span { background: var(--surface-2); padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+.drop-q { display: block; color: var(--text-2); font-size: 0.9rem; margin-top: 10px; }
+.stops { display: grid; gap: 6px; max-height: 360px; overflow: auto; }
+.stop-row { display: grid; grid-template-columns: 70px minmax(0, 1.4fr) 64px minmax(0, 1.6fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 12px; background: var(--surface-2); font-size: 0.88rem; }
+@media (max-width: 700px) { .stop-row { grid-template-columns: 1fr 1fr; } }

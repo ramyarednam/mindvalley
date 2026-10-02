@@ -246,9 +246,32 @@ export class Store {
     return Number(r.changes);
   }
 
-  /** Player seconds where this viewer pressed the spacebar, for the "your moments" feedback step. */
-  interestMoments(sessionId: string): number[] {
-    return (this.db.prepare(`SELECT pt FROM events WHERE session_id = ? AND type = 'interest' ORDER BY pt`).all(sessionId) as { pt: number }[]).map((r) => r.pt);
+  /** Player seconds of one kind of key press, for the "your moments" feedback steps. */
+  pressMoments(sessionId: string, type: 'interest' | 'bored'): number[] {
+    return (this.db.prepare('SELECT pt FROM events WHERE session_id = ? AND type = ? ORDER BY pt').all(sessionId, type) as { pt: number }[]).map((r) => r.pt);
+  }
+
+  /** Journey events (key presses and saves) for every session of a cut, in one query. */
+  journeyEvents(cutId: string): { session_id: string; type: string; pt: number; data: string | null }[] {
+    return this.db
+      .prepare(`SELECT e.session_id, e.type, e.pt, e.data FROM events e JOIN sessions s ON s.id = e.session_id WHERE s.cut_id = ? AND e.type IN ('interest', 'bored', 'save_later') ORDER BY e.pt`)
+      .all(cutId) as { session_id: string; type: string; pt: number; data: string | null }[];
+  }
+
+  /** One viewer's attention, averaged into `buckets` equal slices of the range. */
+  attentionBuckets(sessionId: string, start: number, end: number, buckets: number): (number | null)[] {
+    const rows = this.db.prepare('SELECT sec, samples, attentive FROM session_seconds WHERE session_id = ? AND sec >= ? AND sec < ?').all(sessionId, Math.floor(start), Math.ceil(end)) as { sec: number; samples: number; attentive: number }[];
+    const sum = new Array(buckets).fill(0);
+    const n = new Array(buckets).fill(0);
+    const width = Math.max(1, (end - start) / buckets);
+    for (const r of rows) {
+      const b = Math.min(buckets - 1, Math.floor((r.sec - start) / width));
+      if (r.samples > 0) {
+        sum[b] += r.attentive / r.samples;
+        n[b]++;
+      }
+    }
+    return sum.map((v, i) => (n[i] ? Math.round((1000 * v) / n[i]) / 1000 : null));
   }
 
   // ---- users ----

@@ -5,9 +5,21 @@ import { evaluateSession, rangeFor } from '../quality.ts';
 import { makeToken, readToken } from '../signing.ts';
 import { scheduleChecks, screen, num, str } from '../testConfig.ts';
 import { excerpt } from '../transcript.ts';
-import type { Sample, SessionRow, TestRow, ViewerEvent } from '../types.ts';
-import { DEMOGRAPHIC_KEYS } from '../types.ts';
+import type { Sample, SessionRow, StopReason, TestRow, ViewerEvent } from '../types.ts';
+import { DEMOGRAPHIC_KEYS, STOP_REASONS } from '../types.ts';
 import type { Deps } from './context.ts';
+
+/** Only small, known fields are kept from event data; a save carries why the viewer stopped. */
+function eventData(e: ViewerEvent): Record<string, unknown> | undefined {
+  if (!e.data || typeof e.data !== 'object') return undefined;
+  if (e.type === 'save_later') {
+    const reason = STOP_REASONS.includes(e.data.reason as StopReason) ? e.data.reason : 'other';
+    return { reason };
+  }
+  const out: Record<string, unknown> = {};
+  for (const k of ['at', 'to']) if (Number.isFinite(e.data[k])) out[k] = e.data[k];
+  return Object.keys(out).length ? out : undefined;
+}
 
 const ALLOWED_EVENTS = new Set<ViewerEvent['type']>(['interest', 'bored', 'save_later', 'pause', 'play', 'seek_blocked', 'tab_hidden', 'tab_visible', 'fullscreen_exit', 'check_shown', 'check_passed', 'check_missed', 'rate_blocked']);
 
@@ -132,7 +144,7 @@ export function registerViewerRoutes(router: Router, d: Deps): void {
     const events = (Array.isArray(b.events) ? b.events : [])
       .slice(0, 500)
       .filter((e): e is ViewerEvent => !!e && typeof e === 'object' && ALLOWED_EVENTS.has((e as ViewerEvent).type) && Number.isFinite((e as ViewerEvent).pt))
-      .map((e) => ({ type: e.type, pt: Math.max(0, Math.min(dur, e.pt)), ts: Number(e.ts) || Date.now(), data: e.data && typeof e.data === 'object' ? e.data : undefined }));
+      .map((e) => ({ type: e.type, pt: Math.max(0, Math.min(dur, e.pt)), ts: Number(e.ts) || Date.now(), data: eventData(e) }));
     if (samples.length) store.addSamples(s.id, samples);
     if (events.length) store.addEvents(s.id, events);
     const count = (type: string) => events.filter((e) => e.type === type).length;
@@ -162,15 +174,18 @@ export function registerViewerRoutes(router: Router, d: Deps): void {
   router.on('GET', '/api/public/sessions/:id/feedback', (ctx) => {
     const s = sessionFromKey(ctx);
     const t = d.getTestOr404(s.test_id);
-    const moments = store.interestMoments(s.id);
     // Merge presses within 8 s into one moment so viewers are not asked about the same thing twice.
-    const merged: number[] = [];
-    for (const pt of moments) if (!merged.length || pt - merged.at(-1)! > 8) merged.push(pt);
+    const merge = (pts: number[]) => {
+      const out: number[] = [];
+      for (const pt of pts) if (!out.length || pt - out.at(-1)! > 8) out.push(pt);
+      return out.slice(0, 8).map((pt) => ({ at: Math.round(pt), text: excerpt(t.transcript, pt - 6, pt + 4, 200) }));
+    };
     return {
       title: t.title,
       transcript: t.transcript.map((c) => ({ start: c.start, text: c.text })),
       maxStandoutLines: MAX_STANDOUT_LINES,
-      moments: merged.slice(0, 8).map((pt) => ({ at: Math.round(pt), text: excerpt(t.transcript, pt - 6, pt + 4, 200) })),
+      moments: merge(store.pressMoments(s.id, 'interest')),
+      boredMoments: merge(store.pressMoments(s.id, 'bored')),
       custom: t.config.survey,
       draft: parseFeedback(s),
     };

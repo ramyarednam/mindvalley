@@ -246,8 +246,24 @@ function stopPlayback() {
   state.tracker.stop();
 }
 
-async function saveForLater() {
-  logEvent('save_later');
+/** Ask why they are stopping (one tap), then save. */
+function saveForLater() {
+  const video = $('player');
+  video.pause();
+  const ask = $('stop-ask');
+  ask.classList.remove('hidden');
+  $('stop-cancel').onclick = () => {
+    ask.classList.add('hidden');
+    video.play().catch(() => {});
+  };
+  for (const b of ask.querySelectorAll('[data-reason]')) b.onclick = () => {
+    ask.classList.add('hidden');
+    saveNow(b.dataset.reason);
+  };
+}
+
+async function saveNow(reason) {
+  logEvent('save_later', { reason });
   const at = $('player').currentTime;
   stopPlayback();
   await flush();

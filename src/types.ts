@@ -122,8 +122,13 @@ export type Feedback = {
   standoutLines?: number[]; // transcript cue indices
   standoutWhy?: string;
   momentNotes?: Record<string, string>; // player second -> what grabbed them
+  boredNotes?: Record<string, string>; // player second -> why that part dragged
   oneLiner?: string;
   titleIdea?: string;
   wouldCut?: string;
   custom?: Record<string, string | number | null>;
 };
+
+/** Why a viewer used "Save & finish later". */
+export const STOP_REASONS = ['interrupted', 'break', 'losing_interest', 'too_long', 'other'] as const;
+export type StopReason = (typeof STOP_REASONS)[number];

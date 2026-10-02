@@ -131,7 +131,7 @@ test('end to end: create, watch, save for later, resume, feedback, dashboards', 
     const all = samples(from, to);
     for (let i = 0; i < all.length; i += 2000) assert.equal((await viewer('POST', `/api/public/sessions/${sid}/signals`, { samples: all.slice(i, i + 2000), events: i === 0 ? events : [] }, k)).status, 200);
   };
-  await send(key, j.sessionId, 0, 300, [{ type: 'interest', pt: 101, ts: 1 }, { type: 'check_shown', pt: 150, ts: 1 }, { type: 'check_passed', pt: 152, ts: 2 }, { type: 'save_later', pt: 300, ts: 3 }]);
+  await send(key, j.sessionId, 0, 300, [{ type: 'interest', pt: 101, ts: 1 }, { type: 'check_shown', pt: 150, ts: 1 }, { type: 'check_passed', pt: 152, ts: 2 }, { type: 'bored', pt: 230, ts: 2 }, { type: 'save_later', pt: 300, ts: 3, data: { reason: 'interrupted', junk: 'x' } }]);
 
   // Come back with the personal link from another browser.
   const back = (await client()('POST', '/api/public/resume', { resumeKey: j.resumeKey })).data;
@@ -148,6 +148,7 @@ test('end to end: create, watch, save for later, resume, feedback, dashboards', 
   assert.equal(ctx.transcript.length, 2);
   assert.equal(ctx.moments[0].at, 101);
   assert.equal(ctx.moments[0].text, 'The cold plunge story');
+  assert.equal(ctx.boredMoments[0].at, 230);
   await viewer('POST', `/api/public/sessions/${j.sessionId}/feedback`, { answers: { feeling: 5, relevance: 4, liked: 'loved', bogus: 1 } }, key2);
   const later = (await client()('POST', '/api/public/resume', { resumeKey: j.resumeKey })).data;
   assert.equal(later.stage, 'feedback');
@@ -156,7 +157,7 @@ test('end to end: create, watch, save for later, resume, feedback, dashboards', 
   assert.deepEqual(draft, { feeling: 5, relevance: 4, liked: 'loved' });
   const sent = await viewer('POST', `/api/public/sessions/${j.sessionId}/feedback`, {
     final: true,
-    answers: { recommend: 9, standoutLines: [0, 0, 7], standoutWhy: 'Ice baths, who knew', momentNotes: { 101: 'The story got me' }, oneLiner: 'How to live longer', titleIdea: 'I Tried Ice Baths For 30 Days', wouldCut: 'Nothing', custom: { q1: 'yes' } },
+    answers: { recommend: 9, standoutLines: [0, 0, 7], standoutWhy: 'Ice baths, who knew', momentNotes: { 101: 'The story got me' }, boredNotes: { 230: 'Too much gear talk' }, oneLiner: 'How to live longer', titleIdea: 'I Tried Ice Baths For 30 Days', wouldCut: 'Nothing', custom: { q1: 'yes' } },
   }, key3);
   assert.match(sent.data.completionCode, /^PW-/);
   assert.equal((await client()('POST', '/api/public/resume', { resumeKey: j.resumeKey })).data.stage, 'done');
@@ -193,6 +194,20 @@ test('end to end: create, watch, save for later, resume, feedback, dashboards', 
   assert.equal(responses[0].standoutLines[0].text, 'The cold plunge story');
   assert.equal(responses[0].pid, undefined, 'panel IDs are admin-only');
   assert.equal((await admin('GET', `/api/tests/${t.id}/responses?synthetic=0`)).data[0].pid, 'p1');
+  assert.deepEqual(responses[0].journey.interest, [101]);
+  assert.deepEqual(responses[0].journey.bored, [230]);
+  assert.deepEqual(responses[0].journey.saves, [{ at: 300, reason: 'interrupted' }]);
+  const att = (await member('GET', `/api/tests/${t.id}/viewers/${responses[0].sid}/attention`)).data;
+  assert.equal(att.buckets.length, 120);
+  assert.ok(att.buckets[10] > 0.9 && att.buckets[45] < 0.1, 'per-viewer attention follows their samples');
+
+  const drops = (await member('GET', `/api/tests/${t.id}/dropoffs?synthetic=0`)).data;
+  assert.equal(drops.viewers, 1);
+  assert.equal(drops.finished, 1);
+  assert.equal(drops.saves, 1);
+  assert.deepEqual(drops.reasons, { interrupted: 1 });
+  assert.equal(drops.boredNotes[0].text, 'Too much gear talk');
+  assert.ok(drops.dropoffs[0].boredPresses >= 1, 'bored presses are counted inside the drop');
 
   assert.match((await member('GET', `/api/tests/${t.id}/export/csv?synthetic=0`)).data as string, /^type,name,start_sec/);
   assert.equal((await member('GET', `/api/tests/${t.id}/stream`)).status, 200);

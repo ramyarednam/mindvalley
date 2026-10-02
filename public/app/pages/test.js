@@ -5,6 +5,7 @@ import { api, isAdmin } from '/app/app.js';
 const TAB_MODULES = {
   summary: () => import('/app/pages/tabs/summary.js'),
   attention: () => import('/app/pages/tabs/attention.js'),
+  dropoffs: () => import('/app/pages/tabs/dropoffs.js'),
   feedback: () => import('/app/pages/tabs/feedback.js'),
   hooks: () => import('/app/pages/tabs/hooks.js'),
   audience: () => import('/app/pages/tabs/audience.js'),
@@ -15,10 +16,11 @@ const TAB_MODULES = {
 const TABS = [
   { key: 'summary', label: 'Summary', ic: 'sparkles' },
   { key: 'attention', label: 'Attention', ic: 'chart' },
+  { key: 'dropoffs', label: 'Drop-offs', ic: 'trendDown' },
   { key: 'feedback', label: 'Feedback', ic: 'message' },
   { key: 'hooks', label: 'Hooks & packaging', ic: 'zap' },
   { key: 'audience', label: 'Audience', ic: 'globe' },
-  { key: 'responses', label: 'Responses', ic: 'list' },
+  { key: 'responses', label: 'Viewers', ic: 'users' },
   { key: 'manage', label: 'Manage', ic: 'settings', admin: true },
 ];
 

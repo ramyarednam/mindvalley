@@ -45,6 +45,7 @@ export async function render(el, test, vs) {
       <div class="pair">
         <div class="card"><div class="card-head"><h3>✨ Why it stood out</h3><span class="faint small">${fb.standoutWhy.length}</span></div>${quoteList(fb.standoutWhy)}</div>
         <div class="card"><div class="card-head"><h3>📍 Notes on their marked moments</h3><span class="faint small">${fb.momentNotes.length}</span></div>${quoteList(fb.momentNotes, { empty: 'No notes on marked moments yet.' })}</div>
+        <div class="card"><div class="card-head"><h3>😴 What dragged (their B presses)</h3><span class="faint small">${fb.boredNotes?.length ?? 0}</span></div>${quoteList(fb.boredNotes ?? [], { empty: 'No notes on boring moments yet.' })}</div>
         <div class="card"><div class="card-head"><h3>✂️ What they'd cut</h3><span class="faint small">${fb.wouldCut.length}</span></div>${quoteList(fb.wouldCut)}</div>
         <div class="card"><div class="card-head"><h3>🗣️ How they'd describe it</h3><span class="faint small">${fb.oneLiners.length}</span></div>${quoteList(fb.oneLiners)}</div>
       </div>

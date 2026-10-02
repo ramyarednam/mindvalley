@@ -12,6 +12,16 @@ const int = (v: unknown, lo: number, hi: number): number | undefined => {
   return v !== null && v !== '' && Number.isInteger(n) && n >= lo && n <= hi ? n : undefined;
 };
 
+/** { "<player second>": "note" } with at most 20 entries; undefined when empty. */
+function timedNotes(input: unknown): Record<string, string> | undefined {
+  if (!input || typeof input !== 'object') return undefined;
+  const notes = Object.entries(input as Record<string, unknown>)
+    .slice(0, 20)
+    .map(([k, v]) => [String(Math.round(Number(k))), str(v, 500)] as const)
+    .filter(([k, v]) => v && Number.isFinite(Number(k)));
+  return notes.length ? (Object.fromEntries(notes) as Record<string, string>) : undefined;
+}
+
 /** Cleans a (possibly partial) questionnaire from the browser. Unknown or invalid fields are dropped. */
 export function normalizeFeedback(input: unknown, opts: { cueCount: number; custom: SurveyQuestion[] }): Feedback {
   const f = (input ?? {}) as Record<string, unknown>;
@@ -25,13 +35,8 @@ export function normalizeFeedback(input: unknown, opts: { cueCount: number; cust
     if (lines.length && opts.cueCount) out.standoutLines = lines.slice(0, MAX_STANDOUT_LINES);
   }
   out.standoutWhy = str(f.standoutWhy, 1000);
-  if (f.momentNotes && typeof f.momentNotes === 'object') {
-    const notes = Object.entries(f.momentNotes as Record<string, unknown>)
-      .slice(0, 20)
-      .map(([k, v]) => [String(Math.round(Number(k))), str(v, 500)] as const)
-      .filter(([k, v]) => v && Number.isFinite(Number(k)));
-    if (notes.length) out.momentNotes = Object.fromEntries(notes) as Record<string, string>;
-  }
+  out.momentNotes = timedNotes(f.momentNotes);
+  out.boredNotes = timedNotes(f.boredNotes);
   out.oneLiner = str(f.oneLiner, 300);
   out.titleIdea = str(f.titleIdea, 150);
   out.wouldCut = str(f.wouldCut, 1000);
@@ -105,9 +110,13 @@ export function aggregateFeedback(sessions: SessionRow[], cues: Cue[], custom: S
       .filter((q): q is Quote => !!q.text)
       .reverse();
 
-  const momentNotes: Quote[] = [];
-  for (const { s, f } of fb) for (const [at, text] of Object.entries(f.momentNotes ?? {})) momentNotes.push({ text, at: Number(at), who: who(s) });
-  momentNotes.sort((a, b) => (a.at ?? 0) - (b.at ?? 0));
+  const timed = (pick: (f: Feedback) => Record<string, string> | undefined): Quote[] => {
+    const list: Quote[] = [];
+    for (const { s, f } of fb) for (const [at, text] of Object.entries(pick(f) ?? {})) list.push({ text, at: Number(at), who: who(s) });
+    return list.sort((a, b) => (a.at ?? 0) - (b.at ?? 0));
+  };
+  const momentNotes = timed((f) => f.momentNotes);
+  const boredNotes = timed((f) => f.boredNotes);
 
   const customResults = custom.map((q) => {
     const vals = fb.map((x) => x.f.custom?.[q.id]).filter((v) => v !== undefined && v !== null && v !== '');
@@ -126,6 +135,7 @@ export function aggregateFeedback(sessions: SessionRow[], cues: Cue[], custom: S
     standoutLines,
     standoutWhy: quotes((f) => f.standoutWhy),
     momentNotes,
+    boredNotes,
     oneLiners: quotes((f) => f.oneLiner),
     titleIdeas: quotes((f) => f.titleIdea),
     wouldCut: quotes((f) => f.wouldCut),

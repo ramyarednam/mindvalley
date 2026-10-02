@@ -119,6 +119,20 @@
         <div id="pulse-b" class="pulse bored">😴 Boring</div>
         <div id="check" class="check-overlay hidden"><div>Quick check: press <kbd>A</kbd> now</div><div class="bar"><span></span></div></div>
         <div id="player-msg" class="player-msg hidden"></div>
+        <div id="stop-ask" class="stop-ask hidden" role="dialog" aria-labelledby="stop-title">
+          <div class="stop-card">
+            <h2 id="stop-title">Quick one before you go</h2>
+            <p class="muted">What made you stop here? It helps the editors.</p>
+            <div class="stop-options">
+              <button type="button" data-reason="interrupted">📞 Something came up</button>
+              <button type="button" data-reason="break">☕ I need a break</button>
+              <button type="button" data-reason="losing_interest">😴 I was losing interest</button>
+              <button type="button" data-reason="too_long">⏳ It's long, I'll finish later</button>
+              <button type="button" data-reason="other">🤷 Another reason</button>
+            </div>
+            <button type="button" id="stop-cancel" class="btn-ghost">Keep watching</button>
+          </div>
+        </div>
       </div>
       <div class="controls">
         <button id="play" class="btn-grad">Play</button>

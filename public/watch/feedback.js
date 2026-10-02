@@ -42,6 +42,20 @@ function buildSteps(ctx) {
     });
   }
 
+  if (ctx.boredMoments?.length) {
+    steps.push({
+      id: 'bored',
+      render: () => `<p class="eyebrow">Honest moments</p><h1>You marked ${ctx.boredMoments.length} part${ctx.boredMoments.length === 1 ? '' : 's'} as boring 😴</h1><p class="muted">What lost you there? Too slow, repetitive, confusing? Skip any you don't remember.</p>
+        ${ctx.boredMoments.map((m) => `<div class="moment bored"><span class="t">${fmtTime(m.at)}</span>${m.text ? `<q>${esc(m.text)}</q>` : '<span class="faint small">(no transcript for this part)</span>'}
+          <input type="text" maxlength="500" data-bored="${m.at}" placeholder="Why did this part drag?" value="${esc(f.answers.boredNotes?.[m.at] ?? '')}" /></div>`).join('')}`,
+      read: () => {
+        const notes = {};
+        for (const el of document.querySelectorAll('[data-bored]')) if (el.value.trim()) notes[el.dataset.bored] = el.value.trim();
+        f.answers.boredNotes = notes;
+      },
+    });
+  }
+
   if (ctx.transcript.length) {
     steps.push({
       id: 'lines',

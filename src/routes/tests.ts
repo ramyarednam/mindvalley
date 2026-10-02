@@ -3,7 +3,7 @@ import { toCsv, toEdl, toPremiereXml } from '../exports.ts';
 import { aggregateFeedback, parseFeedback } from '../feedback.ts';
 import { HttpError, type Ctx, type Router } from '../http.ts';
 import { exportFilename } from '../naming.ts';
-import { sweepAbandoned } from '../quality.ts';
+import { rangeFor, sweepAbandoned } from '../quality.ts';
 import { buildReport } from '../scoring.ts';
 import { simulatePanel } from '../simulate.ts';
 import { detectSourceType, resolveSource } from '../sources/index.ts';
@@ -144,32 +144,111 @@ export function registerTestRoutes(router: Router, d: Deps): void {
     return { ...store.getSummary(summaryKey(cut.id, includeSynthetic))!, stale: false };
   });
 
+  const shortId = (id: string) => id.replace(/[^A-Za-z0-9]/g, '').slice(-6).toUpperCase();
+
+  /** Key presses and saves per session, for journey bars. */
+  function journeys(cutId: string) {
+    const map = new Map<string, { interest: number[]; bored: number[]; saves: { at: number; reason: string }[] }>();
+    for (const e of store.journeyEvents(cutId)) {
+      const j = map.get(e.session_id) ?? { interest: [], bored: [], saves: [] };
+      if (e.type === 'interest') j.interest.push(Math.round(e.pt));
+      else if (e.type === 'bored') j.bored.push(Math.round(e.pt));
+      else j.saves.push({ at: Math.round(e.pt), reason: (e.data ? (JSON.parse(e.data) as { reason?: string }).reason : undefined) ?? 'other' });
+      map.set(e.session_id, j);
+    }
+    return map;
+  }
+
   router.on('GET', '/api/tests/:id/responses', (ctx) => {
     const u = d.requireUser(ctx);
     const { t, cut, includeSynthetic } = viewParams(ctx);
+    const range = rangeFor(t.config, cut.resolved?.durationSec ?? 0);
+    const j = journeys(cut.id);
     return cutSessions(t.id, cut.id, includeSynthetic)
       .filter((s) => s.status !== 'screened_out')
       .reverse()
       .map((s) => {
         const feedback = parseFeedback(s);
         return {
-        id: s.id.replace(/[^A-Za-z0-9]/g, '').slice(-6).toUpperCase(),
-        ...(u.role === 'admin' ? { pid: s.pid } : {}),
-        status: s.status,
-        valid: s.valid,
-        excludeReason: s.exclude_reason,
-        synthetic: !!s.synthetic,
-        age_band: s.age_band,
-        gender: s.gender,
-        country: s.country,
-        member: s.member,
-        reached: s.max_pt,
-        startedAt: s.created_at,
-        feedbackAt: s.feedback_at,
-        feedback,
-        standoutLines: (feedback.standoutLines ?? []).map((i) => t.transcript[i]).filter(Boolean).map((c) => ({ start: c.start, text: c.text })),
+          id: shortId(s.id),
+          sid: s.id,
+          ...(u.role === 'admin' ? { pid: s.pid } : {}),
+          status: s.status,
+          valid: s.valid,
+          excludeReason: s.exclude_reason,
+          synthetic: !!s.synthetic,
+          age_band: s.age_band,
+          gender: s.gender,
+          country: s.country,
+          member: s.member,
+          reached: s.max_pt,
+          range,
+          journey: j.get(s.id) ?? { interest: [], bored: [], saves: [] },
+          startedAt: s.created_at,
+          lastSeen: s.last_seen,
+          feedbackAt: s.feedback_at,
+          feedback,
+          standoutLines: (feedback.standoutLines ?? []).map((i) => t.transcript[i]).filter(Boolean).map((c) => ({ start: c.start, text: c.text })),
         };
       });
+  });
+
+  // One viewer's own attention line, for the viewer detail panel.
+  router.on('GET', '/api/tests/:id/viewers/:sid/attention', (ctx) => {
+    d.requireUser(ctx);
+    const t = d.getTestOr404(ctx.params.id);
+    const s = store.getSession(ctx.params.sid);
+    if (!s || s.test_id !== t.id) throw new HttpError(404, 'Viewer not found');
+    const range = rangeFor(t.config, d.durationOf(s.cut_id));
+    return { range, buckets: store.attentionBuckets(s.id, range.start, range.end, 120) };
+  });
+
+  // Where and why viewers stopped, and what happened at each attention drop.
+  router.on('GET', '/api/tests/:id/dropoffs', (ctx) => {
+    const { t, cut, includeSynthetic, report: r } = report(ctx);
+    const range = r.range;
+    const sessions = cutSessions(t.id, cut.id, includeSynthetic).filter((s) => s.status !== 'screened_out' && s.status !== 'started');
+    const j = journeys(cut.id);
+    const finished = (s: (typeof sessions)[number]) => s.status === 'watched' || s.status === 'completed' || s.max_pt >= range.end - 5;
+    const stopped = sessions
+      .filter((s) => !finished(s))
+      .map((s) => ({ sid: s.id, id: shortId(s.id), at: Math.round(s.max_pt), status: s.status, reason: j.get(s.id)?.saves.at(-1)?.reason ?? null, who: { age_band: s.age_band, gender: s.gender, country: s.country, member: s.member }, lastSeen: s.last_seen }))
+      .sort((a, b) => a.at - b.at);
+    const BINS = 24;
+    const width = (range.end - range.start) / BINS;
+    const stopBins = Array.from({ length: BINS }, (_, i) => ({ start: range.start + i * width, end: range.start + (i + 1) * width, count: 0 }));
+    for (const x of stopped) stopBins[Math.min(BINS - 1, Math.max(0, Math.floor((x.at - range.start) / width)))].count++;
+    const reasons: Record<string, number> = {};
+    let saves = 0;
+    for (const s of sessions) for (const sv of j.get(s.id)?.saves ?? []) {
+      saves++;
+      reasons[sv.reason] = (reasons[sv.reason] ?? 0) + 1;
+    }
+    const fb = aggregateFeedback(sessions, t.transcript, t.config.survey);
+    const ids = new Set(sessions.map((s) => s.id));
+    const boredAll = [...j.entries()].filter(([id]) => ids.has(id)).flatMap(([, v]) => v.bored);
+    const dropoffs = r.dropoffs.map((dr) => {
+      const lo = dr.start - 15;
+      const hi = dr.end + 15;
+      return {
+        ...dr,
+        boredPresses: boredAll.filter((p) => p >= lo && p <= hi).length,
+        stoppedHere: stopped.filter((x) => x.at >= lo && x.at <= hi).length,
+        notes: fb.boredNotes.filter((q) => (q.at ?? -1) >= lo && (q.at ?? -1) <= hi),
+      };
+    });
+    return {
+      range,
+      viewers: sessions.length,
+      finished: sessions.filter(finished).length,
+      stopped,
+      stopBins,
+      saves,
+      reasons,
+      dropoffs,
+      boredNotes: fb.boredNotes,
+      wouldCut: fb.wouldCut,
+    };
   });
 
   router.on('GET', '/api/tests/:id/export/:format', (ctx) => {
