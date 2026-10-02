@@ -142,6 +142,30 @@ td.cur,th.cur{background:var(--accent-soft)}
 th.cur{color:var(--accent-ink)}
 tr.sum td{font-weight:700;border-top:1px solid var(--line-strong)}
 tr.sub td{color:var(--muted);font-size:13px}
+tr.grp td{background:var(--surface-2)}
+tr.grp td.cur{background:color-mix(in srgb,var(--accent-soft) 70%,var(--surface-2))}
+tr.subch td{font-size:13px}
+.indent{display:inline-block;padding-left:16px;color:var(--muted)}
+tr.src td{font-size:12.5px}
+tr.src td:first-child{padding-left:26px;font-family:var(--mono);word-break:break-all}
+.utm-tools{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:12px}
+.utm-tools select,.utm-tools input[type=search]{font:inherit;font-size:13.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line-strong);border-radius:8px;padding:6px 10px;max-width:100%}
+.utm-tools select{min-width:0;width:min(420px,100%)}
+.utm-tools label{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}
+.lookup{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:14px}
+.lookup h4{margin:0 0 4px;font-size:14px;font-family:var(--mono);word-break:break-all}
+.summary{display:grid;gap:16px}
+.sum-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.sum-grid{grid-template-columns:1fr}}
+.sum-card{background:var(--surface);border-radius:var(--r);padding:16px 18px;min-width:0}
+.sum-card h3{margin:0 0 8px;font-size:14px;font-weight:800;display:flex;gap:8px;align-items:center}
+.sum-card h3 .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:2px 7px}
+.tag.good{color:var(--up);background:var(--up-soft)} .tag.bad{color:var(--down);background:var(--down-soft)} .tag.do{color:var(--accent-ink);background:var(--accent-soft)}
+.sum-card ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.55}
+.sum-card li{margin:0 0 8px}
+.sum-card li b{color:var(--ink)}
+.sum-lead{font-size:16px;line-height:1.55;margin:0;max-width:95ch}
+.sum-lead b{font-weight:800}
 .cmp td:first-child{font-weight:600;min-width:180px}
 .dim{color:var(--faint)}
 .bar-inline{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-left:6px;opacity:.8}
@@ -179,6 +203,14 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     <div class="head"><div class="k">Landing page sign-up rate</div><div class="v skel">…</div><div class="d skel">Sign-ups ÷ sessions</div></div>
   </div>
 
+  <section id="summary">
+    <div class="sec-head">
+      <h2>Performance so far</h2>
+      <p>Written from the live numbers each time the page loads. Compares Oct 2026 with the same campaign days of past launches.</p>
+    </div>
+    <div class="summary" id="summary-body"><div class="empty">Loading…</div></div>
+  </section>
+
   <section id="days">
     <div class="sec-head">
       <h2>Day by day, channel by channel</h2>
@@ -189,7 +221,7 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
         <span class="ctl-label">Day</span><div class="seg" id="day-seg" role="group" aria-label="Campaign day"></div>
         <span class="ctl-label">Show</span><div class="seg" id="mode-seg" role="group" aria-label="Single day or cumulative">
           <button type="button" data-mode="day" aria-pressed="true">That day</button>
-          <button type="button" data-mode="cum" aria-pressed="false">Day 1 to that day</button>
+          <button type="button" data-mode="cum" aria-pressed="false">Cumulative</button>
         </div>
       </div>
       <div id="day-err"></div>
@@ -199,6 +231,23 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <div class="card-head"><div><h3 id="day-chart-title">Sign-ups by channel</h3><p class="hint">Number on each bar. Bars show the selected day.</p></div></div>
       <div class="legend" id="day-legend"></div>
       <div class="chart" id="day-chart"></div>
+    </div>
+  </section>
+
+  <section id="utm">
+    <div class="sec-head">
+      <h2>Sign-ups by UTM source</h2>
+      <p>Every UTM source, grouped into email, social media, platform and other, with each group compared with past launches. Uses the same day and view as the table above.</p>
+    </div>
+    <div class="card">
+      <div class="utm-tools">
+        <span class="ctl-label">Look up a source</span>
+        <select id="utm-pick" aria-label="UTM source"><option value="">Choose a UTM source…</option></select>
+        <input type="search" id="utm-filter" placeholder="Filter sources, e.g. banner, broadcast" aria-label="Filter UTM sources">
+        <label><input type="checkbox" id="utm-past"> Show past launches' sources</label>
+      </div>
+      <div id="utm-lookup"></div>
+      <div class="tw" id="utm-table"><div class="empty">Loading UTM sources from Metabase…</div></div>
     </div>
   </section>
 
@@ -261,7 +310,7 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <p><b>Sessions</b> are GA4 visits that loaded the webinar page, thank-you and replay pages excluded. Visitors who declined analytics cookies send no session ID, so they're counted from their session-start ping. Cookie-declined visits weren't recorded before 2024, so Jul 2023 sessions run slightly low and its sign-up rate slightly high. <b>Sign-up rate</b> is sign-ups ÷ sessions. The headline compares complete days only, because the two sources refresh on different schedules during the day.</p>
       <p><b>Launch dates.</b> Promo start and webinar: 31 Jul → 2 Aug 2023 (webinar on Day 3), 27 Jul → 30 Jul 2024 (Day 4), 5 Mar → 11 Mar 2025 (Day 7), 30 Sep → 6 Oct 2026 (Day 7). Sign-ups before a promo start are left out.</p>
       <p><b>Revenue.</b> Orders from <code>l3_sales.fact_sales_order</code> for the WildFit programme (every language) plus anything sold through a WildFit funnel. The Mar 2025 webinar sold Membership through the WildFit funnel, so it is included. Each order counts once by <code>order_id</code>. Membership renewals are left out. Revenue before a promo start counts as masterclass and is left out. The Jul 2023 and Jul 2024 webinars ran while the masterclass cart was still open, so launch-window revenue in those years includes buyers who never registered for the webinar; the launch table shows how much came from registrants.</p>
-      <p><b>Channels.</b> Email is any Braze or newsletter send. Platform is the Mindvalley app, mindvalley.com banners and internal links. Paid ads is paid social and paid search. Other is traffic with no usable tracking tag, plus SMS and Telegram. Sign-up channel comes from the sign-up's tracking tags; revenue channel from <code>l3_sales.fact_sales_attribution</code>.</p>
+      <p><b>Channels.</b> Sign-ups are grouped four ways. <b>Email total</b> is any Braze or newsletter send. <b>Social media total</b> is organic social posts plus paid social ads. <b>Platform total</b> is the Mindvalley app, mindvalley.com banners and internal links. <b>Other total</b> is paid search, affiliates, direct and search visits, referrals like Substack, and traffic with no usable tracking tag. Sign-up channel comes from the sign-up's tracking tags; revenue channel from <code>l3_sales.fact_sales_attribution</code>.</p>
       <p><b>Differences</b> are 2026 minus the past launch, as a percentage of the past launch, for the same campaign day. Green means 2026 is higher, red means lower. Days are UTC, which is 8am in Malaysia.</p>
     </div>
   </section>
@@ -283,14 +332,22 @@ function dms(iso){return Date.parse(iso+"T00:00:00Z");}
 LAUNCHES.forEach(function(l){ l.webDay = Math.round((dms(l.web)-dms(l.d1))/DAY)+1; l.endDay = l.webDay+7; });
 var CUR = LAUNCHES[0], BASES = LAUNCHES.slice(1);
 var COLOR = {"2026":"var(--accent)","2025":"var(--y25)","2024":"var(--y24)","2023":"var(--y23)"};
-var CHANNELS = ["Email","Platform","Organic social","Paid ads","Affiliate","Direct & search","Other"];
+var CHANNELS = ["Email","Organic social","Paid social","Platform","Paid search","Paid other","Affiliate","Direct & search","Other"];
+var GROUPS = [
+  {name:"Email total", chans:["Email"], note:"Braze and newsletter sends"},
+  {name:"Social media total", chans:["Organic social","Paid social"], note:"organic posts and paid social ads"},
+  {name:"Platform total", chans:["Platform"], note:"Mindvalley app and mindvalley.com banners"},
+  {name:"Other total", chans:["Paid search","Paid other","Affiliate","Direct & search","Other"], note:"search, affiliates, referrals and untagged"}
+];
+function groupOf(ch){for(var i=0;i<GROUPS.length;i++) if(GROUPS[i].chans.indexOf(ch)>=0) return GROUPS[i]; return GROUPS[3];}
 var LIST_NAME = {daily:"Daily newsletter",mvm:"Members (MVM)",highlights:"Highlights",weekly:"Weekly",spanish_nonmvm:"Spanish non-members",spanish_mvm:"Spanish members",coach:"Coach list",vl:"VL list",vllist:"VL list",events:"Events list",mas:"MAS list",holobody:"Holobody",alumni:"Alumni",newslettertest_daily:"Daily newsletter test",newslettertest:"Daily newsletter test",sublist:"Sub-list",digest:"Digest",retargeting:"Retargeting",retargeting_a:"Retargeting",mvmpro:"Members Pro",members:"Members list","daily-es":"Spanish daily",engaged:"Engaged",wf_alumni_es:"WildFit alumni (ES)",newsletter_digest:"Newsletter digest",newsletter_digest_july:"Newsletter digest",newsletter_digest_new_july:"Newsletter digest (new)",mvmes:"Spanish members"};
 
 /* ---------- queries (single source: scripts/wildfit-live/*.sql) ---------- */
 var SERVER = "Metabase";
-var LEADS_SQL = "-- Sign-ups: people, first sign-up per launch on the live webinar page (all languages), staff removed.\nWITH b AS (\n  SELECT '2023' yr, r'^(/[a-z]{2})?/wildfit/transformation90$' rx, DATE '2023-07-31' d1, DATE '2023-08-02' w UNION ALL\n  SELECT '2024', r'^(/[a-z]{2})?/wildfit/transformation90$', DATE '2024-07-27', DATE '2024-07-30' UNION ALL\n  SELECT '2025', r'^(/[a-z]{2})?/wildfit/health90$', DATE '2025-03-05', DATE '2025-03-11' UNION ALL\n  SELECT '2026', r'^(/[a-z]{2})?/wildfit/invite$', DATE '2026-09-30', DATE '2026-10-06'),\nl AS (\n  SELECT b.yr, b.d1, l.user_id, l.signup_timestamp, l.is_member, l.nth_user_signup, l.traffic_channel ch, LOWER(l.utm_source) src,\n    REGEXP_CONTAINS(LOWER(l.form_path), r'^/[a-z]{2}/') non_en,\n    ROW_NUMBER() OVER (PARTITION BY b.yr, l.user_id ORDER BY l.signup_timestamp) rn\n  FROM l3_leads.fact_lead l\n  JOIN b ON REGEXP_CONTAINS(LOWER(RTRIM(l.form_path,'/')), b.rx) AND DATE(l.signup_timestamp) BETWEEN b.d1 AND DATE_ADD(b.w, INTERVAL 7 DAY)\n  LEFT JOIN l3_common.dim_user u ON u.user_id = l.user_id\n  WHERE NOT COALESCE(u.is_mv_user, l.is_mv_user, FALSE))\nSELECT yr, DATE_DIFF(DATE(signup_timestamp), d1, DAY) + 1 AS cday,\n  CASE WHEN ch='Email' OR src LIKE 'email%' THEN 'Email'\n       WHEN ch IN ('App','Web','Internal Referral') OR src LIKE 'mvapp%' OR src LIKE 'mvhome%' THEN 'Platform'\n       WHEN ch='Organic Social' THEN 'Organic social'\n       WHEN ch IN ('Paid Social','Paid Search','Display','Paid Video','Paid Other') THEN 'Paid ads'\n       WHEN ch='Affiliate' THEN 'Affiliate'\n       WHEN ch IN ('Direct','Organic Search','Organic Referral','LLM Referral') THEN 'Direct & search'\n       ELSE 'Other' END AS channel,\n  IFNULL(is_member, FALSE) AS member, IFNULL(nth_user_signup = 1, FALSE) AS first_ever, non_en,\n  COUNT(*) AS people,\n  FORMAT_TIMESTAMP('%Y-%m-%dT%H:%M:%SZ', MAX(signup_timestamp)) AS last_signup\nFROM l WHERE rn = 1\nGROUP BY 1, 2, 3, 4, 5, 6\nORDER BY 1, 2\n";
-var ORDERS_SQL = "-- Orders: WildFit programme (every language) or anything sold through a WildFit funnel. One row per order_id.\n-- phase 'pre' = the 7 days before promo start (counted as masterclass). Renewals and downgrades left out.\nWITH b AS (\n  SELECT '2023' yr, r'^(/[a-z]{2})?/wildfit/transformation90$' rx, DATE '2023-07-31' d1, DATE '2023-08-02' w UNION ALL\n  SELECT '2024', r'^(/[a-z]{2})?/wildfit/transformation90$', DATE '2024-07-27', DATE '2024-07-30' UNION ALL\n  SELECT '2025', r'^(/[a-z]{2})?/wildfit/health90$', DATE '2025-03-05', DATE '2025-03-11' UNION ALL\n  SELECT '2026', r'^(/[a-z]{2})?/wildfit/invite$', DATE '2026-09-30', DATE '2026-10-06'),\nreg AS (\n  SELECT DISTINCT b.yr, l.user_id FROM l3_leads.fact_lead l\n  JOIN b ON REGEXP_CONTAINS(LOWER(RTRIM(l.form_path,'/')), b.rx) AND DATE(l.signup_timestamp) BETWEEN b.d1 AND DATE_ADD(b.w, INTERVAL 7 DAY)),\no AS (\n  SELECT o.order_id, ANY_VALUE(o.order_timestamp) ts, ANY_VALUE(o.order_amount) amt, ANY_VALUE(IFNULL(o.refund_amount, 0)) refund,\n    ANY_VALUE(o.user_id) user_id, ANY_VALUE(o.order_type) otype,\n    ANY_VALUE(CASE WHEN p.sub_business_unit = 'Wildfit' THEN 'WildFit programme'\n                   WHEN p.business_unit = 'Membership' AND p.revenue_model = 'Subscription' THEN 'Membership' ELSE 'Other' END) prod,\n    ANY_VALUE(a.unified_traffic_channel) ch, ANY_VALUE(LOWER(a.utm_source)) src\n  FROM l3_sales.fact_sales_order o\n  LEFT JOIN l3_common.dim_product p USING (product_id)\n  LEFT JOIN l3_sales.fact_sales_attribution a ON o.attribution_order_id = a.order_id\n  WHERE o.order_timestamp >= TIMESTAMP '2023-07-01'\n    AND (p.sub_business_unit = 'Wildfit' OR REGEXP_CONTAINS(LOWER(o.product_funnel), r'^wf[a-z]{0,2}_product$'))\n  GROUP BY 1)\nSELECT b.yr, IF(DATE(o.ts) < b.d1, 'pre', 'launch') AS phase, DATE_DIFF(DATE(o.ts), b.d1, DAY) + 1 AS cday,\n  CASE WHEN o.ch = 'Email' OR o.src LIKE 'email%' THEN 'Email'\n       WHEN o.ch IN ('App','Web','Internal Referral') THEN 'Platform'\n       WHEN o.ch = 'Organic Social' THEN 'Organic social'\n       WHEN o.ch IN ('Paid Social','Paid Search','Display','Paid Video','Paid Other') THEN 'Paid ads'\n       WHEN o.ch = 'Affiliate' THEN 'Affiliate'\n       WHEN o.ch IN ('Direct','Organic Search','Organic Referral','LLM Referral') THEN 'Direct & search'\n       ELSE 'Other' END AS channel,\n  o.prod AS product, reg.user_id IS NOT NULL AS registrant,\n  COUNT(*) AS orders, ROUND(SUM(o.amt), 2) AS revenue, ROUND(SUM(o.refund), 2) AS refunds\nFROM b JOIN o ON DATE(o.ts) BETWEEN DATE_SUB(b.d1, INTERVAL 7 DAY) AND DATE_ADD(b.w, INTERVAL 7 DAY)\nLEFT JOIN reg ON reg.yr = b.yr AND reg.user_id = o.user_id\nWHERE o.otype NOT IN ('Renewal', 'Downgrade')\nGROUP BY 1, 2, 3, 4, 5, 6\nORDER BY 1, 3\n";
+var LEADS_SQL = "-- Sign-ups: people, first sign-up per launch on the live webinar page (all languages), staff removed.\nWITH b AS (\n  SELECT '2023' yr, r'^(/[a-z]{2})?/wildfit/transformation90$' rx, DATE '2023-07-31' d1, DATE '2023-08-02' w UNION ALL\n  SELECT '2024', r'^(/[a-z]{2})?/wildfit/transformation90$', DATE '2024-07-27', DATE '2024-07-30' UNION ALL\n  SELECT '2025', r'^(/[a-z]{2})?/wildfit/health90$', DATE '2025-03-05', DATE '2025-03-11' UNION ALL\n  SELECT '2026', r'^(/[a-z]{2})?/wildfit/invite$', DATE '2026-09-30', DATE '2026-10-06'),\nl AS (\n  SELECT b.yr, b.d1, l.user_id, l.signup_timestamp, l.is_member, l.nth_user_signup, l.traffic_channel ch, LOWER(l.utm_source) src,\n    REGEXP_CONTAINS(LOWER(l.form_path), r'^/[a-z]{2}/') non_en,\n    ROW_NUMBER() OVER (PARTITION BY b.yr, l.user_id ORDER BY l.signup_timestamp) rn\n  FROM l3_leads.fact_lead l\n  JOIN b ON REGEXP_CONTAINS(LOWER(RTRIM(l.form_path,'/')), b.rx) AND DATE(l.signup_timestamp) BETWEEN b.d1 AND DATE_ADD(b.w, INTERVAL 7 DAY)\n  LEFT JOIN l3_common.dim_user u ON u.user_id = l.user_id\n  WHERE NOT COALESCE(u.is_mv_user, l.is_mv_user, FALSE))\nSELECT yr, DATE_DIFF(DATE(signup_timestamp), d1, DAY) + 1 AS cday,\n  CASE WHEN ch='Email' OR src LIKE 'email%' THEN 'Email'\n       WHEN ch IN ('App','Web','Internal Referral') OR src LIKE 'mvapp%' OR src LIKE 'mvhome%' THEN 'Platform'\n       WHEN ch='Organic Social' THEN 'Organic social'\n       WHEN ch = 'Paid Social' THEN 'Paid social'\n       WHEN ch = 'Paid Search' THEN 'Paid search'\n       WHEN ch IN ('Display','Paid Video','Paid Other') THEN 'Paid other'\n       WHEN ch='Affiliate' THEN 'Affiliate'\n       WHEN ch IN ('Direct','Organic Search','Organic Referral','LLM Referral') THEN 'Direct & search'\n       ELSE 'Other' END AS channel,\n  IFNULL(is_member, FALSE) AS member, IFNULL(nth_user_signup = 1, FALSE) AS first_ever, non_en,\n  COUNT(*) AS people,\n  FORMAT_TIMESTAMP('%Y-%m-%dT%H:%M:%SZ', MAX(signup_timestamp)) AS last_signup\nFROM l WHERE rn = 1\nGROUP BY 1, 2, 3, 4, 5, 6\nORDER BY 1, 2\n";
+var ORDERS_SQL = "-- Orders: WildFit programme (every language) or anything sold through a WildFit funnel. One row per order_id.\n-- phase 'pre' = the 7 days before promo start (counted as masterclass). Renewals and downgrades left out.\nWITH b AS (\n  SELECT '2023' yr, r'^(/[a-z]{2})?/wildfit/transformation90$' rx, DATE '2023-07-31' d1, DATE '2023-08-02' w UNION ALL\n  SELECT '2024', r'^(/[a-z]{2})?/wildfit/transformation90$', DATE '2024-07-27', DATE '2024-07-30' UNION ALL\n  SELECT '2025', r'^(/[a-z]{2})?/wildfit/health90$', DATE '2025-03-05', DATE '2025-03-11' UNION ALL\n  SELECT '2026', r'^(/[a-z]{2})?/wildfit/invite$', DATE '2026-09-30', DATE '2026-10-06'),\nreg AS (\n  SELECT DISTINCT b.yr, l.user_id FROM l3_leads.fact_lead l\n  JOIN b ON REGEXP_CONTAINS(LOWER(RTRIM(l.form_path,'/')), b.rx) AND DATE(l.signup_timestamp) BETWEEN b.d1 AND DATE_ADD(b.w, INTERVAL 7 DAY)),\no AS (\n  SELECT o.order_id, ANY_VALUE(o.order_timestamp) ts, ANY_VALUE(o.order_amount) amt, ANY_VALUE(IFNULL(o.refund_amount, 0)) refund,\n    ANY_VALUE(o.user_id) user_id, ANY_VALUE(o.order_type) otype,\n    ANY_VALUE(CASE WHEN p.sub_business_unit = 'Wildfit' THEN 'WildFit programme'\n                   WHEN p.business_unit = 'Membership' AND p.revenue_model = 'Subscription' THEN 'Membership' ELSE 'Other' END) prod,\n    ANY_VALUE(a.unified_traffic_channel) ch, ANY_VALUE(LOWER(a.utm_source)) src\n  FROM l3_sales.fact_sales_order o\n  LEFT JOIN l3_common.dim_product p USING (product_id)\n  LEFT JOIN l3_sales.fact_sales_attribution a ON o.attribution_order_id = a.order_id\n  WHERE o.order_timestamp >= TIMESTAMP '2023-07-01'\n    AND (p.sub_business_unit = 'Wildfit' OR REGEXP_CONTAINS(LOWER(o.product_funnel), r'^wf[a-z]{0,2}_product$'))\n  GROUP BY 1)\nSELECT b.yr, IF(DATE(o.ts) < b.d1, 'pre', 'launch') AS phase, DATE_DIFF(DATE(o.ts), b.d1, DAY) + 1 AS cday,\n  CASE WHEN o.ch = 'Email' OR o.src LIKE 'email%' THEN 'Email'\n       WHEN o.ch IN ('App','Web','Internal Referral') THEN 'Platform'\n       WHEN o.ch = 'Organic Social' THEN 'Organic social'\n       WHEN o.ch = 'Paid Social' THEN 'Paid social'\n       WHEN o.ch = 'Paid Search' THEN 'Paid search'\n       WHEN o.ch IN ('Display','Paid Video','Paid Other') THEN 'Paid other'\n       WHEN o.ch = 'Affiliate' THEN 'Affiliate'\n       WHEN o.ch IN ('Direct','Organic Search','Organic Referral','LLM Referral') THEN 'Direct & search'\n       ELSE 'Other' END AS channel,\n  o.prod AS product, reg.user_id IS NOT NULL AS registrant,\n  COUNT(*) AS orders, ROUND(SUM(o.amt), 2) AS revenue, ROUND(SUM(o.refund), 2) AS refunds\nFROM b JOIN o ON DATE(o.ts) BETWEEN DATE_SUB(b.d1, INTERVAL 7 DAY) AND DATE_ADD(b.w, INTERVAL 7 DAY)\nLEFT JOIN reg ON reg.yr = b.yr AND reg.user_id = o.user_id\nWHERE o.otype NOT IN ('Renewal', 'Downgrade')\nGROUP BY 1, 2, 3, 4, 5, 6\nORDER BY 1, 3\n";
 var EMAILS_SQL = "-- Email sign-ups by send (utm_source), people's first sign-up per launch.\nWITH b AS (\n  SELECT '2023' yr, r'^(/[a-z]{2})?/wildfit/transformation90$' rx, DATE '2023-07-31' d1, DATE '2023-08-02' w UNION ALL\n  SELECT '2024', r'^(/[a-z]{2})?/wildfit/transformation90$', DATE '2024-07-27', DATE '2024-07-30' UNION ALL\n  SELECT '2025', r'^(/[a-z]{2})?/wildfit/health90$', DATE '2025-03-05', DATE '2025-03-11' UNION ALL\n  SELECT '2026', r'^(/[a-z]{2})?/wildfit/invite$', DATE '2026-09-30', DATE '2026-10-06'),\nl AS (\n  SELECT b.yr, b.d1, l.user_id, l.signup_timestamp, l.is_member, l.traffic_channel ch, LOWER(l.utm_source) src,\n    ROW_NUMBER() OVER (PARTITION BY b.yr, l.user_id ORDER BY l.signup_timestamp) rn\n  FROM l3_leads.fact_lead l\n  JOIN b ON REGEXP_CONTAINS(LOWER(RTRIM(l.form_path,'/')), b.rx) AND DATE(l.signup_timestamp) BETWEEN b.d1 AND DATE_ADD(b.w, INTERVAL 7 DAY)\n  LEFT JOIN l3_common.dim_user u ON u.user_id = l.user_id\n  WHERE NOT COALESCE(u.is_mv_user, l.is_mv_user, FALSE))\nSELECT yr, src, DATE_DIFF(DATE(MIN(signup_timestamp)), ANY_VALUE(d1), DAY) + 1 AS first_cday,\n  COUNT(*) AS people, COUNTIF(IFNULL(is_member, FALSE)) AS members\nFROM l WHERE rn = 1 AND (ch = 'Email' OR src LIKE 'email%')\nGROUP BY 1, 2\nORDER BY 1, people DESC\n";
+var UTM_SQL = "-- Sign-ups by UTM source per campaign day: people, first sign-up per launch, staff removed.\nWITH b AS (\n  SELECT '2023' yr, r'^(/[a-z]{2})?/wildfit/transformation90$' rx, DATE '2023-07-31' d1, DATE '2023-08-02' w UNION ALL\n  SELECT '2024', r'^(/[a-z]{2})?/wildfit/transformation90$', DATE '2024-07-27', DATE '2024-07-30' UNION ALL\n  SELECT '2025', r'^(/[a-z]{2})?/wildfit/health90$', DATE '2025-03-05', DATE '2025-03-11' UNION ALL\n  SELECT '2026', r'^(/[a-z]{2})?/wildfit/invite$', DATE '2026-09-30', DATE '2026-10-06'),\nl AS (\n  SELECT b.yr, b.d1, l.user_id, l.signup_timestamp, l.is_member, l.traffic_channel ch,\n    LOWER(IFNULL(NULLIF(TRIM(l.utm_source), ''), '(no utm_source)')) src, LOWER(IFNULL(l.utm_medium, '')) med,\n    ROW_NUMBER() OVER (PARTITION BY b.yr, l.user_id ORDER BY l.signup_timestamp) rn\n  FROM l3_leads.fact_lead l\n  JOIN b ON REGEXP_CONTAINS(LOWER(RTRIM(l.form_path,'/')), b.rx) AND DATE(l.signup_timestamp) BETWEEN b.d1 AND DATE_ADD(b.w, INTERVAL 7 DAY)\n  LEFT JOIN l3_common.dim_user u ON u.user_id = l.user_id\n  WHERE NOT COALESCE(u.is_mv_user, l.is_mv_user, FALSE))\nSELECT yr, src, DATE_DIFF(DATE(signup_timestamp), d1, DAY) + 1 AS cday,\n  ANY_VALUE(med) AS medium, ANY_VALUE(ch) AS channel,\n  COUNT(*) AS people, COUNTIF(IFNULL(is_member, FALSE)) AS members\nFROM l WHERE rn = 1\nGROUP BY 1, 2, 3\nORDER BY 1, 2, 3\n";
 var GA = ["MV DE Layer (mv-etl-staging)","l2_user_behavior","ga4_web_session_event"];
 function F(col){return ["field",{},GA.concat([col])];}
 function addD(iso,n){return new Date(dms(iso)+n*DAY).toISOString().slice(0,10);}
@@ -305,11 +362,12 @@ function sessionsQuery(l){
 var SOURCES = [
   {key:"leads", label:"Sign-ups", tool:"execute_sql", input:{database_id:35, sql:LEADS_SQL}},
   {key:"orders", label:"Orders", tool:"execute_sql", input:{database_id:35, sql:ORDERS_SQL}},
-  {key:"emails", label:"Email lists", tool:"execute_sql", input:{database_id:35, sql:EMAILS_SQL}}
+  {key:"emails", label:"Email lists", tool:"execute_sql", input:{database_id:35, sql:EMAILS_SQL}},
+  {key:"utm", label:"UTM sources", tool:"execute_sql", input:{database_id:35, sql:UTM_SQL}}
 ].concat(LAUNCHES.map(function(l){return {key:"sess"+l.yr, label:"GA4 "+l.label, ga:true, tool:"query", input:{query:sessionsQuery(l), query_handle:null, continuation_token:null}};}));
 
 /* ---------- state ---------- */
-var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}};
+var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, utm:{pick:"", filter:"", past:false}};
 
 /* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -412,6 +470,7 @@ function derive(){
     S.raw.emails.forEach(function(r){ var x=E[r.yr]; if(!x) return; var f=famOf(r.src); var o=x[f]||(x[f]={people:0,members:0,sends:0}); o.people+=num(r.people); o.members+=num(r.members); o.sends+=1; });
     D.emails=E;
   }
+  D.utm=deriveUtm();
   return D;
 }
 function famOf(src){
@@ -429,7 +488,7 @@ function capDay(l,d){return Math.min(d,l.endDay);}
 function renderChrome(){
   var btn=document.getElementById("refresh");
   btn.disabled=S.busy||!S.mcp; btn.querySelector(".t").textContent=S.busy?"Refreshing…":"Refresh data";
-  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders"]},{label:"Metabase · email lists",keys:["emails"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;})}];
+  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders"]},{label:"Metabase · email lists",keys:["emails","utm"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;})}];
   document.getElementById("pills").innerHTML = groups.map(function(g){
     var err=g.keys.map(function(k){return S.err[k];}).filter(Boolean)[0];
     var ats=g.keys.map(function(k){return S.at[k];}).filter(Boolean);
@@ -503,8 +562,8 @@ function renderDay(D){
   if(!D.leads){ return; }
   function lv(l,ch){var dd=capDay(l,d); if(d>l.endDay&&!cum) return null; return cum?leadsCum(D,l.yr,dd,ch):leadsDay(D,l.yr,d,ch);}
   function sv(l){if(!D.sess[l.yr]) return null; if(d>l.endDay&&!cum) return null; return cum?sessCum(D,l.yr,capDay(l,d)):sessDay(D,l.yr,d);}
-  var chans=CHANNELS.filter(function(c){return LAUNCHES.some(function(l){return (lv(l,c)||0)>0;});});
-  var heads='<tr><th>'+(cum?'Day 1 to Day '+d:'Day '+d)+'</th>'+LAUNCHES.map(function(l){
+  function gv(l,g){var s=0,any=false;g.chans.forEach(function(c){var v=lv(l,c);if(v!=null){any=true;s+=v;}});return any?s:null;}
+  var heads='<tr><th>'+(cum?'Cumulative, Day 1–'+d:'Day '+d)+'</th>'+LAUNCHES.map(function(l){
     var wd=d===l.webDay?' · webinar':(d>l.webDay&&d<=l.endDay?' · after webinar':'');
     return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>'+dateOf(l,d)+wd+'</small></th>';}).join("")+
     BASES.map(function(l){return '<th class="n">2026 vs '+esc(l.label.slice(-4))+'</th>';}).join("")+'</tr>';
@@ -514,7 +573,10 @@ function renderDay(D){
       BASES.map(function(l,i){return '<td class="n">'+delta(vals[0],vals[i+1],isRate)+'</td>';}).join("")+'</tr>';
   }
   var t='<table><thead>'+heads+'</thead><tbody>';
-  chans.forEach(function(c){t+=row(c,function(l){return lv(l,c);},fmt);});
+  GROUPS.forEach(function(g){
+    t+=row('<b>'+g.name+'</b><small>'+g.note+'</small>',function(l){return gv(l,g);},fmt,false,"grp");
+    if(g.chans.length>1) g.chans.forEach(function(c){ if(LAUNCHES.some(function(l){return (lv(l,c)||0)>0;})) t+=row('<span class="indent">'+c+'</span>',function(l){return lv(l,c);},fmt,false,"subch"); });
+  });
   t+=row("All sign-ups",function(l){return lv(l);},fmt,false,"sum");
   t+=row("Landing page sessions",sv,fmt,false,"sub");
   t+=row("Sign-up rate",function(l){var a=lv(l),b=sv(l);return (a!=null&&b)?a/b:null;},function(v){return pctS(v,1);},true,"sub");
@@ -522,9 +584,9 @@ function renderDay(D){
   if(d===td) t+='<p class="hint" style="margin-top:8px">Day '+d+' is still running for Oct 2026, so it is compared with complete days of past launches.</p>';
   document.getElementById("day-table").innerHTML=t;
   // chart: grouped bars per channel, numbers on top
-  document.getElementById("day-chart-title").textContent="Sign-ups by channel · "+(cum?"Day 1 to Day "+d:"Day "+d);
+  document.getElementById("day-chart-title").textContent="Sign-ups by channel group · "+(cum?"cumulative, Day 1–"+d:"Day "+d);
   document.getElementById("day-legend").innerHTML=LAUNCHES.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
-  var groups=chans.map(function(c){return {name:c, vals:LAUNCHES.map(function(l){return lv(l,c)||0;})};});
+  var groups=GROUPS.map(function(g){return {name:g.name.replace(' total',''), vals:LAUNCHES.map(function(l){return gv(l,g)||0;})};});
   groupedBars("day-chart", groups, fmt);
 }
 function dateOf(l,d){var x=new Date(dms(l.d1)+(d-1)*DAY);return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});}
@@ -534,7 +596,7 @@ function attachTip(box){var tip=document.createElement("div");tip.className="tip
 function groupedBars(id, groups, fmtV){
   var box=document.getElementById(id);
   if(!groups.length){box.innerHTML='<div class="empty">No sign-ups on this day yet.</div>';return;}
-  var W=Math.max(560,groups.length*150), H=260, ml=10, mr=10, mt=22, mb=40;
+  var W=Math.max(900,groups.length*150), H=280, ml=10, mr=10, mt=22, mb=40;
   var max=niceMax(Math.max.apply(null,groups.map(function(g){return Math.max.apply(null,g.vals);})));
   var gw=(W-ml-mr)/groups.length, bw=Math.min(30,(gw-24)/LAUNCHES.length);
   var y=function(v){return mt+(1-v/max)*(H-mt-mb);};
@@ -638,8 +700,8 @@ function renderCompare(D){
     ["First-ever Mindvalley sign-up",function(l){var x=D.leads[l.yr];return pctS(x.first,x.total,0)+'<small>'+fmt(x.first)+'</small>';}],
     ["Non-English pages",function(l){var x=D.leads[l.yr];return pctS(x.nonEn,x.total,0)+'<small>'+fmt(x.nonEn)+'</small>';}],
     ["Sign-ups from email",function(l){var x=D.leads[l.yr];return fmt(x.byCh.Email||0)+'<small>'+pctS(x.byCh.Email||0,x.total,0)+'</small>';}],
-    ["Sign-ups from paid ads",function(l){return fmt(D.leads[l.yr].byCh["Paid ads"]||0);}],
-    ["Sign-ups from organic social",function(l){return fmt(D.leads[l.yr].byCh["Organic social"]||0);}],
+    ["Sign-ups from social media",function(l){var x=D.leads[l.yr].byCh,v=(x["Organic social"]||0)+(x["Paid social"]||0);return fmt(v)+'<small>organic '+fmt(x["Organic social"]||0)+' · paid '+fmt(x["Paid social"]||0)+'</small>';}],
+    ["Sign-ups from platform",function(l){return fmt(D.leads[l.yr].byCh.Platform||0)+'<small>app and website banners</small>';}],
     ["What the webinar sold",function(l){var x=o(l);if(!x)return'…';return l===CUR&&x.orders<5?'<span class="dim">Sales open 6 Oct</span>':esc(mainProd(x));}],
     ["Orders",function(l){var x=o(l);return x?fmt(x.orders):'…';}],
     ["Gross revenue",function(l){var x=o(l);return x?'<b>'+usd(x.rev)+'</b>':'…';}],
@@ -659,11 +721,10 @@ function renderRevenue(D){
   if(!D.orders){var e=secErr(["orders"]);document.getElementById("rev-chart").innerHTML='<div class="empty">'+(e||'Loading orders from Metabase…')+'</div>';document.getElementById("rev-table").innerHTML='';document.getElementById("sales-grid").innerHTML='';return;}
   var O=D.orders;
   vbars("rev-chart", LAUNCHES.slice().reverse().map(function(l){return {label:l.label, v:O[l.yr].rev, color:COLOR[l.yr], strong:l===CUR};}), usd, {W:520, H:300, aria:"Gross revenue by launch", labelAll:true});
-  var chans=CHANNELS.filter(function(c){return LAUNCHES.some(function(l){return (O[l.yr].byCh[c]||{}).rev>0;});});
-  var t='<table><thead><tr><th>Channel</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
-  chans.forEach(function(c){t+='<tr><td>'+c+'</td>'+LAUNCHES.map(function(l){var v=(O[l.yr].byCh[c]||{}).rev||0;return '<td class="n'+(l===CUR?' cur':'')+'">'+(v?usd(v):'<span class="dim">–</span>')+'<small>'+(v?pctS(v,O[l.yr].rev,0):'')+'</small></td>';}).join("")+'</tr>';});
+  var t='<table><thead><tr><th>Channel group</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
+  GROUPS.forEach(function(g){t+='<tr><td>'+g.name.replace(' total','')+'<small>'+g.note+'</small></td>'+LAUNCHES.map(function(l){var v=0;g.chans.forEach(function(c){v+=(O[l.yr].byCh[c]||{}).rev||0;});return '<td class="n'+(l===CUR?' cur':'')+'">'+(v?usd(v):'<span class="dim">–</span>')+'<small>'+(v?pctS(v,O[l.yr].rev,0):'')+'</small></td>';}).join("")+'</tr>';});
   t+='<tr class="sum"><td>Total</td>'+LAUNCHES.map(function(l){return '<td class="n'+(l===CUR?' cur':'')+'">'+usd(O[l.yr].rev)+'<small>'+fmt(O[l.yr].orders)+' orders</small></td>';}).join("")+'</tr>';
-  document.getElementById("rev-table").innerHTML=secErr(["orders"])+t+'</tbody></table><p class="hint" style="margin-top:8px">Other is orders with no usable tracking tag. In Jul 2023 that was nearly half of revenue.</p>';
+  document.getElementById("rev-table").innerHTML=secErr(["orders"])+t+'</tbody></table><p class="hint" style="margin-top:8px">Other includes orders with no usable tracking tag. In Jul 2023 that was nearly half of revenue.</p>';
   var grid=document.getElementById("sales-grid"); grid.innerHTML="";
   var max=0; LAUNCHES.forEach(function(l){for(var k in O[l.yr].byDay)max=Math.max(max,O[l.yr].byDay[k].rev);});
   LAUNCHES.forEach(function(l){
@@ -683,27 +744,164 @@ function renderEmail(D){
   LAUNCHES.forEach(function(l){for(var k in E[l.yr]){(fams[k]=fams[k]||{})[l.yr]=E[l.yr][k];}});
   var keys=Object.keys(fams).sort(function(a,b){var ca=(fams[a][CUR.yr]||{}).people||0,cb=(fams[b][CUR.yr]||{}).people||0;if(cb!==ca)return cb-ca;var ta=0,tb=0;LAUNCHES.forEach(function(l){ta+=(fams[a][l.yr]||{}).people||0;tb+=(fams[b][l.yr]||{}).people||0;});return tb-ta;});
   var maxPer=0; keys.forEach(function(k){LAUNCHES.forEach(function(l){var o=fams[k][l.yr];if(o)maxPer=Math.max(maxPer,o.people/o.sends);});});
-  var t='<table><thead><tr><th>List</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>sign-ups · per send</small></th>';}).join("")+'<th class="n">2026 vs 2025</th></tr></thead><tbody>';
+  var t='<table><thead><tr><th>List</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>sign-ups</small></th>';}).join("")+'<th class="n">2026 vs 2025<small>sign-ups per email</small></th></tr></thead><tbody>';
   keys.forEach(function(k){
     t+='<tr><td>'+esc(LIST_NAME[k]||k)+'<small>'+esc(k)+'</small></td>';
-    LAUNCHES.forEach(function(l){var o=fams[k][l.yr],c=l===CUR?' cur':'';if(!o){t+='<td class="n'+c+'"><span class="dim">–</span></td>';return;}var per=o.people/o.sends;t+='<td class="n'+c+'">'+fmt(o.people)+'<small>'+fmt(per)+' × '+o.sends+' send'+(o.sends>1?'s':'')+'<span class="bar-inline" style="width:'+Math.max(2,Math.round(per/maxPer*48))+'px"></span></small></td>';});
-    var a=fams[k][CUR.yr], b=fams[k]["2025"]; t+='<td class="n">'+(a&&b?delta(a.people/a.sends,b.people/b.sends)+'<small>per send</small>':'<span class="dim">–</span>')+'</td></tr>';
+    LAUNCHES.forEach(function(l){var o=fams[k][l.yr],c=l===CUR?' cur':'';if(!o){t+='<td class="n'+c+'"><span class="dim">–</span></td>';return;}var per=o.people/o.sends;t+='<td class="n'+c+'"><b>'+fmt(o.people)+'</b><small>'+o.sends+' email'+(o.sends>1?'s':'')+' sent'+(o.sends>1?' · avg '+fmt(per)+' each':'')+'</small></td>';});
+    var a=fams[k][CUR.yr], b=fams[k]["2025"]; t+='<td class="n">'+(a&&b?delta(a.people/a.sends,b.people/b.sends):'<span class="dim">–</span>')+'</td></tr>';
   });
-  t+='<tr class="sum"><td>All email</td>'+LAUNCHES.map(function(l){var s=0,n=0;for(var k in E[l.yr]){s+=E[l.yr][k].people;n+=E[l.yr][k].sends;}return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(s)+'<small>'+n+' sends</small></td>';}).join("")+'<td></td></tr>';
-  el.innerHTML=secErr(["emails"])+t+'</tbody></table><p class="hint" style="margin-top:10px">A send is one tracking code (one email to one list). Sign-ups count people whose first sign-up came from an email tag.</p>';
+  t+='<tr class="sum"><td>All email</td>'+LAUNCHES.map(function(l){var s=0,n=0;for(var k in E[l.yr]){s+=E[l.yr][k].people;n+=E[l.yr][k].sends;}return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(s)+'<small>'+n+' emails sent</small></td>';}).join("")+'<td></td></tr>';
+  el.innerHTML=secErr(["emails"])+t+'</tbody></table><p class="hint" style="margin-top:10px">How to read a cell: <b>1,314</b> with "4 emails sent · avg 329 each" means that list got 4 different emails in the launch window, and together they brought 1,314 sign-ups, about 329 per email. Each email is counted by its own tracking code. The last column compares sign-ups per email, so a list that got more emails doesn\'t look better just for that.</p>';
 }
+
+/* ---------- UTM sources ---------- */
+function chanOf(ch, src){
+  src=src||"";
+  if(ch==="Email"||src.indexOf("email")===0) return "Email";
+  if(ch==="App"||ch==="Web"||ch==="Internal Referral"||/^mvapp|^mvhome/.test(src)) return "Platform";
+  if(ch==="Organic Social") return "Organic social";
+  if(ch==="Paid Social") return "Paid social";
+  if(ch==="Paid Search") return "Paid search";
+  if(ch==="Display"||ch==="Paid Video"||ch==="Paid Other") return "Paid other";
+  if(ch==="Affiliate") return "Affiliate";
+  if(ch==="Direct"||ch==="Organic Search"||ch==="Organic Referral"||ch==="LLM Referral") return "Direct & search";
+  return "Other";
+}
+function deriveUtm(){
+  if(!S.raw.utm) return null;
+  var U={}; LAUNCHES.forEach(function(l){U[l.yr]={};});
+  S.raw.utm.forEach(function(r){
+    var x=U[r.yr]; if(!x) return; var src=r.src||"(no utm_source)";
+    var o=x[src]||(x[src]={days:{},total:0,members:0,ch:chanOf(r.channel,src),medium:r.medium||""});
+    var d=num(r.cday), n=num(r.people); o.days[d]=(o.days[d]||0)+n; o.total+=n; o.members+=num(r.members);
+  });
+  return U;
+}
+function utmVal(o,l,d,cum){ if(!o) return null; if(!cum){ if(d>l.endDay) return null; return o.days[d]||0; } var s=0; for(var i=1;i<=capDay(l,d);i++) s+=(o.days[i]||0); return s; }
+function renderUtm(D){
+  var U=D.utm, el=document.getElementById("utm-table"), pick=document.getElementById("utm-pick");
+  if(!U){ el.innerHTML='<div class="empty">'+(secErr(["utm"])||'Loading UTM sources from Metabase…')+'</div>'; return; }
+  var d=S.sel.day||1, cum=S.sel.mode==="cum";
+  // all sources, by group
+  var all={}; LAUNCHES.forEach(function(l){ for(var src in U[l.yr]){ var o=U[l.yr][src]; var a=all[src]||(all[src]={src:src,ch:o.ch,by:{}}); a.by[l.yr]=o; if(l===CUR) a.ch=o.ch; } });
+  var list=Object.keys(all).map(function(k){return all[k];});
+  function curTotal(a){return a.by[CUR.yr]?a.by[CUR.yr].total:0;}
+  function anyTotal(a){var s=0;LAUNCHES.forEach(function(l){if(a.by[l.yr])s+=a.by[l.yr].total;});return s;}
+  list.sort(function(a,b){return (curTotal(b)-curTotal(a))||(anyTotal(b)-anyTotal(a));});
+  // picker
+  if(pick.dataset.n!==String(list.length)){
+    var html='<option value="">Choose a UTM source…</option>';
+    GROUPS.forEach(function(g){
+      var items=list.filter(function(a){return g.chans.indexOf(a.ch)>=0;}); if(!items.length) return;
+      html+='<optgroup label="'+esc(g.name.replace(" total",""))+'">'+items.map(function(a){return '<option value="'+esc(a.src)+'"'+(a.src===S.utm.pick?' selected':'')+'>'+esc(a.src)+' — '+(a.by[CUR.yr]?fmt(curTotal(a))+' in 2026':'past launches only')+'</option>';}).join("")+'</optgroup>';
+    });
+    pick.innerHTML=html; pick.dataset.n=String(list.length);
+  }
+  // lookup panel
+  var lk=document.getElementById("utm-lookup");
+  if(S.utm.pick&&all[S.utm.pick]){
+    var a=all[S.utm.pick], maxD=Math.max.apply(null,LAUNCHES.map(function(l){return l.endDay;})), td=todayCday();
+    var t='<div class="lookup"><h4>'+esc(a.src)+'</h4><p class="hint" style="margin:0 0 8px">'+esc(groupOf(a.ch).name.replace(" total",""))+' · '+esc(a.ch)+(a.by[CUR.yr]&&a.by[CUR.yr].medium?' · utm_medium '+esc(a.by[CUR.yr].medium):'')+'</p><div class="tw"><table><thead><tr><th>Launch</th>';
+    for(var i=1;i<=maxD;i++) t+='<th class="n">Day '+i+'</th>'; t+='<th class="n">Total</th><th class="n">Members</th></tr></thead><tbody>';
+    LAUNCHES.forEach(function(l){ var o=a.by[l.yr]; if(!o) return; t+='<tr><td><b>'+esc(l.label)+'</b></td>'; for(var i=1;i<=maxD;i++){ var out=i>l.endDay||(l===CUR&&i>td); t+='<td class="n'+(i===l.webDay?' webcell':'')+'">'+(out?'':fmt(o.days[i]||0))+'</td>'; } t+='<td class="n"><b>'+fmt(o.total)+'</b></td><td class="n">'+pctS(o.members,o.total,0)+'</td></tr>'; });
+    lk.innerHTML=t+'</tbody></table></div></div>';
+  } else lk.innerHTML='';
+  // grouped table
+  var heads='<tr><th>'+(cum?'Cumulative, Day 1–'+d:'Day '+d)+'</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+BASES.map(function(l){return '<th class="n">2026 vs '+esc(l.label.slice(-4))+'</th>';}).join("")+'</tr>';
+  function sumOver(srcs,l){var s=0;srcs.forEach(function(a){var v=utmVal(a.by[l.yr],l,d,cum);if(v)s+=v;});return (d>l.endDay&&!cum)?null:s;}
+  function row(label,vals,cls,withDelta){
+    return '<tr class="'+cls+'"><td>'+label+'</td>'+vals.map(function(v,i){return '<td class="n'+(i===0?' cur':'')+'">'+(v==null?'<span class="dim">–</span>':fmt(v))+'</td>';}).join("")+
+      BASES.map(function(l,i){return '<td class="n">'+(withDelta||(vals[0]!=null&&vals[i+1]!=null)?delta(vals[0],vals[i+1]):'<span class="dim">–</span>')+'</td>';}).join("")+'</tr>';
+  }
+  var f=S.utm.filter, t2='<table><thead>'+heads+'</thead><tbody>';
+  GROUPS.forEach(function(g){
+    var gs=list.filter(function(a){return g.chans.indexOf(a.ch)>=0;});
+    t2+=row('<b>'+g.name+'</b><small>'+g.note+'</small>', LAUNCHES.map(function(l){return sumOver(gs,l);}), "grp", true);
+    g.chans.forEach(function(c){
+      var cs=gs.filter(function(a){return a.ch===c;}); if(!cs.length) return;
+      if(g.chans.length>1) t2+=row('<span class="indent"><b>'+c+'</b></span>', LAUNCHES.map(function(l){return sumOver(cs,l);}), "subch", true);
+      cs.forEach(function(a){
+        var cur=a.by[CUR.yr]; if(!cur&&!S.utm.past) return; if(f&&a.src.indexOf(f)<0) return;
+        var vals=LAUNCHES.map(function(l){var o=a.by[l.yr];return o?utmVal(o,l,d,cum):null;});
+        if(!S.utm.past&&!(vals[0]>0)&&cum) return;
+        t2+=row(esc(a.src), vals, "src", false);
+      });
+    });
+  });
+  t2+=row('<b>All sign-ups</b>', LAUNCHES.map(function(l){return sumOver(list,l);}), "sum", true);
+  el.innerHTML=secErr(["utm"])+t2+'</tbody></table><p class="hint" style="margin-top:8px">Group and channel rows include every source, including past-only ones. Source rows show 2026 sources'+(S.utm.past?' and past launches\' sources':'')+'; a dash means that exact source wasn\'t used in that launch. Pick a source above to see it day by day.</p>';
+}
+
+/* ---------- summary ---------- */
+function renderSummary(D){
+  var el=document.getElementById("summary-body");
+  if(!D.leads){ el.innerHTML='<div class="empty">'+(secErr(["leads"])||'Loading…')+'</div>'; return; }
+  var td=capDay(CUR,todayCday()), K=Math.max(td-1,1), partial=td-1<1;
+  function gcum(yr,g,d){var s=0;g.chans.forEach(function(c){s+=leadsCum(D,yr,d,c)||0;});return s;}
+  function ccum(yr,c,d){return leadsCum(D,yr,d,c)||0;}
+  function pctd(a,b){if(!b) return null; return (a-b)/b*100;}
+  function pd(p){return p==null?'–':(p>=0?'+':'')+Math.round(p).toLocaleString("en-US")+'%';}
+  var curK=leadsCum(D,CUR.yr,K), L25=LAUNCHES[1], L24=LAUNCHES[2], L23=LAUNCHES[3];
+  var lead='After <b>'+(partial?'Day 1 so far':K+' complete day'+(K>1?'s':''))+'</b>, Oct 2026 has <b>'+fmt(curK)+'</b> sign-ups: '+BASES.map(function(l){var b=leadsCum(D,l.yr,capDay(l,K));return '<b>'+pd(pctd(curK,b))+'</b> vs '+l.label+' ('+fmt(b)+')';}).join(', ')+' at the same point.';
+  var sK=sessCum(D,CUR.yr,K); if(sK){ var r=curK/sK, r25=D.sess[L25.yr]?leadsCum(D,L25.yr,K)/sessCum(D,L25.yr,K):null; lead+=' The landing page converts <b>'+pctS(r,1,0)+'</b> of sessions'+(r25?' vs '+pctS(r25,1,0)+' in Mar 2025':'')+'.'; }
+  var daysLeft=CUR.webDay-td, total=D.leads[CUR.yr].total, gap=D.leads[L25.yr].total-total;
+  if(daysLeft>0&&gap>0) lead+=' To pass Mar 2025\'s final <b>'+fmt(D.leads[L25.yr].total)+'</b>, the launch needs <b>'+fmt(gap)+'</b> more sign-ups, about <b>'+fmt(gap/(daysLeft+1))+' a day</b> through webinar day.';
+  else if(gap<=0) lead+=' Oct 2026 has already passed Mar 2025\'s final total of '+fmt(D.leads[L25.yr].total)+'.';
+  // working / behind by group vs 2025 and 2024 at same day
+  var good=[], bad=[];
+  GROUPS.forEach(function(g){
+    var c=gcum(CUR.yr,g,K), b25=gcum(L25.yr,g,K), b24=gcum(L24.yr,g,capDay(L24,K)), b23=gcum(L23.yr,g,capDay(L23,K));
+    var line='<b>'+g.name.replace(' total','')+'</b>: '+fmt(c)+' vs '+fmt(b25)+' (2025), '+fmt(b24)+' (2024), '+fmt(b23)+' (2023)';
+    if(c>=b25&&c>=b24) good.push(line+'.'); else bad.push(line+'. Behind '+[c<b25?'2025':null,c<b24?'2024':null,c<b23?'2023':null].filter(Boolean).join(' and ')+' at the same day.');
+  });
+  var r=sK?curK/sK:null; if(r&&r>0.5) good.push('<b>Landing page</b>: '+pctS(r,1,0)+' of sessions sign up. Traffic is warm and the page converts; the limit is how many people reach it.');
+  // forward-looking: what baselines added after Day K up to webinar day
+  var ahead=[];
+  [L25,L24].forEach(function(l){
+    if(K>=l.webDay) return;
+    GROUPS.forEach(function(g){ var add=gcum(l.yr,g,l.webDay)-gcum(l.yr,g,K); if(add>200) ahead.push({l:l,g:g,add:add}); });
+  });
+  ahead.sort(function(a,b){return b.add-a.add;});
+  ahead.slice(0,2).forEach(function(a){ bad.push('<b>Still to come in '+a.l.label+'</b>: from Day '+(K+1)+' to webinar day it added <b>'+fmt(a.add)+'</b> sign-ups from '+a.g.name.replace(' total','').toLowerCase()+'. Oct 2026 needs a plan to match that.'); });
+  var x=D.leads[CUR.yr], x25=D.leads[L25.yr];
+  var fe=x.total?x.first/x.total:0, fe25=x25.total?x25.first/x25.total:0;
+  if(fe<fe25) bad.push('<b>New people</b>: only '+pctS(x.first,x.total,0)+' are first-ever Mindvalley sign-ups vs '+pctS(x25.first,x25.total,0)+' in Mar 2025. This launch is mostly reaching people already on the lists.');
+  // recommendations
+  var todo=[];
+  var ps=ccum(CUR.yr,"Paid social",td), ps25=ccum(L25.yr,"Paid social",L25.webDay), ps25k=ccum(L25.yr,"Paid social",K);
+  if(ps25>500&&ps<ps25*0.3) todo.push('<b>Scale paid social now.</b> Mar 2025 got <b>'+fmt(ps25)+'</b> sign-ups from paid social by webinar day ('+fmt(ps25-ps25k)+' of them after Day '+K+'), and it is the main source of first-time sign-ups. Oct 2026 has '+fmt(ps)+'. Budget and creative decided in the next day still has 4–5 days to work.');
+  var e1=leadsDay(D,CUR.yr,1,"Email")||0, eL=leadsDay(D,CUR.yr,K,"Email")||0;
+  if(K>1&&eL<e1*0.8) todo.push('<b>Plan the remaining email sends.</b> Email fell from '+fmt(e1)+' on Day 1 to '+fmt(eL)+' on Day '+K+'. Lists respond to each new send, so map one send per list per day to webinar day: a reminder to non-openers, the Spanish and German lists, and a "tomorrow" and "today" email. Mar 2025 sent '+sendCount(D,L25.yr)+' emails in its window; Oct 2026 has sent '+sendCount(D,CUR.yr)+' so far.');
+  else if(K<=1) todo.push('<b>Plan the remaining email sends.</b> Day 1 was one send to every list. Each new send brings a fresh spike, so map one send per list per day to webinar day.');
+  var pl=ccum(CUR.yr,"Platform",td), pl25=ccum(L25.yr,"Platform",L25.webDay);
+  if(pl<pl25) todo.push('<b>Push the platform harder.</b> App and website banners brought '+fmt(pl)+' so far. Mar 2025 reached '+fmt(pl25)+' by webinar day, most of it from an app push on Day 3. Add an app push notification and keep the featured banners live through webinar day.');
+  var os=ccum(CUR.yr,"Organic social",td), os24=ccum(L24.yr,"Organic social",L24.webDay);
+  if(os<os24) todo.push('<b>Keep organic social posting daily.</b> '+fmt(os)+' so far vs '+fmt(os24)+' in Jul 2024 by its webinar day. Broadcast channels (Facebook and Instagram broadcasts) are working; add stories and a countdown in the last two days.');
+  var oth=leadsCum(D,CUR.yr,td,"Other")||0; if(total&&oth/total>0.03) todo.push('<b>Tag every link.</b> '+fmt(oth)+' sign-ups ('+pctS(oth,total,0)+') have no usable UTM source, so we can\'t credit them. Check the blog, Substack and partner links.');
+  if(fe<fe25) todo.push('<b>Reach new people.</b> Use paid social to cold audiences, affiliates and partner shares. People already on the list are signing up; the extra growth has to come from outside it.');
+  var O=D.orders; if(O){ var rps24=O[L24.yr].rev/(D.leads[L24.yr].total||1), rps25=O[L25.yr].rev/(D.leads[L25.yr].total||1); todo.push('<b>Get the offer ready for 6 Oct.</b> Revenue per sign-up was <b>$'+rps24.toFixed(0)+'</b> in Jul 2024 (WildFit programme) and <b>$'+rps25.toFixed(2)+'</b> in Mar 2025 (Membership). What the webinar sells will matter more than the sign-up count.'); }
+  el.innerHTML='<div class="card"><p class="sum-lead">'+lead+'</p></div><div class="sum-grid">'+
+    '<div class="sum-card"><h3><span class="tag good">Working</span>Ahead of past launches</h3><ul>'+(good.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Nothing is ahead of both 2025 and 2024 yet.</li>')+'</ul></div>'+
+    '<div class="sum-card"><h3><span class="tag bad">Missing</span>Behind or still to come</h3><ul>'+(bad.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Every channel group is ahead of 2025 and 2024.</li>')+'</ul></div>'+
+    '<div class="sum-card"><h3><span class="tag do">Next</span>What to do now</h3><ul>'+todo.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div></div>';
+}
+function sendCount(D,yr){ if(!D.emails) return '–'; var n=0; for(var k in D.emails[yr]) n+=D.emails[yr][k].sends; return n; }
 
 /* ---------- render ---------- */
 function renderAll(){
   renderChrome();
   var D=derive();
-  renderHeads(D); renderDay(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
+  renderHeads(D); renderSummary(D); renderDay(D); renderUtm(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
 }
 
 /* ---------- events ---------- */
 document.getElementById("refresh").addEventListener("click",function(){loadAll(true);});
 document.getElementById("day-seg").addEventListener("click",function(e){var b=e.target.closest("button[data-day]");if(!b||b.disabled)return;S.sel.day=+b.dataset.day;renderAll();});
 document.getElementById("mode-seg").addEventListener("click",function(e){var b=e.target.closest("button[data-mode]");if(!b)return;S.sel.mode=b.dataset.mode;document.querySelectorAll("#mode-seg button").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});renderAll();});
+
+document.getElementById("utm-pick").addEventListener("change",function(e){S.utm.pick=e.target.value;renderUtm(derive());});
+document.getElementById("utm-filter").addEventListener("input",function(e){S.utm.filter=e.target.value.toLowerCase();renderUtm(derive());});
+document.getElementById("utm-past").addEventListener("change",function(e){S.utm.past=e.target.checked;renderUtm(derive());});
 
 /* ---------- boot ---------- */
 renderAll();

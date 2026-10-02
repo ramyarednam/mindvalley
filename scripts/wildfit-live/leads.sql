@@ -13,7 +13,9 @@ SELECT yr, DATE_DIFF(DATE(signup_timestamp), d1, DAY) + 1 AS cday,
   CASE WHEN ch='Email' OR src LIKE 'email%' THEN 'Email'
        WHEN ch IN ('App','Web','Internal Referral') OR src LIKE 'mvapp%' OR src LIKE 'mvhome%' THEN 'Platform'
        WHEN ch='Organic Social' THEN 'Organic social'
-       WHEN ch IN ('Paid Social','Paid Search','Display','Paid Video','Paid Other') THEN 'Paid ads'
+       WHEN ch = 'Paid Social' THEN 'Paid social'
+       WHEN ch = 'Paid Search' THEN 'Paid search'
+       WHEN ch IN ('Display','Paid Video','Paid Other') THEN 'Paid other'
        WHEN ch='Affiliate' THEN 'Affiliate'
        WHEN ch IN ('Direct','Organic Search','Organic Referral','LLM Referral') THEN 'Direct & search'
        ELSE 'Other' END AS channel,

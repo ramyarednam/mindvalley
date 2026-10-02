@@ -21,7 +21,9 @@ SELECT b.yr, IF(DATE(o.ts) < b.d1, 'pre', 'launch') AS phase, DATE_DIFF(DATE(o.t
   CASE WHEN o.ch = 'Email' OR o.src LIKE 'email%' THEN 'Email'
        WHEN o.ch IN ('App','Web','Internal Referral') THEN 'Platform'
        WHEN o.ch = 'Organic Social' THEN 'Organic social'
-       WHEN o.ch IN ('Paid Social','Paid Search','Display','Paid Video','Paid Other') THEN 'Paid ads'
+       WHEN o.ch = 'Paid Social' THEN 'Paid social'
+       WHEN o.ch = 'Paid Search' THEN 'Paid search'
+       WHEN o.ch IN ('Display','Paid Video','Paid Other') THEN 'Paid other'
        WHEN o.ch = 'Affiliate' THEN 'Affiliate'
        WHEN o.ch IN ('Direct','Organic Search','Organic Referral','LLM Referral') THEN 'Direct & search'
        ELSE 'Other' END AS channel,

@@ -10,7 +10,7 @@ Published at https://claude.ai/artifact/XPu7WpWUgczfZziTqLfjt9 with the Metabase
 (`execute_sql`, `query`). The page runs its queries when it opens, using the viewer's own
 Metabase connection; **Refresh data** re-runs them. Nothing needs rebuilding for new data.
 
-- Sign-ups, orders and email lists: `scripts/wildfit-live/{leads,orders,emails}.sql` (MV BigQuery, database 35).
+- Sign-ups, orders, email lists and UTM sources: `scripts/wildfit-live/{leads,orders,emails,utm}.sql` (MV BigQuery, database 35).
   Launch dates and pages live in `scripts/wildfit-live/launches.sql`.
 - Sessions: GA4 `l2_user_behavior.ga4_web_session_event` (MV DE Layer), built in the template's `sessionsQuery`.
 
