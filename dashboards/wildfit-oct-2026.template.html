@@ -145,6 +145,8 @@ tr.sub td{color:var(--muted);font-size:13px}
 tr.grp td{background:var(--surface-2)}
 tr.grp td.cur{background:color-mix(in srgb,var(--accent-soft) 70%,var(--surface-2))}
 tr.subch td{font-size:13px}
+tr.emailsub td{background:var(--surface-2);font-size:13px}
+tr.emailsub td.cur{background:color-mix(in srgb,var(--accent-soft) 70%,var(--surface-2))}
 .indent{display:inline-block;padding-left:16px;color:var(--muted)}
 tr.src td{font-size:12.5px}
 tr.src td:first-child{padding-left:26px;font-family:var(--mono);word-break:break-all}
@@ -211,6 +213,29 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     <div class="summary" id="summary-body"><div class="empty">Loading…</div></div>
   </section>
 
+  <section id="breakdown">
+    <div class="sec-head">
+      <h2>Channel breakdown</h2>
+      <p>The team's lead-source report: every UTM source under its channel, with members and non-members, compared with a past launch at the same campaign day.</p>
+    </div>
+    <div class="card">
+      <div class="controls">
+        <span class="ctl-label">Through</span><div class="seg" id="bd-day" role="group" aria-label="Through campaign day"></div>
+        <span class="ctl-label">Compare with</span><div class="seg" id="bd-base" role="group" aria-label="Baseline launch"></div>
+      </div>
+      <h3 style="font-size:15px;margin:4px 0 8px">Summary by channel</h3>
+      <div class="tw" id="bd-small"><div class="empty">Loading lead sources from Metabase…</div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><h3>All lead sources</h3><p class="hint">Sources are listed above the subtotal they add up to. Email is split by email, Ads by paid social and paid search.</p></div></div>
+      <div class="utm-tools">
+        <input type="search" id="bd-filter" placeholder="Filter sources, e.g. banner, facebook, broadcast" aria-label="Filter lead sources">
+        <label><input type="checkbox" id="bd-past"> Also list sources only used in the past launch</label>
+      </div>
+      <div class="tw" id="bd-big"></div>
+    </div>
+  </section>
+
   <section id="days">
     <div class="sec-head">
       <h2>Day by day, channel by channel</h2>
@@ -219,7 +244,7 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     <div class="card">
       <div class="controls">
         <span class="ctl-label">Day</span><div class="seg" id="day-seg" role="group" aria-label="Campaign day"></div>
-        <span class="ctl-label">Show</span><div class="seg" id="mode-seg" role="group" aria-label="Single day or cumulative">
+        <span class="ctl-label">View</span><div class="seg" id="mode-seg" role="group" aria-label="Single day or cumulative">
           <button type="button" data-mode="day" aria-pressed="true">That day</button>
           <button type="button" data-mode="cum" aria-pressed="false">Cumulative</button>
         </div>
@@ -231,23 +256,6 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <div class="card-head"><div><h3 id="day-chart-title">Sign-ups by channel</h3><p class="hint">Number on each bar. Bars show the selected day.</p></div></div>
       <div class="legend" id="day-legend"></div>
       <div class="chart" id="day-chart"></div>
-    </div>
-  </section>
-
-  <section id="utm">
-    <div class="sec-head">
-      <h2>Sign-ups by UTM source</h2>
-      <p>Every UTM source, grouped into email, social media, platform and other, with each group compared with past launches. Uses the same day and view as the table above.</p>
-    </div>
-    <div class="card">
-      <div class="utm-tools">
-        <span class="ctl-label">Look up a source</span>
-        <select id="utm-pick" aria-label="UTM source"><option value="">Choose a UTM source…</option></select>
-        <input type="search" id="utm-filter" placeholder="Filter sources, e.g. banner, broadcast" aria-label="Filter UTM sources">
-        <label><input type="checkbox" id="utm-past"> Show past launches' sources</label>
-      </div>
-      <div id="utm-lookup"></div>
-      <div class="tw" id="utm-table"><div class="empty">Loading UTM sources from Metabase…</div></div>
     </div>
   </section>
 
@@ -295,8 +303,8 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
 
   <section id="email">
     <div class="sec-head">
-      <h2>Email lists</h2>
-      <p>Sign-ups from each email list across the launch window. List names changed between years, so rows group sends by their tracking code.</p>
+      <h2>Leads per email</h2>
+      <p>Each email in the sequence with its subject, send date and leads, split into members and non-members, next to the same email in past launches.</p>
     </div>
     <div class="card"><div class="tw" id="email-table"><div class="empty">Loading…</div></div></div>
   </section>
@@ -310,7 +318,7 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <p><b>Sessions</b> are GA4 visits that loaded the webinar page, thank-you and replay pages excluded. Visitors who declined analytics cookies send no session ID, so they're counted from their session-start ping. Cookie-declined visits weren't recorded before 2024, so Jul 2023 sessions run slightly low and its sign-up rate slightly high. <b>Sign-up rate</b> is sign-ups ÷ sessions. The headline compares complete days only, because the two sources refresh on different schedules during the day.</p>
       <p><b>Launch dates.</b> Promo start and webinar: 31 Jul → 2 Aug 2023 (webinar on Day 3), 27 Jul → 30 Jul 2024 (Day 4), 5 Mar → 11 Mar 2025 (Day 7), 30 Sep → 6 Oct 2026 (Day 7). Sign-ups before a promo start are left out.</p>
       <p><b>Revenue.</b> Orders from <code>l3_sales.fact_sales_order</code> for the WildFit programme (every language) plus anything sold through a WildFit funnel. The Mar 2025 webinar sold Membership through the WildFit funnel, so it is included. Each order counts once by <code>order_id</code>. Membership renewals are left out. Revenue before a promo start counts as masterclass and is left out. The Jul 2023 and Jul 2024 webinars ran while the masterclass cart was still open, so launch-window revenue in those years includes buyers who never registered for the webinar; the launch table shows how much came from registrants.</p>
-      <p><b>Channels.</b> Sign-ups are grouped four ways. <b>Email total</b> is any Braze or newsletter send. <b>Social media total</b> is organic social posts plus paid social ads. <b>Platform total</b> is the Mindvalley app, mindvalley.com banners and internal links. <b>Other total</b> is paid search, affiliates, direct and search visits, referrals like Substack, and traffic with no usable tracking tag. Sign-up channel comes from the sign-up's tracking tags; revenue channel from <code>l3_sales.fact_sales_attribution</code>.</p>
+      <p><b>Channels.</b> Channels follow the team's lead-source report and are set by utm_source. <b>Email</b>: every email_campaign_ send, split by email. <b>Platform</b>: in-app, app and website banners and newsfeed. <b>Ads</b>: anything paid; Paid social (Meta) is facebook-paid, facebook and other Meta ads, Paid search (Google) is google and google-paid. <b>Socials</b>: organic social posts, broadcasts, chatbots, LinkedIn, YouTube and Substack. <b>WhatsApp</b>: WhatsApp community links. <b>Organic</b>: blog, AI search, affiliates, onboarding journeys and other referrals. <b>Undefined</b>: no usable utm_source. Sign-up channel comes from the sign-up's tracking tags; revenue channel from <code>l3_sales.fact_sales_attribution</code>.</p>
       <p><b>Differences</b> are 2026 minus the past launch, as a percentage of the past launch, for the same campaign day. Green means 2026 is higher, red means lower. Days are UTC, which is 8am in Malaysia.</p>
     </div>
   </section>
@@ -333,21 +341,52 @@ LAUNCHES.forEach(function(l){ l.webDay = Math.round((dms(l.web)-dms(l.d1))/DAY)+
 var CUR = LAUNCHES[0], BASES = LAUNCHES.slice(1);
 var COLOR = {"2026":"var(--accent)","2025":"var(--y25)","2024":"var(--y24)","2023":"var(--y23)"};
 var CHANNELS = ["Email","Organic social","Paid social","Platform","Paid search","Paid other","Affiliate","Direct & search","Other"];
-var GROUPS = [
-  {name:"Email total", chans:["Email"], note:"Braze and newsletter sends"},
-  {name:"Social media total", chans:["Organic social","Paid social"], note:"organic posts and paid social ads"},
-  {name:"Platform total", chans:["Platform"], note:"Mindvalley app and mindvalley.com banners"},
-  {name:"Other total", chans:["Paid search","Paid other","Affiliate","Direct & search","Other"], note:"search, affiliates, referrals and untagged"}
+var CATS = [
+  {key:"Email", name:"Email total", note:"Braze and newsletter sends"},
+  {key:"Platform", name:"Platform", note:"in-app, app and website banners, newsfeed"},
+  {key:"Ads", name:"Ads", note:"everything paid: Meta ads, Google ads", subs:["Paid social (Meta)","Paid search (Google)","Other paid"]},
+  {key:"Socials", name:"Socials", note:"organic social, broadcasts, chatbots, LinkedIn, Substack"},
+  {key:"WhatsApp", name:"WhatsApp", note:"WhatsApp community"},
+  {key:"Organic", name:"Organic", note:"blog, AI search, affiliates, other referrals"},
+  {key:"Undefined", name:"Undefined", note:"no usable tracking tag"}
 ];
-function groupOf(ch){for(var i=0;i<GROUPS.length;i++) if(GROUPS[i].chans.indexOf(ch)>=0) return GROUPS[i]; return GROUPS[3];}
+var CAT_BY = {}; CATS.forEach(function(c){CAT_BY[c.key]=c;});
+/* One rule set for every table: utm_source first (how the team reports), traffic channel as fallback. */
+function classify(src, ch, med){
+  src=String(src||"").toLowerCase(); ch=ch||""; med=String(med||"").toLowerCase();
+  if(!src||/^\(no utm_source\)$|^not available$|^null$|^undefined$|^\(not set\)$|^none$/.test(src)) return {cat:"Undefined"};
+  if(/^wa_|whatsapp/.test(src)) return {cat:"WhatsApp"};
+  if(/^email_campaign/.test(src)||(ch==="Email"&&!/^email_journey/.test(src))) return {cat:"Email"};
+  var paid = /^(Paid Social|Paid Search|Display|Paid Video|Paid Other)$/.test(ch) || /(^|[-_])paid([-_]|$)/.test(src) || /^(ocpm|cpc|cpm|paid|paid_social|paidsocial|ppc)$/.test(med);
+  if(paid){
+    if(ch==="Paid Search"||/google|bing|search/.test(src)) return {cat:"Ads",sub:"Paid search (Google)"};
+    if(ch==="Paid Social"||/facebook|meta|instagram|(^|[-_])(fb|ig)([-_]|$)|tiktok|youtube|linkedin/.test(src)) return {cat:"Ads",sub:"Paid social (Meta)"};
+    return {cat:"Ads",sub:"Other paid"};
+  }
+  if(/^(inapp|in_app|mvapp|mvhome|home_|app_|mv_app|mv_home)/.test(src)||/^(App|Web|Internal Referral)$/.test(ch)) return {cat:"Platform"};
+  if(ch==="Organic Social"||/substack|linkedin|instagram|facebook|youtube|tiktok|twitter|threads|(^|[-_])(ig|fb|yt)([-_]|$)|^mv[-_]|^vl[-_]|^mvtalks/.test(src)) return {cat:"Socials"};
+  return {cat:"Organic"};
+}
+/* revenue uses the unified order attribution channel */
+var REV_CAT = {"Email":"Email","Platform":"Platform","Organic social":"Socials","Paid social":"Ads","Paid search":"Ads","Paid other":"Ads","Affiliate":"Organic","Direct & search":"Organic","Other":"Undefined"};
+function emailKey(src){
+  var s=String(src||"").toLowerCase().replace(/^email_campaign_/,"");
+  if(/vlnl/.test(s)) return {key:"vlnl", label:"Vishen's Newsletter", order:0};
+  var m=s.match(/(?:^|_)email_?(\d+)/); if(m) return {key:"email"+m[1], label:"Email "+m[1], order:+m[1]};
+  if(/retarget/.test(s)) return {key:"retargeting", label:"Retargeting", order:90};
+  if(/share/.test(s)) return {key:"share", label:"Share emails", order:91};
+  if(/video/.test(s)) return {key:"video", label:"Video email", order:92};
+  return {key:"other", label:"Other email sends", order:99};
+}
+function subjectOf(name){ if(!name) return ""; var p=String(name).split(/\s+[-–]\s+/); return p[p.length-1].replace(/\{\{\{[^}]*\}\}\},?\s*/g,"").trim(); }
 var LIST_NAME = {daily:"Daily newsletter",mvm:"Members (MVM)",highlights:"Highlights",weekly:"Weekly",spanish_nonmvm:"Spanish non-members",spanish_mvm:"Spanish members",coach:"Coach list",vl:"VL list",vllist:"VL list",events:"Events list",mas:"MAS list",holobody:"Holobody",alumni:"Alumni",newslettertest_daily:"Daily newsletter test",newslettertest:"Daily newsletter test",sublist:"Sub-list",digest:"Digest",retargeting:"Retargeting",retargeting_a:"Retargeting",mvmpro:"Members Pro",members:"Members list","daily-es":"Spanish daily",engaged:"Engaged",wf_alumni_es:"WildFit alumni (ES)",newsletter_digest:"Newsletter digest",newsletter_digest_july:"Newsletter digest",newsletter_digest_new_july:"Newsletter digest (new)",mvmes:"Spanish members"};
 
 /* ---------- queries (single source: scripts/wildfit-live/*.sql) ---------- */
 var SERVER = "Metabase";
 var LEADS_SQL = __LEADS_SQL__;
 var ORDERS_SQL = __ORDERS_SQL__;
-var EMAILS_SQL = __EMAILS_SQL__;
 var UTM_SQL = __UTM_SQL__;
+var ENAMES_SQL = __EMAIL_NAMES_SQL__;
 var GA = ["MV DE Layer (mv-etl-staging)","l2_user_behavior","ga4_web_session_event"];
 function F(col){return ["field",{},GA.concat([col])];}
 function addD(iso,n){return new Date(dms(iso)+n*DAY).toISOString().slice(0,10);}
@@ -362,12 +401,12 @@ function sessionsQuery(l){
 var SOURCES = [
   {key:"leads", label:"Sign-ups", tool:"execute_sql", input:{database_id:35, sql:LEADS_SQL}},
   {key:"orders", label:"Orders", tool:"execute_sql", input:{database_id:35, sql:ORDERS_SQL}},
-  {key:"emails", label:"Email lists", tool:"execute_sql", input:{database_id:35, sql:EMAILS_SQL}},
-  {key:"utm", label:"UTM sources", tool:"execute_sql", input:{database_id:35, sql:UTM_SQL}}
+  {key:"utm", label:"Lead sources", tool:"execute_sql", input:{database_id:35, sql:UTM_SQL}},
+  {key:"enames", label:"Email titles", tool:"execute_sql", input:{database_id:35, sql:ENAMES_SQL}}
 ].concat(LAUNCHES.map(function(l){return {key:"sess"+l.yr, label:"GA4 "+l.label, ga:true, tool:"query", input:{query:sessionsQuery(l), query_handle:null, continuation_token:null}};}));
 
 /* ---------- state ---------- */
-var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, utm:{pick:"", filter:"", past:false}};
+var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, bd:{day:null, base:"2025", filter:"", past:false}};
 
 /* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -471,6 +510,7 @@ function derive(){
     D.emails=E;
   }
   D.utm=deriveUtm();
+  D.enames=deriveNames();
   return D;
 }
 function famOf(src){
@@ -488,7 +528,7 @@ function capDay(l,d){return Math.min(d,l.endDay);}
 function renderChrome(){
   var btn=document.getElementById("refresh");
   btn.disabled=S.busy||!S.mcp; btn.querySelector(".t").textContent=S.busy?"Refreshing…":"Refresh data";
-  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders"]},{label:"Metabase · email lists",keys:["emails","utm"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;})}];
+  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders"]},{label:"Metabase · lead sources",keys:["utm","enames"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;})}];
   document.getElementById("pills").innerHTML = groups.map(function(g){
     var err=g.keys.map(function(k){return S.err[k];}).filter(Boolean)[0];
     var ats=g.keys.map(function(k){return S.at[k];}).filter(Boolean);
@@ -557,12 +597,12 @@ function renderDaySeg(){
 function renderDay(D){
   renderDaySeg();
   var d=S.sel.day, cum=S.sel.mode==="cum", td=capDay(CUR,todayCday());
-  var errs=secErr(["leads","sess"+CUR.yr]);
-  document.getElementById("day-err").innerHTML=errs;
-  if(!D.leads){ return; }
-  function lv(l,ch){var dd=capDay(l,d); if(d>l.endDay&&!cum) return null; return cum?leadsCum(D,l.yr,dd,ch):leadsDay(D,l.yr,d,ch);}
+  document.getElementById("day-err").innerHTML=secErr(["utm","leads","sess"+CUR.yr]);
+  if(!D.utm){ document.getElementById("day-table").innerHTML='<div class="empty">Loading lead sources from Metabase…</div>'; return; }
+  function cv(l,cat,sub){var v=catVal(D,l,d,cum,cat,sub);return v?v.n:null;}
+  function tv(l){var v=sumWhere(D,l,d,cum,function(){return true;});return v?v.n:null;}
+  function mv(l){var v=sumWhere(D,l,d,cum,function(){return true;});return v?v.m:null;}
   function sv(l){if(!D.sess[l.yr]) return null; if(d>l.endDay&&!cum) return null; return cum?sessCum(D,l.yr,capDay(l,d)):sessDay(D,l.yr,d);}
-  function gv(l,g){var s=0,any=false;g.chans.forEach(function(c){var v=lv(l,c);if(v!=null){any=true;s+=v;}});return any?s:null;}
   var heads='<tr><th>'+(cum?'Cumulative, Day 1–'+d:'Day '+d)+'</th>'+LAUNCHES.map(function(l){
     var wd=d===l.webDay?' · webinar':(d>l.webDay&&d<=l.endDay?' · after webinar':'');
     return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>'+dateOf(l,d)+wd+'</small></th>';}).join("")+
@@ -573,20 +613,21 @@ function renderDay(D){
       BASES.map(function(l,i){return '<td class="n">'+delta(vals[0],vals[i+1],isRate)+'</td>';}).join("")+'</tr>';
   }
   var t='<table><thead>'+heads+'</thead><tbody>';
-  GROUPS.forEach(function(g){
-    t+=row('<b>'+g.name+'</b><small>'+g.note+'</small>',function(l){return gv(l,g);},fmt,false,"grp");
-    if(g.chans.length>1) g.chans.forEach(function(c){ if(LAUNCHES.some(function(l){return (lv(l,c)||0)>0;})) t+=row('<span class="indent">'+c+'</span>',function(l){return lv(l,c);},fmt,false,"subch"); });
+  CATS.forEach(function(c){
+    t+=row('<b>'+c.name+'</b><small>'+c.note+'</small>',function(l){return cv(l,c.key);},fmt,false,"grp");
+    if(c.subs) c.subs.forEach(function(sb){ if(LAUNCHES.some(function(l){return (cv(l,c.key,sb)||0)>0;})) t+=row('<span class="indent">'+sb+'</span>',function(l){return cv(l,c.key,sb);},fmt,false,"subch"); });
   });
-  t+=row("All sign-ups",function(l){return lv(l);},fmt,false,"sum");
+  t+=row("All sign-ups",tv,fmt,false,"sum");
+  t+=row('<span class="indent">Members</span>',mv,fmt,false,"subch");
+  t+=row('<span class="indent">Non-members</span>',function(l){var a=tv(l),b=mv(l);return a==null?null:a-b;},fmt,false,"subch");
   t+=row("Landing page sessions",sv,fmt,false,"sub");
-  t+=row("Sign-up rate",function(l){var a=lv(l),b=sv(l);return (a!=null&&b)?a/b:null;},function(v){return pctS(v,1);},true,"sub");
+  t+=row("Sign-up rate",function(l){var a=tv(l),b=sv(l);return (a!=null&&b)?a/b:null;},function(v){return pctS(v,1);},true,"sub");
   t+='</tbody></table>';
   if(d===td) t+='<p class="hint" style="margin-top:8px">Day '+d+' is still running for Oct 2026, so it is compared with complete days of past launches.</p>';
   document.getElementById("day-table").innerHTML=t;
-  // chart: grouped bars per channel, numbers on top
-  document.getElementById("day-chart-title").textContent="Sign-ups by channel group · "+(cum?"cumulative, Day 1–"+d:"Day "+d);
+  document.getElementById("day-chart-title").textContent="Sign-ups by channel · "+(cum?"cumulative, Day 1–"+d:"Day "+d);
   document.getElementById("day-legend").innerHTML=LAUNCHES.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
-  var groups=GROUPS.map(function(g){return {name:g.name.replace(' total',''), vals:LAUNCHES.map(function(l){return gv(l,g)||0;})};});
+  var groups=CATS.filter(function(c){return LAUNCHES.some(function(l){return (cv(l,c.key)||0)>0;});}).map(function(c){return {name:c.name.replace(' total',''), vals:LAUNCHES.map(function(l){return cv(l,c.key)||0;})};});
   groupedBars("day-chart", groups, fmt);
 }
 function dateOf(l,d){var x=new Date(dms(l.d1)+(d-1)*DAY);return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});}
@@ -700,8 +741,9 @@ function renderCompare(D){
     ["First-ever Mindvalley sign-up",function(l){var x=D.leads[l.yr];return pctS(x.first,x.total,0)+'<small>'+fmt(x.first)+'</small>';}],
     ["Non-English pages",function(l){var x=D.leads[l.yr];return pctS(x.nonEn,x.total,0)+'<small>'+fmt(x.nonEn)+'</small>';}],
     ["Sign-ups from email",function(l){var x=D.leads[l.yr];return fmt(x.byCh.Email||0)+'<small>'+pctS(x.byCh.Email||0,x.total,0)+'</small>';}],
-    ["Sign-ups from social media",function(l){var x=D.leads[l.yr].byCh,v=(x["Organic social"]||0)+(x["Paid social"]||0);return fmt(v)+'<small>organic '+fmt(x["Organic social"]||0)+' · paid '+fmt(x["Paid social"]||0)+'</small>';}],
-    ["Sign-ups from platform",function(l){return fmt(D.leads[l.yr].byCh.Platform||0)+'<small>app and website banners</small>';}],
+    ["Sign-ups from Ads",function(l){var v=D.utm?catVal(D,l,l.endDay,true,"Ads"):null;return v?fmt(v.n)+'<small>Meta '+fmt((catVal(D,l,l.endDay,true,"Ads","Paid social (Meta)")||{n:0}).n)+' · Google '+fmt((catVal(D,l,l.endDay,true,"Ads","Paid search (Google)")||{n:0}).n)+'</small>':'…';}],
+    ["Sign-ups from Socials",function(l){var v=D.utm?catVal(D,l,l.endDay,true,"Socials"):null;return v?fmt(v.n):'…';}],
+    ["Sign-ups from Platform",function(l){var v=D.utm?catVal(D,l,l.endDay,true,"Platform"):null;return v?fmt(v.n):'…';}],
     ["What the webinar sold",function(l){var x=o(l);if(!x)return'…';return l===CUR&&x.orders<5?'<span class="dim">Sales open 6 Oct</span>':esc(mainProd(x));}],
     ["Orders",function(l){var x=o(l);return x?fmt(x.orders):'…';}],
     ["Gross revenue",function(l){var x=o(l);return x?'<b>'+usd(x.rev)+'</b>':'…';}],
@@ -722,9 +764,9 @@ function renderRevenue(D){
   var O=D.orders;
   vbars("rev-chart", LAUNCHES.slice().reverse().map(function(l){return {label:l.label, v:O[l.yr].rev, color:COLOR[l.yr], strong:l===CUR};}), usd, {W:520, H:300, aria:"Gross revenue by launch", labelAll:true});
   var t='<table><thead><tr><th>Channel group</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
-  GROUPS.forEach(function(g){t+='<tr><td>'+g.name.replace(' total','')+'<small>'+g.note+'</small></td>'+LAUNCHES.map(function(l){var v=0;g.chans.forEach(function(c){v+=(O[l.yr].byCh[c]||{}).rev||0;});return '<td class="n'+(l===CUR?' cur':'')+'">'+(v?usd(v):'<span class="dim">–</span>')+'<small>'+(v?pctS(v,O[l.yr].rev,0):'')+'</small></td>';}).join("")+'</tr>';});
+  CATS.forEach(function(g){ if(!LAUNCHES.some(function(l){for(var c in O[l.yr].byCh) if(REV_CAT[c]===g.key&&O[l.yr].byCh[c].rev>0) return true; return false;})) return; t+='<tr><td>'+g.name.replace(' total','')+'<small>'+g.note+'</small></td>'+LAUNCHES.map(function(l){var v=0;for(var c in O[l.yr].byCh) if(REV_CAT[c]===g.key) v+=O[l.yr].byCh[c].rev||0;return '<td class="n'+(l===CUR?' cur':'')+'">'+(v?usd(v):'<span class="dim">–</span>')+'<small>'+(v?pctS(v,O[l.yr].rev,0):'')+'</small></td>';}).join("")+'</tr>';});
   t+='<tr class="sum"><td>Total</td>'+LAUNCHES.map(function(l){return '<td class="n'+(l===CUR?' cur':'')+'">'+usd(O[l.yr].rev)+'<small>'+fmt(O[l.yr].orders)+' orders</small></td>';}).join("")+'</tr>';
-  document.getElementById("rev-table").innerHTML=secErr(["orders"])+t+'</tbody></table><p class="hint" style="margin-top:8px">Other includes orders with no usable tracking tag. In Jul 2023 that was nearly half of revenue.</p>';
+  document.getElementById("rev-table").innerHTML=secErr(["orders"])+t+'</tbody></table><p class="hint" style="margin-top:8px">Undefined is orders with no usable tracking tag. In Jul 2023 that was nearly half of revenue.</p>';
   var grid=document.getElementById("sales-grid"); grid.innerHTML="";
   var max=0; LAUNCHES.forEach(function(l){for(var k in O[l.yr].byDay)max=Math.max(max,O[l.yr].byDay[k].rev);});
   LAUNCHES.forEach(function(l){
@@ -737,99 +779,114 @@ function renderRevenue(D){
   });
 }
 
-/* ---------- email ---------- */
-function renderEmail(D){
-  var el=document.getElementById("email-table"); if(!D.emails){el.innerHTML='<div class="empty">'+(secErr(["emails"])||'Loading email lists from Metabase…')+'</div>';return;}
-  var E=D.emails, fams={};
-  LAUNCHES.forEach(function(l){for(var k in E[l.yr]){(fams[k]=fams[k]||{})[l.yr]=E[l.yr][k];}});
-  var keys=Object.keys(fams).sort(function(a,b){var ca=(fams[a][CUR.yr]||{}).people||0,cb=(fams[b][CUR.yr]||{}).people||0;if(cb!==ca)return cb-ca;var ta=0,tb=0;LAUNCHES.forEach(function(l){ta+=(fams[a][l.yr]||{}).people||0;tb+=(fams[b][l.yr]||{}).people||0;});return tb-ta;});
-  var maxPer=0; keys.forEach(function(k){LAUNCHES.forEach(function(l){var o=fams[k][l.yr];if(o)maxPer=Math.max(maxPer,o.people/o.sends);});});
-  var t='<table><thead><tr><th>List</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'<small>sign-ups</small></th>';}).join("")+'<th class="n">2026 vs 2025<small>sign-ups per email</small></th></tr></thead><tbody>';
-  keys.forEach(function(k){
-    t+='<tr><td>'+esc(LIST_NAME[k]||k)+'<small>'+esc(k)+'</small></td>';
-    LAUNCHES.forEach(function(l){var o=fams[k][l.yr],c=l===CUR?' cur':'';if(!o){t+='<td class="n'+c+'"><span class="dim">–</span></td>';return;}var per=o.people/o.sends;t+='<td class="n'+c+'"><b>'+fmt(o.people)+'</b><small>'+o.sends+' email'+(o.sends>1?'s':'')+' sent'+(o.sends>1?' · avg '+fmt(per)+' each':'')+'</small></td>';});
-    var a=fams[k][CUR.yr], b=fams[k]["2025"]; t+='<td class="n">'+(a&&b?delta(a.people/a.sends,b.people/b.sends):'<span class="dim">–</span>')+'</td></tr>';
-  });
-  t+='<tr class="sum"><td>All email</td>'+LAUNCHES.map(function(l){var s=0,n=0;for(var k in E[l.yr]){s+=E[l.yr][k].people;n+=E[l.yr][k].sends;}return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(s)+'<small>'+n+' emails sent</small></td>';}).join("")+'<td></td></tr>';
-  el.innerHTML=secErr(["emails"])+t+'</tbody></table><p class="hint" style="margin-top:10px">How to read a cell: <b>1,314</b> with "4 emails sent · avg 329 each" means that list got 4 different emails in the launch window, and together they brought 1,314 sign-ups, about 329 per email. Each email is counted by its own tracking code. The last column compares sign-ups per email, so a list that got more emails doesn\'t look better just for that.</p>';
-}
 
-/* ---------- UTM sources ---------- */
-function chanOf(ch, src){
-  src=src||"";
-  if(ch==="Email"||src.indexOf("email")===0) return "Email";
-  if(ch==="App"||ch==="Web"||ch==="Internal Referral"||/^mvapp|^mvhome/.test(src)) return "Platform";
-  if(ch==="Organic Social") return "Organic social";
-  if(ch==="Paid Social") return "Paid social";
-  if(ch==="Paid Search") return "Paid search";
-  if(ch==="Display"||ch==="Paid Video"||ch==="Paid Other") return "Paid other";
-  if(ch==="Affiliate") return "Affiliate";
-  if(ch==="Direct"||ch==="Organic Search"||ch==="Organic Referral"||ch==="LLM Referral") return "Direct & search";
-  return "Other";
-}
+
+/* ---------- UTM-based channel data ---------- */
 function deriveUtm(){
   if(!S.raw.utm) return null;
   var U={}; LAUNCHES.forEach(function(l){U[l.yr]={};});
   S.raw.utm.forEach(function(r){
-    var x=U[r.yr]; if(!x) return; var src=r.src||"(no utm_source)";
-    var o=x[src]||(x[src]={days:{},total:0,members:0,ch:chanOf(r.channel,src),medium:r.medium||""});
-    var d=num(r.cday), n=num(r.people); o.days[d]=(o.days[d]||0)+n; o.total+=n; o.members+=num(r.members);
+    var x=U[r.yr]; if(!x) return; var src=String(r.src||"(no utm_source)");
+    var o=x[src]; if(!o){ var c=classify(src,r.channel,r.medium); o=x[src]={src:src,days:{},mdays:{},total:0,members:0,cat:c.cat,sub:c.sub||null,medium:r.medium||"",ch:r.channel||""}; }
+    var d=num(r.cday), n=num(r.people), m=num(r.members); o.days[d]=(o.days[d]||0)+n; o.mdays[d]=(o.mdays[d]||0)+m; o.total+=n; o.members+=m;
   });
   return U;
 }
-function utmVal(o,l,d,cum){ if(!o) return null; if(!cum){ if(d>l.endDay) return null; return o.days[d]||0; } var s=0; for(var i=1;i<=capDay(l,d);i++) s+=(o.days[i]||0); return s; }
-function renderUtm(D){
-  var U=D.utm, el=document.getElementById("utm-table"), pick=document.getElementById("utm-pick");
-  if(!U){ el.innerHTML='<div class="empty">'+(secErr(["utm"])||'Loading UTM sources from Metabase…')+'</div>'; return; }
-  var d=S.sel.day||1, cum=S.sel.mode==="cum";
-  // all sources, by group
-  var all={}; LAUNCHES.forEach(function(l){ for(var src in U[l.yr]){ var o=U[l.yr][src]; var a=all[src]||(all[src]={src:src,ch:o.ch,by:{}}); a.by[l.yr]=o; if(l===CUR) a.ch=o.ch; } });
-  var list=Object.keys(all).map(function(k){return all[k];});
-  function curTotal(a){return a.by[CUR.yr]?a.by[CUR.yr].total:0;}
-  function anyTotal(a){var s=0;LAUNCHES.forEach(function(l){if(a.by[l.yr])s+=a.by[l.yr].total;});return s;}
-  list.sort(function(a,b){return (curTotal(b)-curTotal(a))||(anyTotal(b)-anyTotal(a));});
-  // picker
-  if(pick.dataset.n!==String(list.length)){
-    var html='<option value="">Choose a UTM source…</option>';
-    GROUPS.forEach(function(g){
-      var items=list.filter(function(a){return g.chans.indexOf(a.ch)>=0;}); if(!items.length) return;
-      html+='<optgroup label="'+esc(g.name.replace(" total",""))+'">'+items.map(function(a){return '<option value="'+esc(a.src)+'"'+(a.src===S.utm.pick?' selected':'')+'>'+esc(a.src)+' — '+(a.by[CUR.yr]?fmt(curTotal(a))+' in 2026':'past launches only')+'</option>';}).join("")+'</optgroup>';
-    });
-    pick.innerHTML=html; pick.dataset.n=String(list.length);
+function deriveNames(){
+  if(!S.raw.enames) return null;
+  var N={}; LAUNCHES.forEach(function(l){N[l.yr]={};});
+  S.raw.enames.forEach(function(r){ if(N[r.yr]) N[r.yr][String(r.src).toLowerCase()]={name:r.campaign_name, subject:subjectOf(r.campaign_name), date:r.send_date, list:r.list, lang:r.language}; });
+  return N;
+}
+/* value of one source for a launch: through day d (cum) or on day d only */
+function sv2(o,l,d,cum){
+  if(!o) return null;
+  if(!cum){ if(d>l.endDay) return null; return {n:o.days[d]||0, m:o.mdays[d]||0}; }
+  var n=0,m=0; for(var i=1;i<=capDay(l,d);i++){ n+=(o.days[i]||0); m+=(o.mdays[i]||0); } return {n:n,m:m};
+}
+function sumWhere(D,l,d,cum,pred){
+  var U=D.utm; if(!U) return null; if(!cum&&d>l.endDay) return null;
+  var n=0,m=0; for(var k in U[l.yr]){ var o=U[l.yr][k]; if(!pred(o)) continue; var v=sv2(o,l,d,cum); n+=v.n; m+=v.m; } return {n:n,m:m};
+}
+function catVal(D,l,d,cum,cat,sub){ return sumWhere(D,l,d,cum,function(o){return o.cat===cat&&(!sub||o.sub===sub);}); }
+
+/* ---------- channel breakdown (big + small table, like the team report) ---------- */
+function renderBreakdown(D){
+  var U=D.utm, N=D.enames, small=document.getElementById("bd-small"), big=document.getElementById("bd-big");
+  renderBdControls();
+  if(!U){ var e=secErr(["utm"])||'Loading lead sources from Metabase…'; small.innerHTML='<div class="empty">'+e+'</div>'; big.innerHTML=''; return; }
+  var td=capDay(CUR,todayCday()), d=S.bd.day||td, B=LAUNCHES.filter(function(l){return l.yr===S.bd.base;})[0]||LAUNCHES[1];
+  var dB=capDay(B,d);
+  function pctOf(a,b){ return b?pctS(a,b,0):'<span class="dim">NA</span>'; }
+  function cells(cur,base,cls,lbl){
+    var n=cur?cur.n:0, m=cur?cur.m:0;
+    return '<tr class="'+cls+'"><td>'+lbl+'</td><td class="n cur">'+(cur?fmt(n):'<span class="dim">–</span>')+'</td><td class="n">'+(cur?fmt(m):'')+'</td><td class="n">'+(cur?fmt(n-m):'')+'</td>'+
+      '<td class="n">'+(base&&base.n?fmt(base.n):'<span class="dim">–</span>')+'</td><td class="n">'+(base&&base.n&&cur?pctOf(n,base.n):'<span class="dim">NA</span>')+'</td><td class="n">'+(base&&base.n&&cur?delta(n,base.n):'')+'</td></tr>';
   }
-  // lookup panel
-  var lk=document.getElementById("utm-lookup");
-  if(S.utm.pick&&all[S.utm.pick]){
-    var a=all[S.utm.pick], maxD=Math.max.apply(null,LAUNCHES.map(function(l){return l.endDay;})), td=todayCday();
-    var t='<div class="lookup"><h4>'+esc(a.src)+'</h4><p class="hint" style="margin:0 0 8px">'+esc(groupOf(a.ch).name.replace(" total",""))+' · '+esc(a.ch)+(a.by[CUR.yr]&&a.by[CUR.yr].medium?' · utm_medium '+esc(a.by[CUR.yr].medium):'')+'</p><div class="tw"><table><thead><tr><th>Launch</th>';
-    for(var i=1;i<=maxD;i++) t+='<th class="n">Day '+i+'</th>'; t+='<th class="n">Total</th><th class="n">Members</th></tr></thead><tbody>';
-    LAUNCHES.forEach(function(l){ var o=a.by[l.yr]; if(!o) return; t+='<tr><td><b>'+esc(l.label)+'</b></td>'; for(var i=1;i<=maxD;i++){ var out=i>l.endDay||(l===CUR&&i>td); t+='<td class="n'+(i===l.webDay?' webcell':'')+'">'+(out?'':fmt(o.days[i]||0))+'</td>'; } t+='<td class="n"><b>'+fmt(o.total)+'</b></td><td class="n">'+pctS(o.members,o.total,0)+'</td></tr>'; });
-    lk.innerHTML=t+'</tbody></table></div></div>';
-  } else lk.innerHTML='';
-  // grouped table
-  var heads='<tr><th>'+(cum?'Cumulative, Day 1–'+d:'Day '+d)+'</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+BASES.map(function(l){return '<th class="n">2026 vs '+esc(l.label.slice(-4))+'</th>';}).join("")+'</tr>';
-  function sumOver(srcs,l){var s=0;srcs.forEach(function(a){var v=utmVal(a.by[l.yr],l,d,cum);if(v)s+=v;});return (d>l.endDay&&!cum)?null:s;}
-  function row(label,vals,cls,withDelta){
-    return '<tr class="'+cls+'"><td>'+label+'</td>'+vals.map(function(v,i){return '<td class="n'+(i===0?' cur':'')+'">'+(v==null?'<span class="dim">–</span>':fmt(v))+'</td>';}).join("")+
-      BASES.map(function(l,i){return '<td class="n">'+(withDelta||(vals[0]!=null&&vals[i+1]!=null)?delta(vals[0],vals[i+1]):'<span class="dim">–</span>')+'</td>';}).join("")+'</tr>';
-  }
-  var f=S.utm.filter, t2='<table><thead>'+heads+'</thead><tbody>';
-  GROUPS.forEach(function(g){
-    var gs=list.filter(function(a){return g.chans.indexOf(a.ch)>=0;});
-    t2+=row('<b>'+g.name+'</b><small>'+g.note+'</small>', LAUNCHES.map(function(l){return sumOver(gs,l);}), "grp", true);
-    g.chans.forEach(function(c){
-      var cs=gs.filter(function(a){return a.ch===c;}); if(!cs.length) return;
-      if(g.chans.length>1) t2+=row('<span class="indent"><b>'+c+'</b></span>', LAUNCHES.map(function(l){return sumOver(cs,l);}), "subch", true);
-      cs.forEach(function(a){
-        var cur=a.by[CUR.yr]; if(!cur&&!S.utm.past) return; if(f&&a.src.indexOf(f)<0) return;
-        var vals=LAUNCHES.map(function(l){var o=a.by[l.yr];return o?utmVal(o,l,d,cum):null;});
-        if(!S.utm.past&&!(vals[0]>0)&&cum) return;
-        t2+=row(esc(a.src), vals, "src", false);
-      });
-    });
+  var head='<thead><tr><th>Lead sources</th><th class="n cur">Oct 2026<small>Day 1–'+d+(d===td?' · to date':'')+'</small></th><th class="n">Members</th><th class="n">Non-members</th><th class="n">'+esc(B.label)+'<small>Day 1–'+dB+'</small></th><th class="n">% of '+esc(B.label.slice(-4))+'</th><th class="n">Change</th></tr></thead>';
+  // small table
+  var st='<table>'+head+'<tbody>';
+  CATS.forEach(function(c){
+    var cur=catVal(D,CUR,d,true,c.key), base=catVal(D,B,dB,true,c.key);
+    st+=cells(cur,base,"grp",'<b>'+c.name+'</b><small>'+c.note+'</small>');
+    if(c.subs) c.subs.forEach(function(sb){ var a=catVal(D,CUR,d,true,c.key,sb), b=catVal(D,B,dB,true,c.key,sb); if((a&&a.n)||(b&&b.n)) st+=cells(a,b,"subch",'<span class="indent">'+sb+'</span>'); });
   });
-  t2+=row('<b>All sign-ups</b>', LAUNCHES.map(function(l){return sumOver(list,l);}), "sum", true);
-  el.innerHTML=secErr(["utm"])+t2+'</tbody></table><p class="hint" style="margin-top:8px">Group and channel rows include every source, including past-only ones. Source rows show 2026 sources'+(S.utm.past?' and past launches\' sources':'')+'; a dash means that exact source wasn\'t used in that launch. Pick a source above to see it day by day.</p>';
+  var tc=sumWhere(D,CUR,d,true,function(){return true;}), tb=sumWhere(D,B,dB,true,function(){return true;});
+  st+=cells(tc,tb,"sum",'<b>Total leads</b>');
+  small.innerHTML=secErr(["utm"])+st+'</tbody></table>';
+  // big table
+  var all={}; [CUR,B].forEach(function(l){ for(var k in U[l.yr]) (all[k]=all[k]||{src:k,cat:U[l.yr][k].cat,sub:U[l.yr][k].sub,by:{}}).by[l.yr]=U[l.yr][k]; });
+  var f=S.bd.filter, t='<table>'+head+'<tbody>';
+  function srcRow(a){ var cur=a.by[CUR.yr]?sv2(a.by[CUR.yr],CUR,d,true):null, base=a.by[B.yr]?sv2(a.by[B.yr],B,dB,true):null; if(!(cur&&cur.n)&&!(S.bd.past&&base&&base.n)) return ''; if(f&&a.src.indexOf(f)<0) return ''; return cells(cur,base,"src",esc(a.src)); }
+  function byN(a,b){ var x=a.by[CUR.yr]?sv2(a.by[CUR.yr],CUR,d,true).n:0, y=b.by[CUR.yr]?sv2(b.by[CUR.yr],CUR,d,true).n:0; if(y!==x) return y-x; var bx=a.by[B.yr]?a.by[B.yr].total:0, by=b.by[B.yr]?b.by[B.yr].total:0; return by-bx; }
+  CATS.forEach(function(c){
+    var items=Object.keys(all).map(function(k){return all[k];}).filter(function(a){return a.cat===c.key;});
+    if(c.key==="Email"){
+      var groups={};
+      items.forEach(function(a){ var ek=emailKey(a.src); (groups[ek.key]=groups[ek.key]||{ek:ek,items:[]}).items.push(a); });
+      Object.keys(groups).map(function(k){return groups[k];}).sort(function(a,b){ var da=emailDate(a,N), db=emailDate(b,N); if(da!==db) return da<db?-1:1; return a.ek.order-b.ek.order; }).forEach(function(g){
+        g.items.sort(byN); g.items.forEach(function(a){ t+=srcRow(a); });
+        var cur=sumWhere(D,CUR,d,true,function(o){return o.cat==="Email"&&emailKey(o.src).key===g.ek.key;}), base=sumWhere(D,B,dB,true,function(o){return o.cat==="Email"&&emailKey(o.src).key===g.ek.key;});
+        if(!(cur&&cur.n)&&!(base&&base.n)) return;
+        var nm=emailTitle(g,N,CUR), dt=emailDateLabel(g,N);
+        t+=cells(cur,base,"emailsub",'<b>'+esc(g.ek.label)+(nm?' – '+esc(nm):'')+'</b>'+(dt?'<small>sent '+esc(dt)+'</small>':''));
+      });
+    } else if(c.subs){
+      c.subs.forEach(function(sb){ var its=items.filter(function(a){return a.sub===sb;}).sort(byN); var cur=catVal(D,CUR,d,true,c.key,sb), base=catVal(D,B,dB,true,c.key,sb); if(!(cur&&cur.n)&&!(base&&base.n)) return; its.forEach(function(a){t+=srcRow(a);}); t+=cells(cur,base,"emailsub",'<b>'+sb+'</b>'); });
+    } else items.sort(byN).forEach(function(a){ t+=srcRow(a); });
+    t+=cells(catVal(D,CUR,d,true,c.key),catVal(D,B,dB,true,c.key),"grp",'<b>'+c.name+'</b>');
+  });
+  t+=cells(tc,tb,"sum",'<b>Total leads</b>');
+  big.innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Each source row sits above the subtotal it belongs to, the same way the team report lists them. Source rows show sources used in Oct 2026'+(S.bd.past?' and in '+esc(B.label):'')+'. A dash in the '+esc(B.label)+' column means that exact source wasn\'t used then. Email subtotals compare like for like: Email 2 with that launch\'s Email 2.</p>';
+}
+function emailDate(g,N){ var best="9999"; if(!N) return best; g.items.forEach(function(a){var x=N[CUR.yr][a.src]; if(x&&x.date&&x.date<best) best=x.date;}); return best; }
+function emailDateLabel(g,N){ var d=emailDate(g,N); if(d==="9999") return ""; return new Date(dms(d)).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}); }
+function emailTitle(g,N,l){ if(!N) return ""; var cnt={}; g.items.forEach(function(a){var x=N[l.yr][a.src]; if(x&&x.subject&&x.lang!=="ES"&&x.lang!=="DE"){cnt[x.subject]=(cnt[x.subject]||0)+1;}}); var best="",bn=0; for(var k in cnt) if(cnt[k]>bn){bn=cnt[k];best=k;} if(!best) g.items.forEach(function(a){var x=N[l.yr][a.src]; if(!best&&x&&x.subject) best=x.subject;}); return best; }
+function renderBdControls(){
+  var td=capDay(CUR,todayCday()); if(S.bd.day==null||S.bd.day>td) S.bd.day=td;
+  var h=""; for(var d=1; d<=Math.max(td,1); d++) h+='<button type="button" data-bday="'+d+'" aria-pressed="'+(d===S.bd.day)+'">Day '+d+(d===td?'<small>to date</small>':'')+'</button>';
+  document.getElementById("bd-day").innerHTML=h;
+  document.getElementById("bd-base").innerHTML=BASES.map(function(l){return '<button type="button" data-base="'+l.yr+'" aria-pressed="'+(l.yr===S.bd.base)+'">'+esc(l.label)+'</button>';}).join("");
+}
+
+/* ---------- leads per email ---------- */
+function renderEmail(D){
+  var el=document.getElementById("email-table"), U=D.utm, N=D.enames;
+  if(!U){ el.innerHTML='<div class="empty">'+(secErr(["utm"])||'Loading…')+'</div>'; return; }
+  var td=capDay(CUR,todayCday());
+  function groupsFor(l){ var g={}; for(var k in U[l.yr]){ var o=U[l.yr][k]; if(o.cat!=="Email") continue; var ek=emailKey(o.src); var x=g[ek.key]||(g[ek.key]={ek:ek,items:[],n:0,m:0,lists:{}}); x.items.push(o); x.n+=o.total; x.m+=o.members; x.lists[o.src]=1; } return g; }
+  var cur=groupsFor(CUR), bases={}; BASES.forEach(function(l){bases[l.yr]=groupsFor(l);});
+  var rows=Object.keys(cur).map(function(k){return cur[k];}).sort(function(a,b){var da=emailDate(a,N),db=emailDate(b,N); if(da!==db) return da<db?-1:1; return a.ek.order-b.ek.order;});
+  var t='<table><thead><tr><th>Email</th><th class="n">Sent</th><th class="n">Lists</th><th class="n cur">Leads</th><th class="n">Members</th><th class="n">Non-members</th>'+BASES.map(function(l){return '<th class="n">'+esc(l.label)+'<small>same email</small></th>';}).join("")+'<th class="n">vs '+esc(LAUNCHES[1].label)+'</th></tr></thead><tbody>';
+  var tn=0,tm=0;
+  rows.forEach(function(g){
+    tn+=g.n; tm+=g.m; var title=emailTitle(g,N,CUR);
+    t+='<tr><td><b>'+esc(g.ek.label)+'</b>'+(title?'<small>'+esc(title)+'</small>':'')+'</td><td class="n">'+esc(emailDateLabel(g,N)||'–')+'</td><td class="n">'+Object.keys(g.lists).length+'</td><td class="n cur"><b>'+fmt(g.n)+'</b></td><td class="n">'+fmt(g.m)+'<small>'+pctS(g.m,g.n,0)+'</small></td><td class="n">'+fmt(g.n-g.m)+'<small>'+pctS(g.n-g.m,g.n,0)+'</small></td>'+
+      BASES.map(function(l){var b=bases[l.yr][g.ek.key];return '<td class="n">'+(b?fmt(b.n):'<span class="dim">NA</span>')+'</td>';}).join("")+
+      '<td class="n">'+(bases[LAUNCHES[1].yr][g.ek.key]?delta(g.n,bases[LAUNCHES[1].yr][g.ek.key].n):'<span class="dim">NA</span>')+'</td></tr>';
+  });
+  t+='<tr class="sum"><td>Email total</td><td></td><td></td><td class="n cur">'+fmt(tn)+'</td><td class="n">'+fmt(tm)+'</td><td class="n">'+fmt(tn-tm)+'</td>'+BASES.map(function(l){var s=0;for(var k in bases[l.yr]) s+=bases[l.yr][k].n;return '<td class="n">'+fmt(s)+'</td>';}).join("")+'<td></td></tr>';
+  el.innerHTML=secErr(["utm","enames"])+t+'</tbody></table><p class="hint" style="margin-top:8px">Leads are people whose first sign-up came from that email, across the whole launch window so far. An email is every send that shares its number (Email 2 to Daily, Members, Highlights…). Past launches are matched by the same email number, so Email 2 is compared with that launch\'s Email 2. Titles come from Braze; the English subject is shown.</p>';
 }
 
 /* ---------- summary ---------- */
@@ -837,8 +894,11 @@ function renderSummary(D){
   var el=document.getElementById("summary-body");
   if(!D.leads){ el.innerHTML='<div class="empty">'+(secErr(["leads"])||'Loading…')+'</div>'; return; }
   var td=capDay(CUR,todayCday()), K=Math.max(td-1,1), partial=td-1<1;
-  function gcum(yr,g,d){var s=0;g.chans.forEach(function(c){s+=leadsCum(D,yr,d,c)||0;});return s;}
-  function ccum(yr,c,d){return leadsCum(D,yr,d,c)||0;}
+  if(!D.utm){ el.innerHTML='<div class="empty">'+(secErr(["utm"])||'Loading…')+'</div>'; return; }
+  function LY(yr){return LAUNCHES.filter(function(l){return l.yr===yr;})[0];}
+  function gcum(yr,g,d){var v=catVal(D,LY(yr),d,true,g.key);return v?v.n:0;}
+  var SUBMAP={"Paid social":["Ads","Paid social (Meta)"],"Platform":["Platform"],"Organic social":["Socials"],"Other":["Undefined"],"Email":["Email"]};
+  function ccum(yr,c,d){var m=SUBMAP[c];var v=catVal(D,LY(yr),d,true,m[0],m[1]);return v?v.n:0;}
   function pctd(a,b){if(!b) return null; return (a-b)/b*100;}
   function pd(p){return p==null?'–':(p>=0?'+':'')+Math.round(p).toLocaleString("en-US")+'%';}
   var curK=leadsCum(D,CUR.yr,K), L25=LAUNCHES[1], L24=LAUNCHES[2], L23=LAUNCHES[3];
@@ -849,7 +909,7 @@ function renderSummary(D){
   else if(gap<=0) lead+=' Oct 2026 has already passed Mar 2025\'s final total of '+fmt(D.leads[L25.yr].total)+'.';
   // working / behind by group vs 2025 and 2024 at same day
   var good=[], bad=[];
-  GROUPS.forEach(function(g){
+  CATS.filter(function(g){return g.key!=="WhatsApp";}).forEach(function(g){
     var c=gcum(CUR.yr,g,K), b25=gcum(L25.yr,g,K), b24=gcum(L24.yr,g,capDay(L24,K)), b23=gcum(L23.yr,g,capDay(L23,K));
     var line='<b>'+g.name.replace(' total','')+'</b>: '+fmt(c)+' vs '+fmt(b25)+' (2025), '+fmt(b24)+' (2024), '+fmt(b23)+' (2023)';
     if(c>=b25&&c>=b24) good.push(line+'.'); else bad.push(line+'. Behind '+[c<b25?'2025':null,c<b24?'2024':null,c<b23?'2023':null].filter(Boolean).join(' and ')+' at the same day.');
@@ -859,7 +919,7 @@ function renderSummary(D){
   var ahead=[];
   [L25,L24].forEach(function(l){
     if(K>=l.webDay) return;
-    GROUPS.forEach(function(g){ var add=gcum(l.yr,g,l.webDay)-gcum(l.yr,g,K); if(add>200) ahead.push({l:l,g:g,add:add}); });
+    CATS.forEach(function(g){ var add=gcum(l.yr,g,l.webDay)-gcum(l.yr,g,K); if(add>200) ahead.push({l:l,g:g,add:add}); });
   });
   ahead.sort(function(a,b){return b.add-a.add;});
   ahead.slice(0,2).forEach(function(a){ bad.push('<b>Still to come in '+a.l.label+'</b>: from Day '+(K+1)+' to webinar day it added <b>'+fmt(a.add)+'</b> sign-ups from '+a.g.name.replace(' total','').toLowerCase()+'. Oct 2026 needs a plan to match that.'); });
@@ -870,14 +930,14 @@ function renderSummary(D){
   var todo=[];
   var ps=ccum(CUR.yr,"Paid social",td), ps25=ccum(L25.yr,"Paid social",L25.webDay), ps25k=ccum(L25.yr,"Paid social",K);
   if(ps25>500&&ps<ps25*0.3) todo.push('<b>Scale paid social now.</b> Mar 2025 got <b>'+fmt(ps25)+'</b> sign-ups from paid social by webinar day ('+fmt(ps25-ps25k)+' of them after Day '+K+'), and it is the main source of first-time sign-ups. Oct 2026 has '+fmt(ps)+'. Budget and creative decided in the next day still has 4–5 days to work.');
-  var e1=leadsDay(D,CUR.yr,1,"Email")||0, eL=leadsDay(D,CUR.yr,K,"Email")||0;
+  var e1=(catVal(D,CUR,1,false,"Email")||{n:0}).n, eL=(catVal(D,CUR,K,false,"Email")||{n:0}).n;
   if(K>1&&eL<e1*0.8) todo.push('<b>Plan the remaining email sends.</b> Email fell from '+fmt(e1)+' on Day 1 to '+fmt(eL)+' on Day '+K+'. Lists respond to each new send, so map one send per list per day to webinar day: a reminder to non-openers, the Spanish and German lists, and a "tomorrow" and "today" email. Mar 2025 sent '+sendCount(D,L25.yr)+' emails in its window; Oct 2026 has sent '+sendCount(D,CUR.yr)+' so far.');
   else if(K<=1) todo.push('<b>Plan the remaining email sends.</b> Day 1 was one send to every list. Each new send brings a fresh spike, so map one send per list per day to webinar day.');
   var pl=ccum(CUR.yr,"Platform",td), pl25=ccum(L25.yr,"Platform",L25.webDay);
   if(pl<pl25) todo.push('<b>Push the platform harder.</b> App and website banners brought '+fmt(pl)+' so far. Mar 2025 reached '+fmt(pl25)+' by webinar day, most of it from an app push on Day 3. Add an app push notification and keep the featured banners live through webinar day.');
   var os=ccum(CUR.yr,"Organic social",td), os24=ccum(L24.yr,"Organic social",L24.webDay);
-  if(os<os24) todo.push('<b>Keep organic social posting daily.</b> '+fmt(os)+' so far vs '+fmt(os24)+' in Jul 2024 by its webinar day. Broadcast channels (Facebook and Instagram broadcasts) are working; add stories and a countdown in the last two days.');
-  var oth=leadsCum(D,CUR.yr,td,"Other")||0; if(total&&oth/total>0.03) todo.push('<b>Tag every link.</b> '+fmt(oth)+' sign-ups ('+pctS(oth,total,0)+') have no usable UTM source, so we can\'t credit them. Check the blog, Substack and partner links.');
+  if(os<os24) todo.push('<b>Keep socials posting daily.</b> '+fmt(os)+' so far vs '+fmt(os24)+' in Jul 2024 by its webinar day. Broadcast channels (Facebook and Instagram broadcasts) are working; add stories and a countdown in the last two days.');
+  var oth=ccum(CUR.yr,"Other",td); if(total&&oth/total>0.03) todo.push('<b>Tag every link.</b> '+fmt(oth)+' sign-ups ('+pctS(oth,total,0)+') have no usable UTM source, so we can\'t credit them. Check the blog, Substack and partner links.');
   if(fe<fe25) todo.push('<b>Reach new people.</b> Use paid social to cold audiences, affiliates and partner shares. People already on the list are signing up; the extra growth has to come from outside it.');
   var O=D.orders; if(O){ var rps24=O[L24.yr].rev/(D.leads[L24.yr].total||1), rps25=O[L25.yr].rev/(D.leads[L25.yr].total||1); todo.push('<b>Get the offer ready for 6 Oct.</b> Revenue per sign-up was <b>$'+rps24.toFixed(0)+'</b> in Jul 2024 (WildFit programme) and <b>$'+rps25.toFixed(2)+'</b> in Mar 2025 (Membership). What the webinar sells will matter more than the sign-up count.'); }
   el.innerHTML='<div class="card"><p class="sum-lead">'+lead+'</p></div><div class="sum-grid">'+
@@ -885,13 +945,13 @@ function renderSummary(D){
     '<div class="sum-card"><h3><span class="tag bad">Missing</span>Behind or still to come</h3><ul>'+(bad.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Every channel group is ahead of 2025 and 2024.</li>')+'</ul></div>'+
     '<div class="sum-card"><h3><span class="tag do">Next</span>What to do now</h3><ul>'+todo.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div></div>';
 }
-function sendCount(D,yr){ if(!D.emails) return '–'; var n=0; for(var k in D.emails[yr]) n+=D.emails[yr][k].sends; return n; }
+function sendCount(D,yr){ if(!D.utm) return '–'; var n=0; for(var k in D.utm[yr]) if(D.utm[yr][k].cat==="Email") n++; return n; }
 
 /* ---------- render ---------- */
 function renderAll(){
   renderChrome();
   var D=derive();
-  renderHeads(D); renderSummary(D); renderDay(D); renderUtm(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
+  renderHeads(D); renderSummary(D); renderBreakdown(D); renderDay(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
 }
 
 /* ---------- events ---------- */
@@ -899,9 +959,10 @@ document.getElementById("refresh").addEventListener("click",function(){loadAll(t
 document.getElementById("day-seg").addEventListener("click",function(e){var b=e.target.closest("button[data-day]");if(!b||b.disabled)return;S.sel.day=+b.dataset.day;renderAll();});
 document.getElementById("mode-seg").addEventListener("click",function(e){var b=e.target.closest("button[data-mode]");if(!b)return;S.sel.mode=b.dataset.mode;document.querySelectorAll("#mode-seg button").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});renderAll();});
 
-document.getElementById("utm-pick").addEventListener("change",function(e){S.utm.pick=e.target.value;renderUtm(derive());});
-document.getElementById("utm-filter").addEventListener("input",function(e){S.utm.filter=e.target.value.toLowerCase();renderUtm(derive());});
-document.getElementById("utm-past").addEventListener("change",function(e){S.utm.past=e.target.checked;renderUtm(derive());});
+document.getElementById("bd-day").addEventListener("click",function(e){var b=e.target.closest("button[data-bday]");if(!b)return;S.bd.day=+b.dataset.bday;renderBreakdown(derive());});
+document.getElementById("bd-base").addEventListener("click",function(e){var b=e.target.closest("button[data-base]");if(!b)return;S.bd.base=b.dataset.base;renderBreakdown(derive());});
+document.getElementById("bd-filter").addEventListener("input",function(e){S.bd.filter=e.target.value.toLowerCase();renderBreakdown(derive());});
+document.getElementById("bd-past").addEventListener("change",function(e){S.bd.past=e.target.checked;renderBreakdown(derive());});
 
 /* ---------- boot ---------- */
 renderAll();
