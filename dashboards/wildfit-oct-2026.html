@@ -292,16 +292,16 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
   <section id="sales">
     <div class="sec-head">
       <h2>Sales detail</h2>
-      <p>Oct 2026 against the two WildFit live webinars, at the same point after the webinar and at their final total (webinar day to +7).</p>
+      <p id="sales-detail-sub">Oct 2026 against the Jul 2024 and Jul 2023 WildFit live webinars, all at the same point after the webinar.</p>
     </div>
     <div class="grid2">
       <div class="card">
-        <div class="card-head"><div><h3>Live webinar revenue by launch</h3><p class="hint">USD. WildFit programme + alumni, masterclass sales left out.</p></div></div>
+        <div class="card-head"><div><h3>Live webinar revenue at the same point</h3><p class="hint">USD. WildFit programme + alumni.</p></div></div>
         <div class="chart" id="rev-launch"><div class="empty">Loading…</div></div>
         <p class="hint" id="rev-launch-note" style="margin-top:8px"></p>
       </div>
       <div class="card">
-        <div class="card-head"><div><h3>Sales after the webinar, launch by launch</h3><p class="hint">Cumulative sales by the end of each day. Revenue underneath.</p></div></div>
+        <div class="card-head"><div><h3>Sales after the webinar, day by day</h3><p class="hint">Cumulative sales by the end of each day since the webinar. Revenue underneath.</p></div></div>
         <div class="tw" id="sales-after"><div class="empty">Loading…</div></div>
       </div>
     </div>
@@ -411,7 +411,7 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
       <p><b>Sign-ups are people, not form submits.</b> Each person counts once per launch, on the day of their first sign-up, from promo start to 7 days after the webinar. Mindvalley staff accounts are removed. Members means an active membership at the moment of sign-up.</p>
       <p><b>Sessions</b> are GA4 visits that loaded the webinar page, thank-you and replay pages excluded. Visitors who declined analytics cookies send no session ID, so they're counted from their session-start ping. Cookie-declined visits weren't recorded before 2024, so Jul 2023 sessions run slightly low and its sign-up rate slightly high. <b>Sign-up rate</b> is sign-ups ÷ sessions. The headline compares complete days only, because the two sources refresh on different schedules during the day.</p>
       <p><b>Launch dates.</b> Promo start and webinar: 31 Jul → 2 Aug 2023 (webinar on Day 3), 27 Jul → 30 Jul 2024 (Day 4), 5 Mar → 11 Mar 2025 (Day 7), 30 Sep → 6 Oct 2026 (Day 7). Sign-ups before a promo start are left out.</p>
-      <p><b>Sales.</b> Orders from <code>l3_sales.fact_sales_order</code>, one per <code>order_id</code>, renewals left out, from webinar day (00:00 UTC) to 7 days after. <b>WildFit programme</b> = the WildFit product sold by the live webinar. <b>Alumni offer</b> = WildFit orders tagged alumni, or a webinar single payment of $199–$299 (the $299 alumni price). <b>Masterclass sales are left out</b>: WildFit sold through the masterclass dropdown funnel (place in funnel "Webinar Dropdown"), which was open alongside the Jul 2023 and Jul 2024 webinars. <b>Mar 2025</b> sold Membership through the WildFit webinar, not WildFit, so it isn't a sales baseline; its Membership sales are shown for reference. <b>Members</b> = active member when they bought. <b>Signed up</b> = on that launch's webinar sign-up list. <b>Same point</b> = the same number of hours after 00:00 UTC on webinar day.</p>
+      <p><b>Sales.</b> Orders from <code>l3_sales.fact_sales_order</code>, one per <code>order_id</code>, renewals left out, counted from webinar day (00:00 UTC). <b>Every sales comparison is live webinar to live webinar at the same point</b>: the same number of hours after 00:00 UTC on each launch's webinar day. Whole-launch totals are not used. <b>WildFit programme</b> = the WildFit product sold by the live webinar. <b>Alumni offer</b> = WildFit orders tagged alumni, or a webinar single payment of $199–$299 (the $299 alumni price). <b>Masterclass sales are left out</b>: WildFit sold through the masterclass dropdown funnel (place in funnel "Webinar Dropdown"), which was open alongside the Jul 2023 and Jul 2024 webinars. <b>Mar 2025</b> sold Membership through the WildFit webinar, not WildFit, so it isn't a sales baseline; its Membership sales are shown for reference. <b>Members</b> = active member when they bought. <b>Signed up</b> = on that launch's webinar sign-up list.</p>
       <p><b>Sales pages.</b> GA4 sessions on <code>/wildfit/special</code> (all languages, alumni page excluded) and <code>/wildfit/special/alumni</code>, from webinar day. Conversion = programme sales ÷ sales page sessions, and alumni sales ÷ alumni page sessions. The Elula page (elula.dev) isn't tagged with Mindvalley's GA4.</p>
       <p><b>Live webinar.</b> From the Zoom attendee and survey reports, summarised to totals with <code>scripts/zoom-webinar-summary.py</code>. Total show-up rate = unique attendees ÷ people who signed up. Show-up from the sign-up list = attendees whose email is on the sign-up list ÷ people who signed up. NPS uses the survey's 5-point "recommend" question: Extremely or Very likely = promoters, Moderately = passive, Slightly or Not at all = detractors.</p>
       <p><b>Channels.</b> Channels follow the team's lead-source report and are set by utm_source. <b>Email</b>: every email_campaign_ send, split by email. <b>Platform</b>: in-app, app and website banners and newsfeed. <b>Ads</b>: anything paid; Paid social (Meta) is facebook-paid, facebook and other Meta ads, Paid search (Google) is google and google-paid. <b>Socials</b>: organic social posts, broadcasts, chatbots, LinkedIn, YouTube and Substack. <b>WhatsApp</b>: WhatsApp community links. <b>Organic</b>: blog, AI search, affiliates, onboarding journeys and other referrals. <b>Undefined</b>: no usable utm_source. Sign-up channel comes from the sign-up's tracking tags; revenue channel from <code>l3_sales.fact_sales_attribution</code>.</p>
@@ -831,11 +831,9 @@ function renderCompare(D){
     ["Sign-ups from Socials",function(l){var v=D.utm?catVal(D,l,l.endDay,true,"Socials"):null;return v?fmt(v.n):'…';}],
     ["Sign-ups from Platform",function(l){var v=D.utm?catVal(D,l,l.endDay,true,"Platform"):null;return v?fmt(v.n):'…';}],
     ["What the webinar sold",function(l){return l.yr==="2025"?'Membership<small>through the WildFit webinar</small>':'WildFit programme<small>+ $299 alumni offer</small>';}],
-    ["Live webinar sales<small>webinar day to +7</small>",function(l){var X=D.sales;if(!X)return'…';var a=l.yr==="2025"?sAgg(X,l.yr,null,null,{offer:"membership"}):sAgg(X,l.yr);return '<b>'+fmt(a.n)+'</b>'+(l===CUR?'<small>so far</small>':'');}],
-    ["Live webinar revenue",function(l){var X=D.sales;if(!X)return'…';var a=l.yr==="2025"?sAgg(X,l.yr,null,null,{offer:"membership"}):sAgg(X,l.yr);return '<b>'+usd(a.rev)+'</b>';}],
-    ["Revenue per sign-up",function(l){var X=D.sales;if(!X)return'…';var a=l.yr==="2025"?sAgg(X,l.yr,null,null,{offer:"membership"}):sAgg(X,l.yr),n=D.leads[l.yr].total;return n?'$'+(a.rev/n).toFixed(2):'–';}],
-    ["Bought by webinar sign-ups",function(l){var X=D.sales;if(!X)return'…';var o=l.yr==="2025"?{offer:"membership"}:null,a=sAgg(X,l.yr,null,null,o),r=sAgg(X,l.yr,null,function(x){return x.reg;},o);return fmt(r.n)+'<small>'+pctS(r.n,a.n,0)+' of sales</small>';}],
-    ["Masterclass sales in the window<small>left out of sales</small>",function(l){var X=D.sales;if(!X)return'…';var a=sAgg(X,l.yr,null,null,{offer:"masterclass",pre:true});return a.n?'<span class="dim">'+usd(a.rev)+'</span><small>'+fmt(a.n)+' orders</small>':'<span class="dim">–</span>';}]
+    ["Live webinar sales<small>same point after the webinar</small>",function(l){var X=D.sales;if(!X)return'…';var h=l===CUR?null:hoursSinceWeb(),a=l.yr==="2025"?sAgg(X,l.yr,h,null,{offer:"membership"}):sAgg(X,l.yr,h);return '<b>'+fmt(a.n)+'</b>';}],
+    ["Live webinar revenue<small>same point after the webinar</small>",function(l){var X=D.sales;if(!X)return'…';var h=l===CUR?null:hoursSinceWeb(),a=l.yr==="2025"?sAgg(X,l.yr,h,null,{offer:"membership"}):sAgg(X,l.yr,h);return '<b>'+usd(a.rev)+'</b>';}],
+    ["Bought by webinar sign-ups<small>same point after the webinar</small>",function(l){var X=D.sales;if(!X)return'…';var h=l===CUR?null:hoursSinceWeb(),o=l.yr==="2025"?{offer:"membership"}:null,a=sAgg(X,l.yr,h,null,o),r=sAgg(X,l.yr,h,function(x){return x.reg;},o);return fmt(r.n)+'<small>'+pctS(r.n,a.n,0)+' of sales</small>';}]
   ];
   var t='<table class="cmp"><thead><tr><th></th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
   rows.forEach(function(r){t+='<tr><td>'+r[0]+'</td>'+LAUNCHES.map(function(l){return '<td class="n'+(l===CUR?' cur':'')+'">'+r[1](l)+'</td>';}).join("")+'</tr>';});
@@ -1075,11 +1073,11 @@ function pointLabel(H){
   return (d===0?"webinar day":"webinar day + "+d)+", "+(hh<10?"0":"")+hh+":00 UTC";
 }
 function fewTag(){ return '<span class="dim" style="font-size:11.5px">too few</span>'; }
-/* rows comparing a 2026 value with each WildFit baseline at the same point (and its final) */
+/* rows comparing a 2026 value with each WildFit live webinar at the same point after its webinar */
 function sbRows(cur, fn, fmtF, isRate, min){
-  return '<div class="cmp-list"><div class="hint">Same point after the webinar · final (webinar day to +7):</div>'+SB.map(function(l){
-    var b=fn(l,true), fin=fn(l,false), few=b==null||(min!=null&&b<min);
-    return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'–':fmtF(b))+' <span class="dim">· '+(fin==null?'–':fmtF(fin))+'</span></span>'+(few?fewTag():delta(cur,b,isRate))+'</div>';
+  return '<div class="cmp-list"><div class="hint">Same point after their live webinar:</div>'+SB.map(function(l){
+    var b=fn(l,true), few=b==null||(min!=null&&b<min);
+    return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'–':fmtF(b))+'</span>'+(few?fewTag():delta(cur,b,isRate))+'</div>';
   }).join("")+'</div>';
 }
 function renderSalesTop(D){
@@ -1090,7 +1088,7 @@ function renderSalesTop(D){
   var isF=function(r){return r.offer==="full";}, isA=function(r){return r.offer==="alumni";};
   var tot=sAgg(X,CUR.yr), full=sAgg(X,CUR.yr,null,isF), alu=sAgg(X,CUR.yr,null,isA);
   var pl=pointLabel(H);
-  document.getElementById("sales-sub").innerHTML='Live webinar sales only: WildFit programme and the $299 alumni offer from webinar day (00:00 UTC) on. Masterclass dropdown sales are left out. Compared with Jul 2024 and Jul 2023 at the same point after their webinar (<b>'+esc(pl)+'</b>) and with their final total.'+(X[CUR.yr].last?' Latest order: '+esc(timeLabel(Date.parse(X[CUR.yr].last)))+'.':'');
+  document.getElementById("sales-sub").innerHTML='Live webinar sales only: WildFit programme and the $299 alumni offer from webinar day (00:00 UTC) on. Masterclass dropdown sales are left out. Compared live webinar to live webinar: Jul 2024 and Jul 2023 at the same point after their webinar (<b>'+esc(pl)+'</b>).'+(X[CUR.yr].last?' Latest order: '+esc(timeLabel(Date.parse(X[CUR.yr].last)))+'.':'');
   function g(pred,key){return function(l,same){var a=sAgg(X,l.yr,same?H:null,pred);return key==="rev"?a.rev:a.n;};}
   heads.innerHTML=
     '<div class="head"><div class="k">Total sales</div><div class="v num">'+fmt(tot.n)+'</div><div class="d"><b>'+fmt(full.n)+'</b> WildFit programme · <b>'+fmt(alu.n)+'</b> alumni</div>'+sbRows(tot.n,g(null,"n"),fmt,false,5)+'</div>'+
@@ -1129,25 +1127,26 @@ function renderSalesDetail(D){
   var H=hoursSinceWeb(), pl=pointLabel(H);
   var isF=function(r){return r.offer==="full";}, isA=function(r){return r.offer==="alumni";};
   // revenue by launch
-  var items=[{label:"Oct 2026 now", v:sAgg(X,CUR.yr).rev, color:"var(--accent)", strong:true}];
-  SB.forEach(function(l){ items.push({label:l.label.replace(" 20"," ’")+" same pt", v:sAgg(X,l.yr,H).rev, color:COLOR[l.yr], strong:false}); items.push({label:l.label.replace(" 20"," ’")+" final", v:sAgg(X,l.yr).rev, color:COLOR[l.yr], strong:false}); });
-  vbars("rev-launch", items, usdK, {W:640, H:260, aria:"Live webinar revenue by launch", labelAll:true});
-  var m25=sAgg(X,REF25.yr,null,null,{offer:"membership"}), mc=SB.map(function(l){var a=sAgg(X,l.yr,null,null,{offer:"masterclass",pre:true});return esc(l.label)+' '+usd(a.rev)+' ('+fmt(a.n)+')';}).join(", ");
-  document.getElementById("rev-launch-note").innerHTML='Live webinar sales only, webinar day to +7. Left out: masterclass dropdown sales ('+mc+'). <b>Mar 2025</b> sold Membership through the WildFit webinar, not WildFit: <b>'+fmt(m25.n)+'</b> Membership sales, <b>'+usd(m25.rev)+'</b>, so it isn\'t a WildFit baseline.';
+  var items=[{label:"Oct 2026", v:sAgg(X,CUR.yr).rev, color:"var(--accent)", strong:true}];
+  SB.forEach(function(l){ items.push({label:l.label, v:sAgg(X,l.yr,H).rev, color:COLOR[l.yr], strong:false}); });
+  vbars("rev-launch", items, usd, {W:520, H:260, aria:"Live webinar revenue at the same point", labelAll:true});
+  var m25=sAgg(X,REF25.yr,H,null,{offer:"membership"});
+  document.getElementById("rev-launch-note").innerHTML='Revenue at '+esc(pl)+' for each live webinar. Masterclass dropdown sales are left out. <b>Mar 2025</b> sold Membership through the WildFit webinar, not WildFit (<b>'+fmt(m25.n)+'</b> Membership sales, <b>'+usd(m25.rev)+'</b> at the same point), so it isn\'t a WildFit baseline.';
+  document.getElementById("sales-detail-sub").innerHTML='Oct 2026 against the Jul 2024 and Jul 2023 WildFit live webinars, all at the same point after the webinar: <b>'+esc(pl)+'</b>.';
   renderSalesAfter(X,H);
   // offer mix
   var mixRows=[{label:"Oct 2026", sub:"so far", vals:[sAgg(X,CUR.yr,null,isF).n, sAgg(X,CUR.yr,null,isA).n]}];
-  SB.forEach(function(l){ mixRows.push({label:l.label, sub:"same point", vals:[sAgg(X,l.yr,H,isF).n, sAgg(X,l.yr,H,isA).n]}); mixRows.push({label:l.label, sub:"final", vals:[sAgg(X,l.yr,null,isF).n, sAgg(X,l.yr,null,isA).n]}); });
+  SB.forEach(function(l){ mixRows.push({label:l.label, sub:"same point", vals:[sAgg(X,l.yr,H,isF).n, sAgg(X,l.yr,H,isA).n]}); });
   stackRows("offer-mix", mixRows, [{name:"WildFit programme", color:"var(--accent)"},{name:"Alumni offer", color:"#e0a32e"}]);
-  document.getElementById("offer-hint").innerHTML='Share of sales by offer. Same point = '+esc(pl)+'; final = webinar day to +7.';
+  document.getElementById("offer-hint").innerHTML='Share of sales by offer at the same point after each live webinar ('+esc(pl)+').';
   // who is buying
-  function rowsBy(pa,pb){ var r=[{label:"Oct 2026", sub:"so far", vals:[sAgg(X,CUR.yr,null,pa).n, sAgg(X,CUR.yr,null,pb).n]}]; SB.forEach(function(l){ r.push({label:l.label, sub:"same point", vals:[sAgg(X,l.yr,H,pa).n, sAgg(X,l.yr,H,pb).n]}); r.push({label:l.label, sub:"final", vals:[sAgg(X,l.yr,null,pa).n, sAgg(X,l.yr,null,pb).n]}); }); return r; }
+  function rowsBy(pa,pb){ var r=[{label:"Oct 2026", sub:"so far", vals:[sAgg(X,CUR.yr,null,pa).n, sAgg(X,CUR.yr,null,pb).n]}]; SB.forEach(function(l){ r.push({label:l.label, sub:"same point", vals:[sAgg(X,l.yr,H,pa).n, sAgg(X,l.yr,H,pb).n]}); }); return r; }
   stackRows("mem-mix", rowsBy(function(r){return r.member;},function(r){return !r.member;}), [{name:"Members", color:"var(--accent)"},{name:"Non-members", color:"var(--y24)"}]);
   stackRows("reg-mix", rowsBy(function(r){return r.reg;},function(r){return !r.reg;}), [{name:"Signed up for the webinar", color:"#1f9e89"},{name:"Didn't sign up", color:"var(--y23)"}]);
   if(D.leads){
-    var t='<table><thead><tr><th>Sign-ups who bought</th>'+SL.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+(l===CUR?'<small>so far</small>':'<small>final</small>')+'</th>';}).join("")+'</tr></thead><tbody>';
-    t+='<tr><td>Member sign-ups<small>buyers ÷ member sign-ups</small></td>'+SL.map(function(l){var a=sAgg(X,l.yr,null,function(r){return r.reg&&r.member;}).n;return '<td class="n'+(l===CUR?' cur':'')+'">'+pctS(a,D.leads[l.yr].mem,1)+'<small>'+fmt(a)+' of '+fmt(D.leads[l.yr].mem)+'</small></td>';}).join("")+'</tr>';
-    t+='<tr><td>Non-member sign-ups<small>buyers ÷ non-member sign-ups</small></td>'+SL.map(function(l){var a=sAgg(X,l.yr,null,function(r){return r.reg&&!r.member;}).n, d=D.leads[l.yr].total-D.leads[l.yr].mem;return '<td class="n'+(l===CUR?' cur':'')+'">'+pctS(a,d,1)+'<small>'+fmt(a)+' of '+fmt(d)+'</small></td>';}).join("")+'</tr>';
+    var t='<table><thead><tr><th>Sign-ups who bought</th>'+SL.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+(l===CUR?'<small>so far</small>':'<small>same point</small>')+'</th>';}).join("")+'</tr></thead><tbody>';
+    t+='<tr><td>Member sign-ups<small>buyers ÷ member sign-ups</small></td>'+SL.map(function(l){var a=sAgg(X,l.yr,l===CUR?null:H,function(r){return r.reg&&r.member;}).n;return '<td class="n'+(l===CUR?' cur':'')+'">'+pctS(a,D.leads[l.yr].mem,1)+'<small>'+fmt(a)+' of '+fmt(D.leads[l.yr].mem)+'</small></td>';}).join("")+'</tr>';
+    t+='<tr><td>Non-member sign-ups<small>buyers ÷ non-member sign-ups</small></td>'+SL.map(function(l){var a=sAgg(X,l.yr,l===CUR?null:H,function(r){return r.reg&&!r.member;}).n, d=D.leads[l.yr].total-D.leads[l.yr].mem;return '<td class="n'+(l===CUR?' cur':'')+'">'+pctS(a,d,1)+'<small>'+fmt(a)+' of '+fmt(d)+'</small></td>';}).join("")+'</tr>';
     document.getElementById("mem-table").innerHTML=t+'</tbody></table>';
   }
   renderChannelShare(X,H);
@@ -1155,22 +1154,22 @@ function renderSalesDetail(D){
 }
 function renderSalesAfter(X,H){
   var dwNow=Math.floor(H/24);
-  var rows=[{k:"Before the webinar",d:-1}]; for(var d=0;d<=7;d++) rows.push({k:d===0?"Webinar day":"Day +"+d,d:d});
+  var rows=[]; for(var d=0;d<=Math.min(dwNow,7);d++) rows.push({k:d===0?"Webinar day":"Day +"+d,d:d});
   var t='<table><thead><tr><th>By the end of</th>'+SL.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
   rows.forEach(function(r){
     t+='<tr><td>'+r.k+'</td>'+SL.map(function(l){
       if(l===CUR&&r.d>dwNow) return '<td class="n cur"><span class="dim">–</span></td>';
-      var a=r.d<0?sAgg(X,l.yr,null,null,{pre:true,preOnly:true}):sAgg(X,l.yr,null,function(x){return x.dw<=r.d;});
-      var note=(l===CUR&&r.d===dwNow&&r.d>=0)?'<small>so far</small>':'';
+      var a=sAgg(X,l.yr,(l!==CUR&&r.d===dwNow)?H:null,function(x){return x.dw<=r.d;});
+      var note=(r.d===dwNow)?'<small>'+(l===CUR?'so far':'same hour')+'</small>':'';
       var dl=''; if(l===CUR&&r.d>=0&&r.d<=dwNow){ dl='<small>'+SB.map(function(b){var x=sAgg(X,b.yr,r.d===dwNow?H:null,function(y){return y.dw<=r.d;});return delta(a.n,x.n);}).join(" ")+'</small>'; }
       return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(a.n)+'<small>'+usdK(a.rev)+'</small>'+note+dl+'</td>';
     }).join("")+'</tr>';
   });
-  document.getElementById("sales-after").innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Cumulative from webinar day. Oct 2026 changes are vs Jul 2024 then Jul 2023 ("so far" at the same hour). Before the webinar isn\'t in the totals below it.</p>';
+  document.getElementById("sales-after").innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Cumulative sales from webinar day, up to today. Today\'s row compares at the same hour. Oct 2026 changes are vs Jul 2024 then Jul 2023.</p>';
 }
 function renderChannelShare(X,H){
   var cols=[{l:CUR,H:null,name:"Oct 2026",sub:"so far"}];
-  SB.forEach(function(l){cols.push({l:l,H:H,name:l.label,sub:"same point"}); cols.push({l:l,H:null,name:l.label,sub:"final"});});
+  SB.forEach(function(l){cols.push({l:l,H:H,name:l.label,sub:"same point"});});
   var tots=cols.map(function(c){return sAgg(X,c.l.yr,c.H).n;});
   var t='<table class="share"><thead><tr><th>Channel</th>'+cols.map(function(c,i){return '<th class="'+(i===0?'cur':'')+'">'+esc(c.name)+'<small>'+c.sub+' · '+fmt(tots[i])+' sales</small></th>';}).join("")+'</tr></thead><tbody>';
   SALE_CATS.forEach(function(cat){
@@ -1186,11 +1185,11 @@ function renderBuyerSources(D,X,H,pl){
   var N=D.enames;
   function ag(l,pred){return sAgg(X,l.yr,l===CUR?null:H,pred);}
   function cells(pred,cls,lbl){
-    var a=ag(CUR,pred), am=ag(CUR,function(r){return pred(r)&&r.member;}), b=ag(B,pred), bf=sAgg(X,B.yr,null,pred);
-    if(!a.n&&!b.n&&!bf.n&&cls!=="sum") return '';
-    return '<tr class="'+cls+'"><td>'+lbl+'</td><td class="n cur">'+fmt(a.n)+'</td><td class="n">'+fmt(am.n)+'</td><td class="n">'+fmt(a.n-am.n)+'</td><td class="n">'+usd(a.rev)+'</td><td class="n">'+(b.n?fmt(b.n):'<span class="dim">–</span>')+'</td><td class="n">'+(b.n?delta(a.n,b.n):'')+'</td><td class="n">'+(bf.n?fmt(bf.n):'<span class="dim">–</span>')+'<small>'+(bf.n?usdK(bf.rev):'')+'</small></td></tr>';
+    var a=ag(CUR,pred), am=ag(CUR,function(r){return pred(r)&&r.member;}), b=ag(B,pred);
+    if(!a.n&&!b.n&&cls!=="sum") return '';
+    return '<tr class="'+cls+'"><td>'+lbl+'</td><td class="n cur">'+fmt(a.n)+'</td><td class="n">'+fmt(am.n)+'</td><td class="n">'+fmt(a.n-am.n)+'</td><td class="n">'+usd(a.rev)+'</td><td class="n">'+(b.n?fmt(b.n):'<span class="dim">–</span>')+'</td><td class="n">'+(b.n?delta(a.n,b.n):'')+'</td></tr>';
   }
-  var t='<table><thead><tr><th>Buyer source</th><th class="n cur">Oct 2026<small>sales so far</small></th><th class="n">Members</th><th class="n">Non-members</th><th class="n">Revenue</th><th class="n">'+esc(B.label)+'<small>same point</small></th><th class="n">Change</th><th class="n">'+esc(B.label)+'<small>final</small></th></tr></thead><tbody>';
+  var t='<table><thead><tr><th>Buyer source</th><th class="n cur">Oct 2026<small>sales so far</small></th><th class="n">Members</th><th class="n">Non-members</th><th class="n">Revenue</th><th class="n">'+esc(B.label)+'<small>same point</small></th><th class="n">Change</th></tr></thead><tbody>';
   SALE_CATS.forEach(function(c){
     var isC=function(r){return r.cat===c.key;};
     var srcs={}; X[CUR.yr].rows.forEach(function(r){ if(r.cat===c.key&&(r.offer==="full"||r.offer==="alumni")&&r.dw>=0) srcs[r.src||"(no source)"]=1; });
@@ -1216,39 +1215,36 @@ function renderRevSummary(D){
   var el=document.getElementById("rev-summary-body"), X=D.sales;
   if(!X){ el.innerHTML='<div class="empty">'+(secErr(["sales"])||'Loading sales from Metabase…')+'</div>'; return; }
   var H=hoursSinceWeb(), pl=pointLabel(H), L24=SB[0], L23=SB[1];
-  var cur=sAgg(X,CUR.yr), s24=sAgg(X,L24.yr,H), s23=sAgg(X,L23.yr,H), f24=sAgg(X,L24.yr), f23=sAgg(X,L23.yr);
-  var p24=s24.n?Math.round(cur.n*f24.n/s24.n):null, p23=s23.n?Math.round(cur.n*f23.n/s23.n):null;
-  var r24=s24.rev?cur.rev*f24.rev/s24.rev:null, r23=s23.rev?cur.rev*f23.rev/s23.rev:null;
-  var lo=Math.min(p24||Infinity,p23||Infinity), hi=Math.max(p24||0,p23||0), rlo=Math.min(r24||Infinity,r23||Infinity), rhi=Math.max(r24||0,r23||0);
-  var lead='At <b>'+esc(pl)+'</b>, Oct 2026 has <b>'+fmt(cur.n)+' sales</b> and <b>'+usd(cur.rev)+'</b>. At the same point Jul 2024 had '+fmt(s24.n)+' sales ('+usdK(s24.rev)+') '+delta(cur.n,s24.n)+' and Jul 2023 had '+fmt(s23.n)+' ('+usdK(s23.rev)+') '+delta(cur.n,s23.n)+'.'+
-    (isFinite(lo)?' If the rest of the week follows the 2024 and 2023 curves, Oct 2026 ends at about <b>'+fmt(lo)+(hi!==lo?'–'+fmt(hi):'')+' sales</b> and <b>'+usdK(rlo)+(rhi!==rlo?'–'+usdK(rhi):'')+'</b>, against '+fmt(f24.n)+' sales / '+usdK(f24.rev)+' in Jul 2024 and '+fmt(f23.n)+' / '+usdK(f23.rev)+' in Jul 2023.':'');
+  var cur=sAgg(X,CUR.yr), s24=sAgg(X,L24.yr,H), s23=sAgg(X,L23.yr,H);
+  var lead='Live webinar to live webinar, at <b>'+esc(pl)+'</b>: Oct 2026 has <b>'+fmt(cur.n)+' sales</b> and <b>'+usd(cur.rev)+'</b>. Jul 2024 had <b>'+fmt(s24.n)+'</b> sales ('+usd(s24.rev)+') '+delta(cur.n,s24.n)+' and Jul 2023 had <b>'+fmt(s23.n)+'</b> ('+usd(s23.rev)+') '+delta(cur.n,s23.n)+'.';
   var good=[], bad=[], miss=[], todo=[];
   // channels at the same point vs 2024
-  var cc=SALE_CATS.map(function(c){var p=function(r){return r.cat===c.key;}; return {c:c, cur:sAgg(X,CUR.yr,null,p).n, b:sAgg(X,L24.yr,H,p).n, f24:sAgg(X,L24.yr,null,p).n, f23:sAgg(X,L23.yr,null,p).n};});
+  var cc=SALE_CATS.map(function(c){var p=function(r){return r.cat===c.key;}; return {c:c, cur:sAgg(X,CUR.yr,null,p).n, b:sAgg(X,L24.yr,H,p).n, b23:sAgg(X,L23.yr,H,p).n};});
   cc.forEach(function(x){
     var nm=x.c.name.replace(" total","");
     if(x.cur>0&&x.cur>=x.b&&x.cur>=3) good.push('<b>'+nm+'</b>: '+fmt(x.cur)+' sales vs '+fmt(x.b)+' in Jul 2024 at the same point.');
     else if(x.b>=3&&x.cur<x.b) bad.push('<b>'+nm+'</b>: '+fmt(x.cur)+' sales vs '+fmt(x.b)+' in Jul 2024 at the same point '+delta(x.cur,x.b)+'.');
-    if(x.cur===0&&(x.f24>=5||x.f23>=5)) miss.push('<b>'+nm+' isn\'t live</b>: no sales yet. It brought '+fmt(x.f24)+' sales in Jul 2024 and '+fmt(x.f23)+' in Jul 2023 over the week.');
+    if(x.cur===0&&(x.b>=2||x.b23>=2)) miss.push('<b>'+nm+' isn\'t live</b>: no sales yet. At the same point it had brought '+fmt(x.b)+' sales in Jul 2024 and '+fmt(x.b23)+' in Jul 2023.');
   });
   // sources/families used in 2024 that 2026 hasn't used yet
   var fam={}, used={};
   X[CUR.yr].rows.forEach(function(r){ if((r.offer==="full"||r.offer==="alumni")&&r.dw>=0) used[srcFamily(r.src)]=1; });
-  X[L24.yr].rows.forEach(function(r){ if(!(r.offer==="full"||r.offer==="alumni")||r.dw<0||!r.src) return; var k=srcFamily(r.src); var o=fam[k]||(fam[k]={n:0,rev:0,days:{}}); o.n+=r.n; o.rev+=r.rev; o.days[r.dw]=1; });
-  Object.keys(fam).filter(function(k){return !used[k]&&fam[k].n>=5;}).sort(function(a,b){return fam[b].n-fam[a].n;}).slice(0,6).forEach(function(k){
+  X[L24.yr].rows.forEach(function(r){ if(!(r.offer==="full"||r.offer==="alumni")||r.dw<0||!r.src||!inPoint(r,H)) return; var k=srcFamily(r.src); var o=fam[k]||(fam[k]={n:0,rev:0,days:{}}); o.n+=r.n; o.rev+=r.rev; o.days[r.dw]=1; });
+  Object.keys(fam).filter(function(k){return !used[k]&&fam[k].n>=2;}).sort(function(a,b){return fam[b].n-fam[a].n;}).slice(0,6).forEach(function(k){
     var d=Object.keys(fam[k].days).map(Number).sort(function(a,b){return a-b;});
-    miss.push('<b>'+esc(k)+'</b>: '+fmt(fam[k].n)+' sales ('+usdK(fam[k].rev)+') in Jul 2024, days +'+d[0]+(d.length>1?' to +'+d[d.length-1]:'')+'. Not used in Oct 2026 yet.');
+    miss.push('<b>'+esc(k)+'</b>: '+fmt(fam[k].n)+' sales ('+usdK(fam[k].rev)+') in Jul 2024 by the same point. Not used in Oct 2026 yet.');
   });
   // offers
-  var aCur=sAgg(X,CUR.yr,null,function(r){return r.offer==="alumni";}).n, a24f=sAgg(X,L24.yr,null,function(r){return r.offer==="alumni";}).n, a24=sAgg(X,L24.yr,H,function(r){return r.offer==="alumni";}).n;
-  if(aCur>a24) good.push('<b>Alumni offer</b> started early: '+fmt(aCur)+' alumni sales vs '+fmt(a24)+' in Jul 2024 at the same point. Jul 2024 ended with '+fmt(a24f)+'.');
+  var isAl=function(r){return r.offer==="alumni";}, aCur=sAgg(X,CUR.yr,null,isAl).n, a24=sAgg(X,L24.yr,H,isAl).n, a23=sAgg(X,L23.yr,H,isAl).n;
+  if(aCur>a24) good.push('<b>Alumni offer</b>: '+fmt(aCur)+' alumni sales vs '+fmt(a24)+' in Jul 2024 at the same point.');
+  if(aCur<a23) bad.push('<b>Alumni offer</b>: '+fmt(aCur)+' alumni sales vs '+fmt(a23)+' in Jul 2023 at the same point '+delta(aCur,a23)+'.');
   // members and sign-ups
   if(D.leads){
     var mb=sAgg(X,CUR.yr,null,function(r){return r.reg&&r.member;}).n, nmb=sAgg(X,CUR.yr,null,function(r){return r.reg&&!r.member;}).n;
     var mr=mb/(D.leads[CUR.yr].mem||1), nr=nmb/((D.leads[CUR.yr].total-D.leads[CUR.yr].mem)||1);
-    var mr24=sAgg(X,L24.yr,null,function(r){return r.reg&&r.member;}).n/(D.leads[L24.yr].mem||1), nr24=sAgg(X,L24.yr,null,function(r){return r.reg&&!r.member;}).n/((D.leads[L24.yr].total-D.leads[L24.yr].mem)||1);
-    (mr>=mr24*0.5?good:bad).push('<b>Member sign-ups</b> are converting at '+pctS(mr,1,1)+' so far (Jul 2024 ended at '+pctS(mr24,1,1)+').');
-    bad.push('<b>Non-member sign-ups</b> are converting at '+pctS(nr,1,1)+' so far (Jul 2024 ended at '+pctS(nr24,1,1)+'). '+fmt((D.leads[CUR.yr].total-D.leads[CUR.yr].mem)-nmb)+' non-member sign-ups haven\'t bought.');
+    var mr24=sAgg(X,L24.yr,H,function(r){return r.reg&&r.member;}).n/(D.leads[L24.yr].mem||1), nr24=sAgg(X,L24.yr,H,function(r){return r.reg&&!r.member;}).n/((D.leads[L24.yr].total-D.leads[L24.yr].mem)||1);
+    (mr>=mr24?good:bad).push('<b>Member sign-ups</b> are converting at '+pctS(mr,1,1)+' vs '+pctS(mr24,1,1)+' in Jul 2024 at the same point.');
+    (nr>=nr24?good:bad).push('<b>Non-member sign-ups</b> are converting at '+pctS(nr,1,1)+' vs '+pctS(nr24,1,1)+' in Jul 2024 at the same point. '+fmt((D.leads[CUR.yr].total-D.leads[CUR.yr].mem)-nmb)+' non-member sign-ups haven\'t bought.');
   }
   var W=WEBINAR, A=W.attendees, M=W.match||{};
   var wr=cc.filter(function(x){return x.c.key==="Webinar";})[0];
@@ -1260,12 +1256,11 @@ function renderRevSummary(D){
     if(s24p) (sc>=s24p?good:bad).push('<b>Sales page traffic</b>: '+fmt(sc)+' sessions vs '+fmt(Math.round(s24p))+' in Jul 2024 at the same point '+delta(sc,s24p)+'. Conversion '+pctS(fN,sc,1)+' vs '+pctS(f24N,s24p,1)+'.');
   }
   // what to do
-  var gap24=f24.n-cur.n;
-  todo.push('<b>Close the gap to Jul 2024</b>: '+fmt(gap24)+' more sales needed to match its '+fmt(f24.n)+'. In 2024, '+pctS(f24.n-s24.n,f24.n,0)+' of its sales came after this point, so the remaining days matter most.');
-  if(miss.some(function(m){return /alumni/.test(m);})||a24f>aCur) todo.push('<b>Send the alumni sequence.</b> Jul 2024 sold '+fmt(a24f)+' alumni offers, most from alumni emails 3 to 6 on days +2 to +6. Mail every past WildFit buyer the $299 offer daily to the deadline, with the /wildfit/special/alumni link.');
+  if(s24.n>cur.n) todo.push('<b>Close the gap to Jul 2024</b>: Oct 2026 is '+fmt(s24.n-cur.n)+' sales behind Jul 2024 at the same point after the webinar.');
+  todo.push('<b>Send the alumni sequence.</b> Mail every past WildFit buyer the $299 offer daily to the deadline, with the /wildfit/special/alumni link.');
   todo.push('<b>Run the sales email sequence to the sign-up list</b>: replay, "cart closing" and last-chance emails to everyone who signed up but hasn\'t bought, split members / non-members. '+(M.attendees_on_signup_list?fmt((M.signup_emails||0)-M.attendees_on_signup_list)+' sign-ups didn\'t attend: send them the replay.':''));
   var ads=cc.filter(function(x){return x.c.key==="Ads";})[0];
-  if(ads&&ads.cur<Math.max(3,ads.b)) todo.push('<b>Turn on retargeting ads</b> to sales page visitors and webinar sign-ups (Meta and Google). Ads brought '+fmt(ads.f24)+' sales in Jul 2024 and '+fmt(ads.f23)+' in Jul 2023; Oct 2026 has '+fmt(ads.cur)+'.');
+  if(ads&&ads.cur<Math.max(3,ads.b)) todo.push('<b>Turn on retargeting ads</b> to sales page visitors and webinar sign-ups (Meta and Google). At the same point Ads had brought '+fmt(ads.b)+' sales in Jul 2024 and '+fmt(ads.b23)+' in Jul 2023; Oct 2026 has '+fmt(ads.cur)+'.');
   var soc=cc.filter(function(x){return x.c.key==="Socials";})[0], wa=cc.filter(function(x){return x.c.key==="WhatsApp";})[0];
   todo.push('<b>Push the offer on socials and WhatsApp</b> with tagged links (utm_source per post): socials have '+fmt(soc?soc.cur:0)+' sales, WhatsApp '+fmt(wa?wa.cur:0)+'. Testimonials and a countdown to the deadline.');
   var und=cc.filter(function(x){return x.c.key==="Undefined";})[0];
@@ -1274,7 +1269,7 @@ function renderRevSummary(D){
   el.innerHTML='<div class="card"><p class="sum-lead">'+lead+'</p></div><div class="sum-grid four">'+
     '<div class="sum-card"><h3><span class="tag good">Working</span>Ahead or on track</h3><ul>'+(good.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Nothing is ahead of Jul 2024 yet.</li>')+'</ul></div>'+
     '<div class="sum-card"><h3><span class="tag bad">Not working</span>Behind Jul 2024</h3><ul>'+(bad.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Every channel is at or ahead of Jul 2024.</li>')+'</ul></div>'+
-    '<div class="sum-card"><h3><span class="tag bad">Missing</span>Not live yet vs baseline</h3><ul>'+(miss.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Every channel that sold in 2024 and 2023 is live.</li>')+'</ul></div>'+
+    '<div class="sum-card"><h3><span class="tag bad">Missing</span>Live in 2024/2023 by now, not in 2026</h3><ul>'+(miss.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Every channel that had sold by this point in 2024 and 2023 is live.</li>')+'</ul></div>'+
     '<div class="sum-card"><h3><span class="tag do">Next</span>What to do now</h3><ul>'+todo.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div></div>';
 }
 function renderSales(D){ renderSalesTop(D); if(D.sales){ renderSalesDetail(D); } renderRevSummary(D); }
