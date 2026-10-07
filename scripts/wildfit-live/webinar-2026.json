@@ -288,5 +288,12 @@
     ]
    }
   ]
+ },
+ "match": {
+  "note": "Attendee emails (lowercased) matched against /wildfit/invite sign-up emails, 30 Sep to 13 Oct 2026, in the DE layer lead table. Aggregates only.",
+  "signup_emails": 10036,
+  "attendee_emails_checked": 3986,
+  "attendees_on_signup_list": 2501,
+  "matched_at": "2026-10-07"
  }
 }

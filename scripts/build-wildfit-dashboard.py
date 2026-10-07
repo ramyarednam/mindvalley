@@ -10,7 +10,7 @@ root = pathlib.Path(__file__).resolve().parent.parent
 live = root / "scripts/wildfit-live"
 launches = (live / "launches.sql").read_text().rstrip("\n")
 tpl = (root / "dashboards/wildfit-oct-2026.template.html").read_text()
-for name in ("leads", "orders", "utm", "email_names", "sales"):
+for name in ("leads", "utm", "email_names", "sales"):
     sql = (live / f"{name}.sql").read_text().replace("__LAUNCHES__", launches)
     tpl = tpl.replace(f"__{name.upper()}_SQL__", json.dumps(sql).replace("</", "<\\/"))
 web = (live / "webinar-2026.json").read_text()

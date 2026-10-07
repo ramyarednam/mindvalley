@@ -1,6 +1,8 @@
 -- Sales from the live webinar: promo start to webinar + 7 days, one row per order_id.
--- offer: 'alumni' = WildFit alumni offer (tagged alumni, or a main_webinar single payment at $199-$299);
---        'full' = every other WildFit programme order; 'other' = upsells sold in the WildFit funnel.
+-- offer: 'full' = WildFit programme sold by the live webinar; 'alumni' = WildFit alumni offer (tagged alumni,
+--        or a main_webinar single payment at $199-$299); 'masterclass' = WildFit sold through the masterclass
+--        dropdown funnel (place_in_funnel 'Webinar Dropdown'), not the live webinar; 'membership' = Membership sold
+--        through the WildFit funnel (what the Mar 2025 webinar sold); 'other' = upsells.
 -- dw = days from webinar (0 = webinar day, UTC); h = hours since webinar-day 00:00 UTC, for the first 48 hours only.
 -- ch/src = order attribution channel and source (classified on the page). member = active Mindvalley member at purchase. Renewals and downgrades left out.
 WITH b AS (
@@ -11,10 +13,14 @@ reg AS (
 o AS (
   SELECT o.order_id, ANY_VALUE(o.order_timestamp) ts, ANY_VALUE(o.order_amount) amt, ANY_VALUE(IFNULL(o.refund_amount, 0)) refund,
     ANY_VALUE(o.user_id) user_id, ANY_VALUE(o.order_type) otype, LOGICAL_OR(IFNULL(o.is_active_member, FALSE)) member,
-    ANY_VALUE(CASE WHEN p.sub_business_unit <> 'Wildfit' OR p.sub_business_unit IS NULL THEN 'other'
-                   WHEN REGEXP_CONTAINS(LOWER(o.tags), r'(^|,)alumni(,|$)')
-                     OR (REGEXP_CONTAINS(LOWER(o.tags), r'(^|,)main_webinar(,|$)') AND o.order_amount BETWEEN 199 AND 299) THEN 'alumni'
-                   ELSE 'full' END) offer,
+    ANY_VALUE(CASE
+      WHEN p.sub_business_unit = 'Wildfit' THEN CASE
+        WHEN o.place_in_funnel = 'Webinar Dropdown' OR REGEXP_CONTAINS(LOWER(o.tags), r'(^|,)dropdown_webinar(,|$)') THEN 'masterclass'
+        WHEN REGEXP_CONTAINS(LOWER(o.tags), r'(^|,)alumni(,|$)')
+          OR (REGEXP_CONTAINS(LOWER(o.tags), r'(^|,)main_webinar(,|$)') AND o.order_amount BETWEEN 199 AND 299) THEN 'alumni'
+        ELSE 'full' END
+      WHEN p.sub_business_unit = 'MV Membership' AND IFNULL(o.place_in_funnel, '') <> 'Upsell' THEN 'membership'
+      ELSE 'other' END) offer,
     ANY_VALUE(a.unified_traffic_channel) ch,
     -- source: the attribution utm_source when it has one, else the buy-link tag on the order
     ANY_VALUE(COALESCE(NULLIF(NULLIF(LOWER(a.utm_source), 'not available'), ''),
