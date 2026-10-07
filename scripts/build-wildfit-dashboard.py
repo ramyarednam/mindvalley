@@ -10,10 +10,12 @@ root = pathlib.Path(__file__).resolve().parent.parent
 live = root / "scripts/wildfit-live"
 launches = (live / "launches.sql").read_text().rstrip("\n")
 tpl = (root / "dashboards/wildfit-oct-2026.template.html").read_text()
-for name in ("leads", "orders", "utm", "email_names"):
+for name in ("leads", "orders", "utm", "email_names", "sales"):
     sql = (live / f"{name}.sql").read_text().replace("__LAUNCHES__", launches)
     tpl = tpl.replace(f"__{name.upper()}_SQL__", json.dumps(sql).replace("</", "<\\/"))
-assert "__" + "LEADS_SQL__" not in tpl
+web = (live / "webinar-2026.json").read_text()
+tpl = tpl.replace("__WEBINAR_JSON__", json.dumps(json.loads(web)).replace("</", "<\\/"))
+assert "__" + "LEADS_SQL__" not in tpl and "__" + "WEBINAR_JSON__" not in tpl
 out = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else root / "dashboards/wildfit-oct-2026.html"
 out.write_text(tpl)
 print(f"wrote {out} ({out.stat().st_size:,} bytes)")

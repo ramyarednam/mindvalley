@@ -1,0 +1,292 @@
+{
+ "attendees": {
+  "report_generated": "10/06/2026 08:22:47 PM",
+  "topic": "Turn On Your Metabolic Switch: Lose Stubborn Weight Without Diets or Injections",
+  "zoom_unique_viewers": 3992,
+  "zoom_max_concurrent": 2910,
+  "unique_attendees": 3992,
+  "first_join": "08:00",
+  "length_min": 98,
+  "avg_min": 58.0,
+  "median_min": 60,
+  "stayed": {
+   "15": 3323,
+   "30": 2958,
+   "60": 2038,
+   "90": 1166
+  },
+  "at_end": 1735,
+  "curve": [
+   [
+    0,
+    14
+   ],
+   [
+    5,
+    2295
+   ],
+   [
+    10,
+    2554
+   ],
+   [
+    15,
+    2675
+   ],
+   [
+    20,
+    2769
+   ],
+   [
+    25,
+    2771
+   ],
+   [
+    30,
+    2848
+   ],
+   [
+    35,
+    2877
+   ],
+   [
+    40,
+    2847
+   ],
+   [
+    45,
+    2830
+   ],
+   [
+    50,
+    2754
+   ],
+   [
+    55,
+    2628
+   ],
+   [
+    60,
+    2292
+   ],
+   [
+    65,
+    2043
+   ],
+   [
+    70,
+    1939
+   ],
+   [
+    75,
+    1886
+   ],
+   [
+    80,
+    1794
+   ],
+   [
+    85,
+    1735
+   ],
+   [
+    90,
+    1652
+   ],
+   [
+    95,
+    1530
+   ]
+  ],
+  "countries": [
+   [
+    "United States",
+    1624
+   ],
+   [
+    "Canada",
+    366
+   ],
+   [
+    "United Kingdom",
+    362
+   ],
+   [
+    "Germany",
+    131
+   ],
+   [
+    "Netherlands",
+    91
+   ],
+   [
+    "South Africa",
+    89
+   ],
+   [
+    "India",
+    78
+   ],
+   [
+    "Mexico",
+    77
+   ]
+  ]
+ },
+ "survey": {
+  "responses": 543,
+  "generated": "10/06/2026 08:22:53 PM",
+  "questions": [
+   {
+    "q": "Overall, how would you rate today's class?",
+    "answers": [
+     [
+      "5 - Excellent",
+      193
+     ],
+     [
+      "4 - Very good",
+      192
+     ],
+     [
+      "3 - Good",
+      112
+     ],
+     [
+      "2 - Fair",
+      32
+     ],
+     [
+      "1 - Poor",
+      13
+     ]
+    ]
+   },
+   {
+    "q": "How valuable was what you learned today?",
+    "answers": [
+     [
+      "Very valuable",
+      236
+     ],
+     [
+      "Extremely valuable",
+      127
+     ],
+     [
+      "Moderately valuable",
+      114
+     ],
+     [
+      "Slightly valuable",
+      45
+     ],
+     [
+      "Not valuable",
+      15
+     ]
+    ]
+   },
+   {
+    "q": "How clear and easy to follow were Eric and Vishen?",
+    "answers": [
+     [
+      "Very clear",
+      255
+     ],
+     [
+      "Extremely clear",
+      202
+     ],
+     [
+      "Fairly clear",
+      68
+     ],
+     [
+      "Slightly clear",
+      9
+     ],
+     [
+      "Not at all clear",
+      2
+     ]
+    ]
+   },
+   {
+    "q": "How do you feel about your health goals after today?",
+    "answers": [
+     [
+      "More hopeful",
+      276
+     ],
+     [
+      "About the same",
+      130
+     ],
+     [
+      "Much more hopeful",
+      127
+     ],
+     [
+      "Less hopeful",
+      5
+     ],
+     [
+      "Much less hopeful",
+      1
+     ]
+    ]
+   },
+   {
+    "q": "How likely are you to take the next step with WildFit?",
+    "answers": [
+     [
+      "Moderately likely",
+      162
+     ],
+     [
+      "Very likely",
+      119
+     ],
+     [
+      "Slightly likely",
+      109
+     ],
+     [
+      "Not at all likely",
+      79
+     ],
+     [
+      "Extremely likely",
+      65
+     ]
+    ]
+   },
+   {
+    "q": "How likely are you to recommend this class to a friend?",
+    "answers": [
+     [
+      "Very likely",
+      203
+     ],
+     [
+      "Moderately likely",
+      112
+     ],
+     [
+      "Extremely likely",
+      107
+     ],
+     [
+      "Not at all likely",
+      60
+     ],
+     [
+      "Slightly likely",
+      55
+     ]
+    ]
+   }
+  ]
+ }
+}

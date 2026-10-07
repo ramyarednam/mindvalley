@@ -72,7 +72,18 @@ button.refresh[disabled] .spin{display:inline-block;animation:sp .8s linear infi
 
 /* headline tiles */
 .heads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+.heads.four{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:0}
+.hb{display:grid;grid-template-columns:minmax(120px,170px) 1fr 74px;gap:8px;align-items:center;font-size:13px;margin:3px 0}
+.hb .bar{height:14px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.hb .bar i{display:block;height:100%;border-radius:4px}
+.hb .pv{font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+.hb .pv b{color:var(--ink)}
+.qblock{margin:0 0 14px}
+.qblock h4{font-size:13.5px;margin:0 0 6px}
+.heads.four .head .v{font-size:38px}
+@media (max-width:1100px){.heads.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){.heads{grid-template-columns:1fr}}
+@media (max-width:600px){.heads.four{grid-template-columns:1fr}}
 .head{background:var(--surface);border-radius:14px;padding:18px 20px;min-width:0;display:flex;flex-direction:column;gap:6px}
 .head .k{font-size:13px;font-weight:700;color:var(--muted)}
 .head .v{font-size:46px;font-weight:800;letter-spacing:-.03em;line-height:1.02}
@@ -204,6 +215,76 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     <div class="head"><div class="k">Landing page sessions</div><div class="v skel">…</div><div class="d skel">Loading from GA4</div></div>
     <div class="head"><div class="k">Landing page sign-up rate</div><div class="v skel">…</div><div class="d skel">Sign-ups ÷ sessions</div></div>
   </div>
+
+  <section id="webinar">
+    <div class="sec-head">
+      <h2>Live webinar: Tue 6 Oct</h2>
+      <p id="web-sub">From the Zoom attendee and survey reports.</p>
+    </div>
+    <div class="heads four" id="web-heads"></div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card">
+        <div class="card-head"><div><h3>People watching, minute by minute</h3><p class="hint">Unique attendees in the room every 5 minutes from when doors opened. Number on each bar.</p></div></div>
+        <div class="chart" id="web-curve"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h3>Survey answers</h3><p class="hint" id="web-survey-hint"></p></div></div>
+        <div id="web-survey"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sales">
+    <div class="sec-head">
+      <h2>Sales: WildFit programme + alumni offer</h2>
+      <p id="sales-sub">Orders from Metabase and sales-page sessions from GA4, compared with past launches at the same point after their webinar.</p>
+    </div>
+    <div id="sales-err"></div>
+    <div class="heads four" id="sales-heads">
+      <div class="head"><div class="k">Total sales</div><div class="v skel">…</div><div class="d skel">Loading from Metabase</div></div>
+      <div class="head"><div class="k">Total revenue</div><div class="v skel">…</div><div class="d skel">WildFit programme + alumni</div></div>
+      <div class="head"><div class="k">WildFit programme</div><div class="v skel">…</div><div class="d skel">Full offer</div></div>
+      <div class="head"><div class="k">Alumni offer ($299)</div><div class="v skel">…</div><div class="d skel">Past WildFit buyers</div></div>
+    </div>
+    <div class="heads four" id="page-heads" style="margin-top:16px">
+      <div class="head"><div class="k">Sales page sessions</div><div class="v skel">…</div><div class="d skel">Loading from GA4</div></div>
+      <div class="head"><div class="k">Alumni page sessions</div><div class="v skel">…</div><div class="d skel">Loading from GA4</div></div>
+      <div class="head"><div class="k">Elula page sessions</div><div class="v skel">…</div><div class="d skel">Loading from GA4</div></div>
+      <div class="head"><div class="k">Sales page conversion</div><div class="v skel">…</div><div class="d skel">Orders ÷ sessions</div></div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card">
+        <div class="card-head"><div><h3>Oct 2026 sales by hour since the webinar</h3><p class="hint">WildFit programme + alumni orders per hour (UTC), webinar day and the day after. Number on each bar.</p></div></div>
+        <div class="chart" id="sales-hourly"><div class="empty">Loading…</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h3>Sales after the webinar, launch by launch</h3><p class="hint">Cumulative orders (WildFit programme + alumni) from webinar day, by the end of each day. Revenue underneath; Oct 2026 change vs Jul 2024.</p></div></div>
+        <div class="tw" id="sales-after"><div class="empty">Loading…</div></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card">
+        <div class="card-head"><div><h3>Orders by offer</h3><p class="hint" id="offer-hint">At the same point after each webinar.</p></div></div>
+        <div class="legend" id="offer-legend"></div>
+        <div class="chart" id="offer-chart"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h3>Who is buying: members and non-members</h3><p class="hint" id="mem-hint">At the same point after each webinar.</p></div></div>
+        <div class="chart" id="mem-chart"></div>
+        <div class="tw" id="mem-table" style="margin-top:10px"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-head"><div><h3>Where buyers come from</h3><p class="hint" id="bsrc-hint">Orders (WildFit programme + alumni) by channel, at the same point after each webinar.</p></div></div>
+      <div class="legend" id="bsrc-legend"></div>
+      <div class="chart" id="bsrc-chart"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="controls"><span class="ctl-label">Compare with</span><div class="seg" id="sb-base" role="group" aria-label="Baseline launch"></div></div>
+      <h3 style="font-size:15px;margin:4px 0 8px">Buyers by channel and source</h3>
+      <div class="tw" id="bsrc-table"><div class="empty">Loading…</div></div>
+    </div>
+  </section>
 
   <section id="summary">
     <div class="sec-head">
@@ -387,6 +468,9 @@ var LEADS_SQL = __LEADS_SQL__;
 var ORDERS_SQL = __ORDERS_SQL__;
 var UTM_SQL = __UTM_SQL__;
 var ENAMES_SQL = __EMAIL_NAMES_SQL__;
+var SALES_SQL = __SALES_SQL__;
+/* Zoom reports, summarised by scripts/zoom-webinar-summary.py (aggregates only) */
+var WEBINAR = __WEBINAR_JSON__;
 var GA = ["MV DE Layer (mv-etl-staging)","l2_user_behavior","ga4_web_session_event"];
 function F(col){return ["field",{},GA.concat([col])];}
 function addD(iso,n){return new Date(dms(iso)+n*DAY).toISOString().slice(0,10);}
@@ -403,10 +487,12 @@ var SOURCES = [
   {key:"orders", label:"Orders", tool:"execute_sql", input:{database_id:35, sql:ORDERS_SQL}},
   {key:"utm", label:"Lead sources", tool:"execute_sql", input:{database_id:35, sql:UTM_SQL}},
   {key:"enames", label:"Email titles", tool:"execute_sql", input:{database_id:35, sql:ENAMES_SQL}}
-].concat(LAUNCHES.map(function(l){return {key:"sess"+l.yr, label:"GA4 "+l.label, ga:true, tool:"query", input:{query:sessionsQuery(l), query_handle:null, continuation_token:null}};}));
+  ,{key:"sales", label:"Sales", tool:"execute_sql", input:{database_id:35, sql:SALES_SQL}}
+].concat(LAUNCHES.map(function(l){return {key:"sess"+l.yr, label:"GA4 "+l.label, ga:true, tool:"query", input:{query:sessionsQuery(l), query_handle:null, continuation_token:null}};}))
+ .concat(LAUNCHES.map(function(l){return {key:"pages"+l.yr, label:"GA4 sales pages "+l.label, ga:true, tool:"query", input:{query:pagesQuery(l), query_handle:null, continuation_token:null}};}));
 
 /* ---------- state ---------- */
-var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, bd:{day:null, base:"2025", filter:"", past:false}};
+var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, bd:{day:null, base:"2025", filter:"", past:false}, sb:{base:"2024"}};
 
 /* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -510,6 +596,8 @@ function derive(){
     D.emails=E;
   }
   D.utm=deriveUtm();
+  D.sales=deriveSales();
+  D.pages=derivePages();
   D.enames=deriveNames();
   return D;
 }
@@ -528,7 +616,7 @@ function capDay(l,d){return Math.min(d,l.endDay);}
 function renderChrome(){
   var btn=document.getElementById("refresh");
   btn.disabled=S.busy||!S.mcp; btn.querySelector(".t").textContent=S.busy?"Refreshing…":"Refresh data";
-  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders"]},{label:"Metabase · lead sources",keys:["utm","enames"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;})}];
+  var groups=[{label:"Metabase · sign-ups",keys:["leads"]},{label:"Metabase · orders",keys:["orders","sales"]},{label:"Metabase · lead sources",keys:["utm","enames"]},{label:"GA4 · sessions",keys:LAUNCHES.map(function(l){return"sess"+l.yr;}).concat(LAUNCHES.map(function(l){return"pages"+l.yr;}))}];
   document.getElementById("pills").innerHTML = groups.map(function(g){
     var err=g.keys.map(function(k){return S.err[k];}).filter(Boolean)[0];
     var ats=g.keys.map(function(k){return S.at[k];}).filter(Boolean);
@@ -634,10 +722,10 @@ function dateOf(l,d){var x=new Date(dms(l.d1)+(d-1)*DAY);return x.toLocaleDateSt
 
 /* ---------- charts ---------- */
 function attachTip(box){var tip=document.createElement("div");tip.className="tip";box.appendChild(tip);return{show:function(h,x,y){tip.innerHTML=h;tip.style.left=x+"px";tip.style.top=y+"px";tip.style.opacity=1;},hide:function(){tip.style.opacity=0;}};}
-function groupedBars(id, groups, fmtV){
+function groupedBars(id, groups, fmtV, minW){
   var box=document.getElementById(id);
   if(!groups.length){box.innerHTML='<div class="empty">No sign-ups on this day yet.</div>';return;}
-  var W=Math.max(900,groups.length*150), H=280, ml=10, mr=10, mt=22, mb=40;
+  var W=Math.max(minW||900,groups.length*150), H=280, ml=10, mr=10, mt=22, mb=40;
   var max=niceMax(Math.max.apply(null,groups.map(function(g){return Math.max.apply(null,g.vals);})));
   var gw=(W-ml-mr)/groups.length, bw=Math.min(30,(gw-24)/LAUNCHES.length);
   var y=function(v){return mt+(1-v/max)*(H-mt-mb);};
@@ -947,11 +1035,246 @@ function renderSummary(D){
 }
 function sendCount(D,yr){ if(!D.utm) return '–'; var n=0; for(var k in D.utm[yr]) if(D.utm[yr][k].cat==="Email") n++; return n; }
 
+/* ---------- live webinar (Zoom reports) ---------- */
+function npsOf(q){
+  var t=0,p=0,d=0; q.answers.forEach(function(a){ t+=a[1]; if(/^extremely/i.test(a[0])) p+=a[1]; else if(!/^very/i.test(a[0])) d+=a[1]; });
+  return {n:t, prom:p, det:d, pass:t-p-d, score:t?Math.round((p-d)/t*100):null};
+}
+function renderWebinar(D){
+  var W=WEBINAR, A=W.attendees, Sv=W.survey, el=document.getElementById("web-heads");
+  var gen=A.report_generated;
+  document.getElementById("web-sub").innerHTML='From the Zoom attendee report and the post-webinar survey (both generated '+esc(gen)+', Zoom report time). Host, panelists and team are left out. Static: these update when new Zoom reports are added and the page is rebuilt.';
+  var su=D.leads?D.leads[CUR.yr].total:null;
+  var rq=Sv.questions.filter(function(q){return /recommend/i.test(q.q);})[0], nps=rq?npsOf(rq):null;
+  var nq=Sv.questions.filter(function(q){return /next step/i.test(q.q);})[0], intent=0, nn=0;
+  if(nq) nq.answers.forEach(function(a){nn+=a[1]; if(/^(extremely|very)/i.test(a[0])) intent+=a[1];});
+  var top2=rq?rq.answers.reduce(function(s,a){return s+(/^(extremely|very)/i.test(a[0])?a[1]:0);},0):0;
+  el.innerHTML=
+    '<div class="head"><div class="k">Show-up rate</div><div class="v num">'+(su?pctS(A.unique_attendees,su,1):'<span class="skel">…</span>')+'</div><div class="d"><b>'+fmt(A.unique_attendees)+'</b> unique attendees ÷ <b>'+(su?fmt(su):'…')+'</b> sign-ups on /wildfit/invite</div><div class="cmp-list"><div class="hint">Past launches: no Zoom reports loaded yet, so there is no baseline.</div></div></div>'+
+    '<div class="head"><div class="k">Peak live viewers</div><div class="v num">'+fmt(A.zoom_max_concurrent)+'</div><div class="d">Average watch time <b>'+Math.round(A.avg_min)+' min</b> of '+A.length_min+' · median <b>'+A.median_min+' min</b></div><div class="cmp-list"><div class="cmp-row"><span class="y">30+ min</span><span class="bv">'+fmt(A.stayed["30"])+'</span><span class="delta flat">'+pctS(A.stayed["30"],A.unique_attendees,0)+'</span></div><div class="cmp-row"><span class="y">60+ min</span><span class="bv">'+fmt(A.stayed["60"])+'</span><span class="delta flat">'+pctS(A.stayed["60"],A.unique_attendees,0)+'</span></div><div class="cmp-row"><span class="y">90+ min</span><span class="bv">'+fmt(A.stayed["90"])+'</span><span class="delta flat">'+pctS(A.stayed["90"],A.unique_attendees,0)+'</span></div></div></div>'+
+    '<div class="head"><div class="k">Stayed to the end</div><div class="v num">'+fmt(A.at_end)+'</div><div class="d"><b>'+pctS(A.at_end,A.unique_attendees,0)+'</b> of attendees were still in the room in the last 10 minutes</div><div class="cmp-list"><div class="cmp-row"><span class="y">Survey</span><span class="bv">'+fmt(Sv.responses)+'</span><span class="delta flat">'+pctS(Sv.responses,A.unique_attendees,0)+' answered</span></div><div class="cmp-row"><span class="y" title="Very or extremely likely to take the next step with WildFit">Likely buy</span><span class="bv">'+fmt(intent)+'</span><span class="delta flat">'+pctS(intent,nn,0)+'</span></div></div></div>'+
+    '<div class="head"><div class="k">Webinar NPS</div><div class="v num">'+(nps?(nps.score>0?'+':'')+nps.score:'–')+'</div><div class="d">"How likely are you to recommend this class to a friend?" · '+(nps?fmt(nps.n):'')+' answers</div>'+(nps?'<div class="cmp-list"><div class="cmp-row"><span class="y">Promoters</span><span class="bv">'+fmt(nps.prom)+'</span><span class="delta up">'+pctS(nps.prom,nps.n,0)+'</span></div><div class="cmp-row"><span class="y">Passives</span><span class="bv">'+fmt(nps.pass)+'</span><span class="delta flat">'+pctS(nps.pass,nps.n,0)+'</span></div><div class="cmp-row"><span class="y">Detractors</span><span class="bv">'+fmt(nps.det)+'</span><span class="delta down">'+pctS(nps.det,nps.n,0)+'</span></div><div class="hint">The survey uses a 5-point scale, not 0–10. Promoters = Extremely likely, passives = Very likely, the rest are detractors. Very + Extremely likely together: '+pctS(top2,nps.n,0)+'.</div></div>':'')+'</div>';
+  vbars("web-curve", A.curve.map(function(c){return {label:(c[0]%15===0?c[0]+'m':''), v:c[1], color:"var(--accent)", strong:c[0]%15===0};}), function(v){return v>=1000?(v/1000).toFixed(1)+'k':fmt(v);}, {W:640, H:240, aria:"Attendees in the room every 5 minutes"});
+  document.getElementById("web-survey-hint").innerHTML=fmt(Sv.responses)+' responses ('+pctS(Sv.responses,A.unique_attendees,0)+' of attendees). Share of answers to each question.';
+  var ORDER=["extremely","very","5 -","4 -","much more","more hopeful","moderately","fairly","3 -","about the same","slightly","2 -","less hopeful","not","1 -","much less"];
+  function rank(a){var x=a.toLowerCase();for(var i=0;i<ORDER.length;i++) if(x.indexOf(ORDER[i])===0) return i; return 99;}
+  document.getElementById("web-survey").innerHTML=Sv.questions.map(function(q){
+    var t=q.answers.reduce(function(s,a){return s+a[1];},0), ans=q.answers.slice().sort(function(a,b){return rank(a[0])-rank(b[0]);});
+    return '<div class="qblock"><h4>'+esc(q.q)+'</h4>'+ans.map(function(a,i){var pc=a[1]/t*100;return '<div class="hb"><span>'+esc(a[0])+'</span><span class="bar"><i style="width:'+pc.toFixed(1)+'%;background:'+(i<2?'var(--accent)':'var(--y24)')+'"></i></span><span class="pv"><b>'+Math.round(pc)+'%</b> '+fmt(a[1])+'</span></div>';}).join("")+'</div>';
+  }).join("");
+}
+/* ---------- sales: WildFit programme + alumni offer ---------- */
+var OFFER_NAME = {full:"WildFit programme", alumni:"Alumni offer"};
+var SALE_CATS = [{key:"Webinar", name:"Live webinar room", note:"buy links shown during the webinar and replay (live_resources, live_call, live_replay)"}].concat(CATS);
+/* Buyer source: the order's utm_source (or buy-link tag); the attribution channel when neither exists. */
+function classifySale(src, ch){
+  src=String(src||"").toLowerCase(); ch=ch||"";
+  if(/^live_/.test(src)) return {cat:"Webinar"};
+  if(/^(mobile_|storefront_)/.test(src)) return {cat:"Platform"};
+  if(src) return classify(src, ch, "");
+  if(ch==="Email") return {cat:"Email"};
+  if(/^(App|Web|Internal Referral)$/.test(ch)) return {cat:"Platform"};
+  if(ch==="Organic Social") return {cat:"Socials"};
+  if(ch==="Paid Social") return {cat:"Ads",sub:"Paid social (Meta)"};
+  if(ch==="Paid Search") return {cat:"Ads",sub:"Paid search (Google)"};
+  if(/^(Display|Paid Video|Paid Other)$/.test(ch)) return {cat:"Ads",sub:"Other paid"};
+  if(/^(Affiliate|Direct|Organic Search|Organic Referral|LLM Referral)$/.test(ch)) return {cat:"Organic"};
+  return {cat:"Undefined"};
+}
+function pagesQuery(l){
+  function where(cond){return ["and",{},["=",{},F("event_name"),"session_start"],["is-null",{},F("ga_session_id")],cond];}
+  var salesC=["and",{},["contains",{},F("page_location"),"/wildfit/special"],["does-not-contain",{},F("page_location"),"/alumni"]],
+      alumC=["contains",{},F("page_location"),"/wildfit/special/alumni"], elulaC=["contains",{},F("page_location"),"elula"];
+  return {"lib/type":"mbql/query","stages":[{"lib/type":"mbql.stage/mbql","source-table":GA,
+    "aggregation":[["distinct-where",{"name":"sales","display-name":"sales"},F("ga_session_id"),salesC],
+      ["distinct-where",{"name":"alumni","display-name":"alumni"},F("ga_session_id"),alumC],
+      ["distinct-where",{"name":"elula","display-name":"elula"},F("ga_session_id"),elulaC],
+      ["count-where",{"name":"sales_denied","display-name":"sales_denied"},where(salesC)],
+      ["count-where",{"name":"alumni_denied","display-name":"alumni_denied"},where(alumC)],
+      ["count-where",{"name":"elula_denied","display-name":"elula_denied"},where(elulaC)]],
+    "breakout":[["field",{"temporal-unit":"day"},GA.concat(["event_timestamp"])]],
+    "filters":[[">=",{},F("event_date"),addD(l.d1,-1)],["<=",{},F("event_date"),addD(l.d1,l.endDay)],
+      ["or",{},["contains",{},F("page_location"),"/wildfit/special"],["contains",{},F("page_location"),"elula"]]]}]};
+}
+/* hours since 00:00 UTC on webinar day */
+function hoursSinceWeb(){ return (Date.now()-dms(CUR.web))/36e5; }
+/* does a sales row fall before the same point after the webinar? */
+function inPoint(r,H){ if(r.dw<0) return true; if(r.h>=0) return r.h<H; return r.dw*24<H; }
+function deriveSales(){
+  if(!S.raw.sales) return null;
+  var X={}; LAUNCHES.forEach(function(l){X[l.yr]={rows:[],last:null};});
+  S.raw.sales.forEach(function(r){
+    var x=X[r.yr]; if(!x) return;
+    var c=classifySale(r.src,r.ch);
+    x.rows.push({dw:num(r.dw), h:r.h==null?-1:num(r.h), offer:r.offer, member:bool(r.member), reg:bool(r.registrant), src:r.src||"", cat:c.cat, sub:c.sub||null, n:num(r.orders), rev:num(r.revenue)});
+    if(r.last_order&&(!x.last||r.last_order>x.last)) x.last=r.last_order;
+  });
+  return X;
+}
+function sAgg(X,yr,H,pred,withPre){ // WildFit programme + alumni orders from webinar day on (withPre: also before it)
+  var o={n:0,rev:0}; if(!X||!X[yr]) return null;
+  X[yr].rows.forEach(function(r){ if(r.offer==="other") return; if(r.dw<0&&!withPre) return; if(H!=null&&!inPoint(r,H)) return; if(pred&&!pred(r)) return; o.n+=r.n; o.rev+=r.rev; });
+  return o;
+}
+function derivePages(){
+  var P={};
+  LAUNCHES.forEach(function(l){
+    var raw=S.raw["pages"+l.yr]; if(!raw) return;
+    var x={days:{},tot:{sales:0,alumni:0,elula:0}};
+    raw.forEach(function(r){
+      var ts=r.event_timestamp||r[Object.keys(r)[0]], day=String(ts).slice(0,10), dw=Math.round((dms(day)-dms(l.web))/DAY);
+      var v={sales:num(r.sales)+num(r.sales_denied), alumni:num(r.alumni)+num(r.alumni_denied), elula:num(r.elula)+num(r.elula_denied)};
+      x.days[dw]=v; if(dw>=0) ["sales","alumni","elula"].forEach(function(k){x.tot[k]+=v[k];});
+    });
+    P[l.yr]=x;
+  });
+  return P;
+}
+function pageCum(P,yr,key,K){ var x=P[yr]; if(!x) return null; var s=0; for(var k in x.days) if(+k>=0&&+k<=K) s+=x.days[k][key]; return s; }
+function pointLabel(H){
+  if(H<=0) return "before the webinar";
+  var d=Math.floor(H/24), hh=Math.floor(H%24);
+  return (d===0?"webinar day":"webinar day + "+d)+", "+(hh<10?"0":"")+hh+":00 UTC";
+}
+function renderSales(D){
+  var X=D.sales, P=D.pages, H=hoursSinceWeb(), errs=secErr(["sales"]);
+  document.getElementById("sales-err").innerHTML=errs;
+  var heads=document.getElementById("sales-heads");
+  if(!X){ if(errs) heads.innerHTML='<div class="head"><div class="d">'+errs+'</div></div>'; return; }
+  var tot=sAgg(X,CUR.yr), full=sAgg(X,CUR.yr,null,function(r){return r.offer==="full";}), alu=sAgg(X,CUR.yr,null,function(r){return r.offer==="alumni";});
+  var oth=X[CUR.yr].rows.filter(function(r){return r.offer==="other"&&r.dw>=0;}).reduce(function(a,r){a.n+=r.n;a.rev+=r.rev;return a;},{n:0,rev:0});
+  var pl=pointLabel(H);
+  document.getElementById("sales-sub").innerHTML='Orders from Metabase (one per order, renewals left out) and page sessions from GA4. Sales count from webinar day (00:00 UTC) on. Past launches are compared at the same point after their webinar: <b>'+esc(pl)+'</b>. Mar 2025 sold Membership, not WildFit, so it has almost no WildFit sales.'+(X[CUR.yr].last?' Latest order: '+esc(timeLabel(Date.parse(X[CUR.yr].last)))+'.':'');
+  function cmp(fn,fmtF){
+    return '<div class="cmp-list"><div class="hint">Same point after the webinar in:</div>'+BASES.map(function(l){
+      var b=fn(l.yr,H), c=fn(CUR.yr,null), few=(fmtF===usd?n()(l.yr,H):b)<5;
+      return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'…':fmtF(b))+'</span>'+(few?'<span class="dim" style="font-size:11.5px">too few</span>':delta(c,b))+'</div>';
+    }).join("")+'</div>';
+  }
+  function n(pred){return function(yr,h){var a=sAgg(X,yr,h,pred);return a?a.n:null;};}
+  function rv(pred){return function(yr,h){var a=sAgg(X,yr,h,pred);return a?a.rev:null;};}
+  var isF=function(r){return r.offer==="full";}, isA=function(r){return r.offer==="alumni";};
+  heads.innerHTML=
+    '<div class="head"><div class="k">Total sales</div><div class="v num">'+fmt(tot.n)+'</div><div class="d"><b>'+fmt(full.n)+'</b> WildFit programme · <b>'+fmt(alu.n)+'</b> alumni</div>'+cmp(n(),fmt)+'</div>'+
+    '<div class="head"><div class="k">Total revenue</div><div class="v num">'+usd(tot.rev)+'</div><div class="d">WildFit programme + alumni'+(oth.n?' · upsells sold alongside: <b>'+usd(oth.rev)+'</b> ('+fmt(oth.n)+')':'')+'</div>'+cmp(rv(),usd)+'</div>'+
+    '<div class="head"><div class="k">WildFit programme</div><div class="v num">'+fmt(full.n)+'</div><div class="d"><b>'+usd(full.rev)+'</b> · avg '+(full.n?usd(full.rev/full.n):'–')+' per order</div>'+cmp(n(isF),fmt)+'</div>'+
+    '<div class="head"><div class="k">Alumni offer ($299)</div><div class="v num">'+fmt(alu.n)+'</div><div class="d"><b>'+usd(alu.rev)+'</b> · past WildFit buyers coming back</div>'+cmp(n(isA),fmt)+'</div>';
+  renderPages(D,H);
+  // hourly chart (Oct 2026, first 48h)
+  var hr=[]; for(var i=0;i<48;i++) hr.push(0);
+  X[CUR.yr].rows.forEach(function(r){ if(r.offer!=="other"&&r.h>=0&&r.h<48) hr[r.h]+=r.n; });
+  var lastH=Math.min(47,Math.floor(H)), firstH=0; for(i=0;i<48;i++){ if(hr[i]>0){firstH=Math.max(0,i-2);break;} }
+  var items=[]; for(i=firstH;i<=Math.max(lastH,firstH+12)&&i<48;i++) items.push({label:(i%3===0)?((i<24?'':'+1 ')+String(i%24).padStart(2,"0")+':00'):'', v:hr[i], color:i<24?"var(--accent)":"var(--y25)", strong:true});
+  if(H<=0) document.getElementById("sales-hourly").innerHTML='<div class="empty">Sales open with the webinar on Tue 6 Oct.</div>';
+  else vbars("sales-hourly", items, fmt, {W:640, H:240, aria:"Oct 2026 orders per hour"});
+  renderSalesAfter(X,H);
+  // offers by launch
+  document.getElementById("offer-legend").innerHTML=LAUNCHES.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
+  document.getElementById("offer-hint").innerHTML='Orders at the same point after each webinar ('+esc(pl)+').';
+  groupedBars("offer-chart",[
+    {name:"WildFit programme", vals:LAUNCHES.map(function(l){return sAgg(X,l.yr,l===CUR?null:H,isF).n;})},
+    {name:"Alumni offer", vals:LAUNCHES.map(function(l){return sAgg(X,l.yr,l===CUR?null:H,isA).n;})},
+    {name:"Total", vals:LAUNCHES.map(function(l){return sAgg(X,l.yr,l===CUR?null:H).n;})}], fmt, 480);
+  renderMembers(D,X,H,pl);
+  renderBuyerSources(D,X,H,pl);
+}
+function renderPages(D,H){
+  var P=D.pages, el=document.getElementById("page-heads"), X=D.sales;
+  if(!P[CUR.yr]){ var e=secErr(["pages"+CUR.yr]); if(e) el.innerHTML='<div class="head"><div class="d">'+e+'</div></div>'; return; }
+  var dwNow=Math.floor(H/24), K=Math.max(dwNow-1,0), done=dwNow>=1;
+  var lbl=done?(K===0?'webinar day':'webinar day to day +'+K):'webinar day so far';
+  function cur(key){return pageCum(P,CUR.yr,key,done?K:0);}
+  function today(key){var x=P[CUR.yr].days[dwNow];return x?x[key]:0;}
+  function rows(key){
+    return '<div class="cmp-list"><div class="hint">'+esc(lbl.charAt(0).toUpperCase()+lbl.slice(1))+' vs the same in:</div>'+BASES.map(function(l){
+      var b=pageCum(P,l.yr,key,done?K:0), c=cur(key);
+      return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'…':fmt(b))+'</span>'+(b!=null&&b<20?'<span class="dim" style="font-size:11.5px">too few</span>':delta(c,b))+'</div>';
+    }).join("")+'</div>';
+  }
+  function card(k,key,url){
+    return '<div class="head"><div class="k">'+k+'</div><div class="v num">'+fmt(P[CUR.yr].tot[key])+'</div><div class="d">'+url+'<br><b>'+fmt(cur(key))+'</b> '+esc(lbl)+(done?' · <b>'+fmt(today(key))+'</b> so far today':'')+'</div>'+rows(key)+'</div>';
+  }
+  var elulaTot=P[CUR.yr].tot.elula;
+  var elula='<div class="head"><div class="k">Elula page sessions</div><div class="v num">'+fmt(elulaTot)+'</div><div class="d">elula.dev/p/vishen/wildfit<br>'+(elulaTot<10?'<b>Not tracked yet.</b> The Elula page doesn\'t send data to Mindvalley\'s GA4, so its visits can\'t be counted here. Add the GA4 tag (or UTM-tag its links to the sales page) to see it.':'Sessions GA4 recorded with "elula" in the page URL.')+'</div></div>';
+  // conversion: orders since the webinar / sessions
+  var full=X?sAgg(X,CUR.yr,null,function(r){return r.offer==="full"&&r.dw>=0;}):null, alu=X?sAgg(X,CUR.yr,null,function(r){return r.offer==="alumni"&&r.dw>=0;}):null;
+  var sS=pageCum(P,CUR.yr,"sales",99), sA=pageCum(P,CUR.yr,"alumni",99);
+  function conv(yr,h){ var f=sAgg(X,yr,h,function(r){return r.offer==="full"&&r.dw>=0;}), s=pageCum(P,yr,"sales",h==null?99:Math.floor(h/24)); return (f&&s)?f.n/s:null; }
+  var convCard='<div class="head"><div class="k">Sales page conversion</div><div class="v num">'+(full&&sS?pctS(full.n,sS,1):'–')+'</div><div class="d">WildFit programme orders ÷ sales page sessions since the webinar · alumni page: <b>'+(alu&&sA?pctS(alu.n,sA,1):'–')+'</b></div>'+
+    (X?'<div class="cmp-list"><div class="hint">Same point after the webinar in:</div>'+BASES.map(function(l){var b=P[l.yr]&&sAgg(X,l.yr,H).n>=5?conv(l.yr,H):null, c=conv(CUR.yr,null); return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'–':pctS(b,1))+'</span>'+(b==null?'<span class="dim" style="font-size:11.5px">too few</span>':delta(c,b,true))+'</div>';}).join("")+'</div>':'')+'</div>';
+  el.innerHTML=card("Sales page sessions","sales","mindvalley.com/wildfit/special, all languages, since webinar day")+card("Alumni page sessions","alumni","mindvalley.com/wildfit/special/alumni, since webinar day")+elula+convCard;
+}
+function renderSalesAfter(X,H){
+  var dwNow=Math.floor(H/24);
+  var rows=[{k:"Before the webinar",d:-1}]; for(var d=0;d<=7;d++) rows.push({k:d===0?"Webinar day":"Day +"+d,d:d});
+  var t='<table><thead><tr><th>By the end of</th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
+  rows.forEach(function(r){
+    t+='<tr><td>'+r.k+'</td>'+LAUNCHES.map(function(l){
+      if(l===CUR&&r.d>dwNow) return '<td class="n cur"><span class="dim">–</span></td>';
+      var a=sAgg(X,l.yr,null,function(x){return x.dw<=r.d;},r.d<0);
+      var note=(l===CUR&&r.d===dwNow&&r.d>=0)?'<small>so far</small>':'';
+      var dl=''; if(l===CUR&&r.d>=0&&r.d<=dwNow){ var b=sAgg(X,"2024",r.d===dwNow?H:null,function(x){return x.dw<=r.d;}); dl='<small>'+delta(a.n,b.n)+'</small>'; }
+      return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(a.n)+'<small>'+usdK(a.rev)+'</small>'+note+dl+'</td>';
+    }).join("")+'</tr>';
+  });
+  document.getElementById("sales-after").innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Before the webinar is not in the totals below it: in Jul 2023 and Jul 2024 it was mostly the masterclass cart. "So far" compares with Jul 2024 at the same hour.</p>';
+}
+function renderMembers(D,X,H,pl){
+  document.getElementById("mem-hint").innerHTML='WildFit programme + alumni orders at the same point after each webinar ('+esc(pl)+'). Member = active Mindvalley member when they bought.';
+  function v(l,pred){return sAgg(X,l.yr,l===CUR?null:H,pred).n;}
+  var M=function(r){return r.member;}, NM=function(r){return !r.member;}, R=function(r){return r.reg;}, NR=function(r){return !r.reg;};
+  groupedBars("mem-chart",[
+    {name:"Members", vals:LAUNCHES.map(function(l){return v(l,M);})},
+    {name:"Non-members", vals:LAUNCHES.map(function(l){return v(l,NM);})},
+    {name:"Registered", vals:LAUNCHES.map(function(l){return v(l,R);})},
+    {name:"Didn't register", vals:LAUNCHES.map(function(l){return v(l,NR);})}], fmt, 600);
+  function cell(l,a,b,isRate){ return '<td class="n'+(l===CUR?' cur':'')+'">'+(isRate?(b?pctS(a,b,1):'<span class="dim">–</span>'):fmt(a))+'</td>'; }
+  var t='<table><thead><tr><th></th>'+LAUNCHES.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
+  t+='<tr><td>Members buying<small>share of buyers</small></td>'+LAUNCHES.map(function(l){var a=v(l,M),b=v(l,function(){return true;});return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(a)+'<small>'+(b?pctS(a,b,0):'')+'</small></td>';}).join("")+'</tr>';
+  t+='<tr><td>Non-members buying<small>share of buyers</small></td>'+LAUNCHES.map(function(l){var a=v(l,NM),b=v(l,function(){return true;});return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(a)+'<small>'+(b?pctS(a,b,0):'')+'</small></td>';}).join("")+'</tr>';
+  if(D.leads){
+    t+='<tr><td>Member registrants who bought<small>buyers ÷ member sign-ups</small></td>'+LAUNCHES.map(function(l){return cell(l,v(l,function(r){return r.reg&&r.member;}),D.leads[l.yr].mem,true);}).join("")+'</tr>';
+    t+='<tr><td>Non-member registrants who bought<small>buyers ÷ non-member sign-ups</small></td>'+LAUNCHES.map(function(l){return cell(l,v(l,function(r){return r.reg&&!r.member;}),D.leads[l.yr].total-D.leads[l.yr].mem,true);}).join("")+'</tr>';
+  }
+  document.getElementById("mem-table").innerHTML=t+'</tbody></table>';
+}
+function renderBuyerSources(D,X,H,pl){
+  document.getElementById("bsrc-hint").innerHTML='WildFit programme + alumni orders by channel at the same point after each webinar ('+esc(pl)+'). Channel comes from the order\'s UTM source or buy-link tag, with the attribution channel as fallback.';
+  document.getElementById("bsrc-legend").innerHTML=LAUNCHES.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
+  var groups=SALE_CATS.map(function(c){return {name:c.name.replace(" total",""), vals:LAUNCHES.map(function(l){return sAgg(X,l.yr,l===CUR?null:H,function(r){return r.cat===c.key;}).n;})};}).filter(function(g){return g.vals.some(function(x){return x>0;});});
+  groupedBars("bsrc-chart", groups, fmt);
+  // table: current vs a baseline, with members / non-members and revenue
+  var B=LAUNCHES.filter(function(l){return l.yr===S.sb.base;})[0]||LAUNCHES[2];
+  document.getElementById("sb-base").innerHTML=BASES.map(function(l){return '<button type="button" data-sbase="'+l.yr+'" aria-pressed="'+(l===B)+'">'+esc(l.label)+'</button>';}).join("");
+  var N=D.enames;
+  function ag(l,pred){return sAgg(X,l.yr,l===CUR?null:H,pred);}
+  function mm(pred,m){return function(r){return pred(r)&&r.member===m;};}
+  function cells(pred,cls,lbl){
+    var a=ag(CUR,pred), am=ag(CUR,mm(pred,true)), b=ag(B,pred);
+    if(!a.n&&!b.n&&cls!=="sum") return '';
+    return '<tr class="'+cls+'"><td>'+lbl+'</td><td class="n cur">'+fmt(a.n)+'</td><td class="n">'+fmt(am.n)+'</td><td class="n">'+fmt(a.n-am.n)+'</td><td class="n">'+usd(a.rev)+'</td><td class="n">'+(b.n?fmt(b.n):'<span class="dim">–</span>')+'</td><td class="n">'+(b.n?usd(b.rev):'')+'</td><td class="n">'+(b.n?delta(a.n,b.n):'')+'</td></tr>';
+  }
+  var t='<table><thead><tr><th>Buyer source</th><th class="n cur">Oct 2026<small>orders</small></th><th class="n">Members</th><th class="n">Non-members</th><th class="n">Revenue</th><th class="n">'+esc(B.label)+'<small>orders, same point</small></th><th class="n">Revenue</th><th class="n">Change</th></tr></thead><tbody>';
+  SALE_CATS.forEach(function(c){
+    var isC=function(r){return r.cat===c.key;};
+    var srcs={}; X[CUR.yr].rows.forEach(function(r){ if(r.cat===c.key&&r.offer!=="other"&&r.dw>=0) srcs[r.src||"(no source)"]=1; });
+    var keys=Object.keys(srcs).sort(function(x,y){var f=function(k){return ag(CUR,function(r){return isC(r)&&(r.src||"(no source)")===k;}).n;};return f(y)-f(x)||(x<y?-1:1);});
+    if(c.key==="Ads"&&c.subs) c.subs.forEach(function(sb){ t+=cells(function(r){return isC(r)&&r.sub===sb;},"subch",'<span class="indent">'+sb+'</span>'); });
+    keys.forEach(function(k){
+      var nm=N&&N[CUR.yr]&&N[CUR.yr][k]&&N[CUR.yr][k].subject; if(!nm&&N&&N[B.yr]&&N[B.yr][k]) nm=N[B.yr][k].subject;
+      t+=cells(function(r){return isC(r)&&(r.src||"(no source)")===k;},"src",esc(k)+(nm?'<small>'+esc(nm)+'</small>':''));
+    });
+    t+=cells(isC,"grp",'<b>'+c.name+'</b><small>'+c.note+'</small>');
+  });
+  t+=cells(function(){return true;},"sum",'<b>Total</b>');
+  document.getElementById("bsrc-table").innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Each Oct 2026 source sits above its channel subtotal; the subtotals compare with every source '+esc(B.label)+' used. "(no source)" means the order had no UTM source or buy-link tag, so it is grouped by its attribution channel.</p>';
+}
+
 /* ---------- render ---------- */
 function renderAll(){
   renderChrome();
   var D=derive();
-  renderHeads(D); renderSummary(D); renderBreakdown(D); renderDay(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
+  renderHeads(D); renderWebinar(D); renderSales(D); renderSummary(D); renderBreakdown(D); renderDay(D); renderCdayTable(D); renderPace(D); renderCompare(D); renderRevenue(D); renderEmail(D);
 }
 
 /* ---------- events ---------- */
@@ -962,6 +1285,7 @@ document.getElementById("mode-seg").addEventListener("click",function(e){var b=e
 document.getElementById("bd-day").addEventListener("click",function(e){var b=e.target.closest("button[data-bday]");if(!b)return;S.bd.day=+b.dataset.bday;renderBreakdown(derive());});
 document.getElementById("bd-base").addEventListener("click",function(e){var b=e.target.closest("button[data-base]");if(!b)return;S.bd.base=b.dataset.base;renderBreakdown(derive());});
 document.getElementById("bd-filter").addEventListener("input",function(e){S.bd.filter=e.target.value.toLowerCase();renderBreakdown(derive());});
+document.getElementById("sb-base").addEventListener("click",function(e){var b=e.target.closest("button[data-sbase]");if(!b)return;S.sb.base=b.dataset.sbase;renderSales(derive());});
 document.getElementById("bd-past").addEventListener("change",function(e){S.bd.past=e.target.checked;renderBreakdown(derive());});
 
 /* ---------- boot ---------- */
