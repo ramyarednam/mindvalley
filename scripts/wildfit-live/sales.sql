@@ -3,7 +3,7 @@
 --        or a main_webinar single payment at $199-$299); 'masterclass' = WildFit sold through the masterclass
 --        dropdown funnel (place_in_funnel 'Webinar Dropdown'), not the live webinar; 'membership' = Membership sold
 --        through the WildFit funnel (what the Mar 2025 webinar sold); 'other' = upsells.
--- dw = days from webinar (0 = webinar day, UTC); h = hours since webinar-day 00:00 UTC, for the first 48 hours only.
+-- dw = days from webinar (0 = webinar day, UTC); h = hours since webinar-day 00:00 UTC (-1 before the webinar day).
 -- ch/src = order attribution channel and source (classified on the page). member = active Mindvalley member at purchase. Renewals and downgrades left out.
 WITH b AS (
 __LAUNCHES__),
@@ -32,7 +32,7 @@ o AS (
     AND (p.sub_business_unit = 'Wildfit' OR REGEXP_CONTAINS(LOWER(o.product_funnel), r'^wf[a-z]{0,2}_product$'))
   GROUP BY 1)
 SELECT b.yr, DATE_DIFF(DATE(o.ts), b.w, DAY) AS dw,
-  IF(TIMESTAMP_DIFF(o.ts, TIMESTAMP(b.w), HOUR) BETWEEN 0 AND 47, TIMESTAMP_DIFF(o.ts, TIMESTAMP(b.w), HOUR), -1) AS h,
+  IF(o.ts >= TIMESTAMP(b.w), TIMESTAMP_DIFF(o.ts, TIMESTAMP(b.w), HOUR), -1) AS h,
   o.offer, o.member, reg.user_id IS NOT NULL AS registrant,
   o.ch, o.src,
   COUNT(*) AS orders, ROUND(SUM(o.amt), 2) AS revenue, ROUND(SUM(o.refund), 2) AS refunds,

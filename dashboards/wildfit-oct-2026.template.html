@@ -251,6 +251,26 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
     <p class="hint" id="elula-note" style="margin:10px 2px 0"></p>
   </section>
 
+  <section id="sales-days">
+    <div class="sec-head">
+      <h2>Day-by-day sales</h2>
+      <p id="sd-sub">Sales each day since the webinar and the running total, next to the same day after the Jul 2024 and Jul 2023 live webinars.</p>
+    </div>
+    <div class="card">
+      <div class="controls">
+        <span class="ctl-label">Chart</span><div class="seg" id="sd-mode" role="group" aria-label="Sales that day or running total">
+          <button type="button" data-sdmode="day" aria-pressed="true">That day</button>
+          <button type="button" data-sdmode="cum" aria-pressed="false">Running total</button>
+        </div>
+      </div>
+      <div class="legend" id="sd-legend"></div>
+      <div class="chart" id="sd-chart"><div class="empty">Loading sales from Metabase…</div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="tw" id="sd-table"><div class="empty">Loading…</div></div>
+    </div>
+  </section>
+
   <section id="signups">
     <div class="sec-head">
       <h2>Live webinar sign-ups</h2>
@@ -301,16 +321,12 @@ footer{margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--fain
         <p class="hint" id="rev-launch-note" style="margin-top:8px"></p>
       </div>
       <div class="card">
-        <div class="card-head"><div><h3>Sales after the webinar, day by day</h3><p class="hint">Cumulative sales by the end of each day since the webinar. Revenue underneath.</p></div></div>
-        <div class="tw" id="sales-after"><div class="empty">Loading…</div></div>
-      </div>
-    </div>
-    <div class="grid2" style="margin-top:16px">
-      <div class="card">
         <div class="card-head"><div><h3>Offer mix</h3><p class="hint" id="offer-hint"></p></div></div>
         <div id="offer-mix"></div>
       </div>
-      <div class="card">
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card" style="grid-column:1/-1">
         <div class="card-head"><div><h3>Who is buying</h3><p class="hint">Members = active Mindvalley member when they bought. Signed up = on the webinar sign-up list.</p></div></div>
         <div id="mem-mix"></div>
         <div id="reg-mix" style="margin-top:14px"></div>
@@ -433,6 +449,7 @@ var LAUNCHES = [
 ];
 var DAY = 864e5;
 function dms(iso){return Date.parse(iso+"T00:00:00Z");}
+var LAUNCHES_ALL = LAUNCHES;
 LAUNCHES.forEach(function(l){ l.webDay = Math.round((dms(l.web)-dms(l.d1))/DAY)+1; l.endDay = l.webDay+7; });
 var CUR = LAUNCHES[0], BASES = LAUNCHES.slice(1);
 var COLOR = {"2026":"var(--accent)","2025":"var(--y25)","2024":"var(--y24)","2023":"var(--y23)"};
@@ -505,7 +522,7 @@ var SOURCES = [
  .concat(LAUNCHES.map(function(l){return {key:"pages"+l.yr, label:"GA4 sales pages "+l.label, ga:true, tool:"query", input:{query:pagesQuery(l), query_handle:null, continuation_token:null}};}));
 
 /* ---------- state ---------- */
-var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, bd:{day:null, base:"2025", filter:"", past:false}, sb:{base:"2024"}};
+var S = {raw:{}, at:{}, err:{}, busy:false, mcp:null, noMcp:false, sel:{day:null, mode:"day"}, bd:{day:null, base:"2025", filter:"", past:false}, sb:{base:"2024"}, sd:{mode:"day"}};
 
 /* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -722,7 +739,8 @@ function dateOf(l,d){var x=new Date(dms(l.d1)+(d-1)*DAY);return x.toLocaleDateSt
 
 /* ---------- charts ---------- */
 function attachTip(box){var tip=document.createElement("div");tip.className="tip";box.appendChild(tip);return{show:function(h,x,y){tip.innerHTML=h;tip.style.left=x+"px";tip.style.top=y+"px";tip.style.opacity=1;},hide:function(){tip.style.opacity=0;}};}
-function groupedBars(id, groups, fmtV, minW){
+function groupedBars(id, groups, fmtV, minW, LS){
+  var LAUNCHES=LS||LAUNCHES_ALL;
   var box=document.getElementById(id);
   if(!groups.length){box.innerHTML='<div class="empty">No sign-ups on this day yet.</div>';return;}
   var W=Math.max(minW||900,groups.length*150), H=280, ml=10, mr=10, mt=22, mb=40;
@@ -1029,7 +1047,7 @@ function pagesQuery(l){
       ["or",{},["contains",{},F("page_location"),"/wildfit/special"],["contains",{},F("page_location"),"elula"]]]}]};
 }
 function hoursSinceWeb(){ return (Date.now()-dms(CUR.web))/36e5; }
-function inPoint(r,H){ if(r.dw<0) return true; if(r.h>=0) return r.h<H; return r.dw*24<H; }
+function inPoint(r,H){ if(r.dw<0) return true; return r.h>=0?r.h<H:r.dw*24<H; }
 function deriveSales(){
   if(!S.raw.sales) return null;
   var X={}; LAUNCHES.forEach(function(l){X[l.yr]={rows:[],last:null};});
@@ -1133,7 +1151,6 @@ function renderSalesDetail(D){
   var m25=sAgg(X,REF25.yr,H,null,{offer:"membership"});
   document.getElementById("rev-launch-note").innerHTML='Revenue at '+esc(pl)+' for each live webinar. Masterclass dropdown sales are left out. <b>Mar 2025</b> sold Membership through the WildFit webinar, not WildFit (<b>'+fmt(m25.n)+'</b> Membership sales, <b>'+usd(m25.rev)+'</b> at the same point), so it isn\'t a WildFit baseline.';
   document.getElementById("sales-detail-sub").innerHTML='Oct 2026 against the Jul 2024 and Jul 2023 WildFit live webinars, all at the same point after the webinar: <b>'+esc(pl)+'</b>.';
-  renderSalesAfter(X,H);
   // offer mix
   var mixRows=[{label:"Oct 2026", sub:"so far", vals:[sAgg(X,CUR.yr,null,isF).n, sAgg(X,CUR.yr,null,isA).n]}];
   SB.forEach(function(l){ mixRows.push({label:l.label, sub:"same point", vals:[sAgg(X,l.yr,H,isF).n, sAgg(X,l.yr,H,isA).n]}); });
@@ -1152,20 +1169,30 @@ function renderSalesDetail(D){
   renderChannelShare(X,H);
   renderBuyerSources(D,X,H,pl);
 }
-function renderSalesAfter(X,H){
-  var dwNow=Math.floor(H/24);
-  var rows=[]; for(var d=0;d<=Math.min(dwNow,7);d++) rows.push({k:d===0?"Webinar day":"Day +"+d,d:d});
-  var t='<table><thead><tr><th>By the end of</th>'+SL.map(function(l){return '<th class="n'+(l===CUR?' cur':'')+'">'+esc(l.label)+'</th>';}).join("")+'</tr></thead><tbody>';
-  rows.forEach(function(r){
-    t+='<tr><td>'+r.k+'</td>'+SL.map(function(l){
-      if(l===CUR&&r.d>dwNow) return '<td class="n cur"><span class="dim">–</span></td>';
-      var a=sAgg(X,l.yr,(l!==CUR&&r.d===dwNow)?H:null,function(x){return x.dw<=r.d;});
-      var note=(r.d===dwNow)?'<small>'+(l===CUR?'so far':'same hour')+'</small>':'';
-      var dl=''; if(l===CUR&&r.d>=0&&r.d<=dwNow){ dl='<small>'+SB.map(function(b){var x=sAgg(X,b.yr,r.d===dwNow?H:null,function(y){return y.dw<=r.d;});return delta(a.n,x.n);}).join(" ")+'</small>'; }
-      return '<td class="n'+(l===CUR?' cur':'')+'">'+fmt(a.n)+'<small>'+usdK(a.rev)+'</small>'+note+dl+'</td>';
-    }).join("")+'</tr>';
-  });
-  document.getElementById("sales-after").innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Cumulative sales from webinar day, up to today. Today\'s row compares at the same hour. Oct 2026 changes are vs Jul 2024 then Jul 2023.</p>';
+function renderSalesDays(D){
+  var X=D.sales, tb=document.getElementById("sd-table");
+  if(!X){ var e=secErr(["sales"]); if(e) tb.innerHTML='<div class="empty">'+e+'</div>'; return; }
+  var H=hoursSinceWeb(), dwNow=Math.max(0,Math.min(Math.floor(H/24),7)), cum=S.sd.mode==="cum";
+  document.querySelectorAll("#sd-mode button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.sdmode===S.sd.mode?"true":"false");});
+  /* sales on day d after the webinar (or up to d), past launches cut at the same hour on today's row */
+  function v(l,d,c){ var h=(l!==CUR&&d===dwNow)?H:null; return sAgg(X,l.yr,h,function(r){return c?r.dw<=d:r.dw===d;}); }
+  function dl(l,d){var x=new Date(dms(l.web)+d*DAY);return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});}
+  document.getElementById("sd-sub").innerHTML='Sales each day since the webinar and the running total, next to the same day after the Jul 2024 and Jul 2023 live webinars. Today ('+esc(dl(CUR,dwNow))+') is compared at the same hour: <b>'+esc(pointLabel(H))+'</b>. WildFit programme + alumni.';
+  document.getElementById("sd-legend").innerHTML=SL.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
+  var groups=[]; for(var d=0;d<=dwNow;d++) groups.push({name:(d===0?'Webinar day':'Day +'+d)+(d===dwNow?' (so far)':''), vals:SL.map(function(l){return v(l,d,cum).n;})});
+  groupedBars("sd-chart", groups, fmt, 1100, SL);
+  var t='<table><thead><tr><th>Day</th>'+
+    '<th class="n cur">Oct 2026<small>that day</small></th>'+SB.map(function(l){return '<th class="n">'+esc(l.label)+'<small>that day</small></th>';}).join("")+
+    '<th class="n cur">Oct 2026<small>running total</small></th>'+SB.map(function(l){return '<th class="n">'+esc(l.label)+'<small>running total</small></th>';}).join("")+'</tr></thead><tbody>';
+  for(d=0;d<=dwNow;d++){
+    var a=v(CUR,d,false), ac=v(CUR,d,true);
+    t+='<tr><td><b>'+(d===0?'Webinar day':'Day +'+d)+'</b><small>'+esc(dl(CUR,d))+(d===dwNow?' · so far':'')+'</small></td>'+
+      '<td class="n cur"><b>'+fmt(a.n)+'</b><small>'+usd(a.rev)+'</small></td>'+
+      SB.map(function(l){var b=v(l,d,false);return '<td class="n">'+fmt(b.n)+'<small>'+usdK(b.rev)+'</small>'+(b.n>=3?'<small>'+delta(a.n,b.n)+'</small>':'')+'</td>';}).join("")+
+      '<td class="n cur"><b>'+fmt(ac.n)+'</b><small>'+usd(ac.rev)+'</small></td>'+
+      SB.map(function(l){var b=v(l,d,true);return '<td class="n">'+fmt(b.n)+'<small>'+usdK(b.rev)+'</small>'+(b.n>=3?'<small>'+delta(ac.n,b.n)+'</small>':'')+'</td>';}).join("")+'</tr>';
+  }
+  tb.innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Days are UTC, counted from webinar day (Oct 2026: Tue 6 Oct). Changes are Oct 2026 vs that launch on the same day. Today\'s row stops past launches at the same hour.</p>';
 }
 function renderChannelShare(X,H){
   var cols=[{l:CUR,H:null,name:"Oct 2026",sub:"so far"}];
@@ -1272,7 +1299,7 @@ function renderRevSummary(D){
     '<div class="sum-card"><h3><span class="tag bad">Missing</span>Live in 2024/2023 by now, not in 2026</h3><ul>'+(miss.map(function(x){return '<li>'+x+'</li>';}).join("")||'<li>Every channel that had sold by this point in 2024 and 2023 is live.</li>')+'</ul></div>'+
     '<div class="sum-card"><h3><span class="tag do">Next</span>What to do now</h3><ul>'+todo.map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul></div></div>';
 }
-function renderSales(D){ renderSalesTop(D); if(D.sales){ renderSalesDetail(D); } renderRevSummary(D); }
+function renderSales(D){ renderSalesTop(D); renderSalesDays(D); if(D.sales){ renderSalesDetail(D); } renderRevSummary(D); }
 
 /* ---------- render ---------- */
 function renderAll(){
@@ -1289,6 +1316,7 @@ document.getElementById("mode-seg").addEventListener("click",function(e){var b=e
 document.getElementById("bd-day").addEventListener("click",function(e){var b=e.target.closest("button[data-bday]");if(!b)return;S.bd.day=+b.dataset.bday;renderBreakdown(derive());});
 document.getElementById("bd-base").addEventListener("click",function(e){var b=e.target.closest("button[data-base]");if(!b)return;S.bd.base=b.dataset.base;renderBreakdown(derive());});
 document.getElementById("bd-filter").addEventListener("input",function(e){S.bd.filter=e.target.value.toLowerCase();renderBreakdown(derive());});
+document.getElementById("sd-mode").addEventListener("click",function(e){var b=e.target.closest("button[data-sdmode]");if(!b)return;S.sd.mode=b.dataset.sdmode;renderSalesDays(derive());});
 document.getElementById("sb-base").addEventListener("click",function(e){var b=e.target.closest("button[data-sbase]");if(!b)return;S.sb.base=b.dataset.sbase;var D=derive();if(D.sales)renderBuyerSources(D,D.sales,hoursSinceWeb(),pointLabel(hoursSinceWeb()));});
 document.getElementById("bd-past").addEventListener("change",function(e){S.bd.past=e.target.checked;renderBreakdown(derive());});
 
