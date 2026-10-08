@@ -744,7 +744,7 @@ function groupedBars(id, groups, fmtV, minW, LS){
   var box=document.getElementById(id);
   if(!groups.length){box.innerHTML='<div class="empty">No sign-ups on this day yet.</div>';return;}
   var W=Math.max(minW||900,groups.length*150), H=280, ml=10, mr=10, mt=22, mb=40;
-  var max=niceMax(Math.max.apply(null,groups.map(function(g){return Math.max.apply(null,g.vals);})));
+  var max=niceMax(Math.max.apply(null,groups.map(function(g){return Math.max.apply(null,g.vals.map(function(v){return v||0;}));})));
   var gw=(W-ml-mr)/groups.length, bw=Math.min(30,(gw-24)/LAUNCHES.length);
   var y=function(v){return mt+(1-v/max)*(H-mt-mb);};
   var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Grouped bar chart">';
@@ -753,6 +753,7 @@ function groupedBars(id, groups, fmtV, minW, LS){
   groups.forEach(function(g,gi){
     var gx=ml+gi*gw+(gw-bw*LAUNCHES.length-2*(LAUNCHES.length-1))/2;
     g.vals.forEach(function(v,i){
+      if(v==null) return;
       var x=gx+i*(bw+2), top=y(v), h=y(0)-top;
       marks.push({g:g.name,l:LAUNCHES[i],v:v});
       if(h>0.5) s+='<path data-i="'+(marks.length-1)+'" d="M'+x+' '+y(0)+' V'+(top+3)+' q0 -3 3 -3 H'+(x+bw-3)+' q3 0 3 3 V'+y(0)+' Z" fill="'+COLOR[LAUNCHES[i].yr]+'"/>';
@@ -1093,9 +1094,10 @@ function pointLabel(H){
 function fewTag(){ return '<span class="dim" style="font-size:11.5px">too few</span>'; }
 /* rows comparing a 2026 value with each WildFit live webinar at the same point after its webinar */
 function sbRows(cur, fn, fmtF, isRate, min){
-  return '<div class="cmp-list"><div class="hint">Same point after their live webinar:</div>'+SB.map(function(l){
+  return '<div class="cmp-list"><div class="hint">'+(isRate?'Oct 2026 vs the same point after their live webinar (relative change):':'Same point after their live webinar:')+'</div>'+SB.map(function(l){
     var b=fn(l,true), few=b==null||(min!=null&&b<min);
-    return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+(b==null?'–':fmtF(b))+'</span>'+(few?fewTag():delta(cur,b,isRate))+'</div>';
+    var bv=b==null?'–':(isRate&&cur!=null?fmtF(cur)+' vs '+fmtF(b):fmtF(b));
+    return '<div class="cmp-row"><span class="y">'+esc(l.label)+'</span><span class="bv">'+bv+'</span>'+(few?fewTag():delta(cur,b))+'</div>';
   }).join("")+'</div>';
 }
 function renderSalesTop(D){
@@ -1169,30 +1171,32 @@ function renderSalesDetail(D){
   renderChannelShare(X,H);
   renderBuyerSources(D,X,H,pl);
 }
+var SD_LAST = 6; /* day-by-day sales runs from webinar day to webinar day + 6 (Tue 6 to Mon 12 Oct 2026) */
 function renderSalesDays(D){
   var X=D.sales, tb=document.getElementById("sd-table");
   if(!X){ var e=secErr(["sales"]); if(e) tb.innerHTML='<div class="empty">'+e+'</div>'; return; }
-  var H=hoursSinceWeb(), dwNow=Math.max(0,Math.min(Math.floor(H/24),7)), cum=S.sd.mode==="cum";
+  var H=hoursSinceWeb(), dwNow=Math.max(0,Math.floor(H/24)), cum=S.sd.mode==="cum";
   document.querySelectorAll("#sd-mode button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.sdmode===S.sd.mode?"true":"false");});
-  /* sales on day d after the webinar (or up to d), past launches cut at the same hour on today's row */
-  function v(l,d,c){ var h=(l!==CUR&&d===dwNow)?H:null; return sAgg(X,l.yr,h,function(r){return c?r.dw<=d:r.dw===d;}); }
+  /* sales on day d after the webinar (or up to d). On today's row past launches stop at the same hour. Oct 2026 days still to come are null. */
+  function v(l,d,c){ if(l===CUR&&d>dwNow) return null; var h=(l!==CUR&&d===dwNow)?H:null; return sAgg(X,l.yr,h,function(r){return c?r.dw<=d:r.dw===d;}); }
   function dl(l,d){var x=new Date(dms(l.web)+d*DAY);return x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});}
-  document.getElementById("sd-sub").innerHTML='Sales each day since the webinar and the running total, next to the same day after the Jul 2024 and Jul 2023 live webinars. Today ('+esc(dl(CUR,dwNow))+') is compared at the same hour: <b>'+esc(pointLabel(H))+'</b>. WildFit programme + alumni.';
+  function short(d){var x=new Date(dms(CUR.web)+d*DAY);return x.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"});}
+  document.getElementById("sd-sub").innerHTML='Sales each day from the webinar (Tue 6 Oct) to Mon 12 Oct, next to the same day after the Jul 2024 and Jul 2023 live webinars. Today ('+esc(dl(CUR,Math.min(dwNow,SD_LAST)))+') is compared at the same hour: <b>'+esc(pointLabel(H))+'</b>. Later days show what 2024 and 2023 sold. WildFit programme + alumni.';
   document.getElementById("sd-legend").innerHTML=SL.map(function(l){return '<span><i style="background:'+COLOR[l.yr]+'"></i>'+esc(l.label)+'</span>';}).join("");
-  var groups=[]; for(var d=0;d<=dwNow;d++) groups.push({name:(d===0?'Webinar day':'Day +'+d)+(d===dwNow?' (so far)':''), vals:SL.map(function(l){return v(l,d,cum).n;})});
+  var groups=[]; for(var d=0;d<=SD_LAST;d++) groups.push({name:(d===0?'Webinar · ':'')+short(d)+(d===dwNow?' (today)':''), vals:SL.map(function(l){var a=v(l,d,cum);return a?a.n:null;})});
   groupedBars("sd-chart", groups, fmt, 1100, SL);
-  var t='<table><thead><tr><th>Day</th>'+
+  var t='<table><thead><tr><th>Date</th>'+
     '<th class="n cur">Oct 2026<small>that day</small></th>'+SB.map(function(l){return '<th class="n">'+esc(l.label)+'<small>that day</small></th>';}).join("")+
     '<th class="n cur">Oct 2026<small>running total</small></th>'+SB.map(function(l){return '<th class="n">'+esc(l.label)+'<small>running total</small></th>';}).join("")+'</tr></thead><tbody>';
-  for(d=0;d<=dwNow;d++){
+  function cell(a,b){ return '<td class="n">'+fmt(b.n)+'<small>'+usdK(b.rev)+'</small>'+(a&&b.n>=3?'<small>'+delta(a.n,b.n)+'</small>':'')+'</td>'; }
+  function curCell(a){ return a?'<td class="n cur"><b>'+fmt(a.n)+'</b><small>'+usd(a.rev)+'</small></td>':'<td class="n cur"><span class="dim">–</span></td>'; }
+  for(d=0;d<=SD_LAST;d++){
     var a=v(CUR,d,false), ac=v(CUR,d,true);
-    t+='<tr><td><b>'+(d===0?'Webinar day':'Day +'+d)+'</b><small>'+esc(dl(CUR,d))+(d===dwNow?' · so far':'')+'</small></td>'+
-      '<td class="n cur"><b>'+fmt(a.n)+'</b><small>'+usd(a.rev)+'</small></td>'+
-      SB.map(function(l){var b=v(l,d,false);return '<td class="n">'+fmt(b.n)+'<small>'+usdK(b.rev)+'</small>'+(b.n>=3?'<small>'+delta(a.n,b.n)+'</small>':'')+'</td>';}).join("")+
-      '<td class="n cur"><b>'+fmt(ac.n)+'</b><small>'+usd(ac.rev)+'</small></td>'+
-      SB.map(function(l){var b=v(l,d,true);return '<td class="n">'+fmt(b.n)+'<small>'+usdK(b.rev)+'</small>'+(b.n>=3?'<small>'+delta(ac.n,b.n)+'</small>':'')+'</td>';}).join("")+'</tr>';
+    t+='<tr'+(d===dwNow?' class="grp"':'')+'><td><b>'+esc(dl(CUR,d))+'</b><small>'+(d===0?'webinar day':'webinar day + '+d)+(d===dwNow?' · today so far':(d>dwNow?' · to come':''))+'</small></td>'+
+      curCell(a)+SB.map(function(l){return cell(a,v(l,d,false));}).join("")+
+      curCell(ac)+SB.map(function(l){return cell(ac,v(l,d,true));}).join("")+'</tr>';
   }
-  tb.innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Days are UTC, counted from webinar day (Oct 2026: Tue 6 Oct). Changes are Oct 2026 vs that launch on the same day. Today\'s row stops past launches at the same hour.</p>';
+  tb.innerHTML=t+'</tbody></table><p class="hint" style="margin-top:8px">Dates are Oct 2026 (UTC). Past launches are lined up by days after their own webinar (Jul 2024: Tue 30 Jul; Jul 2023: Wed 2 Aug). Changes are Oct 2026 vs that launch on the same day; today\'s row stops past launches at the same hour.</p>';
 }
 function renderChannelShare(X,H){
   var cols=[{l:CUR,H:null,name:"Oct 2026",sub:"so far"}];
