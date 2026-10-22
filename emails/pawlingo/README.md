@@ -8,17 +8,19 @@ Voice: a golden retriever who has read your diary. Every email is signed by Bisc
 
 | # | File | Send | Subject | Job | CTA |
 |---|------|------|---------|-----|-----|
-| 1 | `01-welcome-the-sigh.html` | Day 0, on signup | {{dog_name}} has been trying to tell you something | Welcome. Lesson 1 (the sigh). Set the frame: he's the teacher. | Start lesson one |
+| 1 | `01-welcome-the-sigh.html` | Day 0, on signup | {{dog_name}}'s first lesson is in. He's already judging your accent. | Welcome. Lesson 1 (the sigh) in the email itself. Names Reverse Training. | Start lesson one |
 | 2 | `02-three-words-before-breakfast.html` | Day 1, 7am | Three words of {{dog_name}} before breakfast | Quick win: ears, tail, sigh. | Open today's lesson |
 | 3 | `03-the-head-tilt.html` | Day 2, 7am | What {{dog_name}}'s head tilt actually means | Real behaviour lesson. Professor Alsatian and the squirrel. | Watch today's lesson |
 | 4 | `04-five-minutes-whole-lesson.html` | Day 3, 7am | {{dog_name}} says: 5 minutes. That's the whole lesson. | Habit and retention. Day four is where apps die. The slow blink. | Five minutes. Go. |
-| 5 | `05-training-the-wrong-one.html` | Day 5, 7am | {{dog_name}}: "You've been training the wrong one." | The reversal. First invitation to Plus. | Start your 7-day free trial |
+| 5 | `05-training-the-wrong-one.html` | Day 5, 7am | {{dog_name}}: "You've been training the wrong one." | The reversal. Reverse Training named against the deleted apps. First invitation to Plus. | Start the 7-day free trial |
 | 6 | `06-live-translate-for-laughs.html` | Day 7, 6pm | {{dog_name}} has opinions about your ex | Live Translate demo, four blue cards from Biscuit. "For laughs" said three times. | Try Live Translate free for 7 days |
 | 7 | `07-breed-packs-dialects.html` | Day 9, 7am | {{dog_name}} speaks a dialect. Which one? | The "for real" half of Plus: five breed packs. | Unlock every breed pack |
 | 8 | `08-good-boy-guarantee.html` | Day 12, 7am | {{dog_name}} has a bone to pick with you | Objection handling: the cancel button. The Good Boy Guarantee. | Start the free trial. Two taps to leave. |
 | 9 | `09-last-word-january.html` | Day 14, 7am | {{first_name}}, {{dog_name}} has one more thing to say | Close. £29.99 a year until 31 January. Door left open. | Get the year for £29.99 |
 
 Alternate subject lines and preview text are in the HTML comment at the top of each file.
+
+The copy was then passed through a market sophistication review (Schwartz's five levels). Emails 1 and 5 changed level; the rest were sharpened. The named mechanism is **Reverse Training**. Diagnosis, before/after and the five-level headline ladder are in `MARKET-SOPHISTICATION.md`.
 
 ## Arc
 
@@ -85,7 +87,7 @@ The brand file is explicit: never invent a review, a behaviourist, or a number p
 
 ## A/B tests worth running
 
-1. **Email 1 subject.** "{{dog_name}} has been trying to tell you something" vs "Lesson one is in. {{dog_name}} is already judging your accent." Measure open rate; 50/50 split; call it at 2,000 sends.
+1. **Email 1 subject.** "{{dog_name}}'s first lesson is in. He's already judging your accent." (Level 4) vs "{{dog_name}} has been trying to tell you something" (Level 1). This is the awareness-level test. Measure first-lesson completion, not just opens; 50/50 split; call it at 2,000 sends.
 2. **Email 5 CTA.** "Start your 7-day free trial" vs "Let him talk. 7 days free." Measure trial starts, not clicks.
 3. **Email 6 send time.** 6pm vs 7am. Measure trial starts within 24 hours. The hypothesis is that evening wins because the dog is in the room.
 
@@ -118,4 +120,5 @@ Track: trial starts by email (which invitation converted), lesson completions in
 - Real behaviour under every gag: settling sigh, ear and tail position, head tilt and sound localisation, slow blink as a soft signal, vacuum unease, alert bark, stiff-tail "no" in Labradors.
 - No "train your dog," no "100% accurate," no loneliness, nothing about the reader's personal attributes, no competitor named, no invented reviews, behaviourists or stats.
 - "Invitation," never the other word.
+- "Reverse Training" never asks the reader to train the dog. If the brand team vetoes the word, swap in "The Three-Word Method" (see `MARKET-SOPHISTICATION.md`).
 - Blue card in every email. Wordmark lower case. Squeaky blue #3B5BFF, Biscuit #F6B73C, Cream #FFF6E8, Ink #1D1B2E. Baloo 2 for display, DM Sans for body (Google Sans is not on Google Fonts; swap in when self-hosting).
