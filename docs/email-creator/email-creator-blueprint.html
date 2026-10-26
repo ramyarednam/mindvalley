@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Email Creator Blueprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: Content Studio shell (dark-first, Mindvalley tokens). Sticky tab bar, one view at a time, each view = summary strip + working surface. */
+:root{
+  --bg:#0F131A; --surface:#181D26; --surface-2:#1D222C; --canvas:#12161D;
+  --text:#FFFFFF; --muted:#B3B8C1; --subtle:#979CA5;
+  --border:#2E333D; --border-strong:#41464F; --chip:#292D38; --chip-ink:#CED1D7;
+  --brand:#9B37F2; --brand-ink:#C79BFF; --brand-light:#2A1840; --brand-border:#4A2A70;
+  --pink:#F72C84; --orange:#FF931F; --orange-light:#2E1E0E; --green:#18C176; --green-light:#0F2A1E;
+  --blue:#329DFF; --blue-light:#0F1F38; --red:#F34747; --red-light:#3A1426; --amber:#F2B233; --amber-light:#2E2410;
+  --ph-promo:#9B37F2; --ph-live:#F72C84; --ph-sales:#FF931F; --ph-brand:#329DFF; --ph-retention:#18C176; --ph-none:#41464F;
+  --font:"Google Sans", "Product Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --shadow:0 5px 20px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F3F4F6; --surface:#FFFFFF; --surface-2:#F9F9F9; --canvas:#EEF0F3;
+    --text:#0F131A; --muted:#595E67; --subtle:#71767F;
+    --border:#DFE1E5; --border-strong:#CED1D7; --chip:#F3F4F6; --chip-ink:#41464F;
+    --brand:#7A12D4; --brand-ink:#680FB4; --brand-light:#F8EFFF; --brand-border:#EED8FE;
+    --pink:#DF1A6F; --orange:#C9541F; --orange-light:#FFF4E9; --green:#128756; --green-light:#E8F9F1;
+    --blue:#1C3BD4; --blue-light:#EBF5FF; --red:#D32F2F; --red-light:#FEEAF3; --amber:#B7791F; --amber-light:#FFF6DC;
+    --ph-promo:#7A12D4; --ph-live:#DF1A6F; --ph-sales:#C9541F; --ph-brand:#1C3BD4; --ph-retention:#128756; --ph-none:#CED1D7;
+    --shadow:0 5px 20px rgba(0,0,0,.10);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F3F4F6; --surface:#FFFFFF; --surface-2:#F9F9F9; --canvas:#EEF0F3;
+  --text:#0F131A; --muted:#595E67; --subtle:#71767F;
+  --border:#DFE1E5; --border-strong:#CED1D7; --chip:#F3F4F6; --chip-ink:#41464F;
+  --brand:#7A12D4; --brand-ink:#680FB4; --brand-light:#F8EFFF; --brand-border:#EED8FE;
+  --pink:#DF1A6F; --orange:#C9541F; --orange-light:#FFF4E9; --green:#128756; --green-light:#E8F9F1;
+  --blue:#1C3BD4; --blue-light:#EBF5FF; --red:#D32F2F; --red-light:#FEEAF3; --amber:#B7791F; --amber-light:#FFF6DC;
+  --ph-promo:#7A12D4; --ph-live:#DF1A6F; --ph-sales:#C9541F; --ph-brand:#1C3BD4; --ph-retention:#128756; --ph-none:#CED1D7;
+  --shadow:0 5px 20px rgba(0,0,0,.10);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3,h4{margin:0;line-height:1.2;text-wrap:balance;font-weight:700}
+p{margin:0}
+a{color:var(--brand-ink)}
+button{font:inherit;color:inherit;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(155,55,242,.35)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--border)}
+.top .wrap{display:flex;align-items:center;gap:14px;min-height:60px;flex-wrap:wrap;padding-block:8px}
+.logo{display:flex;align-items:center;gap:10px;margin-right:auto}
+.logo .mark{width:34px;height:34px;border-radius:9px;background:var(--orange);display:grid;place-items:center;color:#fff}
+.logo .mark svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.logo b{font-size:15px}
+.logo span{display:block;font-size:12px;color:var(--subtle);letter-spacing:.06em;text-transform:uppercase}
+.beta{font-size:11px;font-weight:700;letter-spacing:.06em;background:var(--brand);color:#fff;border-radius:99px;padding:3px 8px}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap}
+nav.tabs a{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);text-decoration:none;border:1px solid transparent}
+nav.tabs a:hover{background:var(--chip);color:var(--text)}
+nav.tabs a[aria-current="page"]{background:var(--brand-light);color:var(--brand-ink);border-color:var(--brand-border)}
+nav.tabs a .n{font-size:11px;color:var(--subtle);font-weight:500}
+
+/* Views */
+.view{padding-block:28px 56px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;margin-bottom:22px}
+.hero .eyebrow{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:6px}
+.hero h1{font-size:30px}
+.hero h2{font-size:26px}
+.hero p.lead{color:var(--muted);max-width:68ch;margin-top:8px;font-size:15.5px}
+.hero .aside{font-size:13px;color:var(--subtle);text-align:right;max-width:34ch}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero .aside{text-align:left}}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px 20px}
+.card.soft{background:var(--surface-2)}
+.card h3{font-size:15px;margin-bottom:10px}
+.card h3 small{font-weight:500;color:var(--subtle);font-size:12.5px;margin-left:8px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.muted{color:var(--muted)}.subtle{color:var(--subtle)}
+.small{font-size:13px}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 14px;font-size:13.5px}
+.kv dt{color:var(--subtle)}.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:500;background:var(--chip);color:var(--chip-ink);white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.85}
+.chip.promo{background:var(--brand-light);color:var(--brand-ink)}
+.chip.live{background:var(--red-light);color:var(--pink)}
+.chip.sales{background:var(--orange-light);color:var(--orange)}
+.chip.brand{background:var(--blue-light);color:var(--blue)}
+.chip.ok{background:var(--green-light);color:var(--green)}
+.chip.warn{background:var(--amber-light);color:var(--amber)}
+.chip.bad{background:var(--red-light);color:var(--red)}
+.chip.plain::before{display:none}
+.chip.plain{white-space:normal;text-align:left}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:99px;border:1px solid transparent;padding:9px 16px;font-size:13.5px;font-weight:500;background:var(--chip);color:var(--text)}
+.btn.primary{background:var(--brand);color:#fff}
+.btn.ghost{background:transparent;border-color:var(--border-strong)}
+.btn.sm{padding:6px 11px;font-size:12.5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:500;color:var(--subtle);font-size:12.5px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.tbl{overflow-x:auto}
+.num{font-variant-numeric:tabular-nums;text-align:right}
+.note{border-left:3px solid var(--orange);padding:10px 14px;background:var(--orange-light);border-radius:0 12px 12px 0;font-size:13.5px}
+.note.blue{border-color:var(--blue);background:var(--blue-light)}
+.note.red{border-color:var(--red);background:var(--red-light)}
+.note.green{border-color:var(--green);background:var(--green-light)}
+ul.clean{margin:0;padding-left:18px}
+ul.clean li{margin:4px 0}
+.sec{margin-top:26px}
+.sec>h2{font-size:20px;margin-bottom:12px}
+.sec>h2 small{font-size:13px;color:var(--subtle);font-weight:500;margin-left:10px}
+
+/* Pipeline */
+.pipe{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}
+@media (max-width:1000px){.pipe{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.pipe{grid-template-columns:1fr}}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px;min-width:0;position:relative}
+.step .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--subtle);font-weight:700}
+.step .t{font-weight:700;font-size:14px;margin:4px 0 6px}
+.step .d{font-size:12.5px;color:var(--muted)}
+.step.human{border-color:var(--brand-border);background:var(--brand-light)}
+.step.human .k{color:var(--brand-ink)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--subtle);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* Phase strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
+.day{border-radius:10px;padding:8px 6px;background:var(--surface);border:1px solid var(--border);text-align:center;min-width:0}
+.day .dn{font-size:11px;color:var(--subtle)}
+.day .dd{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.day .ph{display:block;height:5px;border-radius:3px;margin-top:6px;background:var(--ph-none)}
+.day[data-ph="Promotions"] .ph{background:var(--ph-promo)}
+.day[data-ph="LIVE"] .ph{background:var(--ph-live)}
+.day[data-ph="Sales"] .ph{background:var(--ph-sales)}
+.day[data-ph="Brand"] .ph{background:var(--ph-brand)}
+.day[data-ph="Retention"] .ph{background:var(--ph-retention)}
+.day.noemail{border-style:dashed;opacity:.75}
+.day .fl{font-size:10px;color:var(--amber);margin-top:3px;line-height:1.2}
+
+/* Planning calendar */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .hd{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);padding:0 6px 4px}
+.cell{min-height:104px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.cell.off{background:transparent;border-color:transparent}
+.cell.block{background:repeating-linear-gradient(135deg,transparent 0 6px,var(--chip) 6px 8px)}
+.cell .dnum{font-size:12px;color:var(--subtle);display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.cell .dnum b{color:var(--text)}
+.ev{font-size:11px;line-height:1.25;border-radius:7px;padding:3px 6px;background:var(--chip);color:var(--text);border-left:3px solid var(--ph-none);overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.ev.invite{border-left-color:var(--ph-promo)}
+.ev.live,.ev.showup{border-left-color:var(--ph-live)}
+.ev.sales{border-left-color:var(--ph-sales)}
+.ev.news{border-left-color:var(--ph-retention);color:var(--muted)}
+.ev.other{border-left-color:var(--ph-brand);color:var(--muted)}
+.ev.proposed{border-style:dashed;border-left-style:solid;background:transparent;border:1px dashed var(--border-strong);border-left:3px solid var(--ph-sales)}
+.ev.dropped{opacity:.5;text-decoration:line-through}
+.ev.sel{outline:2px solid var(--brand)}
+@media (max-width:760px){.cal{grid-template-columns:repeat(2,minmax(0,1fr))}.cal .hd{display:none}.cell.off{display:none}}
+
+/* Email Studio mock */
+.studio{display:grid;grid-template-columns:270px minmax(0,1fr) 300px;gap:16px}
+@media (max-width:1000px){.studio{grid-template-columns:1fr}}
+.list .it{display:flex;gap:10px;padding:8px;border-radius:12px;border:1px solid transparent;cursor:pointer}
+.list .it:hover{background:var(--surface-2)}
+.list .it.active{background:var(--surface-2);border-color:var(--brand-border)}
+.tile{flex:none;width:44px;height:46px;border-radius:10px;background:var(--brand-light);color:var(--brand-ink);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.tile .m{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.tile .d{font-size:18px;font-weight:700;margin-top:2px}
+.list .nm{font-size:13px;font-weight:500;line-height:1.3}
+.list .ls{font-size:12px;color:var(--subtle)}
+.gname{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-ink);font-weight:700;margin:10px 4px 4px}
+.editor{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.ebar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--border);align-items:center}
+.ebar .btn{padding:5px 10px;font-size:12px}
+.subj{padding:12px 16px;border-bottom:1px solid var(--border)}
+.subj label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle)}
+.subj input{width:100%;border:0;background:transparent;font-size:16px;font-weight:500;padding:4px 0}
+.ebody{padding:22px 24px;max-width:66ch;font-size:15.5px;line-height:1.6}
+.ebody p{margin:0 0 14px}
+.ebody .cta{display:inline-block;background:#7A12D4;color:#fff;border-radius:99px;padding:10px 20px;font-weight:500;text-decoration:none}
+.ebody .sig{color:var(--muted);margin-top:18px}
+.ebody .ps{font-size:14px;color:var(--muted)}
+.chat{display:flex;flex-direction:column;gap:8px}
+.msg{border-radius:12px;padding:8px 11px;font-size:13px;background:var(--surface-2)}
+.msg.me{background:var(--brand-light);color:var(--text);align-self:flex-end}
+.chat input{width:100%;border:1px solid var(--border-strong);border-radius:99px;padding:8px 12px;background:var(--surface)}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:5px 0}
+.check i{flex:none;width:16px;height:16px;border-radius:50%;display:inline-grid;place-items:center;font-size:10px;font-style:normal;font-weight:700;margin-top:2px}
+.check.ok i{background:var(--green-light);color:var(--green)}
+.check.warn i{background:var(--amber-light);color:var(--amber)}
+.check.bad i{background:var(--red-light);color:var(--red)}
+.ver{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--border)}
+
+/* UTM builder */
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12px;color:var(--subtle)}
+.field input{border:1px solid var(--border-strong);border-radius:10px;padding:8px 10px;background:var(--surface)}
+.url{font-family:var(--mono);font-size:12px;overflow-wrap:anywhere;color:var(--muted)}
+.url b{color:var(--brand-ink);font-weight:500}
+.copy{font-size:11px;padding:3px 8px;border-radius:99px;background:var(--chip);border:0;color:var(--muted)}
+
+/* Tracking */
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.stat .l{font-size:12.5px;color:var(--subtle)}
+.bar{height:8px;border-radius:4px;background:var(--chip);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--orange)}
+.spark{width:100%;height:40px}
+
+/* PRD */
+.prd{max-width:80ch;font-size:15px;line-height:1.6}
+.prd h1{font-size:26px;margin:0 0 14px}
+.prd h2{font-size:20px;margin:30px 0 10px;padding-top:14px;border-top:1px solid var(--border)}
+.prd h3{font-size:16px;margin:20px 0 8px}
+.prd p{margin:0 0 12px}
+.prd ul,.prd ol{margin:0 0 12px;padding-left:22px}
+.prd li{margin:3px 0}
+.prd table{font-size:13px;margin:10px 0 16px;display:block;overflow-x:auto}
+.prd th,.prd td{padding:6px 8px}
+.prd pre{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+.prd code{background:var(--chip);border-radius:5px;padding:1px 5px}
+.prd pre code{background:transparent;padding:0}
+.prd hr{border:0;border-top:1px solid var(--border);margin:20px 0}
+.prd blockquote{margin:0 0 12px;padding-left:14px;border-left:3px solid var(--brand);color:var(--muted)}
+.qs li{margin:8px 0}
+footer{padding-block:30px;color:var(--subtle);font-size:12.5px;border-top:1px solid var(--border);margin-top:20px}
+@media (prefers-reduced-motion:no-preference){.view{animation:fade .18s ease}}
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+</style>
+</head>
+<body>
+
+
+<header class="top"><div class="wrap">
+  <div class="logo">
+    <div class="mark"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+    <div><span>Content Studio · Create</span><b>Email Creator 2.0</b></div>
+    <span class="beta">Blueprint</span>
+  </div>
+  <nav class="tabs" id="tabs">
+    <a href="#overview">Overview</a>
+    <a href="#sources">Sources</a>
+    <a href="#planning">Planning</a>
+    <a href="#review">Review</a>
+    <a href="#scheduled">Scheduled</a>
+    <a href="#tracking">Tracking</a>
+    <a href="#rules">Rules</a>
+    <a href="#utm">UTM engine</a>
+    <a href="#prd">PRD</a>
+    <a href="#questions">Questions <span class="n" id="qn"></span></a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<!-- ================= OVERVIEW ================= -->
+<section class="view" id="v-overview">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">How the Email Creator should work</div>
+      <h1>From calendar row to measured sequence, without a form</h1>
+      <p class="lead">Today a person opens <b>New sequence</b>, fills a brief, and presses <b>Start with Research</b>. In 2.0 the Official Calendar is the brief, the Comms Calendar is the plan, Email Studio is the review desk, and Braze is the sender. People approve. Everything else runs.</p>
+    </div>
+    <div class="aside">Worked example throughout: <b>AI for Founders Summit · 30 Oct – 1 Nov 2026</b>, taken from the real calendar exports you shared on 27 Oct 2026.</div>
+  </div>
+
+  <div class="pipe">
+    <div class="step"><div class="k">① Watch</div><div class="t">Calendar Watcher</div><div class="d">Official Calendar row gets a Key Message Doc or Launch Plan → campaign detected.</div></div>
+    <div class="step"><div class="k">② Brief</div><div class="t">Brief Builder</div><div class="d">Fetches every link in those two cells + the Event Type row. One structured brief.</div></div>
+    <div class="step"><div class="k">③ Research</div><div class="t">Existing step</div><div class="d">Content Studio research runs on the brief. Kept exactly as it is today.</div></div>
+    <div class="step"><div class="k">④ Baseline</div><div class="t">Baseline Finder</div><div class="d">Best comparable past campaign from Metabase, 5y → 3y → 2y. Target = +30%.</div></div>
+    <div class="step human"><div class="k">⑤ Plan · approve</div><div class="t">Sequence Planner</div><div class="d">Emails placed on Comms Calendar slots per list caps. Segments proposed. Owner approves.</div></div>
+    <div class="step"><div class="k">⑥ Draft</div><div class="t">Drafting Engine</div><div class="d">Every email written with the Mindvalley email skill, UTM links in. Lands in Email Studio.</div></div>
+    <div class="step human"><div class="k">⑦ Review · approve</div><div class="t">Email Studio</div><div class="d">Edit, talk to the email, versions, approve. The editor the team already uses.</div></div>
+    <div class="step"><div class="k">⑧ Schedule</div><div class="t">Scheduler → Braze</div><div class="d">Pre-flight checks, Braze naming convention, four time zones, push.</div></div>
+    <div class="step"><div class="k">⑨ Track</div><div class="t">Tracker</div><div class="d">Opens, clicks, conversions, revenue vs baseline and target. Feeds “Make more of this”.</div></div>
+  </div>
+  <div class="legend"><span><i style="background:var(--brand)"></i>Purple steps are the only places a person must act</span><span><i style="background:var(--border-strong)"></i>Everything else is automatic and re-runs when the calendars change</span></div>
+
+  <div class="sec grid g2">
+    <div class="card">
+      <h3>What changes against the current Email Creator</h3>
+      <div class="tbl"><table>
+        <tr><th>Today (screenshots)</th><th>2.0</th></tr>
+        <tr><td>Click <b>New sequence</b>, pick campaign, paste promise, type what you want</td><td>Campaign appears by itself once the calendar row has a Key Message Doc or Launch Plan</td></tr>
+        <tr><td>One sequence per request, 0–5 steps, no link to parked dates</td><td>Full set per campaign: invite, confirmation, retargeting, show-up, live, sales, sales retargeting, placed on Comms Calendar days</td></tr>
+        <tr><td>“Quote from” a transcript or video, optional</td><td>Brief links from the calendar are the quote source; research pack attaches automatically</td></tr>
+        <tr><td>Drafts shown as text cards</td><td>Drafts open in Email Studio (HTML editor, versions, AI quick edits, talk-to-email)</td></tr>
+        <tr><td>Links typed by hand</td><td>UTM engine builds every link from one Links card per campaign</td></tr>
+        <tr><td>Sequences list + “Make more of this”</td><td>Kept. Plus four phase views: Planning · Review &amp; approval · Scheduled · Performance &amp; tracking</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3>The six sequences the system builds for a summit</h3>
+      <div class="tbl"><table>
+        <tr><th>Sequence</th><th>Who gets it</th><th>Timing</th></tr>
+        <tr><td><b>Invite</b></td><td>Daily, Members, Coach, Weekly, Events (per caps)</td><td>Every Promotions slot in the Comms Calendar</td></tr>
+        <tr><td><b>Confirmation</b></td><td>Anyone who registers on the LP</td><td>Triggered, T+0</td></tr>
+        <tr><td><b>Retargeting</b></td><td>Clicked an invite, did not register</td><td>Triggered, T+2 days, max 3</td></tr>
+        <tr><td><b>Show-up</b></td><td>Registrants</td><td>T-3d · T-1d · T-1h, then each live morning</td></tr>
+        <tr><td><b>Live</b></td><td>Full list on day 1, registrants after</td><td>Every LIVE slot</td></tr>
+        <tr><td><b>Sales</b> + <b>Sales retargeting</b></td><td>Full list; visited SP without buying</td><td>Every Sales slot until the Mastery class starts (17 Nov)</td></tr>
+      </table></div>
+      <p class="small subtle" style="margin-top:10px">Other event types use shorter recipes. See <a href="#rules">Rules</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOURCES ================= -->
+<section class="view" id="v-sources" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Phase 0 · Sources</div>
+      <h2>Two Airtable tables are the brief and the plan</h2>
+      <p class="lead">Email Creator reads them every five minutes. A campaign starts the moment its Official Calendar row carries a Key Message Doc or a Launch Plan. Nothing is typed into Content Studio.</p>
+    </div>
+    <div class="aside">Field names below are copied from the 2026 exports of both tables.</div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Official Calendar <small>app9SSYzpUiFmc9QH · one row per campaign</small></h3>
+      <dl class="kv">
+        <dt>Trigger fields</dt><dd><code>Key Message Doc</code> and/or <code>Launch Plan</code> non-empty</dd>
+        <dt>Identity</dt><dd><code>Name of project</code>, <code>Unique Name</code>, Airtable record id (names repeat across years)</dd>
+        <dt>Recipe</dt><dd><code>Event type</code> → Event Type table → recipe, runway, average revenue, rules</dd>
+        <dt>Dates</dt><dd><code>Start date</code>, <code>End Date</code>, <code>Promotions Start Date</code>, <code>Promotions Duration</code></dd>
+        <dt>Target</dt><dd><code>$ Rev target</code>, <code>Notes</code> (often holds the ambition, e.g. “$3M”), <code>Actuals</code> for past rows</dd>
+        <dt>People</dt><dd><code>Responsible</code> approves the plan</dd>
+        <dt>Other</dt><dd><code>Ticket</code> (Free/Paid), <code>Medium</code>, <code>💿 Production Type</code>, <code>Type</code></dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>Comms Calendar <small>app9YRZOVeE65fJPA · one row per day</small></h3>
+      <dl class="kv">
+        <dt>Link</dt><dd><code>📅 Official Cal</code> = the campaign's full name</dd>
+        <dt>Slot</dt><dd><code>Date</code>, <code>Day</code>, <code>Phase</code> (Promotions · LIVE · Sales · Retention · Brand), <code>No. of Emails</code></dd>
+        <dt>Slot text</dt><dd><code>📧 Emails</code>, e.g. <span class="mono">Email 4 - Agenda ["1,2: Daily", 3: Members]</span>. Parsed best-effort; placement never depends on it</dd>
+        <dt>Blockers</dt><dd><code>Initiative</code> = ✋ No Email Day or 🎯 Vishen's Newsletter; <code>Internal Note</code> containing “no email”</dd>
+        <dt>Other channels</dt><dd><code>🖌️ Feature Banner</code>, <code>🔔 Marketing Notifications</code>, <code>📣 Social All Assets</code> (read for context, not written)</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Detected campaign <small>what the watcher sees right now for the worked example</small></h2>
+    <div class="grid g2">
+      <div class="card">
+        <div class="row" style="justify-content:space-between;margin-bottom:8px"><b>AI for Founders Summit | 🌐 Mastery Online Summit - Free | Oct 2026</b><span class="chip warn">Waiting for brief</span></div>
+        <dl class="kv">
+          <dt>Status</dt><dd>Confirmed · Free</dd>
+          <dt>Summit</dt><dd>Fri 30 Oct → Sun 1 Nov 2026</dd>
+          <dt>Promotions</dt><dd>from 30 Sep 2026 · 30 days (Event Type rule: 4-week runway before virtual summits)</dd>
+          <dt>$ Rev target</dt><dd>$2,500,000 · Notes say “$3M”</dd>
+          <dt>Responsible</dt><dd>Jaideep Chagger</dd>
+          <dt>Key Message Doc</dt><dd><span class="chip bad plain">empty</span></dd>
+          <dt>Launch Plan</dt><dd><span class="chip bad plain">empty</span></dd>
+          <dt>Sells into</dt><dd>AI for Founders Mastery · class starts Tue 17 Nov 2026 (end of the sales sequence)</dd>
+        </dl>
+        <div class="note" style="margin-top:12px">Both brief cells are empty on 27 Oct, three days before the summit. 2.0 shows this row as <b>Waiting for brief</b> on the Email Creator home with the owner's name, so the gap is visible weeks earlier. The plan below assumes the cells get filled.</div>
+      </div>
+      <div class="card">
+        <h3>Comms Calendar slots read for this campaign <small>15 rows</small></h3>
+        <div class="strip" id="strip"></div>
+        <div class="legend"><span><i style="background:var(--ph-brand)"></i>Brand</span><span><i style="background:var(--ph-promo)"></i>Promotions</span><span><i style="background:var(--ph-live)"></i>LIVE</span><span><i style="background:var(--ph-sales)"></i>Sales</span><span><i style="background:var(--ph-retention)"></i>Retention / newsletter</span><span>dashed = ✋ No Email Day</span></div>
+        <div class="note red" style="margin-top:12px"><b>Conflicts the watcher flags:</b> 31 Oct and 1 Nov are LIVE days and also ✋ No Email Day. 22 Oct is a Promotions slot whose note says “John Lee podcast launch (no email)”. The planner asks, it does not guess.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Brief examples already in the calendar <small>what the Brief Builder would fetch</small></h2>
+    <div class="tbl card"><table>
+      <tr><th>Campaign</th><th>Key Message Doc</th><th>Launch Plan</th><th>Fetcher</th></tr>
+      <tr><td>Manifesting Summit · May 2026</td><td class="url">marisha-mv.github.io/manifesting-mastery/</td><td class="url">same link</td><td>GitHub Pages → HTML extraction</td></tr>
+      <tr><td>MVU Estonia · Jul 2026</td><td class="url">MVU Key message: marisha-mv.github.io/mvu-2026-positioning-brief/</td><td class="url">customer profile: ramyarednammv.github.io/mv/output/task-7-mvu/customer-profile.html</td><td>Two links in prose; both fetched</td></tr>
+      <tr><td>Expert to Authority Mastery · Oct 2026</td><td class="url">blinklife.com/view/vishen/programs/speaking-authority-mastery-agenda</td><td class="url">same link</td><td>Blinklife page</td></tr>
+      <tr><td>30/30/30 Fibre Challenge · Nov 2026</td><td>“Challenge PDF” (no link)</td><td>“3 live call Nora - Alba health, vibrantly app, black friday OFFER”</td><td>Prose only → brief from text, flagged <span class="chip warn plain">no link</span></td></tr>
+    </table></div>
+  </div>
+</section>
+
+<!-- ================= PLANNING ================= -->
+<section class="view" id="v-planning" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Phase 1 · Planning</div>
+      <h2>The proposed plan, before anyone writes a word</h2>
+      <p class="lead">Brief, baseline, target, segments, and every email placed on a parked day within each list's weekly cap. The owner moves, removes, or approves. Approval starts drafting.</p>
+    </div>
+    <div class="row"><button class="btn ghost">Request changes</button><button class="btn primary">Approve plan → start drafting</button></div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3>Brief <small>auto-assembled</small></h3>
+      <dl class="kv">
+        <dt>Promise</dt><dd class="muted">from Key Message Doc (pending)</dd>
+        <dt>Belief</dt><dd>AI First means Human First: get your life back (from the AI Summit skill; replaced by the doc once filled)</dd>
+        <dt>Offer</dt><dd>Free 3-day summit → AI for Founders Mastery (17 Nov)</dd>
+        <dt>Avatar</dt><dd>Founder / solopreneur, 38–52, feels behind on AI, not technical</dd>
+        <dt>Research</dt><dd><span class="chip ok plain">pack attached</span> (existing step)</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>Baseline <small>5-year window · 4 candidates</small></h3>
+      <div class="tbl"><table>
+        <tr><th>Candidate</th><th class="num">Target</th><th class="num">Actual</th><th class="num">Score</th></tr>
+        <tr><td><b>AI Summit · Mar 2026</b> (free)</td><td class="num">$5.5M</td><td class="num">$4.26M</td><td class="num"><span class="chip ok plain">pick</span></td></tr>
+        <tr><td>AI Summit · Jul 2025 (hybrid)</td><td class="num">—</td><td class="num">Metabase</td><td class="num">2nd</td></tr>
+        <tr><td>AI Summit · Jul 2024 (hybrid)</td><td class="num">—</td><td class="num">Metabase</td><td class="num">3rd</td></tr>
+        <tr><td>AI Summit · Jul 2023 (hybrid)</td><td class="num">—</td><td class="num">Metabase</td><td class="num">4th</td></tr>
+      </table></div>
+      <p class="small subtle" style="margin-top:8px">Match order: event type → AI pathway → free ticket → list mix. Export has actuals only for Mar 2026; Metabase <code>dim_email_campaign.campaign_product</code> fills the rest.</p>
+    </div>
+    <div class="card">
+      <h3>Target <small>owner decides</small></h3>
+      <div class="stat"><div class="v">$2.5M</div><div class="l">Official Calendar $ Rev target</div></div>
+      <div class="stat" style="margin-top:10px"><div class="v">$5.54M</div><div class="l">Baseline rule: AI Summit Mar 2026 × 1.30</div></div>
+      <div class="note" style="margin-top:12px">The two disagree by more than 2×. The system shows both and records the owner's pick. (Open question 6.)</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Segmentation proposal <small>from the Launch Plan; defaults shown while it is empty</small></h2>
+    <div class="grid g4">
+      <div class="card soft"><b>A · $1,000+ customers (non-members)</b><p class="small muted" style="margin-top:6px">50 / 50 test: arm 1 gets VIP free, arm 2 gets the generic invite. Variant copy for Invite E1, E4, E6.</p><span class="chip warn">test</span></div>
+      <div class="card soft"><b>B · $1,000+ members</b><p class="small muted" style="margin-top:6px">Same 50 / 50 test, held separately from A so results never mix.</p><span class="chip warn">test</span></div>
+      <div class="card soft"><b>C · Past AI summit registrants (sublist)</b><p class="small muted" style="margin-top:6px">Warmer opening (“you were there in March”). Same schedule.</p><span class="chip">variant</span></div>
+      <div class="card soft"><b>D · Everyone else</b><p class="small muted" style="margin-top:6px">Generic invite, per list caps.</p><span class="chip">default</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Email plan <small>click an email for its detail</small></h2>
+    <div class="grid" style="grid-template-columns:minmax(0,1fr) 320px">
+      <div>
+        <div class="row" style="margin-bottom:8px;justify-content:space-between"><b id="calTitle">October – November 2026</b><div class="legend" style="margin:0"><span><i style="background:var(--ph-promo)"></i>Invite</span><span><i style="background:var(--ph-live)"></i>Show-up / Live</span><span><i style="background:var(--ph-sales)"></i>Sales</span><span><i style="background:var(--ph-retention)"></i>Newsletter</span><span><i style="background:var(--ph-brand)"></i>Other campaign</span><span>dashed = proposed, not parked</span></div></div>
+        <div class="cal" id="cal"></div>
+      </div>
+      <div class="stack">
+        <div class="card" id="evDetail"><h3>Select an email</h3><p class="small muted">Each planned email carries sequence, number, phase, date, time, lists, segment, sender, goal, reference email, link target.</p></div>
+        <div class="card">
+          <h3>Cadence check <small>week of 19–25 Oct</small></h3>
+          <div class="tbl"><table>
+            <tr><th>List</th><th class="num">Cap</th><th class="num">Planned</th><th></th></tr>
+            <tr><td>Daily</td><td class="num">5</td><td class="num">5</td><td><span class="chip ok plain">4 invites + newsletter</span></td></tr>
+            <tr><td>Members</td><td class="num">3</td><td class="num">3</td><td><span class="chip ok plain">ok</span></td></tr>
+            <tr><td>Coach</td><td class="num">3</td><td class="num">3</td><td><span class="chip ok plain">ok</span></td></tr>
+            <tr><td>Weekly</td><td class="num">1</td><td class="num">1</td><td><span class="chip ok plain">Fri 23</span></td></tr>
+          </table></div>
+          <p class="small subtle" style="margin-top:8px">Dropped to fit: Sat 25 Oct (lowest priority slot) and Thu 22 Oct (note says no email).</p>
+        </div>
+        <div class="card">
+          <h3>Conflicts</h3>
+          <div class="check bad"><i>!</i><span>31 Oct &amp; 1 Nov: LIVE and ✋ No Email Day. Proposal: registrants-only show-up emails, nothing to the full list. Needs owner's yes.</span></div>
+          <div class="check warn"><i>!</i><span>Sales recipe needs emails to 16 Nov; only 2 Nov is parked. 6 proposed days shown dashed.</span></div>
+          <div class="check warn"><i>!</i><span>Black Friday (16–30 Nov) and Build Your Flagship Course (9–16 Nov) share the Daily list in the sales window.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>Sequences in this plan</h2>
+    <div class="tbl card"><table id="seqTable"></table></div>
+  </div>
+</section>
+
+<!-- ================= REVIEW ================= -->
+<section class="view" id="v-review" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Phase 2 · Review &amp; approval</div>
+      <h2>Every draft lands in Email Studio</h2>
+      <p class="lead">The HTML editor your colleague built is the review desk. It keeps everything it has (versions with word diff, AI quick edits, four time zones, export). 2.0 adds sequence context, a talk-to-this-email thread, the pre-send checklist, and Approve.</p>
+    </div>
+    <div class="aside">Mock below. Real one: <a href="https://claude.ai/artifact/UoLv22xD9Fg1BTTuePUugf" target="_blank" rel="noopener">Email Studio</a></div>
+  </div>
+
+  <div class="studio">
+    <aside class="card list" style="padding:12px">
+      <div class="row" style="justify-content:space-between;padding:0 4px 6px"><b>AI for Founders Summit</b><span class="chip">21 emails</span></div>
+      <div class="gname">Invite · Vishen · 8</div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">16</span></div><div><div class="nm">E1 · I almost didn't build this summit</div><div class="ls">Daily · Members · Coach</div><span class="chip ok">Approved</span></div></div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">19</span></div><div><div class="nm">E2 · Still answering email at 11pm?</div><div class="ls">Daily · Members</div><span class="chip ok">Approved</span></div></div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">20</span></div><div><div class="nm">E3 · Try this. It takes 90 seconds.</div><div class="ls">Daily · Coach</div><span class="chip warn">In review</span></div></div>
+      <div class="it active"><div class="tile"><span class="m">Oct</span><span class="d">23</span></div><div><div class="nm">E4 · Stop trying to learn AI.</div><div class="ls">Daily · Members · Coach · Weekly</div><span class="chip warn">In review</span></div></div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">24</span></div><div><div class="nm">E5 · She built it on a flight. Not a developer.</div><div class="ls">Daily · Members</div><span class="chip">Draft</span></div></div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">26</span></div><div><div class="nm">E6 · Last call: Friday. No replays.</div><div class="ls">All lists</div><span class="chip">Draft</span></div></div>
+      <div class="gname">Show-up · team · 5</div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">27</span></div><div><div class="nm">S1 · Three days. Here's your agenda.</div><div class="ls">Registrants</div><span class="chip">Draft</span></div></div>
+      <div class="it"><div class="tile"><span class="m">Oct</span><span class="d">30</span></div><div><div class="nm">S3 · We're live. Your seat is waiting.</div><div class="ls">Registrants · 6:45 PT</div><span class="chip">Draft</span></div></div>
+      <div class="gname">Sales · 7</div>
+      <div class="it"><div class="tile"><span class="m">Nov</span><span class="d">2</span></div><div><div class="nm">P1 · The door to Mastery is open</div><div class="ls">Daily · Members · Coach · Sublist</div><span class="chip">Planned</span></div></div>
+    </aside>
+
+    <div class="editor">
+      <div class="ebar">
+        <span class="chip promo">Invite 4 of 8</span>
+        <span class="subtle small">Fri 23 Oct · 7:00 PT · 10:00 ET · 15:00 UK · 22:00 MYT</span>
+        <span style="margin-left:auto"></span>
+        <button class="btn">H1</button><button class="btn">H2</button><button class="btn">Text</button><button class="btn">Link</button><button class="btn">Button</button><button class="btn">Image</button>
+        <button class="btn">Save version</button><button class="btn primary">Approve</button>
+      </div>
+      <div class="subj"><label>Subject · option 2 of 3</label><input id="subjInput" value="Stop trying to learn AI."><div class="small subtle">Preview: Tools change every six months. Something else doesn't. · Alternatives: “The wrong way to catch up on AI” · “What I'd tell a founder who feels behind”</div></div>
+      <div class="ebody">
+        <p>Last Tuesday a founder told me she had bought four AI courses this year.</p>
+        <p>She finished none of them. Not because she is lazy. She runs a company. Her days were already full before anyone said the word “prompt”.</p>
+        <p>And every month there is a new tool, a new model, a new thread telling her she is falling behind.</p>
+        <p>Here is what I told her.</p>
+        <p>Stop trying to learn AI.</p>
+        <p>The tools change every six months. What does not change is how you think. When you start every decision with the question “what would this look like if AI did the first 80%?”, the tool matters a lot less. You stop collecting courses. You start getting evenings back.</p>
+        <p>That one shift is what the AI for Founders Summit is built around. Three days, 30 October to 1 November. Free. Live.</p>
+        <p>On day one I will walk through the exact way I run Mindvalley with this question, including the parts I got wrong first.</p>
+        <p>If you have ever felt behind, this is the invitation I wish someone had sent me.</p>
+        <p><a class="cta" href="#utm">Save my free seat</a></p>
+        <p class="sig">Vishen</p>
+        <p class="ps">P.S. No replays. No recordings. The content moves too fast to be watched later. Your seat is for the live days only.</p>
+      </div>
+    </div>
+
+    <aside class="stack">
+      <div class="card">
+        <h3>Talk to this email</h3>
+        <div class="chat">
+          <div class="msg me">Open with a scene at 11pm instead of the course count.</div>
+          <div class="msg">Version 3 proposed: opens on “It was 11:14pm and she was still at her desk.” Word count 268. One CTA kept. Accept?</div>
+          <div class="msg me">Accept. Then make the P.S. about the live-only rule.</div>
+          <div class="msg">Done. Saved as version 4, “Reviewer: 11pm scene + live-only P.S.”</div>
+          <input id="chatInput" placeholder="Ask for a change…">
+        </div>
+      </div>
+      <div class="card">
+        <h3>Pre-send checklist <small>runs on every version</small></h3>
+        <div class="check ok"><i>✓</i><span>One belief, one CTA</span></div>
+        <div class="check ok"><i>✓</i><span>268 words (pre-event band 250–350)</span></div>
+        <div class="check ok"><i>✓</i><span>No forbidden phrases (productivity, pitch, excited to announce…)</span></div>
+        <div class="check ok"><i>✓</i><span>Links tracked: utm_campaign=aiffs_oct_2026 · utm_content=invite_e04</span></div>
+        <div class="check warn"><i>!</i><span>Quotes a claim (“four AI courses”) with no source in the brief</span></div>
+        <div class="check ok"><i>✓</i><span>Subject passes the text-a-friend test (3 words, no emoji)</span></div>
+      </div>
+      <div class="card">
+        <h3>Versions</h3>
+        <div class="ver"><span>v4 · Reviewer: 11pm scene + live-only P.S.</span><span class="subtle">now</span></div>
+        <div class="ver"><span>v3 · Talk-to-email proposal</span><span class="subtle">2m</span></div>
+        <div class="ver"><span>v2 · Quick edit: punchier subject</span><span class="subtle">9m</span></div>
+        <div class="ver"><span>v1 · Email Creator draft</span><span class="subtle">1h</span></div>
+        <p class="small subtle" style="margin-top:8px">Reference: AI Summit Mar 2026 · Email 4 “Stop trying to learn AI” · 9.1% click</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= SCHEDULED ================= -->
+<section class="view" id="v-scheduled" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Phase 3 · Scheduled</div>
+      <h2>Approved emails, pre-flighted, pushed to Braze</h2>
+      <p class="lead">Nothing reaches Braze until every check passes. Names follow the <span class="mono">YYYY-MM-DD</span> convention so <code>dim_email_campaign.is_marketing_convention</code> stays true and performance joins work.</p>
+    </div>
+    <div class="row"><button class="btn ghost">Run pre-flight</button><button class="btn primary">Push 9 approved to Braze</button></div>
+  </div>
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="card"><div class="check ok"><i>✓</i><span>Naming convention on all 21</span></div><div class="check ok"><i>✓</i><span>UTM + otag on every link</span></div></div>
+    <div class="card"><div class="check ok"><i>✓</i><span>No send on ✋ No Email Day (full list)</span></div><div class="check warn"><i>!</i><span>2 registrant sends on No Email Days await owner's yes</span></div></div>
+    <div class="card"><div class="check ok"><i>✓</i><span>Weekly caps hold with newsletter + WildFit</span></div><div class="check ok"><i>✓</i><span>Subjects under 60 chars</span></div></div>
+    <div class="card"><div class="check bad"><i>!</i><span>Segment “VIP test arm B” not found in Braze</span></div><div class="check ok"><i>✓</i><span>LP and SP resolve (200)</span></div></div>
+  </div>
+  <div class="tbl card"><table id="schedTable"></table></div>
+  <p class="small subtle" style="margin-top:10px">Times computed from one send time per sequence (default 07:00 America/Los_Angeles for invites and sales, event start minus 15 minutes for live emails). UK and US clocks change on different dates in this window; the table handles it.</p>
+</section>
+
+<!-- ================= TRACKING ================= -->
+<section class="view" id="v-tracking" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Phase 4 · Performance &amp; tracking</div>
+      <h2>Against the baseline, against the target, email by email</h2>
+      <p class="lead">Sends, opens, clicks, conversions and revenue from Analyst OS (<code>fact_braze_campaign_daily</code>, daily 12:00 MYT) and Metabase (<code>bridge_email_revenue</code>, Campaign Efficiency Scorecard). Winners feed “Make more of this”.</p>
+    </div>
+    <div class="aside"><span class="chip warn plain">Example figures</span> Numbers below are illustrative to show the layout, not real results.</div>
+  </div>
+  <div class="grid g4">
+    <div class="card"><div class="stat"><div class="v">41,200</div><div class="l">Registrations · 62% of 66,000 pace</div></div><div class="bar"><i style="width:62%"></i></div></div>
+    <div class="card"><div class="stat"><div class="v">8.4%</div><div class="l">Invite click rate · baseline 6.9%</div></div><div class="bar"><i style="width:84%;background:var(--green)"></i></div></div>
+    <div class="card"><div class="stat"><div class="v">$0</div><div class="l">Revenue · sales opens 2 Nov · target $2.5M</div></div><div class="bar"><i style="width:0"></i></div></div>
+    <div class="card"><div class="stat"><div class="v">0.18%</div><div class="l">Unsubscribe rate · baseline 0.21%</div></div><div class="bar"><i style="width:40%;background:var(--green)"></i></div></div>
+  </div>
+  <div class="sec grid g2">
+    <div class="card">
+      <h3>Current vs baseline <small>same shape as Metabase “Current / Baseline Campaign Performance”</small></h3>
+      <div class="tbl"><table>
+        <tr><th>Email</th><th class="num">Sends</th><th class="num">Open</th><th class="num">Click</th><th class="num">Reg.</th><th>Baseline (AI Summit Mar 26)</th></tr>
+        <tr><td>E1 · I almost didn't build this summit</td><td class="num">812k</td><td class="num">31.2%</td><td class="num">7.9%</td><td class="num">9,840</td><td class="small subtle">E1 · 29.8% / 6.1%</td></tr>
+        <tr><td>E2 · Still answering email at 11pm?</td><td class="num">790k</td><td class="num">28.9%</td><td class="num">6.4%</td><td class="num">6,120</td><td class="small subtle">E2 · 27.1% / 5.8%</td></tr>
+        <tr><td>E3 · Try this. It takes 90 seconds.</td><td class="num">805k</td><td class="num">33.0%</td><td class="num">9.6%</td><td class="num">8,410</td><td class="small subtle">E3 · 30.4% / 8.8%</td></tr>
+        <tr><td>E4 · Stop trying to learn AI.</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="small subtle">E4 · 32.6% / 9.1%</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3>Learnings loop</h3>
+      <ul class="clean small">
+        <li>After each send's first 3 days, the “Make more of this” card on the Email Creator home gets this campaign's winner (today it shows “Invites to Registrants beat the list by half again · 1.8×”).</li>
+        <li>Segment test A/B (VIP free vs generic for $1,000+ customers) reports registrations per arm and purchase rate after 2 Nov.</li>
+        <li>“Write actuals” button pushes revenue into the Official Calendar <code>Actuals</code> cell only on click.</li>
+        <li>Every metric row carries its source and data-through date, as Analyst OS requires.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RULES ================= -->
+<section class="view" id="v-rules" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Admin · Rules</div>
+      <h2>Config, not code</h2>
+      <p class="lead">Recipes, caps, baseline rules, and drafting guardrails live in an admin view so they can change without a deploy.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <h2>Sequence recipe by event type <small>event types are the Official Calendar's own</small></h2>
+    <div class="tbl card"><table>
+      <tr><th>Event type</th><th>Recipe</th><th>Runway</th><th>Sender</th></tr>
+      <tr><td>🌐 Mastery Online Summit (Free / Paid / Hybrid)</td><td>Invite on every Promotions slot · Confirmation · Retargeting · Show-up · Live on every LIVE slot · Sales on every Sales slot to class start · Sales retargeting</td><td>30 / 45 days</td><td>Vishen signs invites; team signs show-up</td></tr>
+      <tr><td>💻 Quest Release Webinar</td><td>Announce · reminder · we're live · last call / replay</td><td>5 days</td><td>Author / team</td></tr>
+      <tr><td>🚀 Quest Soft Release</td><td>Announce · last day</td><td>2 days</td><td>Team</td></tr>
+      <tr><td>📺 Extraordinary Minds (Podcast) · 📧 Value Email</td><td>1 email</td><td>1 day</td><td>Vishen</td></tr>
+      <tr><td>💻 Academy / Accelerator / Cert Presentation / Guild / Lifebook / WildFit webinar</td><td>Announce · reminder · live · last call · replay</td><td>3–15 days</td><td>Host</td></tr>
+      <tr><td>💻 Cert Online 1 Day Seminar</td><td>Invite · show-up · live · sales to cert class start</td><td>15 days</td><td>Host</td></tr>
+      <tr><td>🎓 Mindvalley U · 🎉 Festival · 🎫 Event Campaign</td><td>Ticket sales to Events list every other day</td><td>180–365 days</td><td>Team</td></tr>
+      <tr><td>🛍️ Membership Major Sale (Black Friday)</td><td>Daily sales on each slot · last 48h · last 24h · final hours</td><td>45 days</td><td>Team</td></tr>
+      <tr><td>🏆 Mastery · 👟 Certification · ♾️ Guild class start</td><td>End date of the preceding Sales sequence · onboarding after purchase</td><td>—</td><td>Team</td></tr>
+    </table></div>
+  </div>
+  <div class="sec grid g3">
+    <div class="card">
+      <h3>List caps <small>per ISO week, all campaigns</small></h3>
+      <div class="tbl"><table>
+        <tr><th>List</th><th class="num">Cap</th></tr>
+        <tr><td>Daily</td><td class="num">5</td></tr>
+        <tr><td>Members</td><td class="num">3</td></tr>
+        <tr><td>Coach</td><td class="num">3</td></tr>
+        <tr><td>Events</td><td class="num">2–3</td></tr>
+        <tr><td>Weekly</td><td class="num">1</td></tr>
+        <tr><td>Highlights · Vishen's list · Sublist · Members Pro</td><td class="num"><span class="chip warn plain">confirm</span></td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3>Baseline &amp; target</h3>
+      <ul class="clean small">
+        <li>Lookback 5 years → 3 → 2: first window with at least 2 comparable campaigns.</li>
+        <li>Match: event type → pathway / product → free or paid → list mix.</li>
+        <li>Best = revenue ÷ own target; tie-break revenue per email.</li>
+        <li>Target = max(calendar $ Rev target, baseline × 1.30). Both shown.</li>
+        <li>Baseline's email-by-email subjects, days, lists and rates become reference rows and drafting examples.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Drafting guardrails <small>Mindvalley email skill</small></h3>
+      <ul class="clean small">
+        <li>One belief per sequence. One CTA per email. 250–350 words pre-event.</li>
+        <li>Julie's four stages: Seen → Hope → Trust → Committed, mapped to invite position.</li>
+        <li>Never: “productivity”, fear of job loss, jargon, “pitch”, “We're excited to announce”, multiple CTAs.</li>
+        <li>Always: “invitation”, outcomes before mechanisms, “No replays. No recordings.” from the 48-hour email on.</li>
+        <li>Subject line must pass the text-a-friend test.</li>
+        <li>Comms Calendar: ✋ No Email Day blocks all lists; newsletter day counts 1 on Daily; a note containing “no email” is not a slot.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UTM ================= -->
+<section class="view" id="v-utm" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">UTM engine</div>
+      <h2>One Links card per campaign, every link derived</h2>
+      <p class="lead">Mirrors the launch manager's four inputs from the UTM tracking sheet (LP, video/blog, SP, other) and adds a launch code. Email is the first consumer; the social set from the sheet comes from the same card so the sheet can retire.</p>
+    </div>
+    <div class="aside">Try it: change a field and the table rebuilds.</div>
+  </div>
+  <div class="grid" style="grid-template-columns:340px minmax(0,1fr)">
+    <div class="card stack" style="gap:10px">
+      <div class="field"><label>LP link</label><input id="uLp" value="https://www.mindvalley.com/summit/ai-founders"></div>
+      <div class="field"><label>SP link</label><input id="uSp" value="https://www.mindvalley.com/mastery/ai-founders"></div>
+      <div class="field"><label>Launch code (utm_campaign)</label><input id="uCode" value="aiffs_oct_2026"></div>
+      <div class="field"><label>otag (Braze attribution tag)</label><input id="uOtag" value="aiffs26"></div>
+      <div class="note small">Proposed email convention: <span class="mono">utm_source=email · utm_medium=&lt;list&gt; · utm_campaign=&lt;code&gt; · utm_content=&lt;seq&gt;_e&lt;n&gt; · utm_term=&lt;segment&gt;</span>. The sheet's social values (<span class="mono">mv_fb, vl_ig_story, mv_yt_card…</span>) stay as <span class="mono">utm_source</span> for social. Confirm in question 5.</div>
+    </div>
+    <div class="card tbl"><table id="utmTable"></table></div>
+  </div>
+</section>
+
+<!-- ================= PRD ================= -->
+<section class="view" id="v-prd" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">For the build team</div>
+      <h2>Product requirements</h2>
+      <p class="lead">The same document lives in the repo at <code>docs/email-creator/PRD.md</code> for the team to take into a coding session.</p>
+    </div>
+  </div>
+  <div class="prd card" id="prdOut"><p class="muted">Rendering…</p></div>
+</section>
+
+<!-- ================= QUESTIONS ================= -->
+<section class="view" id="v-questions" hidden>
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Open questions</div>
+      <h2>What I need from you before the team builds</h2>
+      <p class="lead">Each one changes a rule or a data mapping in the PRD. Answers can be one line.</p>
+    </div>
+  </div>
+  <div class="card"><ol class="qs" id="qList"></ol></div>
+</section>
+
+<footer class="wrap">Email Creator 2.0 blueprint · built from the Official Calendar, Comms Calendar and Event Type exports (2026), the Email Studio editor, the Platform UTM Tracking Sheet, Metabase email tables and Analyst OS email metrics · 27 Oct 2026</footer>
+</main>
+
+<script type="text/plain" id="prdSrc"># Email Creator 2.0 — Product Requirements
+
+**Product:** Content Studio › Create › Email Creator
+**Owner:** Ramya Rednam
+**Status:** Draft for build (v0.1, 27 Oct 2026)
+**Companion:** interactive blueprint `email-creator-blueprint.html` (same folder)
+
+---
+
+## 1. Why
+
+Today the Email Creator needs a person to open **New sequence**, pick a campaign, paste a promise, write "what do you want", and press **Start with Research**. Every sequence is hand-started, and the plan it proposes does not know what the Comms Calendar has already parked for that campaign.
+
+Everything the system needs to start on its own already exists in two Airtable tables:
+
+| Table | What it holds | What Email Creator needs from it |
+|---|---|---|
+| **Official Calendar** (`app9SSYzpUiFmc9QH / tblgbY2OofnOiJ7vs`) | One row per campaign: name, event type, start/end date, Key Message Doc, Launch Plan, $ Rev target, promotions start date, responsible | The trigger (Key Message Doc and/or Launch Plan filled), the brief links, the event type, the dates, the target |
+| **Comms Calendar** (`app9YRZOVeE65fJPA / tblUUVMKdSrLVhTx8`) | One row per day: linked Official Cal campaign, Phase (Promotions / LIVE / Sales / Retention / Brand), No. of Emails, "📧 Emails" slot names with list codes, Initiative (No Email Day, Vishen's Newsletter) | Which days carry an email, which phase each day is, what else is going out that day |
+| **Event Type** (lookup table behind Official Calendar) | Per event type: production type, campaign size, promotions duration, average revenue, rules ("4 Week Runway before Virtual Summits") | The sequence recipe and the default runway |
+
+Email Creator 2.0 reads those tables, builds the sequences by itself, drafts every email into the Email Studio editor for review, schedules the approved emails, and reports against a baseline campaign. Humans review and approve. They no longer start, plan, or paste.
+
+## 2. Goals
+
+1. **Zero-touch start.** A campaign whose Official Calendar row has a Key Message Doc or Launch Plan filled appears in Email Creator within 15 minutes, with a proposed plan. No form.
+2. **Plans that respect the Comms Calendar.** Every proposed email lands on a day the Comms Calendar has parked for that campaign, in the right phase, within each list's weekly cap.
+3. **Every email is a Mindvalley email.** Drafts follow the Mindvalley email frameworks (one belief, slippery slide, one CTA, Bari's locked rules) and quote the Key Message Doc.
+4. **Review in Email Studio.** Every draft opens in the HTML email editor the team already loves, with versions, AI quick edits, and a "talk to this email" thread.
+5. **Baseline and target on day one.** Each campaign is planned against the best comparable past campaign (up to 5 years back) and a target of at least 30% above it, or the calendar's $ Rev target when one is set.
+6. **UTM done once.** One link in, every email (and later every channel) gets a correct tracked link out. No hand-built UTMs.
+7. **Four phases, four views.** Planning → Review & approval → Scheduled → Performance & tracking, as separate views inside Email Creator.
+
+## 3. Non-goals (this release)
+
+- Replacing Braze as the sending system. Email Creator schedules *into* Braze; it does not send.
+- Writing social, push, SMS, or banner assets. The UTM engine is built so they can plug in later; the drafting is email only.
+- Editing the Airtable calendars. Email Creator reads them. Changes to dates and slots stay in Airtable.
+- Automatic approval. Nothing is scheduled without a named human approving the plan and each email.
+- Multilingual drafting (ES/DE/etc.). English first; language is a field so it can follow.
+
+## 4. Users
+
+| Role | What they do in Email Creator |
+|---|---|
+| **Campaign owner** (e.g. Jaideep, Daniel, Gareth, Ramya) | Fills the Official Calendar. Reviews the proposed plan. Approves. Watches performance. |
+| **Email writer / reviewer** | Opens drafts in Email Studio, edits, talks to the email, marks approved. |
+| **Email ops** | Checks the Scheduled view, pushes to Braze, fixes pre-flight failures. |
+| **Admin (Ramya)** | Edits recipes, cadence caps, list codes, UTM convention, baseline rules. |
+
+## 5. The process, end to end
+
+```
+Official Calendar row gets Key Message Doc and/or Launch Plan
+        │
+        ▼
+ ① WATCH   Calendar Watcher sees the change (poll every 5 min or Airtable webhook)
+        │   → creates a Campaign in Email Creator, state = Detected
+        ▼
+ ② BRIEF   Brief Builder fetches every link in Key Message Doc + Launch Plan
+        │   (Google Doc, GitHub Pages brief, Blinklife agenda, PDF) → one structured brief
+        │   Event Type row → recipe, promotions duration, average revenue, rules
+        ▼
+ ③ RESEARCH  existing Content Studio research step runs on the brief (kept as is)
+        ▼
+ ④ BASELINE  Baseline Finder picks the best comparable past campaign from Metabase
+        │   (same event type → same pathway/product → same list mix; 5y → 3y → 2y lookback)
+        │   target = max(calendar $ Rev target, baseline revenue × 1.30)
+        ▼
+ ⑤ PLAN    Sequence Planner reads Comms Calendar slots for this campaign
+        │   → places each sequence's emails on parked days, per list, within cadence caps
+        │   → proposes segmentation from the Launch Plan
+        │   → flags conflicts (No Email Day, overlapping campaigns, newsletter day)
+        │   state = Plan proposed  ──► human approves plan ──► state = Drafting
+        ▼
+ ⑥ DRAFT   Drafting Engine writes every email (subject, preview, body HTML) with the
+        │   Mindvalley email skill, quotes the brief, inserts UTM'd links
+        │   → each draft is created in Email Studio as status "In review"
+        ▼
+ ⑦ REVIEW  Reviewer edits / talks to the email / approves in Email Studio
+        │   state per email: In review → Approved
+        ▼
+ ⑧ SCHEDULE  Scheduler runs pre-flight (naming convention, UTM, list, send time, cadence)
+        │   → creates Braze campaigns, status "Scheduled" → after send, "Sent"
+        ▼
+ ⑨ TRACK   Tracker pulls opens/clicks/conversions/revenue per email (Analyst OS + Metabase)
+            → compares to baseline and target → feeds "Make more of this" learnings
+```
+
+## 6. Functional requirements
+
+### 6.1 Sources & trigger (Calendar Watcher)
+
+- **FR-1.1** Poll the Official Calendar every 5 minutes (or subscribe to an Airtable webhook). A row becomes a Campaign when `Status` is `Confirmed` or `Completed` is false and at least one of `Key Message Doc`, `Launch Plan` is non-empty.
+- **FR-1.2** Read these fields: `Name of project`, `Unique Name`, `Status`, `Event type`, `Type`, `💿 Production Type`, `Start date`, `End Date`, `Promotions Start Date`, `Promotions Duration`, `$ Rev target`, `Key Message Doc`, `Launch Plan`, `Responsible`, `Notes`, `Ticket` (Free/Paid), `Medium`.
+- **FR-1.3** Resolve the Event Type row for `Event type` and read `Campaign Type`, `Promotions Duration`, `Average revenue`, `Rules`, `Example URL`, `DNA URL`.
+- **FR-1.4** Read every Comms Calendar row whose `📅 Official Cal` equals the campaign's `Name of project`. Keep `Date`, `Day`, `Phase`, `No. of Emails`, `📧 Emails`, `Internal Note`, `Initiative`, `🖌️ Feature Banner`, `🔔 Marketing Notifications`.
+- **FR-1.5** Also read Comms Calendar rows on the same dates that are *not* this campaign (other campaigns, `✋ No Email Day`, `🎯 Vishen's Newsletter`) so the planner can see the load on each list.
+- **FR-1.6** Re-sync on every poll. If dates, slots, or links change after a plan is approved, mark the plan `Needs re-plan` and show a diff. Never silently move an approved email.
+- **FR-1.7** If `Key Message Doc` and `Launch Plan` are both empty, show the campaign in the Sources view as **Waiting for brief**, with the owner's name, so the gap is visible.
+
+### 6.2 Brief Builder
+
+- **FR-2.1** Extract every URL from `Key Message Doc` and `Launch Plan` (they are free-text cells that may hold several links, or prose such as "Challenge PDF"). Fetch Google Docs via the Drive API, GitHub Pages / Blinklife / other HTML via a fetcher, PDFs via text extraction.
+- **FR-2.2** Produce one structured brief: promise, problem, mechanism, offer and price, dates, speakers, proof points, segmentation notes, claims that need compliance review. Store the source URL and a fetched-at timestamp per field.
+- **FR-2.3** If a link cannot be fetched (permissions), show it as **Needs access** with a one-click "request access" note to the responsible owner. Planning may proceed with the rest.
+- **FR-2.4** The existing **Research** step in Content Studio runs on this brief, unchanged. Its research pack attaches to the campaign.
+
+### 6.3 Baseline Finder
+
+- **FR-3.1** Candidate pool: past campaigns in Metabase (`l3_leads.dim_email_campaign` joined to `fact_email_engagement`, `bridge_email_revenue`, and `fact_braze_campaign_daily`), grouped by `campaign_product` and `campaign_sequence`, plus the Official Calendar's historical rows (`Actuals`, `$ Rev target`).
+- **FR-3.2** Matching order: same `Event type` → same production type / pathway (e.g. AI, Manifesting, Coach) → same `Ticket` (free/paid) → same list mix. Score each candidate; show the top 3 with the score.
+- **FR-3.3** Lookback: try 5 years. If fewer than 2 qualifying campaigns, widen to anything in 3 years; if still fewer than 2, 2 years. Always state which window was used.
+- **FR-3.4** "Best" means highest revenue vs. its own target (ratio), tie-break on revenue per email sent.
+- **FR-3.5** Target rule: `target = max(Official Calendar $ Rev target, baseline revenue × 1.30)`. When the two disagree, show both and let the owner pick; record the choice.
+- **FR-3.6** Pull from the baseline campaign: email-by-email subject lines, send days relative to event, list mix, open/click/conversion rates, revenue per email. These become reference rows in the Planning view and few-shot examples for drafting.
+
+### 6.4 Sequence Planner
+
+- **FR-4.1** Choose the recipe for the event type (see §7.1). Recipes are config, editable by an admin, not code.
+- **FR-4.2** Place emails only on dates the Comms Calendar has parked for this campaign, matching phase: Promotions → invite; LIVE → live/show-up; Sales → sales. If the recipe needs more emails than there are slots, show the shortfall and the days it would propose adding.
+- **FR-4.3** Per-list weekly caps (config, defaults in §7.2). Count every email on every list across *all* campaigns that week, not just this one. When a cap would be exceeded, drop the lowest-priority email for that list and say which.
+- **FR-4.4** Honor `✋ No Email Day` and `🎯 Vishen's Newsletter` days. If a LIVE or Sales day is also a No Email Day (it happens: 31 Oct and 1 Nov 2026 are both LIVE for AI for Founders and No Email Day), flag it as a conflict for the owner instead of guessing.
+- **FR-4.5** Registrant-triggered sequences (confirmation, show-up, retargeting, sales retargeting) are not calendar slots; they are triggered flows with relative timing (e.g. T+0, T-1 day, T-1 hour). Plan them alongside, with their trigger and exit rules.
+- **FR-4.6** Segmentation proposal: parse the Launch Plan for audience rules (spend thresholds, member vs non-member, past buyers, pathway interest). Propose segments and any test split (e.g. 50/50 VIP-free vs generic for $1,000+ spenders, customers and members held separately). Each segment gets its own variant of the affected emails.
+- **FR-4.7** Every email in the plan has: sequence, number, working title, phase, date, send time (default per sequence, config), lists, segment, sender (Vishen vs team), goal (register / show up / buy), reference email from baseline, link target (LP / SP / other).
+- **FR-4.8** The plan view is a calendar grid plus a sequence list. The owner can move an email to another parked day, remove it, change lists, change sender. Approving the plan starts drafting.
+
+### 6.5 Drafting Engine
+
+- **FR-5.1** For each planned email, generate subject line (3 options, one chosen), preview text, HTML body in the Email Studio template, plain-text version, and a one-line "why this email" note.
+- **FR-5.2** Drafting context = brief + research pack + baseline reference email + the Mindvalley email skill (one belief, Julie's four stages, slippery slide, Halbert subject formulas, Bari's locked rules, 250–350 words pre-event, one CTA).
+- **FR-5.3** Every link in the body is produced by the UTM engine (§6.8). No raw LP/SP URL is ever inserted.
+- **FR-5.4** Each draft is written into Email Studio's store as a new email: launch = campaign, send date/time, list or segment, status `In review`, version 1 named "Email Creator draft".
+- **FR-5.5** Pre-send checklist runs automatically on every draft and shows pass/fail per item in Email Studio (forbidden phrases, more than one CTA, word count, missing P.S., untracked link, claim without source).
+
+### 6.6 Review & approval (Email Studio)
+
+- **FR-6.1** Email Studio is the review surface. Keep everything it has: list, launch filter, send date in PT/ET/UK/MYT, status, versions with word diff, AI quick edits, export HTML, "someone else updated" notice.
+- **FR-6.2** Add a **Talk to this email** panel: a thread per email where the reviewer types ("make the opening a scene at 11pm", "shorter", "swap the proof for the student story") and the engine proposes a new version. Each accepted suggestion is a saved version.
+- **FR-6.3** Add **Approve** per email (status `Approved`, records who and when) and **Approve all in sequence**.
+- **FR-6.4** Add the sequence context in the sidebar: where this email sits (Invite 4 of 9), the previous and next email's subject, so a reviewer sees the slide, not one slide.
+- **FR-6.5** A reviewer can **request a rewrite** with a note; the email returns to `Draft` and the engine redrafts with the note.
+
+### 6.7 Scheduled
+
+- **FR-7.1** Table of every approved email: Braze campaign name (convention `YYYY-MM-DD <Campaign> - <Sequence> E<n> [<List>]`, which keeps `is_marketing_convention = true` in `dim_email_campaign`), send time in PT/ET/UK/MYT, list, segment, UTM'd primary link, status.
+- **FR-7.2** Pre-flight checks before push: naming convention, send time not on a No Email Day, list cap not exceeded, all links tracked with the campaign's UTM set and otag, subject under 60 characters, unsubscribe footer present, segment exists in Braze.
+- **FR-7.3** Push to Braze via API as scheduled campaigns; store the Braze campaign id on the email. Status `Scheduled`. After the send time, confirm via Braze and set `Sent`.
+- **FR-7.4** Un-schedule / re-schedule from this view; both require a reason and write an audit line.
+
+### 6.8 UTM engine
+
+- **FR-8.1** One **Links** card per campaign: LP link, SP link, video/blog link, other link (the same four inputs the existing UTM sheet asks the launch manager for), plus a launch code (default: `<campaign-short>_<mon>_<yyyy>`, e.g. `aiffs_oct_2026`).
+- **FR-8.2** Email convention (proposed, confirm with Ramya): `utm_source=email`, `utm_medium=<list code>` (daily, members, coach, events, weekly, highlights, vishen, sublist), `utm_campaign=<launch code>`, `utm_content=<sequence>_e<n>` (e.g. `invite_e04`), `utm_term=<segment or test arm>` when present. Add the `otags` parameter that `bridge_email_revenue` matches on.
+- **FR-8.3** Every email's links are generated from the card at draft time and regenerated if the card changes (drafts in `In review` or earlier only; `Approved` and later show a warning and need re-approval).
+- **FR-8.4** The same card generates the social set from the existing sheet's `utm_source` table (mv_fb, vl_ig_story, mv_yt_description, …) so the sheet can be retired later. Export as CSV in the sheet's layout.
+- **FR-8.5** A link checker fetches each final URL once and confirms it resolves (200) with the parameters intact.
+
+### 6.9 Performance & tracking
+
+- **FR-9.1** Per campaign: registrations (or purchases) vs target pace, revenue vs target, and per email: sends, delivered, opens, clicks, conversions, unsubscribes, revenue, revenue per email. Sources: Analyst OS `open_rate_email`, `click_rate_email`, `conversion_rate_email`, `unsubscribe_rate_email` (table `fact_braze_campaign_daily`, refreshed daily 12:00 MYT) and Metabase `bridge_email_revenue` / "Campaign Efficiency Scorecard" (question 36338, already used by Content Studio).
+- **FR-9.2** Side-by-side with the baseline campaign's email-by-email rows (same shape as Metabase "Baseline Campaign Performance" / "Current Campaign Performance").
+- **FR-9.3** After each send's first 3 days, feed the existing **Make more of this** learnings card (already in Email Creator) with this campaign's winners.
+- **FR-9.4** Write back to the Official Calendar `Actuals` only if the owner clicks "Write actuals" (explicit, not automatic).
+
+## 7. Rules (config, admin-editable)
+
+### 7.1 Sequence recipes by event type
+
+| Event type (Official Calendar) | Recipe | Sender default |
+|---|---|---|
+| 🌐 Mastery Online Summit – Free / Paid / Hybrid | **Invite** on every Promotions slot (announce → story → proof → speakers → agenda → objection → 48h → last call) · **Confirmation** (T+0 after register) · **Retargeting** (clicked, not registered; T+2d) · **Show-up** (T-3d, T-1d, T-1h) · **Live** on each LIVE slot (day 1 live, day 1 recap + day 2 live, …) · **Sales** on each Sales slot until the Mastery class start · **Sales retargeting** (visited SP, no purchase; T+1d) | Invites: Vishen. Show-up/live: team. Sales: Vishen + team |
+| 💻 Quest Release Webinar | Announce · reminder · we're live · last call / replay (3–4) | Author / team |
+| 🚀 Quest Soft Release | 2 emails (announce, last day) | Team |
+| 📺 Extraordinary Minds (Podcast) / 📧 Value Email | 1 email | Vishen |
+| 💻 Academy / Accelerator / Cert Presentation / Guild / Lifebook / WildFit webinar | Announce · reminder · we're live · last call · replay (per Promotions Duration) | Host |
+| 💻 Cert Online 1 Day Seminar | Invite (15-day runway) · show-up · live · sales to cert class start | Host |
+| 🎓 Mindvalley U / 🎉 Festival / 🎫 Event Campaign | Ticket sales to Events list every other day for the promotion window | Team |
+| 🛍️ Membership Major Sale (Black Friday) | Daily sales emails on each slot; last-48h, last-24h, final-hours | Team |
+| 🏆 Mastery / 👟 Certification / ♾️ Guild class start | Terminal date for the preceding Sales sequence; onboarding emails after purchase | Team |
+
+### 7.2 List cadence caps (per list, per ISO week, across all campaigns)
+
+| List | Cap |
+|---|---|
+| Daily (Mindvalley daily) | 5 / week |
+| Members | 3 / week |
+| Coach | 3 / week |
+| Events | 2–3 / week |
+| Weekly | 1 / week |
+| Highlights, Vishen's list, Sublist | to confirm |
+
+### 7.3 Baseline & target
+
+- Lookback 5 years → 3 years → 2 years (first window with ≥ 2 comparable campaigns).
+- Best = highest revenue ÷ its own target; tie-break revenue per email.
+- Target = max(calendar $ Rev target, baseline × 1.30).
+
+### 7.4 Drafting guardrails (from the Mindvalley email skill)
+
+One belief per sequence. One CTA per email. 250–350 words pre-event. Never "productivity", never fear of job loss, never jargon, never "pitch", never "We're excited to announce". "No replays. No recordings." from the 48-hour email onward for live events. "Invitation", not pitch. Subject line passes the text-a-friend test.
+
+### 7.5 Comms Calendar constraints
+
+`✋ No Email Day` blocks all lists. `🎯 Vishen's Newsletter` day counts 1 against Daily. A day with `Internal Note` containing "no email" is not a slot.
+
+## 8. Data model
+
+```
+Campaign        id, airtable_record_id, name, unique_name, event_type, type, production_type,
+                ticket, start_date, end_date, promo_start, promo_duration, rev_target, responsible,
+                key_message_links[], launch_plan_links[], brief(json), research_pack_id,
+                baseline_campaign_id, target_chosen, state
+Slot            campaign_id, date, phase, no_of_emails, raw_emails_text, initiative, notes
+Sequence        campaign_id, kind (invite|confirmation|retargeting|showup|live|sales|sales_retargeting),
+                trigger (calendar|event), exit_rule
+Email           sequence_id, n, title, date, send_time_pt, lists[], segment_id, sender, goal,
+                reference_email_id, link_target, status (planned|draft|in_review|approved|
+                scheduled|sent|measured), braze_campaign_id, braze_name, email_studio_id
+Version         email_id, n, subject, preview, html, text, author (engine|user), note, created_at
+Segment         campaign_id, name, rule(json), test_arm, braze_segment_id
+LinkCard        campaign_id, lp, sp, video, other, launch_code, otag
+TrackedLink     email_id, target, final_url, utm(json), checked_at, http_status
+Baseline        campaign_id, candidate_campaign_ids[], scores[], window_used, revenue, target_ratio
+Metric          email_id, date, sends, delivered, opens, clicks, conversions, unsubs, revenue
+Approval        entity (plan|email), entity_id, user, at, note
+```
+
+## 9. Integrations
+
+| System | Direction | How |
+|---|---|---|
+| Airtable Official Calendar, Comms Calendar, Event Type | read | REST API with a service token; poll 5 min or webhook |
+| Google Drive / Docs | read | Drive API (brief docs) |
+| GitHub Pages / Blinklife / other URLs | read | HTTP fetch + readability extraction |
+| Metabase | read | SQL over `l3_leads.dim_email_campaign`, `fact_email_engagement`, `bridge_email_revenue`; saved questions 6197/36338 |
+| Analyst OS | read | `query_metrics` for the email scope |
+| Email Studio | read/write | shared store: emails, versions, statuses (same records Email Studio lists) |
+| Braze | write/read | create scheduled campaigns, read send confirmation and ids |
+| Content Studio Research | internal | existing step, unchanged |
+
+## 10. States
+
+Campaign: `Detected → Brief ready → Researched → Plan proposed → Plan approved → Drafting → In review → Approved → Scheduled → Live → Measured`. Side states: `Waiting for brief`, `Needs access`, `Needs re-plan`.
+
+Email: `Planned → Draft → In review → Approved → Scheduled → Sent → Measured`, with `Rewrite requested` looping back to `Draft`.
+
+## 11. Views inside Email Creator
+
+1. **Sources** — campaigns detected from the calendars, what was read, what is missing.
+2. **Planning** — brief, baseline, target, segmentation proposal, calendar grid of emails, sequence list, conflicts, approve plan.
+3. **Review & approval** — Email Studio with sequence context, talk-to-email, approve.
+4. **Scheduled** — pre-flight, Braze names, send times, push.
+5. **Performance & tracking** — pace vs target, baseline vs current, learnings.
+6. **Rules** (admin) — recipes, caps, list codes, UTM convention, baseline rules.
+
+The current **Sequences** table and the **Make more of this** card stay on the Email Creator home.
+
+## 12. Acceptance criteria
+
+- AC-1: Fill the Key Message Doc on the AI for Founders Summit row in a test base → within 15 min a campaign appears in Sources with 15 slots read from the Comms Calendar (3 Oct Brand, 16–29 Oct Promotions, 30 Oct–1 Nov LIVE, 2 Nov Sales) and two conflicts flagged (31 Oct and 1 Nov are No Email Day).
+- AC-2: The proposed plan has no list over its weekly cap when combined with Vishen's Newsletter (21 Oct, 28 Oct) and WildFit (6 Oct) on the Daily list.
+- AC-3: Baseline for AI for Founders Summit resolves to an AI summit (AI Summit Mar 2026 / Jul 2025 / Jul 2024 / Jul 2023 candidates), states the 5-year window, and shows target = max($2.5M, baseline × 1.3) with both numbers visible.
+- AC-4: Every drafted email exists in Email Studio with status In review, its links carry `utm_source=email`, `utm_campaign=aiffs_oct_2026`, `utm_content=<seq>_e<n>` and an otag, and the pre-send checklist shows per-item results.
+- AC-5: Approving an email in Email Studio and pushing from Scheduled creates a Braze campaign whose name starts with `YYYY-MM-DD` and returns an id stored on the email.
+- AC-6: Performance view shows per-email metrics from Analyst OS within one day of send and a side-by-side with the baseline's email rows.
+- AC-7: Changing a slot date in the Comms Calendar after plan approval sets `Needs re-plan` and shows the diff; no scheduled email moves on its own.
+
+## 13. Milestones
+
+| # | Scope | Done when |
+|---|---|---|
+| M1 Sources | Watcher + Brief Builder + Sources view | AC-1 |
+| M2 Planning | Baseline Finder + Planner + Planning view + recipes/caps config | AC-2, AC-3, AC-7 |
+| M3 Drafting + Review | Drafting Engine + Email Studio integration (talk-to-email, approve) + UTM engine | AC-4 |
+| M4 Scheduled | Pre-flight + Braze push | AC-5 |
+| M5 Tracking | Metrics + baseline comparison + learnings feed | AC-6 |
+| M6 Segmentation tests | Launch-plan parsing, test arms, Braze segments | VIP 50/50 test runs end to end |
+
+## 14. Risks
+
+- **Brief links behind permissions** (Google Docs not shared with the service account). Mitigation: Needs access state, owner nudge.
+- **Comms Calendar free text** ("📧 Emails" cells mix names and list codes in inconsistent JSON-ish strings). Mitigation: parse best-effort, always show the raw cell, never depend on it for placement; placement uses Date + Phase + No. of Emails.
+- **Two campaigns share a name** across years (the UI already warns "Six pairs of campaigns share a name; pick by date"). Key on Airtable record id, never on name.
+- **Baseline mismatch** (AI for Founders is not AI Summit). Mitigation: show top 3 candidates with scores; owner can override.
+- **Braze naming drift** breaking `is_marketing_convention`. Mitigation: pre-flight check is blocking.
+
+## 15. Open questions for Ramya
+
+1. In the Comms Calendar "📧 Emails" cell, what do the numbers in `"1,2: Daily", 3: Members, 5: Coach` mean: list ids, send batches, or time slots?
+2. Default send times per sequence and per list (the Black Friday row shows 11:00 NY; a live email shows 7:45 AM PST). Is there one default per list?
+3. Which Braze lists/segments map to the list codes Daily, Members, Coach, Events, Weekly, Highlights, Vishen's List, Sublist, Members Pro?
+4. Caps for Highlights, Vishen's list, Sublist, Members Pro?
+5. UTM: confirm `utm_source=email` and `utm_medium=<list>`, or do you want `utm_source=<list>` to mirror the social sheet (`mv_fb`, `vl_ig_story`)? What is the otag format Braze links carry today?
+6. When the calendar's `$ Rev target` is lower than baseline × 1.3 (AI for Founders: $2.5M vs AI Summit Mar 2026's $4.26M × 1.3 = $5.5M), which one is the system's target?
+7. Should the system also propose slots when the Comms Calendar has fewer than the recipe needs, or only ever use parked days?
+8. Who approves a plan: the `Responsible` person on the Official Calendar row, or you for every campaign?
+9. For registrant-triggered flows (confirmation, show-up, retargeting), does Braze already own the triggers, so Email Creator only supplies the copy and timing?
+10. Sales retargeting needs a "visited sales page, did not buy" audience. Is that event available in Braze today?
+11. Languages: English only for v1?
+12. Is the Email Studio artifact's store (its `db` capability) the system of record for drafts, or should Email Creator own drafts and Email Studio read them?
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+<script>
+(function(){
+  // ---------- data: Comms Calendar rows for AI for Founders (from the export) ----------
+  var slots=[
+    {d:'2026-10-03',ph:'Brand',note:'AI Founders Survey'},
+    {d:'2026-10-16',ph:'Promotions'},
+    {d:'2026-10-17',ph:'',noEmail:true},{d:'2026-10-18',ph:'',noEmail:true},
+    {d:'2026-10-19',ph:'Promotions'},{d:'2026-10-20',ph:'Promotions'},
+    {d:'2026-10-21',ph:'Retention',news:true},
+    {d:'2026-10-22',ph:'Promotions',flag:'note: no email'},
+    {d:'2026-10-23',ph:'Promotions'},{d:'2026-10-24',ph:'Promotions'},{d:'2026-10-25',ph:'Promotions'},
+    {d:'2026-10-26',ph:'Promotions',flag:'Last call banner'},{d:'2026-10-27',ph:'Promotions'},
+    {d:'2026-10-28',ph:'Retention',news:true},
+    {d:'2026-10-29',ph:'Promotions'},
+    {d:'2026-10-30',ph:'LIVE'},{d:'2026-10-31',ph:'LIVE',noEmail:true,flag:'LIVE + No Email Day'},{d:'2026-11-01',ph:'LIVE',noEmail:true,flag:'LIVE + No Email Day'},
+    {d:'2026-11-02',ph:'Sales'}
+  ];
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function parse(s){var p=s.split('-');return new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));}
+  function fmt(s){var d=parse(s);return DOW[d.getUTCDay()]+' '+d.getUTCDate()+' '+MON[d.getUTCMonth()];}
+
+  // Sources strip
+  var strip=document.getElementById('strip');
+  slots.forEach(function(s){
+    var d=parse(s.d),el=document.createElement('div');
+    el.className='day'+(s.noEmail?' noemail':'');el.setAttribute('data-ph',s.ph||'');
+    el.innerHTML='<div class="dn">'+DOW[d.getUTCDay()]+'</div><div class="dd">'+d.getUTCDate()+'</div><span class="ph"></span>'+(s.flag?'<div class="fl">'+s.flag+'</div>':(s.news?'<div class="fl" style="color:var(--green)">newsletter</div>':''));
+    el.title=s.d+(s.ph?' · '+s.ph:'')+(s.note?' · '+s.note:'');
+    strip.appendChild(el);
+  });
+
+  // ---------- the plan ----------
+  var LISTS_ALL='Daily · Members · Coach · Weekly';
+  var plan=[
+    {seq:'invite',n:'E1',d:'2026-10-16',t:'I almost didn’t build this summit',lists:'Daily · Members · Coach',stage:'Seen',goal:'Register',ref:'AI Summit Mar 26 · E1',sender:'Vishen'},
+    {seq:'invite',n:'E2',d:'2026-10-19',t:'Still answering email at 11pm?',lists:'Daily · Members',stage:'Seen',goal:'Register',ref:'AI Summit Mar 26 · E2',sender:'Vishen'},
+    {seq:'invite',n:'E3',d:'2026-10-20',t:'Try this. It takes 90 seconds.',lists:'Daily · Coach',stage:'Hope',goal:'Register',ref:'AI Summit Mar 26 · E3',sender:'Vishen'},
+    {seq:'invite',n:'—',d:'2026-10-22',t:'Dropped: note says no email',lists:'',dropped:true},
+    {seq:'invite',n:'E4',d:'2026-10-23',t:'Stop trying to learn AI.',lists:LISTS_ALL,stage:'Hope',goal:'Register',ref:'AI Summit Mar 26 · E4',sender:'Vishen'},
+    {seq:'invite',n:'E5',d:'2026-10-24',t:'She built it on a flight. Not a developer.',lists:'Daily · Members',stage:'Hope',goal:'Register',ref:'AI Summit Mar 26 · E5',sender:'Vishen'},
+    {seq:'invite',n:'—',d:'2026-10-25',t:'Dropped: Daily cap (5/wk)',lists:'',dropped:true},
+    {seq:'invite',n:'E6',d:'2026-10-26',t:'Last call: Friday. No replays.',lists:'Daily · Members · Coach · Events',stage:'Committed',goal:'Register',ref:'AI Summit Mar 26 · E9',sender:'Vishen'},
+    {seq:'invite',n:'E7',d:'2026-10-27',t:'“But I’m not a tech person”',lists:'Daily · Members · Coach',stage:'Trust',goal:'Register',ref:'AI Summit Mar 26 · E8',sender:'Vishen'},
+    {seq:'invite',n:'E8',d:'2026-10-29',t:'Tomorrow morning, everything changes.',lists:'Daily · Members · Coach',stage:'Committed',goal:'Register',ref:'AI Summit Mar 26 · E11',sender:'Vishen'},
+    {seq:'showup',n:'S1',d:'2026-10-27',t:'Three days. Here’s your agenda.',lists:'Registrants',goal:'Show up',ref:'Manifesting Summit May 26 · E11 Agenda',sender:'Team'},
+    {seq:'showup',n:'S2',d:'2026-10-29',t:'Clear tomorrow morning. Here’s why.',lists:'Registrants',goal:'Show up',ref:'AI Summit Mar 26 · E10',sender:'Team'},
+    {seq:'live',n:'L1',d:'2026-10-30',t:'We’re live. Your seat is waiting.',lists:'All lists + Registrants · 6:45 PT',goal:'Show up',ref:'AI Summit Mar 26 · E12',sender:'Vishen'},
+    {seq:'live',n:'L2',d:'2026-10-31',t:'Day 1 recap · Day 2 is live',lists:'Registrants only (No Email Day)',goal:'Show up',ref:'Manifesting Summit May 26 · E19',sender:'Team',conflict:true},
+    {seq:'live',n:'L3',d:'2026-11-01',t:'Day 2 recap · Final day is live',lists:'Registrants only (No Email Day)',goal:'Show up',ref:'Manifesting Summit May 26 · E20',sender:'Team',conflict:true},
+    {seq:'sales',n:'P1',d:'2026-11-02',t:'The door to Mastery is open',lists:'Daily · Members · Coach · Sublist',goal:'Buy',ref:'Speaking Summit Jun 26 · E11 Product announcement',sender:'Vishen'},
+    {seq:'sales',n:'P2',d:'2026-11-04',t:'What the summit could not fit',lists:'Daily · Sublist',goal:'Buy',proposed:true,sender:'Vishen'},
+    {seq:'sales',n:'P3',d:'2026-11-06',t:'Student story: 14 months later',lists:'Daily · Members · Sublist',goal:'Buy',proposed:true,sender:'Team'},
+    {seq:'sales',n:'P4',d:'2026-11-09',t:'The objections, answered',lists:'Daily · Sublist',goal:'Buy',proposed:true,sender:'Team'},
+    {seq:'sales',n:'P5',d:'2026-11-11',t:'Bonus closes Friday',lists:'Daily · Members · Sublist',goal:'Buy',proposed:true,sender:'Vishen'},
+    {seq:'sales',n:'P6',d:'2026-11-13',t:'72 hours to class',lists:'Daily · Coach · Sublist',goal:'Buy',proposed:true,sender:'Team'},
+    {seq:'sales',n:'P7',d:'2026-11-16',t:'Last call: class starts tomorrow',lists:'All lists + Sublist',goal:'Buy',proposed:true,sender:'Vishen'}
+  ];
+  var others=[
+    {d:'2026-10-14',t:'Vishen’s Newsletter',k:'news'},{d:'2026-10-21',t:'Vishen’s Newsletter',k:'news'},{d:'2026-10-28',t:'Vishen’s Newsletter',k:'news'},
+    {d:'2026-11-04',t:'Vishen’s Newsletter',k:'news'},{d:'2026-11-11',t:'Vishen’s Newsletter',k:'news'},
+    {d:'2026-10-06',t:'WildFit webinar (Daily)',k:'other'},{d:'2026-10-09',t:'Bold Conversations release',k:'other'},
+    {d:'2026-11-09',t:'Flagship Course accelerator starts',k:'other'},{d:'2026-11-16',t:'Black Friday starts (Daily)',k:'other'},
+    {d:'2026-11-17',t:'AI for Founders Mastery class starts',k:'other'}
+  ];
+  var blocked={'2026-10-17':1,'2026-10-18':1,'2026-10-31':1,'2026-11-01':1};
+
+  // Calendar grid: Mon 12 Oct → Sun 22 Nov
+  var cal=document.getElementById('cal');
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(h){var e=document.createElement('div');e.className='hd';e.textContent=h;cal.appendChild(e);});
+  var start=parse('2026-10-12');
+  for(var i=0;i<42;i++){
+    var d=new Date(start.getTime()+i*864e5);
+    var key=d.toISOString().slice(0,10);
+    var cell=document.createElement('div');cell.className='cell'+(blocked[key]?' block':'');
+    var inRange=key>='2026-10-16'&&key<='2026-11-17';
+    cell.innerHTML='<div class="dnum"><b>'+d.getUTCDate()+'</b><span>'+(d.getUTCDate()===1||i===0?MON[d.getUTCMonth()]:'')+'</span></div>';
+    if(blocked[key]){var b=document.createElement('div');b.className='ev other';b.textContent='✋ No Email Day';cell.appendChild(b);}
+    others.filter(function(o){return o.d===key}).forEach(function(o){var e=document.createElement('div');e.className='ev '+o.k;e.textContent=o.t;cell.appendChild(e);});
+    plan.filter(function(p){return p.d===key}).forEach(function(p){
+      var e=document.createElement('div');e.className='ev '+p.seq+(p.proposed?' proposed':'')+(p.dropped?' dropped':'');
+      e.textContent=(p.dropped?'':p.n+' · ')+p.t;e.title=p.t;
+      e.addEventListener('click',function(){select(p,e);});
+      cell.appendChild(e);
+    });
+    if(!inRange&&!cell.children[1])cell.classList.add('off');
+    cal.appendChild(cell);
+  }
+  var detail=document.getElementById('evDetail'),selEl=null;
+  function select(p,el){
+    if(selEl)selEl.classList.remove('sel');selEl=el;el.classList.add('sel');
+    var seqName={invite:'Invite',showup:'Show-up',live:'Live',sales:'Sales'}[p.seq];
+    if(p.dropped){detail.innerHTML='<h3>'+fmt(p.d)+' · not used</h3><p class="small muted">'+p.t+'. The slot stays parked in the Comms Calendar; the owner can re-enable it here and the cadence check re-runs.</p>';return;}
+    detail.innerHTML='<h3>'+p.n+' · '+p.t+'</h3><dl class="kv"><dt>Sequence</dt><dd>'+seqName+(p.proposed?' <span class="chip warn plain">proposed day, not parked</span>':'')+(p.conflict?' <span class="chip bad plain">No Email Day conflict</span>':'')+'</dd><dt>Date</dt><dd>'+fmt(p.d)+' 2026</dd><dt>Lists</dt><dd>'+p.lists+'</dd><dt>Sender</dt><dd>'+p.sender+'</dd><dt>Goal</dt><dd>'+p.goal+'</dd>'+(p.stage?'<dt>Stage</dt><dd>'+p.stage+'</dd>':'')+(p.ref?'<dt>Reference</dt><dd>'+p.ref+'</dd>':'<dt>Reference</dt><dd class="muted">none in baseline; drafted from brief</dd>')+'<dt>Link</dt><dd class="mono">'+(p.seq==='sales'?'SP':'LP')+' · utm_content='+p.seq+'_'+p.n.toLowerCase().replace(/[^a-z0-9]/g,'')+'</dd></dl>';
+  }
+  select(plan[4],cal.querySelector('.ev.invite:not(.dropped):nth-of-type(1)')||cal.querySelector('.ev'));
+  // highlight E4 specifically
+  (function(){var evs=cal.querySelectorAll('.ev.invite');for(var i=0;i<evs.length;i++){if(evs[i].textContent.indexOf('E4')===0){select(plan[4],evs[i]);break;}}})();
+
+  // Sequence table
+  var seqRows=[
+    ['Invite','8 emails · Vishen','Promotions slots 16–29 Oct','Daily · Members · Coach · Weekly · Events (per caps)','Register',' 2 slots dropped'],
+    ['Confirmation','1 email · team','Triggered T+0 on LP registration','Registrants','Confirm + calendar file',''],
+    ['Retargeting','up to 3 · Vishen','Triggered T+2d after a clicked invite, exit on register','Clicked, not registered','Register',''],
+    ['Show-up','2 + 3 live mornings · team','T-3d, T-1d, then each live day','Registrants','Show up','2 on No Email Days'],
+    ['Live','3 · Vishen / team','LIVE slots 30 Oct – 1 Nov','Full list day 1, registrants after','Show up','2 on No Email Days'],
+    ['Sales','7 · Vishen / team','Sales slot 2 Nov + 6 proposed days to 16 Nov','Daily · Members · Coach · Sublist','Buy','6 days not parked'],
+    ['Sales retargeting','up to 2 · team','Triggered T+1d after SP visit, exit on purchase','Visited SP, no purchase','Buy','needs Braze event']
+  ];
+  var st=document.getElementById('seqTable');
+  st.innerHTML='<tr><th>Sequence</th><th>Count</th><th>Timing</th><th>Audience</th><th>Goal</th><th>Flags</th></tr>'+seqRows.map(function(r){return '<tr><td><b>'+r[0]+'</b></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+(r[5]?'<span class="chip warn plain">'+r[5].trim()+'</span>':'')+'</td></tr>';}).join('');
+
+  // ---------- Scheduled table with real time-zone math ----------
+  function laInstant(dateStr,h,m){ // find UTC instant for h:m in America/Los_Angeles on dateStr
+    var p=dateStr.split('-').map(Number);
+    var f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'numeric',hour12:false,year:'numeric',month:'numeric',day:'numeric'});
+    for(var off=7;off<=8;off++){
+      var t=Date.UTC(p[0],p[1]-1,p[2],h+off,m);
+      var parts=f.formatToParts(new Date(t)),o={};parts.forEach(function(x){o[x.type]=x.value;});
+      if(+o.hour%24===h&&+o.minute===m&&+o.day===p[2])return t;
+    }
+    return Date.UTC(p[0],p[1]-1,p[2],h+8,m);
+  }
+  function tz(t,zone){return new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(t));}
+  var slug=function(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');};
+  var sched=plan.filter(function(p){return !p.dropped;});
+  var statusFor=function(p,i){if(p.proposed)return '<span class="chip">Planned</span>';if(p.conflict)return '<span class="chip warn">Needs owner</span>';return i<2?'<span class="chip scheduled" style="background:var(--brand-light);color:var(--brand-ink)">Scheduled</span>':(i<9?'<span class="chip ok">Approved</span>':'<span class="chip warn">In review</span>');};
+  var tbl=document.getElementById('schedTable');
+  tbl.innerHTML='<tr><th>Braze campaign name</th><th>PT</th><th>ET</th><th>UK</th><th>MYT</th><th>List / segment</th><th>Primary link</th><th>Status</th></tr>'+sched.map(function(p,i){
+    var hm=p.seq==='live'?[6,45]:[7,0];var t=laInstant(p.d,hm[0],hm[1]);
+    var seqName={invite:'Invite',showup:'Show-up',live:'Live',sales:'Sales'}[p.seq];
+    var name=p.d+' AI for Founders Summit - '+seqName+' '+p.n+' ['+p.lists.split(' ·')[0].replace(/ \(.*$/,'')+']';
+    var link=(p.seq==='sales'?'SP':'LP')+'?…utm_content='+p.seq+'_'+p.n.toLowerCase();
+    return '<tr><td class="mono small">'+name+'</td><td class="num">'+tz(t,'America/Los_Angeles')+'</td><td class="num">'+tz(t,'America/New_York')+'</td><td class="num">'+tz(t,'Europe/London')+'</td><td class="num">'+tz(t,'Asia/Kuala_Lumpur')+'</td><td class="small">'+p.lists+'</td><td class="mono small">'+link+'</td><td>'+statusFor(p,i)+'</td></tr>';
+  }).join('');
+
+  // ---------- UTM builder ----------
+  var listCodes=['daily','members','coach','weekly','events','sublist'];
+  var utmRows=[
+    {seq:'invite',n:'e01',lists:['daily','members','coach'],target:'lp'},
+    {seq:'invite',n:'e04',lists:['daily','members','coach','weekly'],target:'lp',term:'vip_test_a'},
+    {seq:'showup',n:'s01',lists:['registrants'],target:'lp'},
+    {seq:'live',n:'l01',lists:['daily','members','coach','registrants'],target:'lp'},
+    {seq:'sales',n:'p01',lists:['daily','members','coach','sublist'],target:'sp'},
+    {seq:'social',n:'mv_fb',lists:['mv_fb'],target:'lp',social:true},
+    {seq:'social',n:'vl_ig_story',lists:['vl_ig_story'],target:'lp',social:true}
+  ];
+  function buildUtm(){
+    var lp=document.getElementById('uLp').value.trim(),sp=document.getElementById('uSp').value.trim(),code=document.getElementById('uCode').value.trim(),otag=document.getElementById('uOtag').value.trim();
+    var out='<tr><th>Email / asset</th><th>List</th><th>Final link</th><th></th></tr>';
+    utmRows.forEach(function(r){
+      r.lists.forEach(function(l){
+        var base=r.target==='sp'?sp:lp;var sep=base.indexOf('?')>-1?'&':'?';
+        var q=r.social?('utm_source='+l+'&utm_campaign='+code):('utm_source=email&utm_medium='+l+'&utm_campaign='+code+'&utm_content='+r.seq+'_'+r.n+(r.term?'&utm_term='+r.term:''));
+        if(otag)q+='&otag='+otag;
+        var url=base+sep+q;
+        var shown=base+'<b>'+sep+q+'</b>';
+        out+='<tr><td class="small">'+(r.social?'Social · ':'')+r.seq+' '+r.n+'</td><td class="small">'+l+'</td><td class="url">'+shown+'</td><td><button class="copy" data-u="'+url.replace(/"/g,'&quot;')+'">Copy</button></td></tr>';
+      });
+    });
+    document.getElementById('utmTable').innerHTML=out;
+  }
+  ['uLp','uSp','uCode','uOtag'].forEach(function(id){document.getElementById(id).addEventListener('input',buildUtm);});
+  buildUtm();
+  document.getElementById('utmTable').addEventListener('click',function(e){
+    var b=e.target.closest('.copy');if(!b)return;var u=b.getAttribute('data-u');
+    var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1200);};
+    try{navigator.clipboard.writeText(u).then(done,function(){fallback();});}catch(err){fallback();}
+    function fallback(){var r=document.createRange();r.selectNodeContents(b.parentNode.previousSibling);var s=getSelection();s.removeAllRanges();s.addRange(r);}
+  });
+
+  // ---------- PRD render ----------
+  var src=document.getElementById('prdSrc').textContent;
+  var out=document.getElementById('prdOut');
+  try{ if(window.marked){ out.innerHTML=marked.parse(src,{mangle:false,headerIds:false}); } else { throw new Error('no marked'); } }
+  catch(e){ var pre=document.createElement('pre');pre.style.whiteSpace='pre-wrap';pre.textContent=src;out.innerHTML='';out.appendChild(pre); }
+
+  // Questions from PRD §15
+  var qs=[];var m=src.split('## 15. Open questions')[1]||'';m.split('\n').forEach(function(l){var x=l.match(/^\d+\.\s+(.*)$/);if(x)qs.push(x[1]);});
+  document.getElementById('qList').innerHTML=qs.map(function(q){return '<li>'+q.replace(/`([^`]+)`/g,'<code>$1</code>')+'</li>';}).join('');
+  document.getElementById('qn').textContent=qs.length;
+
+  // ---------- tabs ----------
+  var views=['overview','sources','planning','review','scheduled','tracking','rules','utm','prd','questions'];
+  function show(){
+    var h=(location.hash||'#overview').slice(1);if(views.indexOf(h)<0)h='overview';
+    views.forEach(function(v){document.getElementById('v-'+v).hidden=(v!==h);});
+    var links=document.querySelectorAll('#tabs a');for(var i=0;i<links.length;i++){var on=links[i].getAttribute('href')==='#'+h;if(on)links[i].setAttribute('aria-current','page');else links[i].removeAttribute('aria-current');}
+    window.scrollTo({top:0});
+  }
+  window.addEventListener('hashchange',show);show();
+  var chat=document.getElementById('chatInput');chat.addEventListener('keydown',function(e){if(e.key==='Enter'&&chat.value.trim()){var c=chat.closest('.chat');var m1=document.createElement('div');m1.className='msg me';m1.textContent=chat.value;c.insertBefore(m1,chat);var m2=document.createElement('div');m2.className='msg';m2.textContent='In the real product this proposes a new version with your note applied.';c.insertBefore(m2,chat);chat.value='';}});
+})();
+</script>
+
+</body>
+</html>
