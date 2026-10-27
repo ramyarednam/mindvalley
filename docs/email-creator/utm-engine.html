@@ -398,6 +398,19 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 .ttabs button{border:1px solid var(--border-strong);background:transparent;border-radius:999px;padding:7px 14px;font-size:13px}
 .ttabs button[aria-pressed="true"]{background:var(--brand-light);border-color:var(--brand);color:var(--brand-ink)}
 .ghead td{background:var(--surface-2);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle)}
+
+.rail{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.rail button{border:1px solid var(--border-strong);background:transparent;border-radius:999px;padding:7px 13px;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+.rail button[aria-pressed="true"]{background:var(--brand-light);border-color:var(--brand);color:var(--brand-ink)}
+.rail button .n{font-size:11px;color:var(--subtle)}
+.gh{display:flex;align-items:center;gap:10px;padding:10px 8px 6px;border-bottom:1px solid var(--border);margin-top:8px}
+.gh b{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--subtle)}
+.gh .n{font-size:12px;color:var(--subtle)}
+.gh .sp{flex:1}
+.sub{display:flex;align-items:center;gap:8px;padding:8px 8px 2px;font-size:12.5px;color:var(--muted)}
+.sub button{background:none;border:0;color:var(--brand-ink);font-size:12px;padding:0}
+.sum{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+.sum .tl{padding:10px 12px}.sum .tl .v{font-size:20px}
 </style>
 </head>
 <body>
@@ -416,31 +429,36 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   <div class="topbar"><span class="who">Logged in as <b>Admin</b></span><span class="sp"></span><span class="avatar">RR</span><span>Ramya Rednam</span></div>
   <header class="fhead" style="border-color:rgba(50,157,255,.45);background:linear-gradient(180deg,rgba(50,157,255,.08),rgba(50,157,255,.02))">
     <div class="ic" style="background:#1C7CE0"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-    <div><div class="eyebrow" style="color:var(--blue)">Create</div><h1>UTM Engine</h1><p>The Platform UTM Tracking Sheet, as a feature. One card per campaign holds the four links. Every tracked link for every channel is generated from it, approved once, and populated into the assets.</p><div class="beta"><b>NEW</b> Same convention as the sheet. No duplicating, renaming or filling cells in red.</div></div>
+    <div><div class="eyebrow" style="color:var(--blue)">Create</div><h1>UTM Engine</h1><p>One card per campaign. Every tracked link for every channel, every list and every target page is generated from it, approved once, and picked up by the creators and the teams.</p><div class="beta"><b>NEW</b> Replaces the Platform UTM Tracking Sheet. Same convention, every channel in one place.</div></div>
   </header>
 
-  <div class="grid" style="grid-template-columns:300px minmax(0,1fr);margin-top:22px">
+  <div class="grid" style="grid-template-columns:280px minmax(0,1fr);margin-top:22px">
     <aside class="stack">
       <div class="card"><h3>Campaigns <small>from the Official Calendar</small></h3><div id="campList"></div></div>
-      <div class="card"><h3>How a card moves</h3><div class="steps" style="flex-direction:column;overflow:visible"><div class="stepc" style="width:auto"><div class="t" style="color:var(--subtle)">1 · DRAFT</div><div class="n">Launch manager fills the launch code and the four links</div></div><div class="stepc" style="width:auto"><div class="t" style="color:var(--amber)">2 · IN APPROVAL</div><div class="n">Campaign owner checks the generated links</div></div><div class="stepc" style="width:auto"><div class="t" style="color:var(--green)">3 · APPROVED</div><div class="n">Links frozen as a version</div></div><div class="stepc" style="width:auto"><div class="t" style="color:var(--blue)">4 · POPULATED</div><div class="n">Email Creator and the other creators pick up their links</div></div></div></div>
+      <div class="card"><h3>How a card moves</h3><div class="steps" style="flex-direction:column;overflow:visible"><div class="stepc" style="width:auto"><div class="t" style="color:var(--subtle)">1 · DRAFT</div><div class="n">Launch manager fills the launch code and the four links</div></div><div class="stepc" style="width:auto"><div class="t" style="color:var(--amber)">2 · IN APPROVAL</div><div class="n">Campaign owner checks the generated links</div></div><div class="stepc" style="width:auto"><div class="t" style="color:var(--green)">3 · APPROVED</div><div class="n">Links frozen as a version</div></div><div class="stepc" style="width:auto"><div class="t" style="color:var(--blue)">4 · POPULATED</div><div class="n">Email Creator, Reel Creator, Image Creator, social, platform and WhatsApp teams pick up their links</div></div></div></div>
     </aside>
     <div class="stack">
       <div class="card">
         <div class="row" style="justify-content:space-between;margin-bottom:12px"><div><div class="small" style="color:var(--blue);letter-spacing:.1em;text-transform:uppercase;font-weight:700">Links card · v1</div><h2 style="font-size:20px">AI for Founders Summit · Oct 2026</h2></div><div class="row"><span class="chip warn" id="cardStatus">In approval</span><button class="btn ghost sm" id="submitBtn">Submit for approval</button><button class="btn primary sm" id="approveBtn">Approve &amp; populate</button></div></div>
         <div class="grid g3">
           <label class="small muted">Launch code (utm_campaign)<input class="field" id="uCode" value="launch_aiffs_oct_2026"></label>
-          <label class="small muted">Email list for email links<select class="field" id="uList"><option value="daily">Daily</option><option value="highlights">Highlights</option><option value="weekly">Weekly</option><option value="mvm">Members (MVM)</option><option value="coach">Coach</option><option value="events">Events</option><option value="vlnl">Vishen's newsletter (VLNL)</option><option value="mas">Mastery</option><option value="sublist">Sublist (dated)</option></select></label>
-          <label class="small muted">utm_content<input class="field" id="uContent" value="content_wwww"></label>
+          <label class="small muted">utm_content (email and platform rows)<input class="field" id="uContent" value="content_wwww"></label>
+          <label class="small muted">Campaign date for sublists<input class="field" id="uDate" value="26oct"></label>
           <label class="small muted">LP link<input class="field" id="uLp" value="https://www.mindvalley.com/summit/ai-founders"></label>
           <label class="small muted">YouTube video / blog link<input class="field" id="uVid" value="https://www.youtube.com/watch?v=aiffs2026"></label>
           <label class="small muted">SP link<input class="field" id="uSp" value="https://www.mindvalley.com/mastery/ai-founders"></label>
           <label class="small muted">Other link<input class="field" id="uOther" value=""></label>
         </div>
-        <div class="note blue" style="margin-top:12px"><b>Convention, exactly as the sheet.</b> <span class="mono">utm_campaign=launch_&lt;productcode&gt;_&lt;month&gt;_&lt;year&gt;</span>. Email and platform rows: <span class="mono">utm_source=&lt;source&gt;&amp;utm_campaign=…&amp;utm_content=content_wwww&amp;utm_medium=lp&amp;otag=&lt;source&gt;&amp;otag=&lt;launch code&gt;</span>. Social rows: <span class="mono">utm_source=&lt;source&gt;&amp;utm_campaign=…&amp;otag=&lt;launch code&gt;&amp;otag=&lt;source&gt;</span>. Metabase attribution matches on otag.</div>
+        <div class="note blue" style="margin-top:12px"><b>Convention, exactly as the sheet.</b> Email and platform rows: <span class="mono">utm_source=&lt;source&gt;&amp;utm_campaign=&lt;launch code&gt;&amp;utm_content=content_wwww&amp;utm_medium=lp|sp&amp;otag=&lt;source&gt;&amp;otag=&lt;launch code&gt;</span>. Social, WhatsApp and SMS rows: <span class="mono">utm_source=&lt;source&gt;&amp;utm_campaign=&lt;launch code&gt;&amp;otag=&lt;launch code&gt;&amp;otag=&lt;source&gt;</span>. Email sources are <span class="mono">email_campaign_&lt;list&gt;_email_&lt;n&gt;</span> for every list. Metabase attribution matches on otag.</div>
       </div>
+
       <div class="card">
-        <div class="row" style="justify-content:space-between"><h3 style="margin:0">Generated links</h3><div class="row"><button class="btn ghost sm" id="csvBtn">Copy as CSV (sheet layout)</button><button class="btn ghost sm" id="shortBtn">Shorten all</button></div></div>
-        <div class="ttabs" id="ttabs"><button data-t="lp" aria-pressed="true">Landing page</button><button data-t="vid">YouTube video / blog</button><button data-t="sp">Sales page</button><button data-t="other">Other link</button></div>
+        <div class="row" style="justify-content:space-between"><h3 style="margin:0">Generated links <small id="totalCount"></small></h3><div class="row"><button class="btn ghost sm" id="csvBtn">Copy CSV · this view</button><button class="btn ghost sm" id="csvAllBtn">Copy CSV · every channel and target</button><button class="btn ghost sm" id="shortBtn">Shorten all</button></div></div>
+        <div class="sum" id="sum"></div>
+        <div class="small subtle" style="margin:4px 0 4px">Channel</div>
+        <div class="rail" id="rail"></div>
+        <div class="small subtle" style="margin:4px 0 4px">Target page</div>
+        <div class="rail" id="ttabs"><button data-t="lp" aria-pressed="true">Landing page</button><button data-t="vid">YouTube video / blog</button><button data-t="sp">Sales page</button><button data-t="other">Other link</button></div>
         <div class="tbl"><table id="linkTbl"></table></div>
       </div>
       <div class="card"><h3>History</h3><div id="log" class="small muted"></div></div>
@@ -455,58 +473,70 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   var toastT;function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on');},1800);}
   var camps=[{n:'AI for Founders Summit · Oct 2026',st:'In approval',cls:'warn'},{n:'Black Friday · Nov 2026',st:'Draft',cls:''},{n:'WildFit live webinar · Oct 2026',st:'Populated',cls:'brand'},{n:'Expert to Authority Summit · Sep 2026',st:'Populated',cls:'brand'},{n:'30/30/30 Fibre Challenge · Nov 2026',st:'Draft',cls:''},{n:"Vishen's Newsletter · standing",st:'Approved',cls:'ok'}];
   $('#campList').innerHTML=camps.map(function(c,i){return '<button class="item'+(i===0?' active':'')+'" style="display:flex;justify-content:space-between;align-items:center"><span class="nm" style="white-space:normal">'+esc(c.n)+'</span><span class="chip '+c.cls+'">'+esc(c.st)+'</span></button>';}).join('');
-  // Groups from the sheet. kind 'e' = email/platform pattern (utm_content + utm_medium), 's' = social pattern.
-  var groups=[
-    {g:'Email',k:'e',rows:[]},
-    {g:'Platform',k:'e',rows:[['Home Announcement 1','home_announcement_1'],['Home Announcement 2','home_announcement_2'],['App Announcement 1','app_announcement_1'],['App Announcement 2','app_announcement_2'],['Home Push','home_push_1'],['Home Push','home_push_2'],['App Push','app_push_1'],['App Push','app_push_2'],['Web Push','home_web_push_1'],['Web Push','home_web_push_2'],['In-App','inapp_1'],['In-App','inapp_2'],['SMS','sms_1'],['SMS','sms_2'],['Home Feature Banner','mvhome_feature_banner'],['App Feature Banner','mvapp_feature_banner'],['mindvalley.com','mv.com']]},
-    {g:'Facebook',k:'s',rows:[['MV FB Page','mv_fb'],['MV FB Live','mv_fblive'],['MV FB Page Cover','mv_fb-cover'],['MV FB Page Button','mv_fb-button'],['MV FB Page Comments','mv_fb-chatbot'],['Vishen FB Page','vl_fb'],['Vishen FB Live','vl_fblive'],['Finerminds FB Page','fm_fb']]},
-    {g:'Instagram',k:'s',rows:[['MV Instagram Bio','mv-ig_bio'],['MV Instagram Story','mv-ig_story'],['MV Instagram DM','mv-ig_chatbot'],['MV IGTV','mv-ig_broadcast'],['VL Instagram Bio','vl-ig_bio'],['VL Instagram Story','vl-ig_story'],['VL Instagram DM','vl-ig_dm'],['VL IGTV','vl-ig_tv']]},
-    {g:'YouTube MV',k:'s',rows:[['Description','mv_yt_description'],['Card','mv_yt_card'],['End Slate','mv_yt_end'],['Community Wall','mv_yt_community'],['Pinned Comment','mv_yt_comment']]},
-    {g:'YouTube MV Talks',k:'s',rows:[['Description','mvtalks_yt_description'],['Card','mvtalks_yt_card'],['End Slate','mvtalks_yt_end'],['Community Wall','mvtalks_yt_community'],['Pinned Comment','mvtalks_yt_comment']]},
-    {g:'YouTube Vishen',k:'s',rows:[['Description','vl_yt_description'],['Card','vl_yt_card'],['End Slate','vl_yt_end'],['Community Wall','vl_yt_community'],['Pinned Comment','vl_yt_comment']]},
-    {g:'YouTube Vishen · Talking Heads',k:'s',rows:[['Description','vl_yt_description_th'],['Card','vl_yt_card_th'],['End Slate','vl_yt_end_th'],['Community Wall','vl_yt_community_th'],['Pinned Comment','vl_yt_comment_th']]},
-    {g:'Facebook Community',k:'s',rows:[['MV Community','mvc_fb_group'],['MTM Community','mtm_fb_group']]},
-    {g:'Twitter',k:'s',rows:[['MV Twitter','mv_twitter'],['MV Twitter Bio','mv_twitter-bio'],['Vishen Twitter','vl_twitter']]},
-    {g:'LinkedIn',k:'s',rows:[['MV LinkedIn','mv_linkedin'],['Vishen LinkedIn','vl_linkedin'],['MV LinkedIn (2CPR)','mv_linkedin_2CPR'],['Vishen LinkedIn (2CPR)','vl_linkedin_2CPR']]},
-    {g:'TikTok',k:'s',rows:[['MV TikTok','mv_tiktok'],['Vishen TikTok','vl_tiktok']]},
-    {g:'MV.COM (Today)',k:'s',rows:[['MV.COM (Today)','mv_today','wa_broadcast']]}
+  var LISTS=[['daily','Daily'],['highlights','Highlights'],['weekly','Weekly'],['mvm','Members (MVM)'],['coach','Coach'],['events','Events'],['vlnl',"Vishen's newsletter (VLNL)"],['mas','Mastery'],['sublist','Sublist (dated)']];
+  // Channels. k 'e' = email/platform pattern, 's' = social pattern. Sub-groups for email (per list) and YouTube (per channel).
+  var channels=[
+    {id:'email',name:'Email',k:'e',subs:[]},
+    {id:'platform',name:'Platform & app',k:'e',subs:[{name:'Platform',rows:[['Home Announcement 1','home_announcement_1'],['Home Announcement 2','home_announcement_2'],['App Announcement 1','app_announcement_1'],['App Announcement 2','app_announcement_2'],['Home Push 1','home_push_1'],['Home Push 2','home_push_2'],['App Push 1','app_push_1'],['App Push 2','app_push_2'],['Web Push 1','home_web_push_1'],['Web Push 2','home_web_push_2'],['In-App 1','inapp_1'],['In-App 2','inapp_2'],['Home Feature Banner','mvhome_feature_banner'],['App Feature Banner','mvapp_feature_banner'],['mindvalley.com','mv.com']]}]},
+    {id:'wa',name:'WhatsApp & SMS',k:'s',subs:[{name:'WhatsApp',rows:[['WhatsApp broadcast','wa_broadcast'],['WhatsApp community','wa_community'],['MV.COM (Today)','mv_today','wa_broadcast']]},{name:'SMS',rows:[['SMS 1','sms_1'],['SMS 2','sms_2']],k:'e'}]},
+    {id:'fb',name:'Facebook',k:'s',subs:[{name:'Facebook',rows:[['MV FB Page','mv_fb'],['MV FB Live','mv_fblive'],['MV FB Page Cover','mv_fb-cover'],['MV FB Page Button','mv_fb-button'],['MV FB Page Comments','mv_fb-chatbot'],['Vishen FB Page','vl_fb'],['Vishen FB Live','vl_fblive'],['Finerminds FB Page','fm_fb']]},{name:'Facebook Community',rows:[['MV Community','mvc_fb_group'],['MTM Community','mtm_fb_group']]}]},
+    {id:'ig',name:'Instagram',k:'s',subs:[{name:'Instagram',rows:[['MV Instagram Bio','mv-ig_bio'],['MV Instagram Story','mv-ig_story'],['MV Instagram DM','mv-ig_chatbot'],['MV IGTV','mv-ig_broadcast'],['VL Instagram Bio','vl-ig_bio'],['VL Instagram Story','vl-ig_story'],['VL Instagram DM','vl-ig_dm'],['VL IGTV','vl-ig_tv']]}]},
+    {id:'yt',name:'YouTube',k:'s',subs:[['YouTube MV','mv_yt'],['YouTube MV Talks','mvtalks_yt'],['YouTube Vishen','vl_yt'],['YouTube Vishen · Talking Heads','vl_yt','_th']].map(function(c){var sfx=c[2]||'';return {name:c[0],rows:[['Description',c[1]+'_description'+sfx],['Card',c[1]+'_card'+sfx],['End Slate',c[1]+'_end'+sfx],['Community Wall',c[1]+'_community'+sfx],['Pinned Comment',c[1]+'_comment'+sfx]]};})},
+    {id:'x',name:'X / Twitter',k:'s',subs:[{name:'Twitter',rows:[['MV Twitter','mv_twitter'],['MV Twitter Bio','mv_twitter-bio'],['Vishen Twitter','vl_twitter']]}]},
+    {id:'li',name:'LinkedIn',k:'s',subs:[{name:'LinkedIn',rows:[['MV LinkedIn','mv_linkedin'],['Vishen LinkedIn','vl_linkedin'],['MV LinkedIn (2CPR)','mv_linkedin_2CPR'],['Vishen LinkedIn (2CPR)','vl_linkedin_2CPR']]}]},
+    {id:'tt',name:'TikTok',k:'s',subs:[{name:'TikTok',rows:[['MV TikTok','mv_tiktok'],['Vishen TikTok','vl_tiktok']]}]}
   ];
-  var target='lp',csvRows=[],shortened=false;
-  function emailRows(){var l=$('#uList').value;var r=[];for(var i=1;i<=14;i++)r.push(['Email '+i,'email_campaign_'+l+'_email_'+i]);r.push(['Retargeting','email_campaign_retargeting']);return r;}
-  function build(){
-    groups[0].rows=emailRows();
-    var base={lp:$('#uLp').value.trim(),vid:$('#uVid').value.trim(),sp:$('#uSp').value.trim(),other:$('#uOther').value.trim()}[target];
-    var code=$('#uCode').value.trim()||'launch_productcode_month_year',content=$('#uContent').value.trim()||'content_wwww';
-    var medium={lp:'lp',vid:'lp',sp:'sp',other:'lp'}[target];
-    csvRows=[['SOURCE','utm_source','utm_content','utm_medium','otag source','Link','SHORTENED LINKS']];
+  var extra={}; // added sources per channel id
+  function emailSubs(){var d=$('#uDate').value.trim()||'date';return LISTS.map(function(l){var code=l[0]==='sublist'?'sublist_'+d:l[0];var rows=[];for(var i=1;i<=14;i++)rows.push(['Email '+i,'email_campaign_'+code+'_email_'+i]);rows.push(['Retargeting','email_campaign_'+code+'_retargeting']);return {name:l[1],rows:rows};});}
+  var channel='all',target='lp',shortened=false,open={};
+  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return h;}
+  function linkFor(k,src,otagSrc,base,code,content,medium){var sep=base.indexOf('?')>-1?'&':'?';var q=k==='e'?('utm_source='+src+'&utm_campaign='+code+'&utm_content='+content+'&utm_medium='+medium+'&otag='+otagSrc+'&otag='+code):('utm_source='+src+'&utm_campaign='+code+'&otag='+code+'&otag='+otagSrc);return {url:base+sep+q,q:q,sep:sep};}
+  function allRows(t){ // every channel, one target
+    var base={lp:$('#uLp').value.trim(),vid:$('#uVid').value.trim(),sp:$('#uSp').value.trim(),other:$('#uOther').value.trim()}[t];if(!base)return [];
+    var code=$('#uCode').value.trim()||'launch_productcode_month_year',content=$('#uContent').value.trim()||'content_wwww',medium=t==='sp'?'sp':'lp';var out=[];
+    channels.forEach(function(ch){var subs=ch.id==='email'?emailSubs():ch.subs;subs.forEach(function(sg){var k=sg.k||ch.k;var rows=sg.rows.concat(extra[ch.id+'|'+sg.name]||[]);rows.forEach(function(r){var l=linkFor(k,r[1],r[2]||r[1],base,code,content,medium);out.push({ch:ch,sg:sg,k:k,label:r[0],src:r[1],otag:r[2]||r[1],content:k==='e'?content:'',medium:k==='e'?medium:'',url:l.url,base:base,q:l.q,sep:l.sep,target:t});});});});
+    return out;
+  }
+  function render(){
+    var rows=allRows(target);
+    // summary + rail
+    var counts={};rows.forEach(function(r){counts[r.ch.id]=(counts[r.ch.id]||0)+1;});
+    $('#sum').innerHTML=channels.map(function(c){return '<div class="tl"><div class="v">'+(counts[c.id]||0)+'</div><div class="l">'+esc(c.name)+'</div></div>';}).join('');
+    $('#totalCount').textContent=rows.length+' links for this target · '+(['lp','vid','sp','other'].reduce(function(a,t){return a+allRows(t).length;},0))+' across all four';
+    $('#rail').innerHTML='<button data-c="all" aria-pressed="'+(channel==='all')+'">All channels <span class="n">'+rows.length+'</span></button>'+channels.map(function(c){return '<button data-c="'+c.id+'" aria-pressed="'+(channel===c.id)+'">'+esc(c.name)+' <span class="n">'+(counts[c.id]||0)+'</span></button>';}).join('');
+    var shown=rows.filter(function(r){return channel==='all'||r.ch.id===channel;});
+    if(!rows.length){$('#linkTbl').innerHTML='<tr><td class="muted" style="padding:14px">Add the '+({lp:'LP',vid:'YouTube / blog',sp:'SP',other:'other'}[target])+' link on the card to generate these.</td></tr>';return;}
     var out='<tr><th>Source</th><th>utm_source</th><th>utm_content</th><th>utm_medium</th><th>otag source</th><th>Link</th><th>Short</th><th></th></tr>';
-    if(!base){out+='<tr><td colspan="8" class="muted">Add the '+({lp:'LP',vid:'YouTube / blog',sp:'SP',other:'other'}[target])+' link on the card to generate these.</td></tr>';$('#linkTbl').innerHTML=out;return;}
-    var sep=base.indexOf('?')>-1?'&':'?';
-    groups.forEach(function(g){
-      out+='<tr class="ghead"><td colspan="8">'+esc(g.g)+'</td></tr>';
-      g.rows.forEach(function(r){
-        var src=r[1],otagSrc=r[2]||src;var q,c='',m='';
-        if(g.k==='e'){c=content;m=medium;q='utm_source='+src+'&utm_campaign='+code+'&utm_content='+c+'&utm_medium='+m+'&otag='+otagSrc+'&otag='+code;}
-        else{q='utm_source='+src+'&utm_campaign='+code+'&otag='+code+'&otag='+otagSrc;}
-        var url=base+sep+q;var sh=shortened?'https://mv.link/'+Math.abs(hash(url)).toString(36).slice(0,6):'';
-        csvRows.push([r[0],src,c,m,otagSrc,url,sh]);
-        out+='<tr><td>'+esc(r[0])+'</td><td class="mono small">'+esc(src)+'</td><td class="mono small">'+esc(c)+'</td><td class="mono small">'+esc(m)+'</td><td class="mono small">'+esc(otagSrc)+'</td><td class="url">'+esc(base)+'<b>'+esc(sep+q)+'</b></td><td class="mono small">'+(sh||'<span class="subtle">—</span>')+'</td><td><button class="copy" data-u="'+esc(url)+'">Copy</button></td></tr>';
-      });
+    var lastCh=null,lastSg=null;
+    shown.forEach(function(r){
+      var key=r.ch.id+'|'+r.sg.name;var collapsed=r.ch.id==='email'&&channel==='all'&&!open[key]&&r.sg.name!=='Daily';
+      if(r.ch!==lastCh){out+='<tr><td colspan="8" style="padding:0"><div class="gh"><b>'+esc(r.ch.name)+'</b><span class="n">'+counts[r.ch.id]+' links</span><span class="sp"></span><button class="copy" data-copych="'+r.ch.id+'">Copy channel CSV</button></div></td></tr>';lastCh=r.ch;lastSg=null;}
+      if(r.sg!==lastSg){var n=(r.sg.rows.length+(extra[key]||[]).length);out+='<tr><td colspan="8" style="padding:0"><div class="sub"><span>'+esc(r.sg.name)+' · '+n+'</span>'+(r.ch.id==='email'&&channel==='all'?'<button data-toggle="'+esc(key)+'">'+(collapsed?'show':'hide')+'</button>':'')+'<button data-addsrc="'+esc(key)+'">+ add a source</button></div></td></tr>';lastSg=r.sg;}
+      if(collapsed)return;
+      var sh=shortened?'https://mv.link/'+Math.abs(hash(r.url)).toString(36).slice(0,6):'';
+      out+='<tr><td>'+esc(r.label)+'</td><td class="mono small">'+esc(r.src)+'</td><td class="mono small">'+esc(r.content)+'</td><td class="mono small">'+esc(r.medium)+'</td><td class="mono small">'+esc(r.otag)+'</td><td class="url">'+esc(r.base)+'<b>'+esc(r.sep+r.q)+'</b></td><td class="mono small">'+(sh||'<span class="subtle">—</span>')+'</td><td><button class="copy" data-u="'+esc(r.url)+'">Copy</button></td></tr>';
     });
     $('#linkTbl').innerHTML=out;
   }
-  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return h;}
-  ['uLp','uSp','uVid','uOther','uCode','uContent','uList'].forEach(function(id){$('#'+id).addEventListener('input',function(){build();if($('#cardStatus').textContent!=='Draft'&&id!=='uList'){$('#cardStatus').textContent='Draft';$('#cardStatus').className='chip';log('Card edited after approval → back to Draft (v2). Assets that already took links are listed for re-population.');}});$('#'+id).addEventListener('change',build);});
-  $('#ttabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;document.querySelectorAll('#ttabs button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');target=b.getAttribute('data-t');build();});
-  build();
-  document.body.addEventListener('click',function(e){var b=e.target.closest('.copy');if(!b)return;var u=b.getAttribute('data-u');var done=function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1200);};try{navigator.clipboard.writeText(u).then(done,function(){toast('Select the link and copy it.');});}catch(err){toast('Select the link and copy it.');}});
-  $('#csvBtn').addEventListener('click',function(){var csv=csvRows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');try{navigator.clipboard.writeText(csv).then(function(){toast('CSV copied: '+(csvRows.length-1)+' rows, sheet layout');},function(){toast('Clipboard blocked here.');});}catch(err){toast('Clipboard blocked here.');}});
-  $('#shortBtn').addEventListener('click',function(){shortened=true;build();toast('Short links generated for every row.');});
-  var logs=['22 Oct 14:02 · Approved by Jaideep Chagger · v1 · Email Creator took 21 email links; Reel Creator and Social took theirs','22 Oct 11:40 · Submitted for approval by Ramya Rednam','22 Oct 11:31 · Card created from Official Calendar row (AI for Founders Summit)'];
-  function log(m){logs.unshift('27 Oct · '+m);render();}function render(){$('#log').innerHTML=logs.map(function(l){return '<div style="padding:5px 0;border-bottom:1px solid var(--border-muted)">'+esc(l)+'</div>';}).join('');}
-  render();
+  function csvOf(rows){return [['TARGET','CHANNEL','GROUP','SOURCE','utm_source','utm_content','utm_medium','otag source','Link','SHORTENED LINKS']].concat(rows.map(function(r){return [r.target,r.ch.name,r.sg.name,r.label,r.src,r.content,r.medium,r.otag,r.url,shortened?'https://mv.link/'+Math.abs(hash(r.url)).toString(36).slice(0,6):''];})).map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');}
+  function copyText(t,msg){try{navigator.clipboard.writeText(t).then(function(){toast(msg);},function(){toast('Clipboard blocked here.');});}catch(err){toast('Clipboard blocked here.');}}
+  ['uLp','uSp','uVid','uOther','uCode','uContent','uDate'].forEach(function(id){$('#'+id).addEventListener('input',function(){render();if($('#cardStatus').textContent!=='Draft'){$('#cardStatus').textContent='Draft';$('#cardStatus').className='chip';log('Card edited after approval → back to Draft (v2). Assets that already took links are listed for re-population.');}});});
+  $('#rail').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;channel=b.getAttribute('data-c');render();});
+  $('#ttabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;document.querySelectorAll('#ttabs button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');target=b.getAttribute('data-t');render();});
+  $('#linkTbl').addEventListener('click',function(e){
+    var t=e.target.closest('[data-toggle]');if(t){var k=t.getAttribute('data-toggle');open[k]=!open[k];render();return;}
+    var a=e.target.closest('[data-addsrc]');if(a){var key=a.getAttribute('data-addsrc');var name=window.prompt?null:null;var label='Custom source '+(((extra[key]||[]).length)+1);var src=key.split('|')[1].toLowerCase().replace(/[^a-z0-9]+/g,'_')+'_custom_'+(((extra[key]||[]).length)+1);(extra[key]=extra[key]||[]).push([label,src]);render();toast('Added '+src+'. Rename it inline in the real product.');return;}
+    var c=e.target.closest('[data-copych]');if(c){var id=c.getAttribute('data-copych');copyText(csvOf(allRows(target).filter(function(r){return r.ch.id===id;})),'Channel CSV copied');return;}
+    var b=e.target.closest('.copy[data-u]');if(b){var u=b.getAttribute('data-u');copyText(u,'Link copied');}
+  });
+  $('#csvBtn').addEventListener('click',function(){copyText(csvOf(allRows(target).filter(function(r){return channel==='all'||r.ch.id===channel;})),'CSV copied for this view');});
+  $('#csvAllBtn').addEventListener('click',function(){var all=[];['lp','vid','sp','other'].forEach(function(t){all=all.concat(allRows(t));});copyText(csvOf(all),'CSV copied: '+all.length+' links, every channel and target');});
+  $('#shortBtn').addEventListener('click',function(){shortened=true;render();toast('Short links generated for every row.');});
+  var logs=['22 Oct 14:02 · Approved by Jaideep Chagger · v1 · Email Creator took 21 email links; Reel Creator, Image Creator, social, platform and WhatsApp took theirs','22 Oct 11:40 · Submitted for approval by Ramya Rednam','22 Oct 11:31 · Card created from Official Calendar row (AI for Founders Summit)'];
+  function log(m){logs.unshift('27 Oct · '+m);renderLog();}function renderLog(){$('#log').innerHTML=logs.map(function(l){return '<div style="padding:5px 0;border-bottom:1px solid var(--border-muted)">'+esc(l)+'</div>';}).join('');}
+  renderLog();render();
   $('#submitBtn').addEventListener('click',function(){$('#cardStatus').textContent='In approval';$('#cardStatus').className='chip warn';log('Submitted for approval by Ramya Rednam');toast('Sent to the campaign owner for approval.');});
-  $('#approveBtn').addEventListener('click',function(){$('#cardStatus').textContent='Populated';$('#cardStatus').className='chip brand';log('Approved by Ramya Rednam · links frozen · Email Creator populated 21 emails (Draft and In review); 2 Approved emails flagged for re-approval');toast('Approved. Creators are picking up their links.');});
+  $('#approveBtn').addEventListener('click',function(){$('#cardStatus').textContent='Populated';$('#cardStatus').className='chip brand';log('Approved by Ramya Rednam · links frozen · every creator and team picked up its links');toast('Approved. Creators are picking up their links.');});
 })();
 </script>
 
