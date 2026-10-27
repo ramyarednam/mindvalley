@@ -359,7 +359,13 @@ body.focus .main{padding-top:0}
 .drawer-head h2{font-size:18px;margin-right:auto}
 .drawer-body{overflow:auto;padding:14px 16px 24px;flex:1}
 .drawer-body .card{border:0;padding:0 0 16px;background:transparent}
-.drawer-body .details{background:transparent;padding:0}
+.drawer-body .details{background:transparent;padding:0;margin:0}
+.drawer-body .details-top{flex-direction:column;align-items:stretch;gap:6px}
+.drawer-body #name{font-size:18px;white-space:normal;line-height:1.3}
+.drawer-body .dgrid{grid-template-columns:1fr;gap:12px}
+.drawer-body .dgrid label{font-size:12.5px}
+.drawer-body .dt{display:grid;grid-template-columns:minmax(0,1fr) 84px}
+.drawer-body .seqctx{flex-direction:column;align-items:flex-start;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border-muted)}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:39}
 .drawer-body .card>h3{display:none}
 .focuswrap .chips{display:none}.focuswrap .panel.expanded .chips{display:flex}
@@ -504,8 +510,7 @@ body.focus .main{padding-top:0}
       <button class="btn ghost sm" data-drawer="ctx">Context</button>
       <button class="btn ghost sm" id="undoAi" disabled>Undo</button>
       <button class="btn ghost sm" id="saveVer">Save version</button>
-      <button class="btn ghost sm" id="rewriteBtn">Rewrite</button>
-      <button class="btn primary sm" id="approveBtn">Approve</button>
+            <button class="btn primary sm" id="approveBtn">Approve</button>
       <button class="btn ghost sm icon" id="focusToggle" title="Show or hide Content Studio around the email">⤢</button>
     </div>
     <div class="focuswrap">
@@ -961,7 +966,7 @@ body.focus .main{padding-top:0}
   $('#mic').addEventListener('click',function(){toast('Voice runs in the real editor; type the change here instead.');});
   $('#undoAi').addEventListener('click',function(){toast('Last edit undone');$('#undoAi').disabled=true;});
   $('#approveBtn').addEventListener('click',function(){$('#stat').value='Approved';$('#fbStatus').textContent='Approved';$('#fbStatus').className='chip approved';versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Approved · translation to DE and ES started',when:'now'});renderVersions();$('#transBody').innerHTML='<div class="pr"><i>✓</i><div><b>English</b><span>approved by Ramya Rednam · pushed to Braze as draft</span></div></div><div class="pr warn"><i>…</i><div><b>German</b><span>translated · review agent passed · queued Fri 23 Oct (same day: time-critical) · German members + non-members</span></div></div><div class="pr warn"><i>…</i><div><b>Spanish</b><span>translating · review agent next · queued Fri 23 Oct · Spanish members + non-members</span></div></div>';toast('Approved. Translating to German and Spanish.');});
-  $('#rewriteBtn').addEventListener('click',function(){versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Requested a rewrite with a note · back to Draft',when:'now'});renderVersions();toast('Back to Draft with your note. The engine redrafts.');});
+  var rw=$('#rewriteBtn');if(rw)rw.addEventListener('click',function(){versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Requested a rewrite with a note · back to Draft',when:'now'});renderVersions();toast('Back to Draft with your note. The engine redrafts.');});
   counts();
   /* New email wizard */
   $('#newEmailBtn').addEventListener('click',function(){
