@@ -336,6 +336,29 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 .toast.on{opacity:1;transform:translateX(-50%)}
 
 /* v3 additions */
+/* context intake */
+.ctx{display:flex;flex-direction:column;gap:8px}
+.ci{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--border-muted);border-radius:12px;background:var(--surface-2);font-size:13px}
+.ci .ic2{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:10px;font-weight:700;letter-spacing:.04em;background:var(--chip);color:var(--chip-ink)}
+.ci .ic2.doc{background:var(--blue-light);color:var(--blue)}.ci .ic2.csv{background:var(--green-light);color:var(--green)}.ci .ic2.aud{background:var(--orange-light);color:var(--orange)}.ci .ic2.vid{background:var(--red-light);color:var(--pink)}.ci .ic2.lnk{background:var(--brand-light);color:var(--brand-ink)}
+.ci b{display:block;font-weight:500}.ci .w{color:var(--subtle);font-size:12px}
+.drop{border:1.5px dashed var(--border-strong);border-radius:14px;padding:16px;text-align:center;color:var(--muted);font-size:13.5px;background:transparent}
+.drop:hover{border-color:var(--brand);color:var(--text)}
+.drop b{color:var(--text)}
+.ctxbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ctxpanel{margin-top:10px;background:var(--surface);border:1px solid var(--border-muted);border-radius:18px;padding:14px 16px}
+.cap{font-size:12px;color:var(--subtle)}
+/* editor blocks */
+#body table.et{width:100%;border-collapse:separate;border-spacing:10px;margin:0 -10px 12px}
+#body table.et td{vertical-align:top;background:var(--surface-2);border:1px dashed var(--border);border-radius:10px;padding:10px;min-width:120px}
+#body table.et td img{margin:0 0 8px}
+#body .ph{display:grid;place-items:center;height:110px;border-radius:8px;background:var(--chip);color:var(--subtle);font-size:12px;margin-bottom:8px}
+#body img{display:block;max-width:100%;height:auto;border-radius:12px;margin:8px 0 16px}
+#body h1{font-size:28px;line-height:1.2;margin:0 0 14px}#body h2{font-size:21px;margin:0 0 12px}
+#body [style*="text-align:center"] a.btn{margin-left:auto;margin-right:auto}
+.dlg{width:min(460px,100%);background:var(--surface);border-radius:20px;box-shadow:var(--shadow-strong);padding:20px 22px}
+.dlg h3{font-size:17px;margin-bottom:10px}.dlg label{display:block;font-size:12.5px;color:var(--subtle);margin:10px 0 4px}
+
 .nav a.sub{padding-left:34px;font-size:13.5px;color:var(--muted)}
 .nav a.sub.active{background:var(--brand-light);color:var(--brand-ink)}
 .nav a.sub .n{background:var(--chip);color:var(--subtle)}
@@ -472,7 +495,12 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
             <span class="sep"></span>
             <button class="tool" data-block="h1">H1</button><button class="tool" data-block="h2">H2</button><button class="tool" data-block="p">Text</button><button class="tool" data-cmd="insertUnorderedList">List</button>
             <span class="sep"></span>
-            <button class="tool" id="linkBtn">Link</button><button class="tool" id="ctaBtn">Button</button><button class="tool">Image</button>
+            <button class="tool" id="linkBtn">Link</button><button class="tool" id="ctaBtn">Button</button><button class="tool" id="imgBtn">Image</button>
+            <span class="sep"></span>
+            <button class="tool" data-cmd="justifyLeft" title="Align left">⇤</button><button class="tool" data-cmd="justifyCenter" title="Center">☰</button><button class="tool" data-cmd="justifyRight" title="Align right">⇥</button>
+            <span class="sep"></span>
+            <button class="tool" id="tblBtn" title="Insert columns">Columns</button><button class="tool" id="colBtn" title="Add a column to the selected table">+ Column</button>
+            <input type="file" id="imgFile" accept="image/*" hidden>
           </div>
           <div class="sheet">
             <div class="inbox">
@@ -506,6 +534,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
               <div class="mode"><button id="modeDictate" aria-pressed="false">Dictate</button><button id="modeEdit" aria-pressed="true">Edit</button></div>
               <div class="mode" id="modelSel" title="Which model edits this email"><button data-m="Claude" aria-pressed="true">Claude</button><button data-m="ChatGPT" aria-pressed="false">ChatGPT</button></div>
               <input id="cmd" placeholder="Type or speak an edit, e.g. open with a scene at 11pm">
+              <button class="qchip" id="ctxBtn" style="padding:11px 14px">+ Add context</button>
               <button class="btn-apply" id="runBtn">Apply</button>
             </div>
             <div class="chips">
@@ -513,9 +542,16 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
               <span class="scope" id="scope">Edits the whole email</span>
             </div>
           </div></div>
+          <div class="ctxpanel" id="ctxPanel" hidden>
+            <div class="row" style="justify-content:space-between"><b>Context for this edit</b><span class="cap">attached to the version it produces</span></div>
+            <textarea class="ta" id="editWhy" style="margin-top:8px;min-height:60px" placeholder="Why this edit? e.g. the ad test showed the 'founder with a job' angle won; survey says 61% are solo; use the transcript from the 14 Oct kick-off for Vishen's phrasing."></textarea>
+            <button class="drop" id="editDrop" style="margin-top:8px;padding:12px"><b>Drop files or click to upload</b> · CSV, PDF, docs, transcripts, video transcripts, voice notes, links. Any length.</button>
+            <div class="ctxbar"><button class="btn sm ghost" id="editVoice">🎙 Voice note</button><button class="btn sm ghost" id="editLink">Add a link</button><span class="cap" style="align-self:center" id="editCtxCount">0 items attached</span></div>
+          </div>
         </div>
       </div>
       <aside class="right stack">
+        <div class="card"><h3>Context this email reads <small>campaign + this email</small></h3><div class="ctx" id="emailCtx"></div></div>
         <div class="card"><h3>Email copywriting principles <small>live on this draft</small></h3><div class="princ" id="princ"></div></div>
         <div class="card"><h3>Versions &amp; edit log <small id="verCount"></small></h3><div class="vlog" id="versions"></div></div>
         <div class="card" id="transCard"><h3>Translations <small>on approval</small></h3><div class="small muted" id="transBody">Approving this email sends it to the translator (Claude translator project). The German and Spanish review agent checks translation quality (meaning and sentence construction), then each version is queued for the next German and Spanish slot (Monday or Friday, or the same day when time-critical) and pushed to Braze as a draft.</div></div>
@@ -687,12 +723,13 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 
   function planDetailCampaign(){
     return '<button class="back" id="backPlan">← All campaigns and sequences</button>'+
-    '<div class="vhead"><div><div class="small" style="color:var(--orange);letter-spacing:.1em;text-transform:uppercase;font-weight:700">Campaign · Mastery Online Summit – Free</div><h2>AI for Founders Summit · 30 Oct – 1 Nov 2026</h2><p>Picked up from the Official Calendar row (Jaideep Chagger, $2.5M target, promotions from 16 Oct). 15 Comms Calendar slots read. Plan proposed 16 Oct 07:12.</p></div><div class="row"><button class="btn ghost">Request changes</button><button class="btn primary" id="approvePlan">Approve plan → start drafting</button></div></div>'+
+    '<div class="vhead"><div><div class="small" style="color:var(--orange);letter-spacing:.1em;text-transform:uppercase;font-weight:700">Campaign · Mastery Online Summit – Free</div><h2>AI for Founders Summit · 30 Oct – 1 Nov 2026</h2><p>Picked up from the Official Calendar row (Jaideep Chagger, $2.5M target, promotions from 16 Oct). 15 Comms Calendar slots read. Plan proposed 16 Oct 07:12.</p></div><div class="row"><button class="btn ghost" id="reqChanges">Request changes with context</button><button class="btn primary" id="approvePlan">Approve plan → start drafting</button></div></div>'+
     '<div class="grid g3">'+
     '<div class="card"><h3>Brief <small>auto-assembled</small></h3><dl class="kv"><dt>Promise</dt><dd class="muted">from Key Message Doc <span class="chip bad plain">cell empty on 27 Oct</span></dd><dt>Belief</dt><dd>AI First means Human First: get your life back (from the AI Summit learnings until the doc lands)</dd><dt>Offer</dt><dd>Free 3-day summit → AI for Founders Mastery, class starts 17 Nov</dd><dt>Avatar</dt><dd>Founder / solopreneur, 38–52, feels behind on AI, not technical</dd><dt>Research</dt><dd><span class="chip ok plain">pack attached</span></dd></dl></div>'+
     '<div class="card"><h3>Baseline <small>5-year window · 4 candidates</small></h3><div class="tbl"><table><tr><th>Candidate</th><th class="num">Target</th><th class="num">Actual</th><th></th></tr><tr><td><b>AI Summit · Mar 2026</b> (free)</td><td class="num">$5.5M</td><td class="num">$4.26M</td><td><span class="chip ok plain">picked</span></td></tr><tr><td>AI Summit · Jul 2025 (hybrid)</td><td class="num">—</td><td class="num">Metabase</td><td class="small subtle">2nd</td></tr><tr><td>AI Summit · Jul 2024 (hybrid)</td><td class="num">—</td><td class="num">Metabase</td><td class="small subtle">3rd</td></tr><tr><td>AI Summit · Jul 2023 (hybrid)</td><td class="num">—</td><td class="num">Metabase</td><td class="small subtle">4th</td></tr></table></div><p class="small subtle" style="margin-top:8px">Match: event type → AI pathway → free → list mix. <a href="#">Override</a></p></div>'+
     '<div class="card"><h3>Target <small>owner decides</small></h3><div class="stat"><div class="v">$2.5M</div><div class="l">Official Calendar $ Rev target</div></div><div class="stat" style="margin-top:8px"><div class="v">$5.54M</div><div class="l">Baseline rule: AI Summit Mar 2026 × 1.30</div></div><div class="note" style="margin-top:10px">They disagree by more than 2×. Both shown; the owner picks and the pick is recorded.</div></div>'+
     '</div>'+
+    '<div class="sec"><h2>Context for this campaign <small>everything the planner and the drafts read · no size limit</small></h2><div class="grid" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)"><div class="card"><div class="ctx" id="planCtx"></div></div><div class="card"><h3>Add more context</h3><button class="drop" id="planDrop"><b>Drop files here or click to upload</b><br>survey results, ad test CSVs, meeting notes, transcripts, video transcripts, decks, PDFs. Whole files, any length.</button><textarea class="ta" id="planCtxText" style="margin-top:8px;min-height:64px" placeholder="Or paste text, a link, or describe what this is and why it matters…"></textarea><div class="ctxbar"><button class="btn sm ghost" id="planVoice">🎙 Record a voice note</button><button class="btn sm ghost" id="planLink">Add a link</button><button class="btn sm primary" id="planCtxAdd">Add to context</button></div><p class="cap" style="margin-top:8px">Each item is read in full, summarised, and tagged with who added it and why. Adding context after the plan is approved re-runs the plan and shows the diff; the drafts pick it up on their next version.</p></div></div></div>'+
     '<div class="sec"><h2>Segmentation proposal <small>from the Launch Plan; defaults while it is empty</small></h2><div class="grid g4">'+
     '<div class="card"><b>A · $1,000+ customers (non-members)</b><p class="small muted" style="margin:6px 0 8px">50 / 50 test: arm 1 gets VIP free, arm 2 the generic invite. Variants for E1, E4, E6.</p><span class="chip warn">test</span></div>'+
     '<div class="card"><b>B · $1,000+ members</b><p class="small muted" style="margin:6px 0 8px">Same 50 / 50 test, held apart from A so results never mix.</p><span class="chip warn">test</span></div>'+
@@ -757,11 +794,37 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
     $('#planDetail').innerHTML=html;$('#planDetail').hidden=false;$('#planHome').hidden=true;
     $('#backPlan').addEventListener('click',function(){$('#planDetail').hidden=true;$('#planHome').hidden=false;window.scrollTo({top:0});});
     var ap=$('#approvePlan');if(ap)ap.addEventListener('click',function(){toast('Plan approved. Drafting 21 emails into Email Studio.');});
-    renderCal();window.scrollTo({top:0});
+    renderCal();wirePlanCtx();window.scrollTo({top:0});
   }
   $('#planBoxes').addEventListener('click',function(e){var b=e.target.closest('.box');if(b)openPlan(b.getAttribute('data-id'));});
 
-    /* ---------------- Review: editor ---------------- */
+    /* ---------------- Context intake (planning + editor) ---------------- */
+  var ctxItems=[
+    {k:'doc',n:'Key Message Doc',w:'from the Official Calendar · read in full · 3,900 words',by:'system'},
+    {k:'doc',n:'Launch Plan',w:'from the Official Calendar · segmentation and targets',by:'system'},
+    {k:'csv',n:'Ad test results · Sep–Oct 2026.csv',w:'Jaideep · 20 Oct · 14 angles, CTR and CPL · "founder with a job" won',by:'Jaideep'},
+    {k:'doc',n:'AI Founders survey results.pdf',w:'Marisha · 18 Oct · 2,140 responses · 61% solo, 28% have a job and an idea',by:'Marisha'},
+    {k:'vid',n:'Kick-off meeting · 14 Oct · video transcript',w:'Ramya · 48 min · Vishen\'s phrasing of the promise, three stories to use',by:'Ramya'},
+    {k:'aud',n:'Voice note · "what the sales emails must not say"',w:'Ramya · 21 Oct · 3 min · transcribed',by:'Ramya'},
+    {k:'lnk',n:'AI Summit Mar 2026 · sales sequence (Drive)',w:'baseline sequence · every email read',by:'system'}
+  ];
+  var ICO={doc:'DOC',csv:'CSV',aud:'AUD',vid:'VID',lnk:'URL'};
+  function ctxHtml(list){return list.map(function(c){return '<div class="ci"><span class="ic2 '+c.k+'">'+ICO[c.k]+'</span><div><b>'+esc(c.n)+'</b><span class="w">'+esc(c.w)+'</span></div><span class="chip ok plain">read</span></div>';}).join('');}
+  function renderCtx(){var p=$('#planCtx');if(p)p.innerHTML=ctxHtml(ctxItems);var e=$('#emailCtx');if(e)e.innerHTML=ctxHtml(ctxItems.slice(0,2).concat(ctxItems.slice(2,5)));}
+  function kindOf(name){return /\.csv$|\.xlsx?$/i.test(name)?'csv':/\.(mp3|m4a|wav|ogg)$/i.test(name)?'aud':/\.(mp4|mov|srt|vtt)$|transcript/i.test(name)?'vid':/^https?:/i.test(name)?'lnk':'doc';}
+  function addCtx(name,why,by){ctxItems.unshift({k:kindOf(name),n:name,w:(by||'Ramya')+' · now · '+(why||'added as context')+' · reading in full',by:by||'Ramya'});renderCtx();}
+  function pickFiles(cb){var i=document.createElement('input');i.type='file';i.multiple=true;i.addEventListener('change',function(){Array.prototype.forEach.call(i.files,function(f){cb(f.name);});});i.click();}
+  function wirePlanCtx(){
+    renderCtx();
+    var d=$('#planDrop');if(!d)return;
+    d.addEventListener('click',function(){pickFiles(function(n){addCtx(n,$('#planCtxText').value.trim());});});
+    d.addEventListener('dragover',function(e){e.preventDefault();});d.addEventListener('drop',function(e){e.preventDefault();Array.prototype.forEach.call(e.dataTransfer.files,function(f){addCtx(f.name,$('#planCtxText').value.trim());});});
+    $('#planCtxAdd').addEventListener('click',function(){var t=$('#planCtxText').value.trim();if(!t){toast('Paste text, a link, or drop a file first.');return;}addCtx(/^https?:/i.test(t)?t:'Note · '+t.slice(0,48)+(t.length>48?'…':''),'pasted');$('#planCtxText').value='';toast('Added. The plan re-reads it and shows what changed.');});
+    $('#planLink').addEventListener('click',function(){$('#planCtxText').value='https://';$('#planCtxText').focus();});
+    $('#planVoice').addEventListener('click',function(){addCtx('Voice note · '+new Date().toLocaleTimeString().slice(0,5),'recorded and transcribed');toast('Recording transcribed and added.');});
+    var rq=$('#reqChanges');if(rq)rq.addEventListener('click',function(){var m=$('#modal');m.innerHTML='<div class="wiz"><h3>Request changes</h3><p class="small muted">Say what should change and why. Attach anything the planner should read. It re-plans and shows the diff.</p><textarea class="ta" style="margin-top:10px;min-height:90px" placeholder="e.g. Change E4 and E6 to the \'founder with a job\' angle, the ad test proves it. Drop the Oct 24 send."></textarea><button class="drop" style="margin-top:8px;padding:12px"><b>Drop files or click to upload</b> · any length</button><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" id="rqCancel">Cancel</button><button class="btn primary" id="rqGo">Send and re-plan</button></div></div>';m.hidden=false;$('#rqCancel').addEventListener('click',function(){m.hidden=true;});$('#rqGo').addEventListener('click',function(){m.hidden=true;toast('Re-planning with your context. Diff in a minute.');});});
+  }
+  /* ---------------- Review: editor ---------------- */
   var statusCls={'Sent':'sent','Scheduled':'scheduled','Pushed to Braze (draft)':'scheduled','Approved':'approved','In review':'review','Translating':'review','Draft':'','Planned':''};
   var emailsList=plan.filter(function(p){return !p.dropped&&p.seq!=='salese';}).slice(0,12);
   function renderList(){
@@ -798,8 +861,25 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   var saveT;function saving(){var s=$('#esStatus');s.textContent='Saving…';s.setAttribute('data-state','saving');clearTimeout(saveT);saveT=setTimeout(function(){s.textContent='Saved';s.removeAttribute('data-state');},700);}
   document.querySelectorAll('[data-cmd]').forEach(function(b){b.addEventListener('mousedown',function(e){e.preventDefault();body.focus();document.execCommand(b.getAttribute('data-cmd'));saving();});});
   document.querySelectorAll('[data-block]').forEach(function(b){b.addEventListener('mousedown',function(e){e.preventDefault();body.focus();document.execCommand('formatBlock',false,b.getAttribute('data-block'));saving();});});
-  $('#linkBtn').addEventListener('mousedown',function(e){e.preventDefault();toast('Links come from the approved UTM Engine card for this campaign.');});
-  $('#ctaBtn').addEventListener('mousedown',function(e){e.preventDefault();toast('One button per email. Replace the existing one instead.');});
+  var savedRange=null;
+  document.addEventListener('selectionchange',function(){var sel=getSelection();if(sel.rangeCount&&body.contains(sel.anchorNode))savedRange=sel.getRangeAt(0).cloneRange();});
+  function restore(){body.focus();var sel=getSelection();sel.removeAllRanges();if(savedRange)sel.addRange(savedRange);else{var r=document.createRange();r.selectNodeContents(body);r.collapse(false);sel.addRange(r);}}
+  function askDlg(title,f1,f2,ok,cb){var m=$('#modal');m.innerHTML='<div class="dlg"><h3>'+title+'</h3><label>'+f1[0]+'</label><input class="field" id="d1" value="'+esc(f1[1]||'')+'">'+(f2?'<label>'+f2[0]+'</label><input class="field" id="d2" value="'+esc(f2[1]||'')+'"><p class="cap" style="margin-top:6px">Pick a tracked link from the approved UTM card, or paste one.</p>':'')+'<div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" id="dCancel">Cancel</button><button class="btn primary" id="dOk">'+ok+'</button></div></div>';m.hidden=false;$('#d1').focus();$('#dCancel').addEventListener('click',function(){m.hidden=true;});$('#dOk').addEventListener('click',function(){var a=$('#d1').value.trim(),b=f2?$('#d2').value.trim():'';m.hidden=true;cb(a,b);});}
+  var LP='https://www.mindvalley.com/summit/ai-founders?utm_source=email_campaign_daily_email_4&utm_campaign=launch_aiffs_oct_2026&utm_content=content_wwww&utm_medium=lp&otag=email_campaign_daily_email_4&otag=launch_aiffs_oct_2026';
+  $('#linkBtn').addEventListener('mousedown',function(e){e.preventDefault();var sel=savedRange?savedRange.toString():'';askDlg('Add a link',['Text',sel],['Link',LP],'Add',function(t,u){restore();document.execCommand('insertHTML',false,'<a href="'+esc(u)+'">'+esc(t||u)+'</a>');saving();});});
+  $('#ctaBtn').addEventListener('mousedown',function(e){e.preventDefault();askDlg('Add a button',['Button text','Save my free seat'],['Link',LP],'Add',function(t,u){restore();document.execCommand('insertHTML',false,'<p><a class="btn" href="'+esc(u)+'">'+esc(t)+'</a></p>');saving();principles();});});
+  $('#imgBtn').addEventListener('mousedown',function(e){e.preventDefault();$('#imgFile').click();});
+  $('#imgFile').addEventListener('change',function(){var f=$('#imgFile').files[0];if(!f)return;var r=new FileReader();r.onload=function(){restore();document.execCommand('insertHTML',false,'<img src="'+r.result+'" alt="">');saving();};r.readAsDataURL(f);$('#imgFile').value='';});
+  $('#tblBtn').addEventListener('mousedown',function(e){e.preventDefault();restore();document.execCommand('insertHTML',false,'<table class="et"><tr><td><div class="ph">image · click Image to replace</div><p>Column 1 text</p></td><td><div class="ph">image · click Image to replace</div><p>Column 2 text</p></td></tr></table><p></p>');saving();});
+  $('#colBtn').addEventListener('mousedown',function(e){e.preventDefault();var sel=getSelection();var n=sel.anchorNode;var t=n&&(n.nodeType===1?n:n.parentNode).closest('table.et');if(!t){toast('Click inside a column block first.');return;}t.querySelectorAll('tr').forEach(function(tr){var td=document.createElement('td');td.innerHTML='<div class="ph">image</div><p>New column</p>';tr.appendChild(td);});saving();});
+  var editCtx=[];
+  function editCtxUpd(){$('#editCtxCount').textContent=editCtx.length+' item'+(editCtx.length===1?'':'s')+' attached';}
+  $('#ctxBtn').addEventListener('click',function(){var p=$('#ctxPanel');p.hidden=!p.hidden;if(!p.hidden)$('#editWhy').focus();});
+  $('#editDrop').addEventListener('click',function(){pickFiles(function(n){editCtx.push(n);addCtx(n,$('#editWhy').value.trim()||'for this edit');editCtxUpd();});});
+  $('#editDrop').addEventListener('dragover',function(e){e.preventDefault();});$('#editDrop').addEventListener('drop',function(e){e.preventDefault();Array.prototype.forEach.call(e.dataTransfer.files,function(f){editCtx.push(f.name);addCtx(f.name,$('#editWhy').value.trim()||'for this edit');});editCtxUpd();});
+  $('#editLink').addEventListener('click',function(){askDlg('Add a link as context',['Link','https://'],null,'Add',function(u){if(!u)return;editCtx.push(u);addCtx(u,$('#editWhy').value.trim()||'for this edit');editCtxUpd();});});
+  $('#editVoice').addEventListener('click',function(){var n='Voice note · '+new Date().toLocaleTimeString().slice(0,5);editCtx.push(n);addCtx(n,'recorded and transcribed · for this edit');editCtxUpd();toast('Recording transcribed and attached.');});
+  renderCtx();
   var ME='Ramya Rednam';
   var versions=[
     {n:4,who:'Ramya Rednam',role:'reviewer',act:'Claude edit: open with a scene at 11pm · P.S. on the live-only rule',when:'27 Oct 02:31'},
@@ -822,7 +902,8 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
       else if(/subject/i.test(instr)){subject.value='The wrong way to catch up on AI';}
       else if(/tight/i.test(instr)){var ps2=body.querySelectorAll('p');if(ps2[2])ps2[2].remove();}
       else if(/urgen/i.test(instr)){var p=document.createElement('p');p.textContent='Registration closes Thursday night. The first session starts Friday at 7am Pacific.';body.insertBefore(p,body.querySelector('a.btn').parentNode);}
-      versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:model+' edit: '+instr,when:'now'});renderVersions();$('#undoAi').disabled=false;
+      var why=$('#editWhy').value.trim();var ctxNote=(why?' · why: '+why:'')+(editCtx.length?' · context: '+editCtx.join(', '):'');
+      versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:model+' edit: '+instr+ctxNote,when:'now'});renderVersions();$('#undoAi').disabled=false;editCtx=[];editCtxUpd();$('#editWhy').value='';
       counts();saving();$('#liveMsg').textContent='Done: "'+instr+'". Logged as v'+versions[0].n+' by '+ME+'. Undo if it is not right.';$('#cmd').value='';
     },500);
   }
