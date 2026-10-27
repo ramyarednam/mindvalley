@@ -336,6 +336,35 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 .toast.on{opacity:1;transform:translateX(-50%)}
 
 /* v3 additions */
+/* focus review */
+.focusbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:12;display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border-muted);border-radius:16px;padding:8px 10px;margin:14px 0 14px}
+.fb-title{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.2;padding:0 6px}
+.fb-title b{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fb-title .small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.focuswrap{max-width:760px;margin:0 auto}
+.focuswrap .tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);z-index:11;margin:0 auto 14px}
+.focuswrap .sheet{max-width:none;box-shadow:var(--shadow-strong)}
+.focuswrap #body{min-height:60vh;padding:34px 40px 60px;font-size:17px;line-height:1.7}
+.focuswrap .dock{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:11;margin-top:16px}
+.focuswrap .ctxpanel{margin-top:12px}
+.btn.icon.sm{width:32px;height:32px;padding:0}
+body.focus .nav{display:none}
+body.focus .shell{grid-template-columns:1fr}
+body.focus .topbar,body.focus .fhead{display:none}
+body.focus .main{padding-top:0}
+.drawer{position:fixed;top:env(safe-area-inset-top,0px);bottom:0;width:min(440px,100vw);background:var(--surface);z-index:40;display:flex;flex-direction:column;box-shadow:var(--shadow-strong);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.left{left:0;border-right:1px solid var(--border)}
+.drawer.right{right:0;border-left:1px solid var(--border)}
+.drawer-head{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--border-muted)}
+.drawer-head h2{font-size:18px;margin-right:auto}
+.drawer-body{overflow:auto;padding:14px 16px 24px;flex:1}
+.drawer-body .card{border:0;padding:0 0 16px;background:transparent}
+.drawer-body .details{background:transparent;padding:0}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:39}
+.drawer-body .card>h3{display:none}
+.focuswrap .chips{display:none}.focuswrap .panel.expanded .chips{display:flex}
+.focuswrap .live{margin-bottom:6px}
+
 /* context intake */
 .ctx{display:flex;flex-direction:column;gap:8px}
 .ci{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--border-muted);border-radius:12px;background:var(--surface-2);font-size:13px}
@@ -463,34 +492,24 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 
   <!-- ================= REVIEW ================= -->
   <section class="view" id="v-review" hidden>
-    <div class="es-top" style="margin-top:18px">
-      <span class="prod">Editor</span><span class="div"></span>
+    <div class="focusbar">
+      <button class="btn ghost sm" id="openList">☰ Emails</button>
+      <button class="btn ghost sm icon" id="prevEmail" title="Previous email">‹</button><button class="btn ghost sm icon" id="nextEmail" title="Next email">›</button>
+      <div class="fb-title"><b id="fbName">Email 4 · Stop trying to learn AI</b><span class="small subtle" id="fbMeta">AI for Founders Summit 2026 · Invite 4 of 8 · Fri 23 Oct · 7:00 AM PT · Daily · Members · Coach · Weekly</span></div>
       <span class="status" id="esStatus">Saved</span>
-      <span class="sp" style="flex:1"></span>
-      <button class="btn ghost sm" id="undoAi" disabled>Undo edit</button>
+      <span class="chip review" id="fbStatus">In review</span>
+      <button class="btn ghost sm" data-drawer="details">Details</button>
+      <button class="btn ghost sm" data-drawer="princ">Principles</button>
+      <button class="btn ghost sm" data-drawer="versions">Versions</button>
+      <button class="btn ghost sm" data-drawer="ctx">Context</button>
+      <button class="btn ghost sm" id="undoAi" disabled>Undo</button>
       <button class="btn ghost sm" id="saveVer">Save version</button>
-      <button class="btn ghost sm" id="rewriteBtn">Request a rewrite</button>
+      <button class="btn ghost sm" id="rewriteBtn">Rewrite</button>
       <button class="btn primary sm" id="approveBtn">Approve</button>
+      <button class="btn ghost sm icon" id="focusToggle" title="Show or hide Content Studio around the email">⤢</button>
     </div>
-    <div class="studio">
-      <aside>
-        <div class="side-head"><h2>Emails</h2><button class="btn primary sm" id="newEmailBtn">+ New email</button></div>
-        <select class="select" id="launchFilter"><option>AI for Founders Summit 2026</option><option>Mindvalley member onboarding</option><option>Vishen's Newsletter</option><option>WildFit live webinar Oct 2026</option><option>All</option></select>
-        <div class="elist" id="elist"></div>
-      </aside>
-      <div>
-        <section class="card details">
-          <div class="details-top"><input id="name" value="Email 4 · Stop trying to learn AI"><div><button class="btn-quiet">Duplicate</button><button class="btn-quiet">Delete</button></div></div>
-          <div class="dgrid">
-            <label>Campaign / sequence<input class="field" value="AI for Founders Summit 2026 · Invite"></label>
-            <label>Send date and time<span class="dt"><input class="field" type="datetime-local" value="2026-10-23T07:00"><select class="field tzsel"><option>PT</option><option>ET</option><option>UK</option><option>MYT</option></select></span></label>
-            <label>Lists<input class="field" value="Daily · Members · Coach · Weekly"></label>
-            <label>Status<select class="field" id="stat"><option>Draft</option><option selected>In review</option><option>Approved</option><option>Pushed to Braze (draft)</option><option>Scheduled</option><option>Sent</option></select></label>
-          </div>
-          <div class="seqctx"><span class="chip promo">Invite 4 of 8</span><span>Previous: <b>E3 · Try this. It takes 90 seconds.</b></span><span>Next: <b>E5 · She built it on a flight. Not a developer.</b></span><span>Modelled on: <b>AI Summit Mar 2026 · E4 · 9.1% CTR</b></span><span>Languages: <span class="lang">EN</span> <span class="lang de">DE</span> <span class="lang es">ES</span></span></div>
-        </section>
-        <div class="canvas">
-          <div class="tools" role="toolbar">
+    <div class="focuswrap">
+      <div class="tools" role="toolbar">
             <button class="tool" data-cmd="bold"><b>B</b></button><button class="tool" data-cmd="italic"><i>I</i></button><button class="tool" data-cmd="underline"><u>U</u></button>
             <span class="sep"></span>
             <button class="tool" data-block="h1">H1</button><button class="tool" data-block="h2">H2</button><button class="tool" data-block="p">Text</button><button class="tool" data-cmd="insertUnorderedList">List</button>
@@ -502,7 +521,8 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
             <button class="tool" id="tblBtn" title="Insert columns">Columns</button><button class="tool" id="colBtn" title="Add a column to the selected table">+ Column</button>
             <input type="file" id="imgFile" accept="image/*" hidden>
           </div>
-          <div class="sheet">
+          
+      <div class="sheet">
             <div class="inbox">
               <div class="av"><svg viewBox="0 0 54.463 24" fill="currentColor"><path d="M 0 0 C 1.871 0.154 3.735 0.394 5.591 0.663 C 8.266 1.051 10.929 1.536 13.554 2.182 C 16.039 2.793 18.657 3.45 20.912 4.699 C 24.841 6.877 25.634 11.429 25.634 15.575 L 25.634 24 C 7.732 14.836 0 0 0 0 Z"/><path d="M 54.463 0 C 52.592 0.154 50.728 0.394 48.872 0.663 C 46.197 1.051 43.535 1.536 40.909 2.182 C 38.424 2.793 35.806 3.45 33.551 4.699 C 29.622 6.877 28.829 11.429 28.829 15.575 L 28.829 24 C 46.73 14.836 54.463 0 54.463 0 Z"/></svg></div>
               <div class="inbox-main">
@@ -527,7 +547,8 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
               <p class="ps">P.S. No replays. No recordings. The content moves too fast to be watched later. Your seat is for the live days only.</p>
             </div>
           </div>
-          <div class="dock"><div class="panel">
+          
+      <div class="dock"><div class="panel">
             <div class="live" id="liveMsg">Edit the email directly above, or tell me the change here.</div>
             <div class="prow">
               <button class="mic" id="mic" aria-label="Start voice"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg></button>
@@ -535,6 +556,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
               <div class="mode" id="modelSel" title="Which model edits this email"><button data-m="Claude" aria-pressed="true">Claude</button><button data-m="ChatGPT" aria-pressed="false">ChatGPT</button></div>
               <input id="cmd" placeholder="Type or speak an edit, e.g. open with a scene at 11pm">
               <button class="qchip" id="ctxBtn" style="padding:11px 14px">+ Add context</button>
+              <button class="qchip" id="quickBtn" style="padding:11px 14px" aria-expanded="false">Quick edits</button>
               <button class="btn-apply" id="runBtn">Apply</button>
             </div>
             <div class="chips">
@@ -542,21 +564,44 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
               <span class="scope" id="scope">Edits the whole email</span>
             </div>
           </div></div>
-          <div class="ctxpanel" id="ctxPanel" hidden>
+          
+      <div class="ctxpanel" id="ctxPanel" hidden>
             <div class="row" style="justify-content:space-between"><b>Context for this edit</b><span class="cap">attached to the version it produces</span></div>
             <textarea class="ta" id="editWhy" style="margin-top:8px;min-height:60px" placeholder="Why this edit? e.g. the ad test showed the 'founder with a job' angle won; survey says 61% are solo; use the transcript from the 14 Oct kick-off for Vishen's phrasing."></textarea>
             <button class="drop" id="editDrop" style="margin-top:8px;padding:12px"><b>Drop files or click to upload</b> · CSV, PDF, docs, transcripts, video transcripts, voice notes, links. Any length.</button>
             <div class="ctxbar"><button class="btn sm ghost" id="editVoice">🎙 Voice note</button><button class="btn sm ghost" id="editLink">Add a link</button><span class="cap" style="align-self:center" id="editCtxCount">0 items attached</span></div>
           </div>
-        </div>
-      </div>
-      <aside class="right stack">
-        <div class="card"><h3>Context this email reads <small>campaign + this email</small></h3><div class="ctx" id="emailCtx"></div></div>
-        <div class="card"><h3>Email copywriting principles <small>live on this draft</small></h3><div class="princ" id="princ"></div></div>
-        <div class="card"><h3>Versions &amp; edit log <small id="verCount"></small></h3><div class="vlog" id="versions"></div></div>
-        <div class="card" id="transCard"><h3>Translations <small>on approval</small></h3><div class="small muted" id="transBody">Approving this email sends it to the translator (Claude translator project). The German and Spanish review agent checks translation quality (meaning and sentence construction), then each version is queued for the next German and Spanish slot (Monday or Friday, or the same day when time-critical) and pushed to Braze as a draft.</div></div>
-      </aside>
     </div>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <aside class="drawer left" id="drawerList" hidden>
+      <div class="drawer-head"><h2>Emails</h2><button class="btn primary sm" id="newEmailBtn">+ New email</button><button class="btn ghost sm icon drawer-close" title="Close">×</button></div>
+      <div class="drawer-body"><select class="select" id="launchFilter"><option>AI for Founders Summit 2026</option><option>Mindvalley member onboarding</option><option>Vishen's Newsletter</option><option>WildFit live webinar Oct 2026</option><option>All</option></select>
+        <div class="elist" id="elist"></div>
+      </div>
+    </aside>
+    <aside class="drawer right" id="drawerSide" hidden>
+      <div class="drawer-head"><h2 id="drawerTitle">Details</h2><button class="btn ghost sm icon drawer-close" title="Close">×</button></div>
+      <div class="drawer-body">
+        <div data-pane="details"><section class="card details">
+          <div class="details-top"><input id="name" value="Email 4 · Stop trying to learn AI"><div><button class="btn-quiet">Duplicate</button><button class="btn-quiet">Delete</button></div></div>
+          <div class="dgrid">
+            <label>Campaign / sequence<input class="field" value="AI for Founders Summit 2026 · Invite"></label>
+            <label>Send date and time<span class="dt"><input class="field" type="datetime-local" value="2026-10-23T07:00"><select class="field tzsel"><option>PT</option><option>ET</option><option>UK</option><option>MYT</option></select></span></label>
+            <label>Lists<input class="field" value="Daily · Members · Coach · Weekly"></label>
+            <label>Status<select class="field" id="stat"><option>Draft</option><option selected>In review</option><option>Approved</option><option>Pushed to Braze (draft)</option><option>Scheduled</option><option>Sent</option></select></label>
+          </div>
+          <div class="seqctx"><span class="chip promo">Invite 4 of 8</span><span>Previous: <b>E3 · Try this. It takes 90 seconds.</b></span><span>Next: <b>E5 · She built it on a flight. Not a developer.</b></span><span>Modelled on: <b>AI Summit Mar 2026 · E4 · 9.1% CTR</b></span><span>Languages: <span class="lang">EN</span> <span class="lang de">DE</span> <span class="lang es">ES</span></span></div>
+        </section></div>
+        <div data-pane="princ" hidden><div class="card"><h3>Email copywriting principles <small>live on this draft</small></h3><div class="princ" id="princ"></div></div>
+        </div>
+        <div data-pane="versions" hidden><div class="card"><h3>Versions &amp; edit log <small id="verCount"></small></h3><div class="vlog" id="versions"></div></div>
+        </div>
+        <div data-pane="ctx" hidden><div class="card"><h3>Context this email reads <small>campaign + this email</small></h3><div class="ctx" id="emailCtx"></div></div>
+        <div class="card" id="transCard"><h3>Translations <small>on approval</small></h3><div class="small muted" id="transBody">Approving this email sends it to the translator (Claude translator project). The German and Spanish review agent checks translation quality (meaning and sentence construction), then each version is queued for the next German and Spanish slot (Monday or Friday, or the same day when time-critical) and pushed to Braze as a draft.</div></div>
+      </div>
+      </div>
+    </aside>
   </section>
 
   <!-- ================= SCHEDULING ================= -->
@@ -874,6 +919,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   $('#colBtn').addEventListener('mousedown',function(e){e.preventDefault();var sel=getSelection();var n=sel.anchorNode;var t=n&&(n.nodeType===1?n:n.parentNode).closest('table.et');if(!t){toast('Click inside a column block first.');return;}t.querySelectorAll('tr').forEach(function(tr){var td=document.createElement('td');td.innerHTML='<div class="ph">image</div><p>New column</p>';tr.appendChild(td);});saving();});
   var editCtx=[];
   function editCtxUpd(){$('#editCtxCount').textContent=editCtx.length+' item'+(editCtx.length===1?'':'s')+' attached';}
+  $('#quickBtn').addEventListener('click',function(){var pn=$('#quickBtn').closest('.panel');pn.classList.toggle('expanded');$('#quickBtn').setAttribute('aria-pressed',pn.classList.contains('expanded'));});
   $('#ctxBtn').addEventListener('click',function(){var p=$('#ctxPanel');p.hidden=!p.hidden;if(!p.hidden)$('#editWhy').focus();});
   $('#editDrop').addEventListener('click',function(){pickFiles(function(n){editCtx.push(n);addCtx(n,$('#editWhy').value.trim()||'for this edit');editCtxUpd();});});
   $('#editDrop').addEventListener('dragover',function(e){e.preventDefault();});$('#editDrop').addEventListener('drop',function(e){e.preventDefault();Array.prototype.forEach.call(e.dataTransfer.files,function(f){editCtx.push(f.name);addCtx(f.name,$('#editWhy').value.trim()||'for this edit');});editCtxUpd();});
@@ -914,7 +960,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   $('#modeEdit').addEventListener('click',function(){$('#modeEdit').setAttribute('aria-pressed','true');$('#modeDictate').setAttribute('aria-pressed','false');$('#liveMsg').textContent='Edit: say or type the change you want and press Apply.';});
   $('#mic').addEventListener('click',function(){toast('Voice runs in the real editor; type the change here instead.');});
   $('#undoAi').addEventListener('click',function(){toast('Last edit undone');$('#undoAi').disabled=true;});
-  $('#approveBtn').addEventListener('click',function(){$('#stat').value='Approved';versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Approved · translation to DE and ES started',when:'now'});renderVersions();$('#transBody').innerHTML='<div class="pr"><i>✓</i><div><b>English</b><span>approved by Ramya Rednam · pushed to Braze as draft</span></div></div><div class="pr warn"><i>…</i><div><b>German</b><span>translated · review agent passed · queued Fri 23 Oct (same day: time-critical) · German members + non-members</span></div></div><div class="pr warn"><i>…</i><div><b>Spanish</b><span>translating · review agent next · queued Fri 23 Oct · Spanish members + non-members</span></div></div>';toast('Approved. Translating to German and Spanish.');});
+  $('#approveBtn').addEventListener('click',function(){$('#stat').value='Approved';$('#fbStatus').textContent='Approved';$('#fbStatus').className='chip approved';versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Approved · translation to DE and ES started',when:'now'});renderVersions();$('#transBody').innerHTML='<div class="pr"><i>✓</i><div><b>English</b><span>approved by Ramya Rednam · pushed to Braze as draft</span></div></div><div class="pr warn"><i>…</i><div><b>German</b><span>translated · review agent passed · queued Fri 23 Oct (same day: time-critical) · German members + non-members</span></div></div><div class="pr warn"><i>…</i><div><b>Spanish</b><span>translating · review agent next · queued Fri 23 Oct · Spanish members + non-members</span></div></div>';toast('Approved. Translating to German and Spanish.');});
   $('#rewriteBtn').addEventListener('click',function(){versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Requested a rewrite with a note · back to Draft',when:'now'});renderVersions();toast('Back to Draft with your note. The engine redrafts.');});
   counts();
   /* New email wizard */
@@ -1120,13 +1166,34 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   $('#logTog').addEventListener('click',function(){var b=$('#logBody');b.hidden=!b.hidden;$('#logTog').firstChild.textContent=(b.hidden?'▸':'▾')+' Review all raw learnings ';});
   renderRules();renderPending();renderLog();
 
+  /* ---------------- focus review: drawers ---------------- */
+  function openDrawer(which,pane){
+    $('#scrim').hidden=false;
+    if(which==='list'){$('#drawerList').hidden=false;return;}
+    $('#drawerSide').hidden=false;
+    document.querySelectorAll('#drawerSide [data-pane]').forEach(function(d){d.hidden=d.getAttribute('data-pane')!==pane;});
+    $('#drawerTitle').textContent={details:'Send details',princ:'Email copywriting principles',versions:'Versions & edit log',ctx:'Context & translations'}[pane];
+  }
+  function closeDrawers(){$('#scrim').hidden=true;$('#drawerList').hidden=true;$('#drawerSide').hidden=true;}
+  $('#openList').addEventListener('click',function(){openDrawer('list');});
+  document.querySelectorAll('[data-drawer]').forEach(function(b){b.addEventListener('click',function(){openDrawer('side',b.getAttribute('data-drawer'));});});
+  document.querySelectorAll('.drawer-close').forEach(function(b){b.addEventListener('click',closeDrawers);});
+  $('#scrim').addEventListener('click',closeDrawers);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawers();});
+  $('#elist').addEventListener('click',function(e){var r=e.target.closest('.erow');if(!r)return;document.querySelectorAll('.erow').forEach(function(x){x.classList.remove('active');});r.classList.add('active');var t=r.querySelector('.t').textContent;$('#fbName').textContent=t.replace(/^(E|S)\d+[a-z]? · /,function(m){return m.replace('E','Email ').replace('S','Show-up ');});$('#fbMeta').textContent='AI for Founders Summit 2026 · '+r.querySelector('.m').textContent;$('#fbStatus').textContent=r.querySelector('.chip').textContent;$('#fbStatus').className='chip '+(r.querySelector('.chip').className.replace('chip','').trim());closeDrawers();window.scrollTo({top:0});toast('Opened: '+t);});
+  function step(dir){var rows=Array.prototype.slice.call(document.querySelectorAll('.erow'));var i=rows.findIndex(function(x){return x.classList.contains('active');});var n=rows[i+dir];if(n){n.click();}}
+  $('#prevEmail').addEventListener('click',function(){step(-1);});$('#nextEmail').addEventListener('click',function(){step(1);});
+  var focusOn=true;
+  function applyFocus(h){document.body.classList.toggle('focus',h==='review'&&focusOn);}
+  $('#focusToggle').addEventListener('click',function(){focusOn=!focusOn;applyFocus('review');toast(focusOn?'Focus: only the email on screen.':'Content Studio shown around the email.');});
+
   /* ---------------- overlay + nav ---------------- */
   $('#processBtn').addEventListener('click',function(){$('#overlay').hidden=false;});
   $('#closeOverlay').addEventListener('click',function(){$('#overlay').hidden=true;});
   $('#overlay').addEventListener('click',function(e){if(e.target===$('#overlay'))$('#overlay').hidden=true;});
   var views=['planning','review','scheduling','performance','rules'];
   var leads={planning:['Planning','Every campaign with a brief on the Official Calendar, and every standing sequence, is a box. Open one to see the proposed plan and approve it.'],review:['Review','Every drafted email, in the editor. Edit in place, dictate or talk to it, see the principles beside it, and approve. Approval starts the German and Spanish translations.'],scheduling:['Scheduling','The email scope sheet, live. Select approved emails and push them to Braze as drafts; the team schedules them there.'],performance:['Performance','Email overall performance on top, then every campaign and sequence tracked at the same time, email by email against its baseline.'],rules:['Rules','What every plan and draft obeys. Learnings come from the system after every send, from Message of the Week, and from anyone on the team; Ramya, Marisha or Vishen approve them into rules.']};
-  function show(){var h=(location.hash||'#planning').slice(1);if(views.indexOf(h)<0)h='planning';views.forEach(function(v){$('#v-'+v).hidden=(v!==h);});document.querySelectorAll('.nav a.sub').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-v')===h);});$('#secTitle').textContent=leads[h][0];$('#secLead').textContent=leads[h][1];}
+  function show(){var h=(location.hash||'#planning').slice(1);if(views.indexOf(h)<0)h='planning';views.forEach(function(v){$('#v-'+v).hidden=(v!==h);});applyFocus(h);closeDrawers();document.querySelectorAll('.nav a.sub').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-v')===h);});$('#secTitle').textContent=leads[h][0];$('#secLead').textContent=leads[h][1];}
   window.addEventListener('hashchange',show);show();
 })();
 </script>
