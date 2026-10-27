@@ -334,10 +334,67 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 .step.human .k{color:var(--brand-ink)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13.5px;opacity:0;transition:.2s;z-index:70;pointer-events:none}
 .toast.on{opacity:1;transform:translateX(-50%)}
+
+/* v3 additions */
+.nav a.sub{padding-left:34px;font-size:13.5px;color:var(--muted)}
+.nav a.sub.active{background:var(--brand-light);color:var(--brand-ink)}
+.nav a.sub .n{background:var(--chip);color:var(--subtle)}
+.nav .parent{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:999px;background:linear-gradient(90deg,#7A12D4,#DF1A6F);color:#fff;font-size:14.5px;margin-bottom:4px}
+.nav .parent .bt{background:rgba(255,255,255,.2);color:#fff}
+.sect{display:flex;align-items:baseline;gap:12px;margin:4px 0 16px}
+.sect h2{font-size:24px}.sect p{color:var(--muted);max-width:76ch}
+.crumb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:4px}
+/* review list */
+.elist .grp{margin-bottom:12px}
+.elist .grp h4{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-ink);margin:0 0 6px;padding:0 4px;display:flex;justify-content:space-between}
+.elist .grp h4 span{color:var(--subtle);font-weight:500;letter-spacing:0;text-transform:none}
+.erow{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border-muted);border-radius:14px;padding:9px 10px;margin-bottom:6px;align-items:start}
+.erow:hover{border-color:var(--border-strong)}
+.erow.active{border-color:var(--brand);box-shadow:var(--shadow)}
+.erow .dt{background:var(--brand-light);color:var(--brand-ink);border-radius:9px;text-align:center;padding:5px 0;line-height:1.05}
+.erow .dt b{display:block;font-size:17px}.erow .dt small{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.erow .t{display:block;font-size:13.5px;font-weight:500;line-height:1.3}
+.erow .m{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.erow .s{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.lang{font-size:10.5px;font-weight:700;letter-spacing:.04em;border-radius:5px;padding:1px 5px;background:var(--chip);color:var(--chip-ink)}
+.lang.de{background:var(--amber-light);color:var(--amber)}.lang.es{background:var(--blue-light);color:var(--blue)}
+/* version log */
+.vlog{display:flex;flex-direction:column;gap:0}
+.vl{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--border-muted);font-size:12.5px}
+.vl:last-child{border-bottom:0}
+.vl .av{width:28px;height:28px;border-radius:50%;background:var(--chip);color:var(--chip-ink);display:grid;place-items:center;font-size:10.5px;font-weight:700}
+.vl .av.sys{background:var(--orange-light);color:var(--orange)}
+.vl .av.rv{background:var(--brand-light);color:var(--brand-ink)}
+.vl b{font-weight:500}.vl .w{color:var(--subtle)}
+.vl .act{color:var(--muted)}
+/* wizard */
+.wiz{width:min(680px,100%);background:var(--surface);border-radius:22px;box-shadow:var(--shadow-strong);padding:22px 24px;max-height:90vh;overflow:auto}
+.wiz h3{font-size:19px;margin-bottom:4px}
+.wiz .q{margin-top:14px}
+.wiz .q label{display:block;font-size:12.5px;color:var(--subtle);margin-bottom:5px}
+.wiz .opts{display:flex;gap:6px;flex-wrap:wrap}
+.wiz .opt{border:1px solid var(--border-strong);background:transparent;border-radius:999px;padding:6px 12px;font-size:13px}
+.wiz .opt[aria-pressed="true"]{background:var(--brand-light);border-color:var(--brand);color:var(--brand-ink)}
+/* scheduling */
+.sched input[type=checkbox]{width:16px;height:16px}
+.warnic{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--amber-light);color:var(--amber);font-size:10px;font-weight:700;text-align:center;line-height:16px;margin-left:6px;cursor:help}
+.bar2{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border-muted);border-radius:14px}
+.bar2 .sp{flex:1}
+/* performance */
+.ovr{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+@media (max-width:1200px){.ovr{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:640px){.ovr{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ovr .tl .v{font-size:22px}
+/* rules log */
+.lg{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-muted);font-size:13px;align-items:start}
+.lg:last-child{border-bottom:0}
+.lg .src{font-size:12px;color:var(--subtle)}
+.lg .src b{display:block;color:var(--text);font-weight:500}
+.tog{background:none;border:1px dashed var(--border-strong);border-radius:12px;padding:10px 14px;width:100%;text-align:left;color:var(--muted);font-size:13.5px}
+.tog:hover{color:var(--text)}
 </style>
 </head>
 <body>
-
 
 <div class="shell">
 <nav class="nav" aria-label="Content Studio">
@@ -345,73 +402,69 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   <a href="#planning">My requests</a><a href="#planning">My queue</a><a href="#planning">Prioritization <span class="n">19</span></a><a href="#planning">Shoots</a><a href="#planning">Delivery &amp; risk</a>
   <div class="sec">Create</div>
   <a href="#planning">Reel Creator <span class="bt">Beta</span></a>
-  <a href="#planning" class="active">Email Creator <span class="bt">Beta</span></a>
+  <div class="parent">Email Creator <span class="bt">Beta</span></div>
+  <a href="#planning" class="sub" data-v="planning">Planning <span class="n" id="nPlan"></span></a>
+  <a href="#review" class="sub" data-v="review">Review <span class="n">21</span></a>
+  <a href="#scheduling" class="sub" data-v="scheduling">Scheduling <span class="n" id="nSched"></span></a>
+  <a href="#performance" class="sub" data-v="performance">Performance <span class="n" id="nPerf"></span></a>
+  <a href="#rules" class="sub" data-v="rules">Rules <span class="n" id="nRules"></span></a>
   <a href="#planning">Test creator <span class="bt">Beta</span></a>
   <a href="#planning">Image Creator</a>
   <a href="#planning">UTM Engine <span class="bt">New</span></a>
   <div class="sec">Results</div>
-  <a href="#tracking">Brand Performance Summary <span class="bt">Beta</span></a><a href="#tracking">Social performance</a><a href="#tracking">Email performance</a><a href="#tracking">Ad performance</a>
+  <a href="#performance">Brand Performance Summary <span class="bt">Beta</span></a><a href="#performance">Social performance</a><a href="#performance">Email performance</a><a href="#performance">Ad performance</a>
 </nav>
 
 <main class="main">
-  <div class="topbar"><span class="who">Logged in as <b>Admin</b></span><span class="sp"></span><button class="btn primary">+ New request</button><span class="avatar">RR</span><span>Ramya Rednam</span></div>
+  <div class="topbar"><span class="who">Logged in as <b>Admin</b></span><span class="sp"></span><span class="small subtle">Calendars synced 4 min ago</span><span class="avatar">RR</span><span>Ramya Rednam</span></div>
 
   <header class="fhead">
     <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
     <div>
-      <div class="eyebrow">Create</div>
-      <h1>Email Creator</h1>
-      <p>Builds every sequence from the calendars, drafts into Email Studio, schedules into Braze, and tracks against a baseline.</p>
+      <div class="eyebrow">Create · Email Creator</div>
+      <h1 id="secTitle">Planning</h1>
+      <p id="secLead">Every campaign with a brief on the Official Calendar, and every standing sequence, is a box. Open one to see the proposed plan and approve it.</p>
       <div class="beta"><b>BETA</b> Still being built by <strong>Ramya</strong>. Things may change or break. Send them your feedback.</div>
     </div>
-    <div class="right"><button class="btn ghost" id="processBtn">Show me the whole email process</button><span class="small subtle">Calendars synced 4 min ago</span></div>
+    <div class="right"><button class="btn ghost sm" id="processBtn">Show me the whole email process</button></div>
   </header>
-
-  <nav class="tabs" id="tabs">
-    <a href="#planning">Planning <span class="n" id="nPlan"></span></a>
-    <a href="#review">Review <span class="n">21 in review</span></a>
-    <a href="#scheduled">Scheduled <span class="n" id="nSched"></span></a>
-    <a href="#tracking">Tracking <span class="n" id="nTrack"></span></a>
-    <a href="#rules">Rules <span class="n" id="nRules"></span></a>
-  </nav>
 
   <!-- ================= PLANNING ================= -->
   <section class="view" id="v-planning">
     <div id="planHome">
-      <div class="vhead"><div><h2>Planning</h2><p>Every campaign with a brief on the Official Calendar, and every standing sequence, is a box. Open one to see the proposed plan and approve it.</p></div><div class="row"><span class="chip warn">2 waiting for brief</span><span class="chip">1 plan to approve</span></div></div>
+      <div class="row" style="justify-content:flex-end;margin:18px 0 12px"><span class="chip warn">2 waiting for brief</span><span class="chip">1 plan to approve · Ramya</span></div>
       <div class="boxes" id="planBoxes"></div>
     </div>
-    <div id="planDetail" hidden></div>
+    <div id="planDetail" hidden style="margin-top:18px"></div>
   </section>
 
-  <!-- ================= REVIEW (Email Studio) ================= -->
+  <!-- ================= REVIEW ================= -->
   <section class="view" id="v-review" hidden>
-    <div class="es-top">
-      <span class="prod">Email Studio <span>· inside Email Creator</span></span><span class="div"></span>
+    <div class="es-top" style="margin-top:18px">
+      <span class="prod">Editor</span><span class="div"></span>
       <span class="status" id="esStatus">Saved</span>
       <span class="sp" style="flex:1"></span>
       <button class="btn ghost sm" id="undoAi" disabled>Undo edit</button>
       <button class="btn ghost sm" id="saveVer">Save version</button>
       <button class="btn ghost sm" id="rewriteBtn">Request a rewrite</button>
       <button class="btn primary sm" id="approveBtn">Approve</button>
-      <button class="btn sm">Export</button>
     </div>
     <div class="studio">
       <aside>
-        <div class="side-head"><h2>Launch calendar</h2><button class="btn primary sm">+ New email</button></div>
-        <select class="select" id="launchFilter"><option>AI for Founders Summit 2026</option><option>All launches</option><option>Mindvalley member onboarding</option><option>WildFit live webinar Oct 2026</option></select>
-        <div id="groups"></div>
+        <div class="side-head"><h2>Emails</h2><button class="btn primary sm" id="newEmailBtn">+ New email</button></div>
+        <select class="select" id="launchFilter"><option>AI for Founders Summit 2026</option><option>Mindvalley member onboarding</option><option>Vishen's Newsletter</option><option>WildFit live webinar Oct 2026</option><option>All</option></select>
+        <div class="elist" id="elist"></div>
       </aside>
       <div>
         <section class="card details">
-          <div class="details-top"><input id="name" value="Oct 23 Fri - Email 4 - Stop trying to learn AI"><div><button class="btn-quiet">Duplicate</button><button class="btn-quiet">Delete</button></div></div>
+          <div class="details-top"><input id="name" value="Email 4 · Stop trying to learn AI"><div><button class="btn-quiet">Duplicate</button><button class="btn-quiet">Delete</button></div></div>
           <div class="dgrid">
-            <label>Launch<input class="field" value="AI for Founders Summit 2026"></label>
+            <label>Campaign / sequence<input class="field" value="AI for Founders Summit 2026 · Invite"></label>
             <label>Send date and time<span class="dt"><input class="field" type="datetime-local" value="2026-10-23T07:00"><select class="field tzsel"><option>PT</option><option>ET</option><option>UK</option><option>MYT</option></select></span></label>
-            <label>List or segment<input class="field" value="Daily · Members · Coach · Weekly"></label>
-            <label>Status<select class="field" id="stat"><option>Draft</option><option selected>In review</option><option>Approved</option><option>Scheduled</option><option>Sent</option></select></label>
+            <label>Lists<input class="field" value="Daily · Members · Coach · Weekly"></label>
+            <label>Status<select class="field" id="stat"><option>Draft</option><option selected>In review</option><option>Approved</option><option>Pushed to Braze (draft)</option><option>Scheduled</option><option>Sent</option></select></label>
           </div>
-          <div class="seqctx"><span class="chip promo">Invite 4 of 8</span><span>Previous: <b>E3 · Try this. It takes 90 seconds.</b></span><span>Next: <b>E5 · She built it on a flight. Not a developer.</b></span><span>Reference: <b>AI Summit Mar 2026 · E4 · 9.1% CTR</b></span></div>
+          <div class="seqctx"><span class="chip promo">Invite 4 of 8</span><span>Previous: <b>E3 · Try this. It takes 90 seconds.</b></span><span>Next: <b>E5 · She built it on a flight. Not a developer.</b></span><span>Modelled on: <b>AI Summit Mar 2026 · E4 · 9.1% CTR</b></span><span>Languages: <span class="lang">EN</span> <span class="lang de">DE</span> <span class="lang es">ES</span></span></div>
         </section>
         <div class="canvas">
           <div class="tools" role="toolbar">
@@ -441,7 +494,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
               <p>That one shift is what the AI for Founders Summit is built around. Three days, 30 October to 1 November. Free. Live.</p>
               <p>On day one I will walk through the exact way I run Mindvalley with this question, including the parts I got wrong first.</p>
               <p>If you have ever felt behind, this is the invitation I wish someone had sent me.</p>
-              <p><a class="btn" href="https://www.mindvalley.com/summit/ai-founders?utm_source=email_campaign_daily_aiffs_oct23&amp;utm_campaign=launch_aiffs_oct_2026&amp;utm_content=invite_e4&amp;utm_medium=lp&amp;otag=email_campaign_daily_aiffs_oct23&amp;otag=launch_aiffs_oct_2026">Save my free seat</a></p>
+              <p><a class="btn" href="https://www.mindvalley.com/summit/ai-founders?utm_source=email_campaign_daily_email_4&amp;utm_campaign=launch_aiffs_oct_2026&amp;utm_content=content_wwww&amp;utm_medium=lp&amp;otag=email_campaign_daily_email_4&amp;otag=launch_aiffs_oct_2026">Save my free seat</a></p>
               <p>Vishen</p>
               <p class="ps">P.S. No replays. No recordings. The content moves too fast to be watched later. Your seat is for the live days only.</p>
             </div>
@@ -464,66 +517,85 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
       </div>
       <aside class="right stack">
         <div class="card"><h3>Email copywriting principles <small>live on this draft</small></h3><div class="princ" id="princ"></div></div>
-        <div class="card"><h3>Versions <small id="verCount"></small></h3><div id="versions"></div></div>
+        <div class="card"><h3>Versions &amp; edit log <small id="verCount"></small></h3><div class="vlog" id="versions"></div></div>
+        <div class="card" id="transCard"><h3>Translations <small>on approval</small></h3><div class="small muted" id="transBody">Approving this email sends it to the translator (Claude translator project). German and Spanish versions are created, then pushed to the German and Spanish lists as Braze drafts for scheduling.</div></div>
       </aside>
     </div>
   </section>
 
-  <!-- ================= SCHEDULED ================= -->
-  <section class="view" id="v-scheduled" hidden>
-    <div class="vhead"><div><h2>Scheduled</h2><p>The email scope sheet, live. One row per email per send list, with the UTM from the approved UTM Engine card, the Braze link after push, and a preview.</p></div><div class="row"><button class="btn ghost">Export CSV (sheet layout)</button><button class="btn ghost">Run pre-flight</button><button class="btn primary" id="pushBtn">Push approved to Braze</button></div></div>
-    <div class="grid g4" style="margin-bottom:14px">
-      <div class="card"><div class="pr"><i>✓</i><div><b>Naming convention</b><span>21 of 21 names start with the date</span></div></div></div>
-      <div class="card"><div class="pr"><i>✓</i><div><b>UTM and otag</b><span>Card approved 22 Oct · all links populated</span></div></div></div>
-      <div class="card"><div class="pr warn"><i>!</i><div><b>No Email Day</b><span>2 registrant sends on 31 Oct, 1 Nov need owner's yes</span></div></div></div>
-      <div class="card"><div class="pr warn"><i>!</i><div><b>Braze segment</b><span>"VIP test arm B" not found</span></div></div></div>
+  <!-- ================= SCHEDULING ================= -->
+  <section class="view" id="v-scheduling" hidden>
+    <div class="bar2" style="margin-top:18px">
+      <span class="small muted"><b id="selCount">0</b> selected</span>
+      <span class="sp"></span>
+      <button class="btn ghost sm">Export CSV (sheet layout)</button>
+      <button class="btn primary sm" id="pushBtn">Push selected to Braze as drafts</button>
     </div>
     <div class="filters">
       <select id="fCamp"><option value="">All campaigns</option></select>
       <select id="fSeq"><option value="">All sequences</option></select>
       <select id="fList"><option value="">All lists</option></select>
-      <select id="fStatus"><option value="">All statuses</option><option>Draft</option><option>In review</option><option>Approved</option><option>Scheduled</option><option>Sent</option></select>
+      <select id="fLang"><option value="">All languages</option><option>EN</option><option>DE</option><option>ES</option></select>
+      <select id="fStatus"><option value="">All statuses</option><option>Draft</option><option>In review</option><option>Approved</option><option>Translating</option><option>Pushed to Braze (draft)</option><option>Scheduled</option><option>Sent</option></select>
       <input id="fSearch" placeholder="Search subject or email…">
     </div>
     <div class="card tbl" style="padding:6px 8px"><table class="sched" id="schedTable"></table></div>
+    <p class="small subtle" style="margin-top:10px">Email Creator supplies the copy. Pushing creates Braze campaign drafts (and canvas drafts for confirmation, retargeting and show-up flows); the team schedules them in Braze. A ⚠ in the Status column names what still needs attention on that row.</p>
   </section>
 
-  <!-- ================= TRACKING ================= -->
-  <section class="view" id="v-tracking" hidden>
-    <div id="trackHome">
-      <div class="vhead"><div><h2>Tracking</h2><p>Every campaign and every standing sequence, tracked at the same time. Open a box for email-by-email performance against the email that did the same job in the baseline.</p></div><div class="row"><span class="chip warn plain">Example figures to show the layout</span><span class="small subtle">Data through 26 Oct 2026 · Analyst OS 12:00 MYT</span></div></div>
-      <div class="boxes" id="trackBoxes"></div>
+  <!-- ================= PERFORMANCE ================= -->
+  <section class="view" id="v-performance" hidden>
+    <div id="perfHome">
+      <div class="sec" style="margin-top:18px"><h2>Email overall performance <small>2026 year to date · Metabase + Braze · data through 26 Oct</small><span class="chip warn plain" style="margin-left:10px">Example figures</span></h2>
+        <div class="ovr">
+          <div class="tl"><div class="v">1,284</div><div class="l">Emails sent this year</div><div class="s">distinct emails, not sends</div></div>
+          <div class="tl"><div class="v">$38.2M</div><div class="l">Email channel revenue</div><div class="s">bridge_email_revenue · last touch</div></div>
+          <div class="tl"><div class="v">412M</div><div class="l">Total sends</div><div class="s">all lists, all languages</div></div>
+          <div class="tl"><div class="v">1.92M</div><div class="l">Leads from email</div><div class="s">first sign-up attributed to an email</div></div>
+          <div class="tl"><div class="v">29.4%</div><div class="l">Average open rate</div><div class="s">unique opens ÷ delivered</div></div>
+          <div class="tl"><div class="v">5.8%</div><div class="l">Average CTR</div><div class="s">unique clicks ÷ delivered</div></div>
+          <div class="tl"><div class="v">0.17%</div><div class="l">Unsubscribe rate</div><div class="s">2025: 0.21%</div></div>
+        </div>
+      </div>
+      <div class="sec"><h2>Campaign performance <small>campaigns, sequences and the newsletter, tracked at the same time · open one for email-by-email detail</small></h2>
+        <div class="boxes" id="perfBoxes"></div>
+      </div>
     </div>
-    <div id="trackDetail" hidden></div>
+    <div id="perfDetail" hidden style="margin-top:18px"></div>
   </section>
 
   <!-- ================= RULES ================= -->
   <section class="view" id="v-rules" hidden>
-    <div class="vhead"><div><h2>Rules</h2><p>What every plan and every draft obeys. Rules come from two places: seeded by Ramya, or derived from a learning someone added and Ramya approved.</p></div><span class="chip warn" id="pendCount"></span></div>
+    <div class="row" style="justify-content:space-between;margin:18px 0 12px"><span class="small muted">Rules are approved by <b>Ramya</b>, <b>Marisha</b> or <b>Vishen</b>. Anyone with Content Studio access can add a learning.</span><span class="chip warn" id="pendCount"></span></div>
     <div class="grid" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
       <div class="stack">
         <div class="card">
           <h3>List caps <small>per list, per week, across all campaigns</small></h3>
           <div class="tbl"><table>
-            <tr><th>List</th><th class="num">Cap / week</th><th>Counts</th><th></th></tr>
-            <tr><td>Daily</td><td class="num">5</td><td class="small muted">campaign emails + Vishen's Newsletter</td><td><span class="chip plain subtle">seeded</span></td></tr>
-            <tr><td>Members</td><td class="num">3</td><td class="small muted">all campaigns</td><td><span class="chip plain subtle">seeded</span></td></tr>
-            <tr><td>Coach</td><td class="num">3</td><td class="small muted">all campaigns</td><td><span class="chip plain subtle">seeded</span></td></tr>
-            <tr><td>Events</td><td class="num">2–3</td><td class="small muted">ticket campaigns every other day</td><td><span class="chip plain subtle">seeded</span></td></tr>
-            <tr><td>Weekly</td><td class="num">1</td><td class="small muted">one per week</td><td><span class="chip plain subtle">seeded</span></td></tr>
-            <tr><td>Highlights · Vishen's list · Sublist · Members Pro</td><td class="num">—</td><td class="small muted">shown, not capped</td><td><span class="chip warn plain">confirm</span></td></tr>
+            <tr><th>List</th><th class="num">Cap / week</th><th>Note</th></tr>
+            <tr><td>Daily</td><td class="num">5</td><td class="small muted">campaign emails + Vishen's Newsletter</td></tr>
+            <tr><td>Members (MVM)</td><td class="num">3</td><td class="small muted">all campaigns</td></tr>
+            <tr><td>Coach</td><td class="num">3</td><td class="small muted">all campaigns</td></tr>
+            <tr><td>Events</td><td class="num">2–3</td><td class="small muted">ticket campaigns every other day</td></tr>
+            <tr><td>Weekly</td><td class="num">1</td><td class="small muted">one per week</td></tr>
+            <tr><td>German · Spanish (members and non-members)</td><td class="num">3</td><td class="small muted">translated emails; may be the best performer not yet sent to that list</td></tr>
+            <tr><td>Highlights · Vishen's list (VLNL) · Mastery · Sublists</td><td class="num">—</td><td class="small muted">shown, not capped; sublists always carry the date in their name</td></tr>
           </table></div>
         </div>
-        <div class="card" id="rulesCard"><h3>Rules <small>one list, grouped</small></h3><div id="rulesList"></div></div>
+        <div class="card" id="rulesCard"><h3>Rules <small>one list, grouped · provenance on every rule</small></h3><div id="rulesList"></div></div>
       </div>
       <div class="stack">
-        <div class="card"><h3>Recently added rules <small>waiting for Ramya's approval</small></h3><div id="pending"></div></div>
+        <div class="card"><h3>Recently added rules <small>waiting for approval</small></h3><div id="pending"></div></div>
         <div class="card">
           <h3>Add a learning</h3>
           <div class="row" style="margin-bottom:10px"><button class="btn sm" id="srcMow" aria-pressed="true">Message of the Week · learnings from email</button><button class="btn sm ghost" id="srcCamp" aria-pressed="false">From a recent campaign or message</button></div>
-          <textarea class="ta" id="learnText" placeholder="Write it the way you'd say it in the room. Example: the Wednesday newsletter with one big idea and the summit as the only link beat every invite that week."></textarea>
-          <div class="row" style="margin-top:8px"><input class="field sm" id="learnFrom" placeholder="From (anyone, any words): Marisha · Vishen · MOW 21 Oct · E4 test" style="flex:1;min-width:200px"><button class="btn primary sm" id="learnBtn">Process and send for approval</button></div>
-          <p class="small subtle" style="margin-top:8px">The system rewrites it as one clear learning with its evidence, proposes rules, and puts them under Recently added rules. Nothing becomes a rule until Ramya approves it.</p>
+          <textarea class="ta" id="learnText" placeholder="Write it the way you'd say it in the room."></textarea>
+          <div class="row" style="margin-top:8px"><input class="field sm" id="learnFrom" placeholder="From (anyone, any words): Moni · Marisha · MOW 21 Oct" style="flex:1;min-width:200px"><button class="btn primary sm" id="learnBtn">Process and send for approval</button></div>
+          <p class="small subtle" style="margin-top:8px">The system also adds a learning by itself after every send, from the numbers. All of them go through the same approval.</p>
+        </div>
+        <div class="card">
+          <button class="tog" id="logTog">▸ Review all raw learnings <span class="subtle">· system-added and person-added, with status</span></button>
+          <div id="logBody" hidden style="margin-top:10px"></div>
         </div>
       </div>
     </div>
@@ -534,17 +606,17 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 <div class="overlay" id="overlay" hidden>
   <div class="inner">
     <div class="row" style="justify-content:space-between;margin-bottom:14px"><div><div class="small subtle" style="letter-spacing:.1em;text-transform:uppercase;font-weight:700">The whole email process</div><h2 style="font-size:22px">From calendar row to measured sequence</h2></div><button class="btn ghost" id="closeOverlay">Close</button></div>
-    <p class="muted" style="margin-bottom:14px;max-width:80ch">Purple steps are the two places a person acts. Everything else runs in the backend and re-runs when the Official Calendar or the Comms Calendar changes.</p>
+    <p class="muted" style="margin-bottom:14px;max-width:80ch">Purple steps are where a person acts. Everything else runs in the backend and re-runs when the Official Calendar or the Comms Calendar changes.</p>
     <div class="pipe">
       <div class="step"><div class="k">① Watch</div><div class="t">Calendar Watcher</div><div class="d">An Official Calendar row gets a Key Message Doc or Launch Plan → the campaign is detected. Comms Calendar slots are read for it.</div></div>
-      <div class="step"><div class="k">② Brief</div><div class="t">Brief Builder</div><div class="d">Every link in those cells is fetched, plus the Event Type row. One structured brief.</div></div>
+      <div class="step"><div class="k">② Brief</div><div class="t">Brief Builder</div><div class="d">Every link in those cells is fetched, plus the Event Type row. Target comes from the launch plan, not the calendar.</div></div>
       <div class="step"><div class="k">③ Research</div><div class="t">Existing step</div><div class="d">Content Studio research runs on the brief. Unchanged.</div></div>
-      <div class="step"><div class="k">④ Baseline</div><div class="t">Baseline Finder</div><div class="d">Best comparable past campaign from Metabase, 5y → 3y → 2y. Target = max(calendar target, baseline × 1.3).</div></div>
-      <div class="step human"><div class="k">⑤ Plan · approve</div><div class="t">Sequence Planner</div><div class="d">Emails on parked days, per list caps, segments proposed, conflicts flagged. Owner approves in Planning.</div></div>
-      <div class="step"><div class="k">⑥ Draft</div><div class="t">Drafting Engine</div><div class="d">Every email written with the email rules and the baseline's matching email; links from the approved UTM card.</div></div>
-      <div class="step human"><div class="k">⑦ Review · approve</div><div class="t">Email Studio</div><div class="d">Edit in place, dictate or talk to the email, versions, approve.</div></div>
-      <div class="step"><div class="k">⑧ Schedule</div><div class="t">Scheduler → Braze</div><div class="d">Pre-flight, date-first naming, suppress lists, push. Braze link written back.</div></div>
-      <div class="step"><div class="k">⑨ Track</div><div class="t">Tracker</div><div class="d">Email by email against the baseline's matching email. Learnings go to Rules for approval.</div></div>
+      <div class="step"><div class="k">④ Baseline</div><div class="t">Baseline Finder</div><div class="d">Best comparable past campaign from Metabase, 5y → 3y → 2y. Flags when the calendar figure is below baseline.</div></div>
+      <div class="step human"><div class="k">⑤ Plan · approve</div><div class="t">Sequence Planner</div><div class="d">Emails on parked days, per list caps, segments proposed, conflicts flagged. Ramya approves in Planning.</div></div>
+      <div class="step"><div class="k">⑥ Draft</div><div class="t">Drafting Engine</div><div class="d">Every email written with the rules and the baseline's matching email; links from the approved UTM Engine card.</div></div>
+      <div class="step human"><div class="k">⑦ Review · approve</div><div class="t">Editor</div><div class="d">Edit in place, dictate or talk to the email (Claude or ChatGPT), versions with who edited, approve. Approval triggers DE and ES translation.</div></div>
+      <div class="step"><div class="k">⑧ Schedule</div><div class="t">Push to Braze as drafts</div><div class="d">Copy only. Campaign drafts and canvas drafts go to Braze; the team schedules there.</div></div>
+      <div class="step"><div class="k">⑨ Performance</div><div class="t">Tracker</div><div class="d">Email by email against the baseline's matching email, plus total campaign revenue. Learnings go to Rules for approval.</div></div>
     </div>
   </div>
 </div>
@@ -552,6 +624,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 <div class="toast" id="toast"></div>
 
 <script>
+
 (function(){
   var $=function(s,r){return (r||document).querySelector(s);};
   var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
@@ -580,8 +653,8 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
     return '<button class="box" data-id="'+b.id+'"><div class="kind '+b.k+'">'+esc(b.kind)+'</div><h3>'+esc(b.name)+'</h3><div class="meta">'+esc(b.src)+'</div><div class="meta">'+esc(b.when)+'</div><div class="foot">'+foot+'</div></button>';
   }
   $('#planBoxes').innerHTML=boxes.map(function(b){return boxHtml(b,'plan');}).join('');
-  $('#trackBoxes').innerHTML=boxes.map(function(b){return boxHtml(b,'track');}).join('');
-  $('#nPlan').textContent=boxes.length+' boxes';$('#nTrack').textContent=boxes.filter(function(b){return b.track;}).length+' live';
+  $('#perfBoxes').innerHTML=boxes.map(function(b){return boxHtml(b,'track');}).join('');
+  $('#nPlan').textContent=boxes.length+' boxes';$('#nPerf').textContent=boxes.filter(function(b){return b.track;}).length+' live';
 
   /* ---------------- AI for Founders plan ---------------- */
   var plan=[
@@ -688,10 +761,14 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   }
   $('#planBoxes').addEventListener('click',function(e){var b=e.target.closest('.box');if(b)openPlan(b.getAttribute('data-id'));});
 
-  /* ---------------- Review: Email Studio ---------------- */
-  var side=plan.filter(function(p){return !p.dropped&&p.seq!=='salese';}).slice(0,12);
-  var g={};side.forEach(function(p){var k=p.seq==='showup'?'Show-up · team':'Invite · Vishen';(g[k]=g[k]||[]).push(p);});
-  $('#groups').innerHTML=Object.keys(g).map(function(k){return '<div class="group"><h3><span class="gname">'+k+'</span><span class="gcount">'+g[k].length+' emails</span></h3>'+g[k].map(function(p){var d=parse(p.d);return '<button class="item'+(p.n==='E4'?' active':'')+'"><span class="tile"><span class="tmon">'+MON[d.getUTCMonth()]+'</span><span class="tnum">'+d.getUTCDate()+'</span></span><span class="imain"><span class="nm">'+esc(p.n+' · '+p.t)+'</span><span class="lst">'+DOW[d.getUTCDay()]+' '+(p.time||'7:00 AM')+' PT · '+esc(p.lists)+'</span><span class="badge '+({'Sent':'sent','Scheduled':'scheduled','Approved':'approved','In review':'review'}[p.status]||'')+'">'+p.status+'</span></span></button>';}).join('')+'</div>';}).join('');
+    /* ---------------- Review: editor ---------------- */
+  var statusCls={'Sent':'sent','Scheduled':'scheduled','Pushed to Braze (draft)':'scheduled','Approved':'approved','In review':'review','Translating':'review','Draft':'','Planned':''};
+  var emailsList=plan.filter(function(p){return !p.dropped&&p.seq!=='salese';}).slice(0,12);
+  function renderList(){
+    var g={};emailsList.forEach(function(p){var k=p.seq==='showup'?'Show-up · team':'Invite · Vishen';(g[k]=g[k]||[]).push(p);});
+    $('#elist').innerHTML=Object.keys(g).map(function(k){return '<div class="grp"><h4>'+k+'<span>'+g[k].length+' emails</span></h4>'+g[k].map(function(p){var d=parse(p.d);var langs=p.status==='Sent'||p.status==='Scheduled'||p.status==='Approved'?'<span class="lang">EN</span><span class="lang de">DE</span><span class="lang es">ES</span>':'<span class="lang">EN</span>';return '<button class="erow'+(p.n==='E4'?' active':'')+'"><span class="dt"><small>'+MON[d.getUTCMonth()]+'</small><b>'+d.getUTCDate()+'</b></span><span><span class="t">'+esc(p.n+' · '+p.t)+'</span><span class="m">'+DOW[d.getUTCDay()]+' · '+(p.time||'7:00 AM PST')+' · '+esc(p.lists.replace(/ *\(.*\)/,''))+'</span><span class="s"><span class="chip '+(statusCls[p.status]||'')+'">'+p.status+'</span>'+langs+'</span></span></button>';}).join('')+'</div>';}).join('');
+  }
+  renderList();
   var subject=$('#subject'),preview=$('#preview'),subjectB=$('#subjectB'),body=$('#body');
   var FORBID=['productivity','pitch','excited to announce',"don't miss",'incredible opportunity','master prompting','job loss','agentic','vibe coding'];
   function counts(){
@@ -704,12 +781,12 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
     var lower=(text+' '+subject.value).toLowerCase(),hits=FORBID.filter(function(f){return lower.indexOf(f)>-1;});
     var untracked=0;body.querySelectorAll('a').forEach(function(a){if(/^https?:/.test(a.getAttribute('href')||'')&&(a.href.indexOf('utm_campaign=')<0||a.href.indexOf('otag=')<0))untracked++;});
     var items=[
-      {ok:true,t:'One belief, proven a new way each email',s:'The sequence belief: AI First means Human First. Different proof per email.'},
+      {ok:true,t:'One belief, proven a new way each email',s:'Sequence belief: AI First means Human First. Different proof per email.'},
       {ok:ctas===1,t:'One call to action',s:ctas===1?'One button. Good.':ctas+' buttons. Julie needs one thing to do.'},
       {ok:words>=250&&words<=350,t:'250–350 words pre-event',s:words+' words'+(words<250?' · under the band':words>350?' · over the band':' · in the band')},
       {ok:hits.length===0,t:'No forbidden phrases',s:hits.length?'Found: '+hits.join(', '):'productivity · pitch · fear of job loss · jargon · "excited to announce"'},
-      {ok:subject.value.length>0&&subject.value.length<=60&&!/[!]{2,}|🚀|🔥/.test(subject.value),t:'Subject passes the text-a-friend test',s:subject.value.length+' characters · would you text this to a friend?'},
-      {ok:/^(.{0,40})(\n|$)/.test(text.trim())&&!/^(I'm excited|We're excited|Don't miss)/i.test(text.trim()),t:'First sentence earns the second',s:'Short, unexpected, personal: a scene, a question, a confession.'},
+      {ok:subject.value.length>0&&subject.value.length<=60,t:'Subject passes the text-a-friend test',s:subject.value.length+' characters · would you text this to a friend?'},
+      {ok:!/^(I'm excited|We're excited|Don't miss)/i.test(text.trim()),t:'First sentence earns the second',s:'Short, unexpected, personal: a scene, a question, a confession.'},
       {ok:untracked===0,t:'Every link tracked',s:untracked?untracked+' link(s) missing utm_campaign or otag':links+' link(s) carry the approved UTM card'},
       {ok:/no replays/i.test(text),t:'Live-only rule from the 48-hour email on',s:'"No replays. No recordings." present'},
       {ok:true,t:'Emotional stage',s:'Hope (emails 3–5): a tiny win, then the summit as the path'}
@@ -723,20 +800,30 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   document.querySelectorAll('[data-block]').forEach(function(b){b.addEventListener('mousedown',function(e){e.preventDefault();body.focus();document.execCommand('formatBlock',false,b.getAttribute('data-block'));saving();});});
   $('#linkBtn').addEventListener('mousedown',function(e){e.preventDefault();toast('Links come from the approved UTM Engine card for this campaign.');});
   $('#ctaBtn').addEventListener('mousedown',function(e){e.preventDefault();toast('One button per email. Replace the existing one instead.');});
-  var versions=[{n:4,note:'Reviewer: 11pm scene + live-only P.S.',when:'now'},{n:3,note:'Claude: scene opening proposed',when:'2m'},{n:2,note:'Quick edit: punchier subject line',when:'9m'},{n:1,note:'Email Creator draft',when:'1h'}];
-  function renderVersions(){$('#versions').innerHTML=versions.map(function(v){return '<div class="ver"><span>v'+v.n+' · '+esc(v.note)+'</span><span class="subtle">'+v.when+' <button>view</button> <button>restore</button></span></div>';}).join('');$('#verCount').textContent=versions.length+' saved';}
+  var ME='Ramya Rednam';
+  var versions=[
+    {n:4,who:'Ramya Rednam',role:'reviewer',act:'Claude edit: open with a scene at 11pm · P.S. on the live-only rule',when:'27 Oct 02:31'},
+    {n:3,who:'Moni',role:'writer',act:'Quick edit (Claude): punchier subject line · subject B added',when:'26 Oct 16:10'},
+    {n:2,who:'Moni',role:'writer',act:'Edited copy in place: paragraphs 2 and 6',when:'26 Oct 15:48'},
+    {n:1,who:'Email Creator',role:'system',act:'Drafted from the brief, modelled on AI Summit Mar 2026 · E4',when:'26 Oct 14:02'}
+  ];
+  function renderVersions(){
+    $('#versions').innerHTML=versions.map(function(v){var ini=v.who==='Email Creator'?'EC':v.who.split(' ').map(function(x){return x[0];}).join('').slice(0,2).toUpperCase();return '<div class="vl"><span class="av'+(v.role==='system'?' sys':v.role==='reviewer'?' rv':'')+'">'+ini+'</span><div><b>v'+v.n+' · '+esc(v.who)+'</b> <span class="w">· '+v.role+' · '+v.when+'</span><div class="act">'+esc(v.act)+'</div><div class="row" style="gap:6px;margin-top:3px"><button class="btn sm ghost" style="padding:2px 8px;font-size:11px">view</button><button class="btn sm ghost" style="padding:2px 8px;font-size:11px">restore</button></div></div></div>';}).join('');
+    $('#verCount').textContent=versions.length+' versions · every edit logged with who and when';
+  }
   renderVersions();
-  $('#saveVer').addEventListener('click',function(){versions.unshift({n:versions.length+1,note:'Saved by Ramya',when:'now'});renderVersions();toast('Version saved');});
+  $('#saveVer').addEventListener('click',function(){versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Saved a version',when:'now'});renderVersions();toast('Version saved');});
+  var model='Claude';document.querySelectorAll('#modelSel button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#modelSel button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');model=b.getAttribute('data-m');$('#liveMsg').textContent='Edits now run on '+model+'. Each applied change is logged as a version with your name and the model.';});});
   function runEdit(instr){
-    if(!instr)return;$('#liveMsg').textContent='Applying: '+instr+'…';
+    if(!instr)return;$('#liveMsg').textContent='Applying with '+model+': '+instr+'…';
     setTimeout(function(){
       if(/11pm|scene/i.test(instr)){body.firstElementChild.textContent='It was 11:14pm and she was still at her desk.';}
       else if(/p\.?s/i.test(instr)){var ps=body.querySelector('.ps');if(ps)ps.textContent='P.S. No replays. No recordings. Your seat is for the live days only. Save it now and block the mornings.';}
       else if(/subject/i.test(instr)){subject.value='The wrong way to catch up on AI';}
       else if(/tight/i.test(instr)){var ps2=body.querySelectorAll('p');if(ps2[2])ps2[2].remove();}
       else if(/urgen/i.test(instr)){var p=document.createElement('p');p.textContent='Registration closes Thursday night. The first session starts Friday at 7am Pacific.';body.insertBefore(p,body.querySelector('a.btn').parentNode);}
-      versions.unshift({n:versions.length+1,note:model+': '+instr,when:'now'});renderVersions();$('#undoAi').disabled=false;
-      counts();saving();$('#liveMsg').textContent='Done: "'+instr+'". Saved as a version. Undo if it is not right.';$('#cmd').value='';
+      versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:model+' edit: '+instr,when:'now'});renderVersions();$('#undoAi').disabled=false;
+      counts();saving();$('#liveMsg').textContent='Done: "'+instr+'". Logged as v'+versions[0].n+' by '+ME+'. Undo if it is not right.';$('#cmd').value='';
     },500);
   }
   $('#runBtn').addEventListener('click',function(){runEdit($('#cmd').value.trim());});
@@ -744,53 +831,83 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
   document.querySelectorAll('.qchip').forEach(function(c){c.addEventListener('click',function(){runEdit(c.textContent);});});
   $('#modeDictate').addEventListener('click',function(){$('#modeDictate').setAttribute('aria-pressed','true');$('#modeEdit').setAttribute('aria-pressed','false');$('#liveMsg').textContent='Dictate: speak and the words go into the email where the cursor is.';});
   $('#modeEdit').addEventListener('click',function(){$('#modeEdit').setAttribute('aria-pressed','true');$('#modeDictate').setAttribute('aria-pressed','false');$('#liveMsg').textContent='Edit: say or type the change you want and press Apply.';});
-  var model='Claude';document.querySelectorAll('#modelSel button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#modelSel button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');model=b.getAttribute('data-m');$('#liveMsg').textContent='Edits now run on '+model+'. Each applied change is saved as a version with the model named.';});});
-  $('#mic').addEventListener('click',function(){toast('Voice runs in the real Email Studio; type the change here instead.');});
+  $('#mic').addEventListener('click',function(){toast('Voice runs in the real editor; type the change here instead.');});
   $('#undoAi').addEventListener('click',function(){toast('Last edit undone');$('#undoAi').disabled=true;});
-  $('#approveBtn').addEventListener('click',function(){$('#stat').value='Approved';toast('Approved by Ramya · 27 Oct 02:40');});
-  $('#rewriteBtn').addEventListener('click',function(){toast('Back to Draft with your note. The engine redrafts.');});
+  $('#approveBtn').addEventListener('click',function(){$('#stat').value='Approved';versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Approved · translation to DE and ES started',when:'now'});renderVersions();$('#transBody').innerHTML='<div class="pr"><i>✓</i><div><b>English</b><span>approved by Ramya Rednam · pushed to Braze as draft</span></div></div><div class="pr warn"><i>…</i><div><b>German</b><span>translating (Claude translator project) · then German members + non-members lists</span></div></div><div class="pr warn"><i>…</i><div><b>Spanish</b><span>queued · then Spanish members + non-members lists</span></div></div>';toast('Approved. Translating to German and Spanish.');});
+  $('#rewriteBtn').addEventListener('click',function(){versions.unshift({n:versions.length+1,who:ME,role:'reviewer',act:'Requested a rewrite with a note · back to Draft',when:'now'});renderVersions();toast('Back to Draft with your note. The engine redrafts.');});
   counts();
+  /* New email wizard */
+  $('#newEmailBtn').addEventListener('click',function(){
+    var m=$('#modal');
+    m.innerHTML='<div class="wiz"><h3>New email</h3><p class="small muted">Answer these and the email is drafted into the list, modelled on the best matching email from the baseline.</p>'+
+      '<div class="q"><label>Which campaign or sequence is it for?</label><select class="field"><option>AI for Founders Summit 2026 · Invite</option><option>AI for Founders Summit 2026 · Show-up</option><option>AI for Founders Summit 2026 · Sales retargeting</option><option>Mindvalley member onboarding</option><option>Vishen’s Newsletter</option><option>Something else (one-off)</option></select></div>'+
+      '<div class="q"><label>What is this email about? One or two lines.</label><textarea class="ta" style="min-height:64px" placeholder="e.g. A founder story: she built her onboarding app on a flight. Point to day 2 of the summit."></textarea></div>'+
+      '<div class="q"><label>What should the reader do?</label><div class="opts"><button class="opt" aria-pressed="true">Register</button><button class="opt">Show up</button><button class="opt">Buy</button><button class="opt">Read / watch</button></div></div>'+
+      '<div class="q"><label>Who signs it?</label><div class="opts"><button class="opt" aria-pressed="true">Vishen</button><button class="opt">Team</button><button class="opt">Author / speaker</button></div></div>'+
+      '<div class="q"><label>Which lists?</label><div class="opts"><button class="opt" aria-pressed="true">Daily</button><button class="opt" aria-pressed="true">Members</button><button class="opt">Coach</button><button class="opt">Weekly</button><button class="opt">Events</button><button class="opt">Sublist (dated)</button></div></div>'+
+      '<div class="q"><label>Languages</label><div class="opts"><button class="opt" aria-pressed="true">EN</button><button class="opt" aria-pressed="true">DE (translated on approval)</button><button class="opt" aria-pressed="true">ES (translated on approval)</button></div></div>'+
+      '<div class="q"><label>Link target</label><div class="opts"><button class="opt" aria-pressed="true">Landing page</button><button class="opt">Sales page</button><button class="opt">Video / blog</button><button class="opt">Other</button></div><p class="small subtle" style="margin-top:4px">The tracked link comes from the approved UTM Engine card.</p></div>'+
+      '<div class="q"><label>Anything the draft must include or avoid? (optional)</label><input class="field" placeholder="e.g. mention the VIP pass for $1,000+ customers"></div>'+
+      '<div class="row" style="justify-content:flex-end;margin-top:16px"><button class="btn ghost" id="wizCancel">Cancel</button><button class="btn primary" id="wizGo">Craft the email</button></div></div>';
+    m.hidden=false;
+    m.querySelectorAll('.opt').forEach(function(o){o.addEventListener('click',function(){var multi=o.parentNode.querySelectorAll('.opt').length>4||/EN|DE|ES|Daily|Members|Coach|Weekly|Events|Sublist/.test(o.textContent);if(!multi)o.parentNode.querySelectorAll('.opt').forEach(function(x){x.setAttribute('aria-pressed','false');});o.setAttribute('aria-pressed',o.getAttribute('aria-pressed')==='true'&&multi?'false':'true');});});
+    $('#wizCancel').addEventListener('click',function(){m.hidden=true;});
+    $('#wizGo').addEventListener('click',function(){m.hidden=true;emailsList.push({seq:'invite',n:'E9b',d:'2026-10-28',t:'New: drafting from your answers…',lists:'Daily · Members',status:'Draft',sender:'Vishen'});renderList();toast('Drafting. It appears in the list as Draft in about a minute.');});
+  });
 
-  /* ---------------- Scheduled ---------------- */
+  /* ---------------- Scheduling ---------------- */
   var LISTCODE={'Daily':'daily','Members':'mvm','Coach':'coach','Weekly':'weekly','Events':'events','Registrants':'sublist','Sublist':'sublist','Highlights':'highlights'};
   var CASCADE=['Daily','Highlights','Weekly','Members','Coach','Events'];
   var rows=[];
+  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return h;}
   plan.filter(function(p){return !p.dropped&&!p.proposed;}).forEach(function(p){
     var lists=p.lists.replace(/ *\(.*\)/,'').split(' · ').map(function(l){return l.replace(' only','');});
-    lists.forEach(function(l){
+    var d=parse(p.d),n=p.n.replace(/\D/g,'');
+    var mk=function(l,lang){
       var idx=CASCADE.indexOf(l);var sup=idx>0?CASCADE.slice(0,idx).join(', '):'NA';
-      if(p.seq==='invite'&&l!=='Registrants')sup=(sup==='NA'?'':sup+', ')+'AIFFS 2026 sign-ups';
-      var d=parse(p.d),mon=MON[d.getUTCMonth()].toLowerCase()+d.getUTCDate();
-      var code=LISTCODE[l]||l.toLowerCase();var src='email_campaign_'+code+'_aiffs_'+mon;
+      if(p.seq==='invite'&&l!=='Registrants')sup=(sup==='NA'?'':sup+', ')+'AIFFS 2026 sign-ups (26 Oct)';
+      var code=LISTCODE[l]||l.toLowerCase();var src='email_campaign_'+code+'_'+(p.seq==='showup'?'showup':'email')+'_'+n;
       var base=p.seq==='salese'?'https://www.mindvalley.com/mastery/ai-founders':'https://www.mindvalley.com/summit/ai-founders';
-      var url=base+'?utm_source='+src+'&utm_campaign=launch_aiffs_oct_2026&utm_content='+(p.seq==='showup'?'showup':'invite')+'_'+p.n.toLowerCase()+'&utm_medium='+(p.seq==='salese'?'sp':'lp')+'&otag='+src+'&otag=launch_aiffs_oct_2026';
-      rows.push({date:fmtShort(p.d),day:dow(p.d),camp:'AI for Founders Summit 2026',seq:p.seq==='showup'?'Show up sequence':(p.seq==='salese'?'Sales sequence':'Invite sequence'),copy:fmtShort(p.d)+' '+DOW[d.getUTCDay()]+' - Email '+p.n.replace(/\D/g,'')+' - '+p.t,instr:p.conflict?'No Email Day: registrants only, owner to confirm':(l==='Members'?'Members: VIP variant for $1,000+ (test arm A)':'NA'),time:p.time||'7:00 AM PST',list:l,sup:sup,url:url,braze:p.status==='Sent'||p.status==='Scheduled'?'https://dashboard-01.braze.com/engagement/campaigns/69'+Math.abs(hash(p.n+l)).toString(16).slice(0,10):'',subj:p.t,status:p.status,p:p});
-    });
+      var url=base+(lang!=='EN'?'/'+lang.toLowerCase():'')+'?utm_source='+src+'&utm_campaign=launch_aiffs_oct_2026&utm_content=content_wwww&utm_medium='+(p.seq==='salese'?'sp':'lp')+'&otag='+src+'&otag=launch_aiffs_oct_2026';
+      var st=p.status;var warn='';
+      if(lang!=='EN'){st=(p.status==='Sent'||p.status==='Scheduled')?'Pushed to Braze (draft)':(p.status==='Approved'?'Translating':'Draft');}
+      if(p.conflict)warn='No Email Day: registrants only, owner to confirm';
+      if(l==='Members'&&lang==='EN')warn=warn||'Segment "VIP test arm B" not found in Braze';
+      var listName=lang==='EN'?l:(lang==='DE'?'German - ':'Spanish - ')+(l==='Members'?'Members':'Non Members');
+      rows.push({date:fmtShort(p.d),day:dow(p.d),camp:'AI for Founders Summit 2026',seq:p.seq==='showup'?'Show up sequence':(p.seq==='salese'?'Sales sequence':'Invite sequence'),copy:fmtShort(p.d)+' '+DOW[d.getUTCDay()]+' - Email '+n+' - '+p.t,instr:p.conflict?'Registrants only':(l==='Members'?'VIP variant for $1,000+ (test arm A)':'NA'),time:p.time||'7:00 AM PST',list:listName,lang:lang,sup:lang==='EN'?sup:'NA',url:url,braze:(st==='Sent'||st==='Scheduled'||st==='Pushed to Braze (draft)')?'https://dashboard-01.braze.com/engagement/campaigns/69'+Math.abs(hash(p.n+l+lang)).toString(16).slice(0,10):'',subj:p.t,status:st,warn:warn,p:p});
+    };
+    lists.forEach(function(l){mk(l,'EN');});
+    if(['Sent','Scheduled','Approved'].indexOf(p.status)>-1&&p.seq==='invite'){['Members','Daily'].forEach(function(l){mk(l,'DE');mk(l,'ES');});}
   });
-  [['Oct 21','Wednesday','Vishen\'s Newsletter','Newsletter','Oct 21 Wed - I built an AI app in 8 hours. Using nothing but WhatsApp','Summit CTA as the only link','7:00 AM PST','Daily','NA','https://www.mindvalley.com/summit/ai-founders?utm_source=email_campaign_daily_vlnl_oct21&utm_campaign=launch_aiffs_oct_2026&utm_content=newsletter&utm_medium=lp&otag=email_campaign_daily_vlnl_oct21&otag=launch_aiffs_oct_2026','https://dashboard-01.braze.com/engagement/campaigns/6956a1f0c3','I built an AI app in 8 hours. Using nothing but WhatsApp on my iPhone','Sent'],
-   ['Oct 6','Tuesday','WildFit live webinar Oct 2026','Invite sequence','Oct 6 Tue - Email 5 - We are live','NA','7:45 AM PST','WF live webinar Oct 2026 sign ups list','NA','https://www.mindvalley.com/wildfit/health90?utm_source=email_campaign_sublist_wf_oct6&utm_campaign=launch_wf_oct_2026&utm_content=live&utm_medium=lp&otag=email_campaign_sublist_wf_oct6&otag=launch_wf_oct_2026','https://dashboard-01.braze.com/engagement/campaigns/6956b7d2e1','We\'re live: Eric is on in 15 minutes','Sent']
-  ].forEach(function(r){rows.push({date:r[0],day:r[1],camp:r[2],seq:r[3],copy:r[4],instr:r[5],time:r[6],list:r[7],sup:r[8],url:r[9],braze:r[10],subj:r[11],status:r[12]});});
-  function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return h;}
+  rows.push({date:'Oct 21',day:'Wednesday',camp:"Vishen's Newsletter",seq:'Newsletter',copy:'Oct 21 Wed - I built an AI app in 8 hours. Using nothing but WhatsApp',instr:'Summit CTA as the only link',time:'7:00 AM PST',list:'Daily',lang:'EN',sup:'NA',url:'https://www.mindvalley.com/summit/ai-founders?utm_source=email_campaign_daily_vlnl_oct21&utm_campaign=launch_aiffs_oct_2026&utm_content=content_wwww&utm_medium=lp&otag=email_campaign_daily_vlnl_oct21&otag=launch_aiffs_oct_2026',braze:'https://dashboard-01.braze.com/engagement/campaigns/6956a1f0c3',subj:'I built an AI app in 8 hours. Using nothing but WhatsApp on my iPhone',status:'Sent',warn:''});
   var uniq=function(k){return rows.map(function(r){return r[k];}).filter(function(v,i,a){return a.indexOf(v)===i;});};
   $('#fCamp').innerHTML+=uniq('camp').map(function(v){return '<option>'+esc(v)+'</option>';}).join('');
   $('#fSeq').innerHTML+=uniq('seq').map(function(v){return '<option>'+esc(v)+'</option>';}).join('');
   $('#fList').innerHTML+=uniq('list').map(function(v){return '<option>'+esc(v)+'</option>';}).join('');
-  var stCls={'Sent':'sent','Scheduled':'scheduled','Approved':'approved','In review':'review','Draft':'','Planned':''};
+  var selected={};
   function renderSched(){
-    var fc=$('#fCamp').value,fs=$('#fSeq').value,fl=$('#fList').value,fst=$('#fStatus').value,q=$('#fSearch').value.toLowerCase();
-    var shown=rows.filter(function(r){return (!fc||r.camp===fc)&&(!fs||r.seq===fs)&&(!fl||r.list===fl)&&(!fst||r.status===fst)&&(!q||(r.subj+' '+r.copy).toLowerCase().indexOf(q)>-1);});
-    $('#schedTable').innerHTML='<tr><th>Date</th><th>Day</th><th>Campaign Name</th><th>Sequence</th><th>Email Copy for the day</th><th>Any Specific Instructions</th><th>Send Time</th><th>Send List</th><th>Suppress list</th><th>UTMs</th><th>Braze Link</th><th>Subject Line</th><th>Status</th><th></th></tr>'+
-      shown.map(function(r,i){return '<tr><td>'+esc(r.date)+'</td><td>'+esc(r.day)+'</td><td>'+esc(r.camp)+'</td><td>'+esc(r.seq)+'</td><td class="wrap">'+esc(r.copy)+'</td><td class="wrap small muted">'+esc(r.instr)+'</td><td>'+esc(r.time)+'</td><td>'+esc(r.list)+'</td><td class="wrap small muted">'+esc(r.sup)+'</td><td><span class="url" title="'+esc(r.url)+'">'+esc(r.url)+'</span></td><td>'+(r.braze?'<a href="'+esc(r.braze)+'" target="_blank" rel="noopener">Open in Braze ↗</a>':'<span class="small subtle">after push</span>')+'</td><td class="wrap">'+esc(r.subj)+'</td><td><span class="chip '+(stCls[r.status]||'')+'">'+esc(r.status)+'</span></td><td><button class="btn sm ghost prev" data-i="'+rows.indexOf(r)+'">Preview</button></td></tr>';}).join('');
-    $('#nSched').textContent=rows.length+' rows';
+    var fc=$('#fCamp').value,fs=$('#fSeq').value,fl=$('#fList').value,fg=$('#fLang').value,fst=$('#fStatus').value,q=$('#fSearch').value.toLowerCase();
+    var shown=rows.filter(function(r){return (!fc||r.camp===fc)&&(!fs||r.seq===fs)&&(!fl||r.list===fl)&&(!fg||r.lang===fg)&&(!fst||r.status===fst)&&(!q||(r.subj+' '+r.copy).toLowerCase().indexOf(q)>-1);});
+    $('#schedTable').innerHTML='<tr><th><input type="checkbox" id="selAll" title="Select all approved"></th><th>Date</th><th>Day</th><th>Campaign Name</th><th>Sequence</th><th>Email Copy for the day</th><th>Any Specific Instructions</th><th>Send Time</th><th>Send List</th><th>Lang</th><th>Suppress list</th><th>UTMs</th><th>Braze Link</th><th>Subject Line</th><th>Status</th><th></th></tr>'+
+      shown.map(function(r){var i=rows.indexOf(r);var canSel=r.status==='Approved';return '<tr><td>'+(canSel?'<input type="checkbox" class="sel" data-i="'+i+'"'+(selected[i]?' checked':'')+'>':'')+'</td><td>'+esc(r.date)+'</td><td>'+esc(r.day)+'</td><td>'+esc(r.camp)+'</td><td>'+esc(r.seq)+'</td><td class="wrap">'+esc(r.copy)+'</td><td class="wrap small muted">'+esc(r.instr)+'</td><td>'+esc(r.time)+'</td><td>'+esc(r.list)+'</td><td><span class="lang '+r.lang.toLowerCase()+'">'+r.lang+'</span></td><td class="wrap small muted">'+esc(r.sup)+'</td><td><span class="url" title="'+esc(r.url)+'">'+esc(r.url)+'</span></td><td>'+(r.braze?'<a href="'+esc(r.braze)+'" target="_blank" rel="noopener">Open in Braze ↗</a>':'<span class="small subtle">after push</span>')+'</td><td class="wrap">'+esc(r.subj)+'</td><td><span class="chip '+(statusCls[r.status]||'')+'">'+esc(r.status)+'</span>'+(r.warn?'<span class="warnic" title="'+esc(r.warn)+'">!</span>':'')+'</td><td><button class="btn sm ghost prev" data-i="'+i+'">Preview</button></td></tr>';}).join('');
+    $('#nSched').textContent=rows.length;
+    $('#selCount').textContent=Object.keys(selected).filter(function(k){return selected[k];}).length;
   }
-  ['fCamp','fSeq','fList','fStatus'].forEach(function(id){$('#'+id).addEventListener('change',renderSched);});$('#fSearch').addEventListener('input',renderSched);renderSched();
+  ['fCamp','fSeq','fList','fLang','fStatus'].forEach(function(id){$('#'+id).addEventListener('change',renderSched);});$('#fSearch').addEventListener('input',renderSched);renderSched();
+  $('#schedTable').addEventListener('change',function(e){if(e.target.id==='selAll'){rows.forEach(function(r,i){if(r.status==='Approved')selected[i]=e.target.checked;});renderSched();return;}var c=e.target.closest('.sel');if(c){selected[+c.getAttribute('data-i')]=c.checked;$('#selCount').textContent=Object.keys(selected).filter(function(k){return selected[k];}).length;}});
   $('#schedTable').addEventListener('click',function(e){var b=e.target.closest('.prev');if(!b)return;var r=rows[+b.getAttribute('data-i')];
-    var m=$('#modal');m.innerHTML='<div class="sheet"><div class="mh"><span>'+esc(r.date)+' · '+esc(r.list)+' · '+esc(r.time)+'</span><button class="btn sm ghost" id="mClose">Close</button></div><div class="inbox"><div class="av"></div><div class="inbox-main"><div class="from"><strong>Vishen Lakhiani</strong><span>via Mindvalley</span></div><div class="line"><b>'+esc(r.subj)+'</b></div><div class="line muted small">'+esc(r.copy)+'</div></div></div><div id="pbody" style="padding:24px 26px;font-size:16px;line-height:1.6">'+(r.p&&r.p.n==='E4'?body.innerHTML:'<p class="muted">Draft body renders here from Email Studio. Link for this list:</p><p class="mono small" style="overflow-wrap:anywhere">'+esc(r.url)+'</p>')+'</div></div>';
+    var m=$('#modal');m.innerHTML='<div class="sheet"><div class="mh"><span>'+esc(r.date)+' · '+esc(r.list)+' · '+esc(r.time)+' · '+r.lang+'</span><button class="btn sm ghost" id="mClose">Close</button></div><div class="inbox"><div class="av"></div><div class="inbox-main"><div class="from"><strong>Vishen Lakhiani</strong><span>via Mindvalley</span></div><div class="line"><b>'+esc(r.subj)+'</b></div><div class="line muted small">'+esc(r.copy)+'</div></div></div><div style="padding:24px 26px;font-size:16px;line-height:1.6">'+(r.p&&r.p.n==='E4'&&r.lang==='EN'?body.innerHTML:'<p class="muted">'+(r.lang!=='EN'?'Translated body ('+r.lang+') renders here once the translator finishes.':'Draft body renders here from the editor.')+' Link for this list:</p><p class="mono small" style="overflow-wrap:anywhere">'+esc(r.url)+'</p>')+'</div></div>';
     m.hidden=false;$('#mClose').addEventListener('click',function(){m.hidden=true;});});
   $('#modal').addEventListener('click',function(e){if(e.target===$('#modal'))$('#modal').hidden=true;});
-  $('#pushBtn').addEventListener('click',function(){toast('Pre-flight blocked: segment "VIP test arm B" not found in Braze.');});
+  $('#pushBtn').addEventListener('click',function(){var n=0;Object.keys(selected).forEach(function(k){if(selected[k]){rows[+k].status='Pushed to Braze (draft)';rows[+k].braze='https://dashboard-01.braze.com/engagement/campaigns/69'+Math.abs(hash(k+'push')).toString(16).slice(0,10);n++;}});selected={};renderSched();toast(n?n+' email'+(n>1?'s':'')+' pushed to Braze as drafts. Schedule them in Braze.':'Select approved emails first.');});
 
-  /* ---------------- Tracking ---------------- */
+  function campaignTotals(b){
+    var T={aiffs:['$0','Campaign revenue so far · sales opens 2 Nov','$3.0M','Target from the launch plan','$2.5M','Calendar figure (below baseline × 1.3: flagged)','41,200','Registrations from email · 71% of all registrations','58,100','All registrations (email + ads + organic)'],eas:['$1.38M','Campaign revenue (all channels)','$1.5M','Target from the launch plan','$2.0M','Calendar figure','$0.91M','Revenue attributed to email · 66%','31,400','Registrations · 64% from email'],wf:['$184k','Campaign revenue (all channels)','$250k','Target from the launch plan','—','No calendar figure','$121k','Revenue attributed to email','6,340','Sign-ups · 81% from email']}[b.id]||['—','Campaign revenue','—','Target from the launch plan','—','Calendar figure','—','Revenue attributed to email','—','Registrations'];
+    var h='<div class="sec"><h2>Campaign totals <small>whole campaign, all channels · from Metabase and the launch plan</small></h2><div class="tiles">';
+    for(var i=0;i<T.length;i+=2)h+='<div class="tl"><div class="v">'+T[i]+'</div><div class="l">'+T[i+1]+'</div></div>';
+    return h+'</div></div>';
+  }
+/* ---------------- Tracking ---------------- */
   var track={
     aiffs:{title:'AI for Founders Summit: email tracker',sub:'AI for Founders 2026 vs AI Summit Mar 2026 (baseline picked in Planning). Day 0 = Email 1 (Fri 16 Oct 2026 · Fri 20 Feb 2026). Both summits start on day 14.',unit:'leads',
       tiles:[['41,200','Email leads so far (2026)','11,870 members · up to 26 Oct'],['37,800','AI Summit Mar 2026 on the same day','12,400 members'],['+3,400','Gap on the same day','members: −530'],['66,000','AI Summit Mar 2026 final email leads','the number to beat'],['$2.5M','Revenue target','owner picked the calendar figure']],
@@ -853,7 +970,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
     var html='<button class="back" id="backTrack">← All campaigns and sequences</button>'+
       '<div class="vhead"><div><div class="small" style="color:var(--orange);letter-spacing:.1em;text-transform:uppercase;font-weight:700">'+esc(b.kind)+'</div><h2>'+esc(t.title)+'</h2><p>'+esc(t.sub)+'</p></div><span class="chip warn plain">Example figures</span></div>'+
       '<div class="tiles">'+t.tiles.map(function(x){return '<div class="tl"><div class="v">'+esc(x[0])+'</div><div class="l">'+esc(x[1])+'</div><div class="s">'+esc(x[2])+'</div></div>';}).join('')+'</div>'+
-      '<div class="sec"><h2>Email by email, matched by type <small>this version · baseline · difference (% for counts, points for rates)</small></h2><div class="card tbl"><table><tr><th>Email type</th><th>This email</th><th>Baseline email it is compared with</th>'+t.cols.map(function(c){return '<th class="num" colspan="3">'+c+'</th>';}).join('')+'</tr>'+
+      (b.k==='c'?campaignTotals(b):'')+'<div class="sec"><h2>Email by email, matched by type <small>this version · baseline · difference (% for counts, points for rates)</small></h2><div class="card tbl"><table><tr><th>Email type</th><th>This email</th><th>Baseline email it is compared with</th>'+t.cols.map(function(c){return '<th class="num" colspan="3">'+c+'</th>';}).join('')+'</tr>'+
       t.rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td class="wrap">'+esc(r[1])+'</td><td class="wrap small muted">'+esc(r[2])+'</td>'+t.cols.map(function(c,ci){var pair=r[3+ci];return pair[1]==null?'<td class="num">'+(isRate(ci)?pair[0].toFixed(1)+'%':pair[0].toLocaleString())+'</td><td class="num muted">—</td><td class="num subtle">new</td>':diffCell(pair[0],pair[1],isRate(ci));}).join('')+'</tr>';}).join('')+
       '</table></div><p class="small subtle" style="margin-top:8px">Rows not sent yet show what the matching baseline email brought: that is their target. Open rate and CTR = unique opens and unique clicks ÷ delivered. Sources: Analyst OS fact_braze_campaign_daily · Metabase bridge_email_revenue · data through 26 Oct.</p></div>'+
       '<div class="sec grid g2"><div class="card"><h3>Running total of '+t.unit+', day by day <small>this version vs baseline</small></h3>'+chart(t.run)+'</div>'+
@@ -861,67 +978,71 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
         '<div class="card"><h3>By list</h3><div class="tbl"><table><tr><th>List</th><th class="num">Sends</th><th class="num">Open</th><th class="num">CTR</th><th class="num">This</th><th class="num">Baseline</th></tr>'+t.lists.map(function(l){return '<tr>'+l.map(function(c,i){return '<td class="'+(i?'num':'')+'">'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table></div>'+(t.actions?'<ul class="clean small" style="margin-top:10px">'+t.actions.map(function(a){return '<li>'+esc(a)+'</li>';}).join('')+'</ul>':'')+'</div>')+'</div>'+
       '<div class="sec grid g2"><div class="card"><h3>Tests and learnings</h3><div class="tbl"><table><tr><th>Test</th><th>Arms</th><th>Result</th><th>Learning</th></tr>'+(t.tests.length?t.tests.map(function(x){return '<tr><td>'+esc(x[0])+'</td><td class="small muted">'+esc(x[1])+'</td><td>'+esc(x[2])+'</td><td class="small">'+esc(x[3])+'</td></tr>';}).join(''):'<tr><td colspan="4" class="muted">No tests on this one yet.</td></tr>')+'</table></div><div class="row" style="margin-top:10px"><input class="field sm" id="tLearn" placeholder="Add a learning from this campaign…" style="flex:1;min-width:200px"><button class="btn sm primary" id="tLearnBtn">Send to Rules for approval</button></div></div>'+
       (t.gap?'<div class="card"><h3>By list</h3><div class="tbl"><table><tr><th>List</th><th class="num">Sends</th><th class="num">Open</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">Baseline</th></tr>'+t.lists.map(function(l){return '<tr>'+l.map(function(c,i){return '<td class="'+(i?'num':'')+'">'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table></div></div>':'<div class="card"><h3>Write-back</h3><p class="small muted">Actuals go into the Official Calendar only when you click.</p><button class="btn sm ghost" style="margin-top:10px">Write actuals to the calendar</button></div>')+'</div>';
-    $('#trackDetail').innerHTML=html;$('#trackDetail').hidden=false;$('#trackHome').hidden=true;window.scrollTo({top:0});
-    $('#backTrack').addEventListener('click',function(){$('#trackDetail').hidden=true;$('#trackHome').hidden=false;window.scrollTo({top:0});});
-    $('#tLearnBtn').addEventListener('click',function(){var v=$('#tLearn').value.trim();if(!v)return;addLearning(v,'Tracking · '+b.name+' · Ramya');$('#tLearn').value='';toast('Sent to Rules. Waiting for approval.');});
+    $('#perfDetail').innerHTML=html;$('#perfDetail').hidden=false;$('#perfHome').hidden=true;window.scrollTo({top:0});
+    $('#backTrack').addEventListener('click',function(){$('#perfDetail').hidden=true;$('#perfHome').hidden=false;window.scrollTo({top:0});});
+    $('#tLearnBtn').addEventListener('click',function(){var v=$('#tLearn').value.trim();if(!v)return;addLearning(v,'Ramya','from Performance · '+b.name);$('#tLearn').value='';toast('Sent to Rules. Waiting for approval.');});
   }
-  $('#trackBoxes').addEventListener('click',function(e){var b=e.target.closest('.box');if(b)openTrack(b.getAttribute('data-id'));});
+  $('#perfBoxes').addEventListener('click',function(e){var b=e.target.closest('.box');if(b)openTrack(b.getAttribute('data-id'));});
 
-  /* ---------------- Rules ---------------- */
+    /* ---------------- Rules ---------------- */
   var rules=[
-    {g:'Drafting guardrails',t:'One belief per sequence. Every email proves it a different way.',p:'seeded'},
-    {g:'Drafting guardrails',t:'One call to action per email, framed as an invitation, never a pitch.',p:'seeded'},
-    {g:'Drafting guardrails',t:'250–350 words for pre-event emails. Under 1,000 characters for WhatsApp.',p:'seeded'},
-    {g:'Drafting guardrails',t:'Never: "productivity", fear of job loss, jargon (MCP, agentic, vibe coding), "master prompting", "We\'re excited to announce", multiple CTAs.',p:'seeded'},
-    {g:'Drafting guardrails',t:'"No replays. No recordings." from the 48-hour email on, for live events.',p:'seeded'},
-    {g:'Drafting guardrails',t:'Subject line passes the text-a-friend test. Julie\'s thumb decides in 1.5 seconds.',p:'seeded'},
-    {g:'Drafting guardrails',t:'Give people something to do. Active participation beats passive reading (Free Your Friday: +98%).',p:'learning · AI Summit 2026 · Bari'},
-    {g:'Drafting guardrails',t:'Social proof must be program-specific stories, never generic quotes (generic quotes: −64%).',p:'learning · AI Summit 2026 · Bari'},
-    {g:'Drafting guardrails',t:'Do not sell the problem. The audience already knows it (pain/survey angle lost its test).',p:'learning · AI Summit 2026'},
-    {g:'Baseline & target',t:'Lookback 5 years, then 3, then 2: the first window with at least 2 comparable campaigns.',p:'seeded'},
-    {g:'Baseline & target',t:'Match event type → pathway → free or paid → list mix. Best = revenue ÷ own target, tie-break revenue per email.',p:'seeded'},
-    {g:'Baseline & target',t:'Target = max(calendar $ Rev target, baseline × 1.30). Both shown; the owner picks.',p:'seeded'},
-    {g:'Sequence recipe by event type',t:'Mastery Online Summit: invite on every Promotions, LIVE and Sales slot until class start · confirmation · retargeting · show-up (T-3d, T-1d, T-1h, each live morning) · sales retargeting.',p:'seeded'},
-    {g:'Sequence recipe by event type',t:'Quest Release Webinar: announce · reminder · we\'re live · last call or replay. Quest Soft Release: 2. Podcast and Value Email: 1.',p:'seeded'},
-    {g:'Sequence recipe by event type',t:'Academy, Accelerator, Cert Presentation, Guild, Lifebook, WildFit webinars: announce · reminder · live · last call · replay.',p:'seeded'},
-    {g:'Sequence recipe by event type',t:'Cert Online 1 Day Seminar: 15-day invite · show-up · live · sales to class start. Events (MVU, Festival): ticket emails every other day to Events.',p:'seeded'},
-    {g:'Sequence recipe by event type',t:'Membership Major Sale: daily sales on each slot · last 48h · last 24h · final hours.',p:'seeded'},
-    {g:'Comms Calendar',t:'✋ No Email Day blocks all lists. A newsletter day counts 1 on Daily. A note containing "no email" is not a slot.',p:'seeded'},
-    {g:'Comms Calendar',t:'Emails are placed only on days parked for the campaign. Extra days are proposed, shown dashed, never scheduled until parked.',p:'seeded'}
+    {g:'Drafting guardrails',t:'One belief per sequence. Every email proves it a different way.',p:'seeded · Ramya'},
+    {g:'Drafting guardrails',t:'One call to action per email, framed as an invitation, never a pitch.',p:'seeded · Ramya'},
+    {g:'Drafting guardrails',t:'250–350 words for pre-event emails. Under 1,000 characters for WhatsApp.',p:'seeded · Ramya'},
+    {g:'Drafting guardrails',t:'Never: "productivity", fear of job loss, jargon (MCP, agentic, vibe coding), "master prompting", "We\'re excited to announce", multiple CTAs.',p:'seeded · Bari'},
+    {g:'Drafting guardrails',t:'"No replays. No recordings." from the 48-hour email on, for live events.',p:'seeded · Bari'},
+    {g:'Drafting guardrails',t:'Subject line passes the text-a-friend test.',p:'seeded · Ramya'},
+    {g:'Drafting guardrails',t:'Give people something to do. Active participation beats passive reading (Free Your Friday: +98%).',p:'learning · AI Summit 2026 · approved by Ramya'},
+    {g:'Drafting guardrails',t:'Social proof must be program-specific stories, never generic quotes (generic quotes: −64%).',p:'learning · AI Summit 2026 · approved by Ramya'},
+    {g:'Timing & lists',t:'Broadcast lists send at 7:00 AM PT unless intelligent send-time is on. Segmented sequences (show-up, live) send relative to the event start, e.g. summit at 8:00 AM PT → show-up at 7:45.',p:'seeded · Ramya'},
+    {g:'Timing & lists',t:'Sublists always carry the campaign date in their name (e.g. AIFFS 2026 sign-ups · 26 Oct) so they can be tracked.',p:'seeded · Ramya'},
+    {g:'Timing & lists',t:'German and Spanish lists (members and non-members) get 3 emails a week, translated on approval. The email sent may be the best performer not yet sent to that list, not necessarily the day\'s English email.',p:'seeded · Ramya'},
+    {g:'Baseline & target',t:'The target comes from the Key Message Doc or Launch Plan, never from the calendar\'s $ Rev target. If the calendar figure is below baseline, flag it.',p:'seeded · Ramya'},
+    {g:'Baseline & target',t:'Lookback 5 years, then 3, then 2: the first window with at least 2 comparable campaigns. Match event type → pathway → free or paid → list mix.',p:'seeded · Ramya'},
+    {g:'Sequence recipe by event type',t:'Mastery Online Summit: invite on every Promotions and LIVE slot · sales sequence of about 15 emails mapped until the program starts · confirmation, retargeting, show-up and sales retargeting as Braze canvases.',p:'seeded · Ramya'},
+    {g:'Sequence recipe by event type',t:'Quest Release Webinar: announce · reminder · we\'re live · last call or replay. Quest Soft Release: 2. Podcast and Value Email: 1.',p:'seeded · Ramya'},
+    {g:'Sequence recipe by event type',t:'Webinars (Academy, Accelerator, Cert Presentation, Guild, Lifebook, WildFit): announce · reminder · live · last call · replay. Cert 1-Day Seminar: 15-day invite · show-up · live · sales to class start.',p:'seeded · Ramya'},
+    {g:'Sequence recipe by event type',t:'Events (MVU, Festival): ticket emails every other day to Events. Membership Major Sale: daily on each slot · last 48h · last 24h · final hours.',p:'seeded · Ramya'},
+    {g:'Comms Calendar',t:'✋ No Email Day blocks all lists. A newsletter day counts 1 on Daily. A note containing "no email" is not a slot. Extra days are proposed, never scheduled until parked.',p:'seeded · Ramya'}
   ];
-  function renderRules(){
-    var out='',last='';rules.forEach(function(r){if(r.g!==last){out+='<div class="rgroup">'+esc(r.g)+'</div>';last=r.g;}out+='<div class="rule"><span>'+esc(r.t)+'</span><span class="prov">'+esc(r.p)+'</span></div>';});
-    $('#rulesList').innerHTML=out;$('#nRules').textContent=rules.length;
-  }
-  var pending=[
-    {from:'MOW 21 Oct · Marisha',raw:'the wed newsletter with the one big idea and only the summit link beat all the invites that week, we should do that every summit',learning:'In summit weeks, Wednesday\'s newsletter with one big idea and the summit as its only link out-performed every invite that week.',rule:'During a summit runway, Vishen\'s Wednesday newsletter carries one big idea with the summit as the only link, and counts as an invite slot.',ev:'AI Summit Mar 2026: newsletter 2 brought 6,910 leads vs invite average 5,200'},
-    {from:'E1 subject test · AI for Founders',raw:'confession subject beat the number one by 11% opens',learning:'On the Daily list, a confession-style subject ("I almost didn\'t build this summit") beat a specific-number subject by 11% opens.',rule:'For the first invite of a summit, prefer a confession subject line over a specific-number subject.',ev:'AI for Founders E1, 16 Oct 2026, 812k sends'}
+  function renderRules(){var out='',last='';rules.forEach(function(r){if(r.g!==last){out+='<div class="rgroup">'+esc(r.g)+'</div>';last=r.g;}out+='<div class="rule"><span>'+esc(r.t)+'</span><span class="prov">'+esc(r.p)+'</span></div>';});$('#rulesList').innerHTML=out;$('#nRules').textContent=rules.length;}
+  var log=[
+    {who:'System',src:'after send · AI for Founders E3 · 20 Oct',raw:'E3 (90-second exercise) beat its baseline email by 6% leads and +0.8 pts CTR on Daily; Members −14%.',learning:'A results-in-advance email (a 90-second exercise) out-performs its baseline on Daily but under-performs on Members.',rule:'For Members, replace the exercise email with a story email at position 3.',state:'Waiting for approval',when:'21 Oct 12:05'},
+    {who:'Marisha',src:'MOW · 21 Oct',raw:'the wed newsletter with the one big idea and only the summit link beat all the invites that week, we should do that every summit',learning:'In summit weeks, Wednesday\'s newsletter with one big idea and the summit as its only link out-performed every invite that week.',rule:'During a summit runway, Vishen\'s Wednesday newsletter carries one big idea with the summit as the only link, and counts as an invite slot.',state:'Waiting for approval',when:'21 Oct 15:40'},
+    {who:'System',src:'subject test · AI for Founders E1 · 16 Oct',raw:'A "I almost didn\'t build this summit" vs B "A month of work in 2 hours": A +11% opens, 812k sends.',learning:'On Daily, a confession-style subject beat a specific-number subject by 11% opens.',rule:'For the first invite of a summit, prefer a confession subject line over a specific-number subject.',state:'Waiting for approval',when:'17 Oct 12:02'},
+    {who:'Moni',src:'campaign · Expert to Authority sales · 29 Sep',raw:'the bonus-expiry email with a call with vishen did best of the whole sales run',learning:'In the Expert to Authority sales run, the bonus-expiry email that paired a deadline with a live call with Vishen brought the most revenue of the sequence.',rule:'Pair every sales-sequence deadline with a live touchpoint (call or session) when one exists.',state:'Approved as rule · Ramya · 2 Oct',when:'29 Sep 10:12'},
+    {who:'System',src:'after send · Expert to Authority E7 · 16 Sep',raw:'Generic quote block in E7: CTR −64% vs E7 baseline.',learning:'Generic social-proof quotes lose to program-specific stories.',rule:'Already a rule (AI Summit 2026). No change.',state:'Merged into existing rule',when:'17 Sep 12:03'},
+    {who:'Ramya',src:'from Performance · AI for Founders',raw:'members are down more than non-members, open with who it is for',learning:'Member leads trail non-member leads on the same day; emails that name the reader (coach, consultant, person with a job and an idea) close the gap.',rule:'Open every email in a summit runway with who it is for.',state:'Rejected · Marisha · too broad, re-test',when:'24 Oct 09:30'}
   ];
+  var pending=log.filter(function(l){return l.state==='Waiting for approval';});
   function renderPending(){
-    $('#pending').innerHTML=pending.length?pending.map(function(p,i){return '<div class="pend"><div class="from">From '+esc(p.from)+' · processed by the system</div><div class="lr"><b>Learning.</b> '+esc(p.learning)+'</div><div class="pr-rule"><b>Proposed rule.</b> '+esc(p.rule)+'</div><div class="small subtle" style="margin-bottom:8px">Evidence: '+esc(p.ev)+' · <span title="'+esc(p.raw)+'">original text</span></div><div class="row"><button class="btn sm primary" data-act="approve" data-i="'+i+'">Approve as rule</button><button class="btn sm ghost" data-act="edit" data-i="'+i+'">Edit</button><button class="btn sm ghost" data-act="reject" data-i="'+i+'">Reject</button></div></div>';}).join(''):'<p class="muted small">Nothing waiting.</p>';
+    $('#pending').innerHTML=pending.length?pending.map(function(p,i){return '<div class="pend"><div class="from">From '+esc(p.who)+' · '+esc(p.src)+' · processed by the system</div><div class="lr"><b>Learning.</b> '+esc(p.learning)+'</div><div class="pr-rule"><b>Proposed rule.</b> '+esc(p.rule)+'</div><div class="row"><button class="btn sm primary" data-act="approve" data-i="'+i+'">Approve as rule</button><button class="btn sm ghost" data-act="edit" data-i="'+i+'">Edit</button><button class="btn sm ghost" data-act="reject" data-i="'+i+'">Reject</button></div></div>';}).join(''):'<p class="muted small">Nothing waiting.</p>';
     $('#pendCount').textContent=pending.length+' waiting for approval';
   }
+  function renderLog(){$('#logBody').innerHTML='<div class="small subtle" style="margin-bottom:6px">Every learning ever added, newest first. System entries come from the numbers after each send; person entries from the form, MOW or Performance.</div>'+log.map(function(l){var cls=/Approved|Merged/.test(l.state)?'ok':/Rejected/.test(l.state)?'bad':'warn';return '<div class="lg"><div class="src"><b>'+esc(l.who)+'</b>'+esc(l.src)+'<br>'+l.when+'</div><div><div>'+esc(l.learning)+'</div><div class="small subtle" style="margin-top:3px">Raw: “'+esc(l.raw)+'”</div><div class="small" style="margin-top:3px">Rule: '+esc(l.rule)+'</div></div><span class="chip '+cls+' plain">'+esc(l.state)+'</span></div>';}).join('');}
   $('#pending').addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var i=+b.getAttribute('data-i'),p=pending[i];
-    if(b.getAttribute('data-act')==='approve'){rules.splice(9,0,{g:'Drafting guardrails',t:p.rule,p:'learning · '+p.from});pending.splice(i,1);renderRules();renderPending();toast('Approved. It is now a rule every draft obeys.');}
-    else if(b.getAttribute('data-act')==='reject'){pending.splice(i,1);renderPending();toast('Rejected and kept with the reason.');}
+    if(b.getAttribute('data-act')==='approve'){rules.splice(8,0,{g:'Drafting guardrails',t:p.rule,p:'learning · '+p.who+' · '+p.src+' · approved by Ramya'});p.state='Approved as rule · Ramya · now';pending.splice(i,1);renderRules();renderPending();renderLog();toast('Approved. It is now a rule every draft obeys.');}
+    else if(b.getAttribute('data-act')==='reject'){p.state='Rejected · Ramya · now';pending.splice(i,1);renderPending();renderLog();toast('Rejected and kept in the raw learnings log.');}
     else toast('Edit the rule text, then approve.');});
-  function process(raw,from){
+  function process(raw,from,src){
     var s=raw.trim();var learning=s.charAt(0).toUpperCase()+s.slice(1).replace(/\s+/g,' ');if(!/[.!?]$/.test(learning))learning+='.';
-    var rule=/newsletter/i.test(s)?'During a campaign runway, the newsletter carries one idea with the campaign as its only link.':/subject/i.test(s)?'Prefer the subject-line pattern that won this test for the same list and position.':/member/i.test(s)?'Open every email in this situation with who it is for, and send to Members every day of the runway.':'Apply this learning to the matching sequence position and list in the next plan.';
-    return {from:from||'unnamed',raw:s,learning:learning,rule:rule,ev:'Added from the form on 27 Oct 2026 · evidence to be attached by the system from Tracking'};
+    var rule=/newsletter/i.test(s)?'During a campaign runway, the newsletter carries one idea with the campaign as its only link.':/subject/i.test(s)?'Prefer the subject-line pattern that won this test for the same list and position.':/member/i.test(s)?'Open every email in this situation with who it is for.':'Apply this learning to the matching sequence position and list in the next plan.';
+    return {who:from||'unnamed',src:src,raw:s,learning:learning,rule:rule,state:'Waiting for approval',when:'now'};
   }
-  function addLearning(raw,from){pending.unshift(process(raw,from));renderPending();}
-  $('#learnBtn').addEventListener('click',function(){var v=$('#learnText').value.trim();if(!v){toast('Write the learning first.');return;}addLearning(v,($('#srcMow').getAttribute('aria-pressed')==='true'?'MOW · ':'Campaign · ')+($('#learnFrom').value.trim()||'unnamed'));$('#learnText').value='';$('#learnFrom').value='';toast('Processed. Waiting for Ramya\'s approval under Recently added rules.');});
+  function addLearning(raw,from,src){var l=process(raw,from,src||'form');log.unshift(l);pending.unshift(l);renderPending();renderLog();}
+  $('#learnBtn').addEventListener('click',function(){var v=$('#learnText').value.trim();if(!v){toast('Write the learning first.');return;}addLearning(v,$('#learnFrom').value.trim()||'unnamed',$('#srcMow').getAttribute('aria-pressed')==='true'?'MOW':'campaign or message');$('#learnText').value='';$('#learnFrom').value='';toast('Processed. Waiting for approval under Recently added rules.');});
   $('#srcMow').addEventListener('click',function(){$('#srcMow').setAttribute('aria-pressed','true');$('#srcMow').classList.remove('ghost');$('#srcCamp').setAttribute('aria-pressed','false');$('#srcCamp').classList.add('ghost');});
   $('#srcCamp').addEventListener('click',function(){$('#srcCamp').setAttribute('aria-pressed','true');$('#srcCamp').classList.remove('ghost');$('#srcMow').setAttribute('aria-pressed','false');$('#srcMow').classList.add('ghost');});
-  renderRules();renderPending();
+  $('#logTog').addEventListener('click',function(){var b=$('#logBody');b.hidden=!b.hidden;$('#logTog').firstChild.textContent=(b.hidden?'▸':'▾')+' Review all raw learnings ';});
+  renderRules();renderPending();renderLog();
 
-  /* ---------------- overlay + tabs ---------------- */
+  /* ---------------- overlay + nav ---------------- */
   $('#processBtn').addEventListener('click',function(){$('#overlay').hidden=false;});
   $('#closeOverlay').addEventListener('click',function(){$('#overlay').hidden=true;});
   $('#overlay').addEventListener('click',function(e){if(e.target===$('#overlay'))$('#overlay').hidden=true;});
-  var views=['planning','review','scheduled','tracking','rules'];
-  function show(){var h=(location.hash||'#planning').slice(1);if(views.indexOf(h)<0)h='planning';views.forEach(function(v){$('#v-'+v).hidden=(v!==h);});document.querySelectorAll('#tabs a').forEach(function(a){if(a.getAttribute('href')==='#'+h)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});}
+  var views=['planning','review','scheduling','performance','rules'];
+  var leads={planning:['Planning','Every campaign with a brief on the Official Calendar, and every standing sequence, is a box. Open one to see the proposed plan and approve it.'],review:['Review','Every drafted email, in the editor. Edit in place, dictate or talk to it, see the principles beside it, and approve. Approval starts the German and Spanish translations.'],scheduling:['Scheduling','The email scope sheet, live. Select approved emails and push them to Braze as drafts; the team schedules them there.'],performance:['Performance','Email overall performance on top, then every campaign and sequence tracked at the same time, email by email against its baseline.'],rules:['Rules','What every plan and draft obeys. Learnings come from the system after every send, from Message of the Week, and from anyone on the team; Ramya, Marisha or Vishen approve them into rules.']};
+  function show(){var h=(location.hash||'#planning').slice(1);if(views.indexOf(h)<0)h='planning';views.forEach(function(v){$('#v-'+v).hidden=(v!==h);});document.querySelectorAll('.nav a.sub').forEach(function(a){a.classList.toggle('active',a.getAttribute('data-v')===h);});$('#secTitle').textContent=leads[h][0];$('#secLead').textContent=leads[h][1];}
   window.addEventListener('hashchange',show);show();
 })();
 </script>
