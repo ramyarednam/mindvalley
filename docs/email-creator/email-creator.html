@@ -518,7 +518,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
       <aside class="right stack">
         <div class="card"><h3>Email copywriting principles <small>live on this draft</small></h3><div class="princ" id="princ"></div></div>
         <div class="card"><h3>Versions &amp; edit log <small id="verCount"></small></h3><div class="vlog" id="versions"></div></div>
-        <div class="card" id="transCard"><h3>Translations <small>on approval</small></h3><div class="small muted" id="transBody">Approving this email sends it to the translator (Claude translator project). The German and Spanish review agent checks each version, then it is queued for the next German and Spanish slot (Monday or Friday, or the same day when time-critical) and pushed to Braze as a draft.</div></div>
+        <div class="card" id="transCard"><h3>Translations <small>on approval</small></h3><div class="small muted" id="transBody">Approving this email sends it to the translator (Claude translator project). The German and Spanish review agent checks translation quality (meaning and sentence construction), then each version is queued for the next German and Spanish slot (Monday or Friday, or the same day when time-critical) and pushed to Braze as a draft.</div></div>
       </aside>
     </div>
   </section>
@@ -540,7 +540,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
       <input id="fSearch" placeholder="Search subject or email…">
     </div>
     <div class="card tbl" style="padding:6px 8px"><table class="sched" id="schedTable"></table></div>
-    <p class="small subtle" style="margin-top:10px">Email Creator creates the Braze campaign drafts and the canvas drafts (confirmation, retargeting, show-up, sales retargeting) through the Braze API; email ops schedule them in Braze. Push is limited to email ops: Ramya Rednam, Nicole Chen, Monique, Pavel, Sadaf. A ⚠ in the Status column names what still needs attention on that row.</p>
+    <p class="small subtle" style="margin-top:10px">Email Creator creates the Braze campaign drafts and the canvas drafts (confirmation, retargeting, show-up, sales retargeting) through the Braze API; email ops schedule them in Braze. Push is limited to email ops: Ramya Rednam, Monique Schuldt, Nicole Chin, Pavel Luzanov, Syeda Sadaf Adnan Wasti, Janja Živko. A ⚠ in the Status column names what still needs attention on that row.</p>
   </section>
 
   <!-- ================= PERFORMANCE ================= -->
@@ -996,16 +996,16 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
     {g:'Drafting guardrails',t:'Social proof must be program-specific stories, never generic quotes (generic quotes: −64%).',p:'learning · AI Summit 2026 · approved by Ramya'},
     {g:'Timing & lists',t:'Broadcast lists send at 7:00 AM PT or with Braze intelligent send-time, set per list. Segmented sequences (show-up, live) send relative to the event start, e.g. summit at 8:00 AM PT → show-up at 7:45.',p:'seeded · Ramya'},
     {g:'Timing & lists',t:'Sublists always carry the campaign date in their name (e.g. AIFFS 2026 sign-ups · 26 Oct) so they can be tracked.',p:'seeded · Ramya'},
-    {g:'Timing & lists',t:'German and Spanish lists (members and non-members): Wednesday is Vishen\'s newsletter, translated the same day. Monday and Friday are the campaign slots: either last week\'s best email by CTR and open rate not yet sent to that list, or a same-day email when it is time-critical (last call, we\'re live, summit day).',p:'seeded · Ramya'},
-    {g:'Timing & lists',t:'Translations are checked by the German and Spanish review agent before they are queued; there is no native speaker on the team.',p:'seeded · Ramya'},
-    {g:'Timing & lists',t:'Only email ops push to Braze: Ramya Rednam, Nicole Chen, Monique, Pavel, Sadaf (list is admin-editable). Email Creator creates the campaign and canvas drafts through the Braze API; ops schedule them.',p:'seeded · Ramya'},
+    {g:'Timing & lists',t:'German and Spanish lists (members and non-members): Wednesday is Vishen\'s newsletter, translated the same day. Monday and Friday are the campaign slots: either last week\'s best email by CTR and open rate not yet sent to that list, or a same-day email when it is time-critical (announcement, agenda, last call, we\'re live, summit day, bonus closing).',p:'seeded · Ramya'},
+    {g:'Timing & lists',t:'Translations are checked by the German and Spanish review agent for translation quality only (meaning kept, sentences read naturally) before they are queued; there is no native speaker on the team.',p:'seeded · Ramya'},
+    {g:'Timing & lists',t:'Only email ops push to Braze: Ramya Rednam, Monique Schuldt, Nicole Chin, Pavel Luzanov, Syeda Sadaf Adnan Wasti, Janja Živko (list is admin-editable). Email Creator creates the campaign and canvas drafts through the Braze API; ops schedule them.',p:'seeded · Ramya'},
     {g:'Baseline & target',t:'The target comes from the Key Message Doc or Launch Plan, never from the calendar\'s $ Rev target. If the calendar figure is below baseline, flag it.',p:'seeded · Ramya'},
     {g:'Baseline & target',t:'Lookback 5 years, then 3, then 2: the first window with at least 2 comparable campaigns. Match event type → pathway → free or paid → list mix.',p:'seeded · Ramya'},
     {g:'Sequence recipe by event type',t:'Mastery Online Summit: invite on every Promotions and LIVE slot · sales sequence of about 15 emails mapped until the program starts · confirmation, retargeting, show-up and sales retargeting as Braze canvases.',p:'seeded · Ramya'},
     {g:'Sequence recipe by event type',t:'Quest Release Webinar: announce · reminder · we\'re live · last call or replay. Quest Soft Release: 2. Podcast and Value Email: 1.',p:'seeded · Ramya'},
     {g:'Sequence recipe by event type',t:'Webinars (Academy, Accelerator, Cert Presentation, Guild, Lifebook, WildFit): announce · reminder · live · last call · replay. Cert 1-Day Seminar: 15-day invite · show-up · live · sales to class start.',p:'seeded · Ramya'},
     {g:'Sequence recipe by event type',t:'Events (MVU, Festival): ticket emails every other day to Events. Membership Major Sale: daily on each slot · last 48h · last 24h · final hours.',p:'seeded · Ramya'},
-    {g:'Comms Calendar',t:'✋ No Email Day blocks all lists, and a slot whose note says "no email" is a No Email Day too. The plan never uses them; the angles from the Key Message Doc must carry the target without them. Only when a campaign is well behind target does the planner propose using a No Email Day, naming the email it would send.',p:'seeded · Ramya'},
+    {g:'Comms Calendar',t:'✋ No Email Day blocks all lists, and a slot whose note says "no email" is a No Email Day too. The plan never uses them; the angles from the Key Message Doc must carry the target without them. Campaign emails must beat the baseline; the moment a campaign runs any percent below its baseline, the planner proposes using the No Email Days, naming the specific email for each.',p:'seeded · Ramya'},
     {g:'Comms Calendar',t:'A newsletter day counts 1 on Daily. Extra days are proposed, never scheduled until parked.',p:'seeded · Ramya'}
   ];
   function renderRules(){var out='',last='';rules.forEach(function(r){if(r.g!==last){out+='<div class="rgroup">'+esc(r.g)+'</div>';last=r.g;}out+='<div class="rule"><span>'+esc(r.t)+'</span><span class="prov">'+esc(r.p)+'</span></div>';});$('#rulesList').innerHTML=out;$('#nRules').textContent=rules.length;}
