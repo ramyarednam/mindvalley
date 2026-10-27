@@ -67,7 +67,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .nav{background:var(--nav);border-right:1px solid var(--border-muted);padding:18px 14px 24px max(14px,env(safe-area-inset-left,0px));position:sticky;top:0;height:100vh;overflow:auto}
 .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}
 .brand .lg{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7A12D4,#DF1A6F);display:grid;place-items:center;color:#fff}
-.brand .lg svg{width:20px;height:auto}
+.brand .lg{overflow:hidden}.brand .lg svg{width:20px;height:9px;display:block}
 .brand small{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .brand b{font-size:19px;letter-spacing:-.01em}
 .nav .sec{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--subtle);font-weight:700;margin:14px 10px 6px}
@@ -93,6 +93,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 
 /* Feature header */
 .fhead{border:1px solid rgba(255,147,31,.45);background:linear-gradient(180deg,rgba(255,147,31,.08),rgba(255,147,31,.02));border-radius:22px;padding:22px 26px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.fhead>div:not(.ic):not(.right){flex:1 1 380px;min-width:0}.fhead .right{flex:none}
 .fhead .ic{width:72px;height:72px;border-radius:18px;background:#FF7A1A;display:grid;place-items:center;color:#fff;flex:none}
 .fhead .ic svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fhead .eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:700}
@@ -125,6 +126,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:500;background:var(--chip);color:var(--chip-ink);white-space:nowrap}
 .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.85}
 .chip.plain::before{display:none}
+.chip.plain{white-space:normal;text-align:left}
 .chip.promo,.chip.review{background:var(--brand-light);color:var(--brand-ink)}
 .chip.live{background:var(--red-light);color:var(--pink)}
 .chip.sales{background:var(--orange-light);color:var(--orange)}
@@ -137,7 +139,9 @@ table{width:100%;border-collapse:collapse;font-size:13.5px}
 th{text-align:left;font-weight:500;color:var(--subtle);font-size:12.5px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
 td{padding:9px 10px;border-bottom:1px solid var(--border-muted);vertical-align:top}
 tr:last-child td{border-bottom:0}
-.tbl{overflow-x:auto}
+.tbl{overflow-x:auto;scrollbar-width:thin}
+#perfDetail .card.tbl table{font-size:12.5px}#perfDetail .card.tbl th,#perfDetail .card.tbl td{padding:8px 7px}#perfDetail .card.tbl td.wrap{min-width:150px}#perfDetail .card.tbl th.num{text-align:center;border-left:1px solid var(--border)}#perfDetail .card.tbl td.num:nth-child(3n+1){border-left:1px solid var(--border-muted)}
+.sched{font-size:12.5px}.sched th,.sched td{padding:7px 8px}
 .num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .pos{color:var(--green)}.neg{color:var(--red)}
 .note{border-left:3px solid var(--orange);padding:10px 14px;background:var(--orange-light);border-radius:0 12px 12px 0;font-size:13.5px}
@@ -304,6 +308,7 @@ td.wrap{white-space:normal;min-width:180px}
 @media (max-width:640px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .tl{background:var(--surface);border:1px solid var(--border-muted);border-radius:18px;padding:14px 16px}
 .tl .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tl .v:empty::before{content:'—'}
 .tl .l{font-size:12.5px;color:var(--subtle);margin-top:2px}
 .tl .s{font-size:12px;color:var(--muted);margin-top:6px}
 .chart{width:100%;height:auto;display:block}
@@ -342,7 +347,7 @@ textarea.ta{width:100%;min-height:84px;border:1px solid var(--border-strong);bor
 .fb-title b{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fb-title .small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .focuswrap{max-width:760px;margin:0 auto}
-.focuswrap .tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);z-index:11;margin:0 auto 14px}
+.focuswrap .tools{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);z-index:11;margin:0 auto 14px;box-shadow:0 0 0 10px var(--bg),var(--shadow)}
 .focuswrap .sheet{max-width:none;box-shadow:var(--shadow-strong)}
 .focuswrap #body{min-height:60vh;padding:34px 40px 60px;font-size:17px;line-height:1.7}
 .focuswrap .dock{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:11;margin-top:16px}
@@ -364,7 +369,7 @@ body.focus .main{padding-top:0}
 .drawer-body #name{font-size:18px;white-space:normal;line-height:1.3}
 .drawer-body .dgrid{grid-template-columns:1fr;gap:12px}
 .drawer-body .dgrid label{font-size:12.5px}
-.drawer-body .dt{display:grid;grid-template-columns:minmax(0,1fr) 84px}
+.drawer-body .dt{display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:6px}
 .drawer-body .seqctx{flex-direction:column;align-items:flex-start;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border-muted)}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:39}
 .drawer-body .card>h3{display:none}
@@ -398,7 +403,7 @@ body.focus .main{padding-top:0}
 .nav a.sub.active{background:var(--brand-light);color:var(--brand-ink)}
 .nav a.sub .n{background:var(--chip);color:var(--subtle)}
 .nav .parent{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:999px;background:linear-gradient(90deg,#7A12D4,#DF1A6F);color:#fff;font-size:14.5px;margin-bottom:4px}
-.nav .parent .bt{background:rgba(255,255,255,.2);color:#fff}
+.nav .parent .bt{font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 7px;background:rgba(255,255,255,.22);color:#fff;line-height:1.4}
 .sect{display:flex;align-items:baseline;gap:12px;margin:4px 0 16px}
 .sect h2{font-size:24px}.sect p{color:var(--muted);max-width:76ch}
 .crumb{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:4px}
@@ -409,7 +414,8 @@ body.focus .main{padding-top:0}
 .erow{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border-muted);border-radius:14px;padding:9px 10px;margin-bottom:6px;align-items:start}
 .erow:hover{border-color:var(--border-strong)}
 .erow.active{border-color:var(--brand);box-shadow:var(--shadow)}
-.erow .dt{background:var(--brand-light);color:var(--brand-ink);border-radius:9px;text-align:center;padding:5px 0;line-height:1.05}
+.erow .dt{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--brand-light);color:var(--brand-ink);border-radius:9px;padding:5px 0;line-height:1.05;height:46px}
+.erow>span:last-child{display:block;min-width:0}
 .erow .dt b{display:block;font-size:17px}.erow .dt small{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
 .erow .t{display:block;font-size:13.5px;font-weight:500;line-height:1.3}
 .erow .m{display:block;font-size:12px;color:var(--muted);margin-top:2px}
@@ -444,7 +450,8 @@ body.focus .main{padding-top:0}
 @media (max-width:640px){.ovr{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .ovr .tl .v{font-size:22px}
 /* rules log */
-.lg{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-muted);font-size:13px;align-items:start}
+.lg{display:grid;grid-template-columns:120px minmax(0,1fr);gap:6px 12px;padding:10px 0;border-bottom:1px solid var(--border-muted);font-size:13px;align-items:start}
+.lg .chip{grid-column:2;justify-self:start;white-space:normal}
 .lg:last-child{border-bottom:0}
 .lg .src{font-size:12px;color:var(--subtle)}
 .lg .src b{display:block;color:var(--text);font-weight:500}
@@ -453,7 +460,6 @@ body.focus .main{padding-top:0}
 </style>
 </head>
 <body>
-
 <div class="shell">
 <nav class="nav" aria-label="Content Studio">
   <div class="brand"><div class="lg"><svg viewBox="0 0 54.463 24" fill="currentColor"><path d="M 0 0 C 1.871 0.154 3.735 0.394 5.591 0.663 C 8.266 1.051 10.929 1.536 13.554 2.182 C 16.039 2.793 18.657 3.45 20.912 4.699 C 24.841 6.877 25.634 11.429 25.634 15.575 L 25.634 24 C 7.732 14.836 0 0 0 0 Z"/><path d="M 54.463 0 C 52.592 0.154 50.728 0.394 48.872 0.663 C 46.197 1.051 43.535 1.536 40.909 2.182 C 38.424 2.793 35.806 3.45 33.551 4.699 C 29.622 6.877 28.829 11.429 28.829 15.575 L 28.829 24 C 46.73 14.836 54.463 0 54.463 0 Z"/></svg></div><div><small>Mindvalley</small><b>Content Studio</b></div></div>
@@ -482,7 +488,7 @@ body.focus .main{padding-top:0}
       <div class="eyebrow">Create · Email Creator</div>
       <h1 id="secTitle">Planning</h1>
       <p id="secLead">Every campaign with a brief on the Official Calendar, and every standing sequence, is a box. Open one to see the proposed plan and approve it.</p>
-      <div class="beta"><b>BETA</b> Still being built by <strong>Ramya</strong>. Things may change or break. Send them your feedback.</div>
+      <div class="beta"><b>BETA</b><span>Still being built by <strong>Ramya</strong>. Things may change or break. Send them your feedback.</span></div>
     </div>
     <div class="right"><button class="btn ghost sm" id="processBtn">Show me the whole email process</button></div>
   </header>
@@ -734,7 +740,7 @@ body.focus .main{padding-top:0}
     {id:'canc',kind:'Lifecycle sequence',k:'l',name:'Membership cancellation',src:'Standing · triggered on cancel request',when:'4 emails · T+0 to T+10d',emails:4,state:'Live · v2',stateCls:'ok',track:{v:'11.2%',l:'saved after cancel request',d:'−0.6 pts vs v1',dc:'neg'}}
   ];
   function boxHtml(b,mode){
-    var foot=mode==='plan'?'<span class="small subtle">'+b.emails+' emails</span><span class="chip '+b.stateCls+'">'+esc(b.state)+'</span>':
+    var foot=mode==='plan'?'<span class="small subtle">'+b.emails+(b.emails===1?' email':' emails')+'</span><span class="chip '+b.stateCls+'">'+esc(b.state)+'</span>':
       (b.track?'<div><div class="big">'+b.track.v+'<small>'+esc(b.track.l)+'</small></div><div class="delta '+(b.track.dc||'subtle')+'">'+esc(b.track.d)+'</div></div>':'<span class="small subtle">Nothing sent yet</span>');
     return '<button class="box" data-id="'+b.id+'"><div class="kind '+b.k+'">'+esc(b.kind)+'</div><h3>'+esc(b.name)+'</h3><div class="meta">'+esc(b.src)+'</div><div class="meta">'+esc(b.when)+'</div><div class="foot">'+foot+'</div></button>';
   }
@@ -879,7 +885,7 @@ body.focus .main{padding-top:0}
   var emailsList=plan.filter(function(p){return !p.dropped&&p.seq!=='salese';}).slice(0,12);
   function renderList(){
     var g={};emailsList.forEach(function(p){var k=p.seq==='showup'?'Show-up · team':'Invite · Vishen';(g[k]=g[k]||[]).push(p);});
-    $('#elist').innerHTML=Object.keys(g).map(function(k){return '<div class="grp"><h4>'+k+'<span>'+g[k].length+' emails</span></h4>'+g[k].map(function(p){var d=parse(p.d);var langs=p.status==='Sent'||p.status==='Scheduled'||p.status==='Approved'?'<span class="lang">EN</span><span class="lang de">DE</span><span class="lang es">ES</span>':'<span class="lang">EN</span>';return '<button class="erow'+(p.n==='E4'?' active':'')+'"><span class="dt"><small>'+MON[d.getUTCMonth()]+'</small><b>'+d.getUTCDate()+'</b></span><span><span class="t">'+esc(p.n+' · '+p.t)+'</span><span class="m">'+DOW[d.getUTCDay()]+' · '+(p.time||'7:00 AM PST')+' · '+esc(p.lists.replace(/ *\(.*\)/,''))+'</span><span class="s"><span class="chip '+(statusCls[p.status]||'')+'">'+p.status+'</span>'+langs+'</span></span></button>';}).join('')+'</div>';}).join('');
+    $('#elist').innerHTML=Object.keys(g).map(function(k){return '<div class="grp"><h4>'+k+'<span>'+g[k].length+(g[k].length===1?' email':' emails')+'</span></h4>'+g[k].map(function(p){var d=parse(p.d);var langs=p.status==='Sent'||p.status==='Scheduled'||p.status==='Approved'?'<span class="lang">EN</span><span class="lang de">DE</span><span class="lang es">ES</span>':'<span class="lang">EN</span>';return '<button class="erow'+(p.n==='E4'?' active':'')+'"><span class="dt"><small>'+MON[d.getUTCMonth()]+'</small><b>'+d.getUTCDate()+'</b></span><span><span class="t">'+esc(p.n+' · '+p.t)+'</span><span class="m">'+DOW[d.getUTCDay()]+' · '+(p.time||'7:00 AM PST')+' · '+esc(p.lists.replace(/ *\(.*\)/,''))+'</span><span class="s"><span class="chip '+(statusCls[p.status]||'')+'">'+p.status+'</span>'+langs+'</span></span></button>';}).join('')+'</div>';}).join('');
   }
   renderList();
   var subject=$('#subject'),preview=$('#preview'),subjectB=$('#subjectB'),body=$('#body');
@@ -1020,7 +1026,7 @@ body.focus .main{padding-top:0}
   function renderSched(){
     var fc=$('#fCamp').value,fs=$('#fSeq').value,fl=$('#fList').value,fg=$('#fLang').value,fst=$('#fStatus').value,q=$('#fSearch').value.toLowerCase();
     var shown=rows.filter(function(r){return (!fc||r.camp===fc)&&(!fs||r.seq===fs)&&(!fl||r.list===fl)&&(!fg||r.lang===fg)&&(!fst||r.status===fst)&&(!q||(r.subj+' '+r.copy).toLowerCase().indexOf(q)>-1);});
-    $('#schedTable').innerHTML='<tr><th><input type="checkbox" id="selAll" title="Select all approved"></th><th>Date</th><th>Day</th><th>Campaign Name</th><th>Sequence</th><th>Email Copy for the day</th><th>Any Specific Instructions</th><th>Send Time</th><th>Send List</th><th>Lang</th><th>Suppress list</th><th>UTMs</th><th>Braze Link</th><th>Subject Line</th><th>Status</th><th></th></tr>'+
+    $('#schedTable').innerHTML='<tr><th title="Select all approved"><input type="checkbox" id="selAll"></th><th>Date</th><th>Day</th><th>Campaign Name</th><th>Sequence</th><th>Email Copy for the day</th><th>Any Specific Instructions</th><th>Send Time</th><th>Send List</th><th>Lang</th><th>Suppress list</th><th>UTMs</th><th>Braze Link</th><th>Subject Line</th><th>Status</th><th></th></tr>'+
       shown.map(function(r){var i=rows.indexOf(r);var canSel=r.status==='Approved';return '<tr><td>'+(canSel?'<input type="checkbox" class="sel" data-i="'+i+'"'+(selected[i]?' checked':'')+'>':'')+'</td><td>'+esc(r.date)+'</td><td>'+esc(r.day)+'</td><td>'+esc(r.camp)+'</td><td>'+esc(r.seq)+'</td><td class="wrap">'+esc(r.copy)+'</td><td class="wrap small muted">'+esc(r.instr)+'</td><td>'+esc(r.time)+'</td><td>'+esc(r.list)+'</td><td><span class="lang '+r.lang.toLowerCase()+'">'+r.lang+'</span></td><td class="wrap small muted">'+esc(r.sup)+'</td><td><span class="url" title="'+esc(r.url)+'">'+esc(r.url)+'</span></td><td>'+(r.braze?'<a href="'+esc(r.braze)+'" target="_blank" rel="noopener">Open in Braze ↗</a>':'<span class="small subtle">after push</span>')+'</td><td class="wrap">'+esc(r.subj)+'</td><td><span class="chip '+(statusCls[r.status]||'')+'">'+esc(r.status)+'</span>'+(r.warn?'<span class="warnic" title="'+esc(r.warn)+'">!</span>':'')+'</td><td><button class="btn sm ghost prev" data-i="'+i+'">Preview</button></td></tr>';}).join('');
     $('#nSched').textContent=rows.length;
     $('#selCount').textContent=Object.keys(selected).filter(function(k){return selected[k];}).length;
@@ -1109,7 +1115,7 @@ body.focus .main{padding-top:0}
       (t.gap?'<div class="card"><h3>What we need to do to close the gap</h3><div class="grid g3" style="margin-bottom:10px">'+t.gap.map(function(x){return '<div class="stat"><div class="v">'+esc(x[0])+'</div><div class="l">'+esc(x[1])+'</div><div class="small subtle">'+esc(x[2])+'</div></div>';}).join('')+'</div><ul class="clean small">'+t.actions.map(function(a){return '<li>'+esc(a)+'</li>';}).join('')+'</ul></div>':
         '<div class="card"><h3>By list</h3><div class="tbl"><table><tr><th>List</th><th class="num">Sends</th><th class="num">Open</th><th class="num">CTR</th><th class="num">This</th><th class="num">Baseline</th></tr>'+t.lists.map(function(l){return '<tr>'+l.map(function(c,i){return '<td class="'+(i?'num':'')+'">'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table></div>'+(t.actions?'<ul class="clean small" style="margin-top:10px">'+t.actions.map(function(a){return '<li>'+esc(a)+'</li>';}).join('')+'</ul>':'')+'</div>')+'</div>'+
       '<div class="sec grid g2"><div class="card"><h3>Tests and learnings</h3><div class="tbl"><table><tr><th>Test</th><th>Arms</th><th>Result</th><th>Learning</th></tr>'+(t.tests.length?t.tests.map(function(x){return '<tr><td>'+esc(x[0])+'</td><td class="small muted">'+esc(x[1])+'</td><td>'+esc(x[2])+'</td><td class="small">'+esc(x[3])+'</td></tr>';}).join(''):'<tr><td colspan="4" class="muted">No tests on this one yet.</td></tr>')+'</table></div><div class="row" style="margin-top:10px"><input class="field sm" id="tLearn" placeholder="Add a learning from this campaign…" style="flex:1;min-width:200px"><button class="btn sm primary" id="tLearnBtn">Send to Rules for approval</button></div></div>'+
-      (t.gap?'<div class="card"><h3>By list</h3><div class="tbl"><table><tr><th>List</th><th class="num">Sends</th><th class="num">Open</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">Baseline</th></tr>'+t.lists.map(function(l){return '<tr>'+l.map(function(c,i){return '<td class="'+(i?'num':'')+'">'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table></div></div>':'<div class="card"><h3>Write-back</h3><p class="small muted">Actuals go into the Official Calendar only when you click.</p><button class="btn sm ghost" style="margin-top:10px">Write actuals to the calendar</button></div>')+'</div>';
+      (t.gap?'<div class="card"><h3>By list</h3><div class="tbl"><table><tr><th>List</th><th class="num">Sends</th><th class="num">Open</th><th class="num">CTR</th><th class="num">Leads</th><th class="num">Baseline</th></tr>'+t.lists.map(function(l){return '<tr>'+l.map(function(c,i){return '<td class="'+(i?'num':'')+'">'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table></div></div>':'<div class="card"><h3>Where the actuals live</h3><p class="small muted">Here and in Metabase. Nothing is written to the Official Calendar. If the calendar needs a number, export it and paste it by hand.</p><button class="btn sm ghost" style="margin-top:10px" onclick="toast(\'Actuals exported as CSV\')">Export actuals (CSV)</button></div>')+'</div>';
     $('#perfDetail').innerHTML=html;$('#perfDetail').hidden=false;$('#perfHome').hidden=true;window.scrollTo({top:0});
     $('#backTrack').addEventListener('click',function(){$('#perfDetail').hidden=true;$('#perfHome').hidden=false;window.scrollTo({top:0});});
     $('#tLearnBtn').addEventListener('click',function(){var v=$('#tLearn').value.trim();if(!v)return;addLearning(v,'Ramya','from Performance · '+b.name);$('#tLearn').value='';toast('Sent to Rules. Waiting for approval.');});
