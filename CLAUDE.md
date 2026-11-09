@@ -70,6 +70,14 @@ When initializing, always create these files:
 3. **Package manifest** - `package.json`, `requirements.txt`, `Cargo.toml`, etc.
 4. **Configuration files** - Linting, formatting, build tools
 
+## Email and Customer-Facing Copy Rules
+
+These rules apply to every email, landing page, Slack-to-customer message or other copy written in this repository. They override default wording.
+
+1. **Never write "cohort".** It is an internal word. In customer-facing copy always write **"class"** (e.g. "the class starts November 17", "join the November 17 class", "this class runs once a year"). This applies to subject lines, pre-headers, body copy, CTAs, P.S. lines and page copy.
+2. Say "invitation", never "pitch".
+3. Follow the Mindvalley email skill for voice, structure and forbidden phrases.
+
 ## Development Conventions
 
 ### Git Workflow
