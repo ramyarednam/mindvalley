@@ -1,0 +1,26 @@
+{
+  "calendarName": "30-30-30 Fibre Challenge",
+  "events": [
+    {
+      "id": "challenge",
+      "title": "30-30-30 Fibre Challenge",
+      "start": "2026-11-16",
+      "end": "2026-12-15",
+      "description": "30 days. 30 g of fibre a day. 30 plants a week. Do the day's action from your guide and tick it off."
+    },
+    {
+      "id": "day-1",
+      "title": "Fibre Challenge Day 1: measure and make the breakfast bowl",
+      "start": "2026-11-16",
+      "end": "2026-11-16",
+      "description": "Measure your waist (men) or hips (women), fill in the baseline page of your guide and make Nora's breakfast bowl."
+    },
+    {
+      "id": "day-31",
+      "title": "Fibre Challenge Day 31: measure again",
+      "start": "2026-12-16",
+      "end": "2026-12-16",
+      "description": "Measure the same way you did on day one, score yourself again and share what changed in the challenge community."
+    }
+  ]
+}
