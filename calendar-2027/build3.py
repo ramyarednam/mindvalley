@@ -326,7 +326,7 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 <section class="first">
 <div class="eyebrow">2027 proposed calendar</div>
 <h1>2027, month by month</h1>
-<p class="lede">Jaideep's Academy timeline sets the spine: Social Media Summit at 1BFS in January, Manifesting Summit in person in April, AI Summit with a paid ticket in July, Expert to Authority in September, AI for Founders in October, and Life Coach (Jan-Feb) and Hypnotherapist (Jun-Aug) certification launches, each with its campaign window before it. The five rows already in the 2027 sheet are unchanged. Membership adds one summit, four quest-release webinars, three challenges, Black Friday and Q5.</p>
+<p class="lede">Jaideep's Academy timeline sets the spine: Social Media Summit at 1BFS in January, Manifesting Summit in person in April, AI Summit with a paid ticket in July, Expert to Authority in September, AI for Founders in October, and Life Coach (Jan-Feb) and Hypnotherapist (Jun-Aug) certification launches, each with its campaign window before it. The five rows already in the 2027 sheet are unchanged. Membership adds one summit, four quest-release webinars, a challenge every quarter, Black Friday and Q5.</p>
 <div class="tiles">
  <div class="tile"><div class="k">2026 full year</div><div class="v">{M(camp26_full,1)}</div><div class="d">Actual to 10 Nov + remaining sheet targets.</div></div>
  <div class="tile"><div class="k">2027 target · 30% above 2026</div><div class="v">{M(target27,1)}</div><div class="d">1.3 × {M(camp26_full,1)}.</div></div>
@@ -339,15 +339,27 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 </div>
 </section>
 <section>
+<div class="eyebrow">The progression</div>
+<h2>Future Human is the identity. The year walks people through the four masteries that build it.</h2>
+<ol class="rules">
+ <li><strong>Q1 · Build visibility, then clarity.</strong> Social Media Summit at 1BFS (Jan 8-10) and the Life Coach launch open the year. The Q1 challenge (Feb 15-21, clarity) runs the week the Manifesting campaign opens.</li>
+ <li><strong>Q2 · Build clarity, then systems.</strong> Manifesting Summit in person (Apr 16-18), Membership Summit (May 22-23). The Q2 challenge (Jun 1-7, systems) runs as the AI campaign opens.</li>
+ <li><strong>Q3 · Build systems, then authority.</strong> MVU Porto and the AI Summit with a paid ticket (Jul 23-25), Hypnotherapist cohort (Aug 2). The Q3 challenge (Aug 15-21, authority) runs inside the Expert to Authority campaign; the summit follows Sep 17-19.</li>
+ <li><strong>Q4 · Become it.</strong> AI for Founders (Oct 29-31), Future Human Dubai (Nov 5-7) where the four-mastery bundle is sold, then the Q4 challenge (Nov 16 - Dec 16) carrying the list into Black Friday, Lifebook and Q5.</li>
+</ol>
+<div class="note">What a $1M challenge needs. The best challenge on record, 7 Sacred States in Dec 2025, pulled 25.5k sign-ups and $0.43M of attributed orders, about $17 per sign-up. At that rate $1M is roughly 60k sign-ups; the alternative is a paid product sold at the end of the challenge (the next summit's VIP ticket or an accelerator), which is why each challenge is placed at the start of a summit campaign.</div>
+</section>
+<section>
 <h2>The calendar</h2>
 <p>Status: ■ already in the sheet · ▲ Jaideep's Academy timeline · ● proposed. For each campaign: what it made in 2025, what it made in 2026, the 2027 target (1.3 × 2026; 1.3 × 2025 where it did not run in 2026; $1M where you set it). A dash means the campaign did not run that year. Italic lines show which campaign windows are open that month. Each month ends with a total row.</p>
 {plan_table()}
 <h3>1 Billion Followers Summit, campaign one</h3>
 <p>The fifth edition runs <strong>8 to 10 January 2027</strong> across Emirates Towers, DIFC and the Museum of the Future in Dubai, organised by the UAE Government Media Office with 500+ speakers. The 2027 sheet's Social Media Summit row already carries those dates. 2026 at 1BFS: 145k sign-ups, 444 Social Media Mastery orders, $2.10M, promo opened 25 November. Target $2.73M.</p>
-<h3>Three things to settle on the day</h3>
+<h3>Four things to settle on the day</h3>
 <ol class="rules">
  <li><strong>Black Friday.</strong> 2027 is 1.3 × the 2026 sheet target. Re-set to 1.3 × the actual once the sale closes on Nov 30. 2025 did $8.1M.</li>
  <li><strong>Membership Summit date.</strong> May 22-23 is the free fortnight in Q2 (after the Manifesting class start, before the AI Summit campaign opens May 24).</li>
+ <li><strong>Hypnotherapist 2026.</strong> Metabase shows $1.88M of MCH orders in Aug-Sep ($1.43M on the cohort table); the sheet says $2.5M. The 2027 target uses $1.88M; on $2.5M it would be $3.25M.</li>
  <li><strong>Future Human date.</strong> The sheet says Nov 5-7; Jaideep's deck says December. Nov 5-7 is kept so it does not sit on Black Friday.</li>
 </ol>
 </section>
