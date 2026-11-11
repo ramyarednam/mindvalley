@@ -1,6 +1,6 @@
 # 30-30-30 Fibre Challenge: landing and thank-you pages
 
-Static pages for the Extraordinary Minds × Alba Health fibre challenge
+Static pages for the Mindvalley × Alba Health fibre challenge
 (Mon 16 Nov – Tue 15 Dec 2026, Day 31 re-measure on Wed 16 Dec).
 
 | File | What it is |
@@ -25,7 +25,7 @@ Then open http://localhost:8000.
 1. `formAction` in `assets/config.js`: connect the form to the list (Braze/CRM).
    While it's empty, the form skips the network call and goes straight to the thank-you page.
 2. `communityUrl`: the Finer Minds group invite link. The button stays greyed out until it's set.
-3. `youtubeVideoId`: the Extraordinary Minds episode with Nora.
+3. Done: `youtubeVideoId` is set to the Vishen and Nora video (s2spgmKPu58).
 4. Host the folder on HTTPS. Calendar subscriptions (`webcal://`) need a public HTTPS URL.
 
 ## How the add-to-calendar works

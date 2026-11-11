@@ -78,7 +78,7 @@
       el.innerHTML = "";
       var iframe = document.createElement("iframe");
       iframe.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(videoId) + "?rel=0";
-      iframe.title = "Extraordinary Minds with Vishen Lakhiani and Nora Cavani";
+      iframe.title = "Vishen Lakhiani and Nora Cavani on fibre";
       iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
       iframe.allowFullscreen = true;
       el.appendChild(iframe);

@@ -128,9 +128,13 @@ section {
   gap: 14px;
 }
 
-.lockup .em {
-  height: 44px;
-  width: auto;
+.mv-wordmark {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  line-height: 1;
 }
 
 .lockup .alba {
@@ -876,8 +880,8 @@ section {
     grid-template-columns: 1fr;
   }
 
-  .lockup .em {
-    height: 32px;
+  .mv-wordmark {
+    font-size: 1.15rem;
   }
 
   .lockup .alba {

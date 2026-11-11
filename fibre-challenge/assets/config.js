@@ -19,9 +19,8 @@ window.FIBRE_CONFIG = {
   communityName: "Finer Minds",
   communityUrl: "",
 
-  // Extraordinary Minds episode with Nora Cavani. TODO: paste the YouTube
-  // video ID (the part after "watch?v=").
-  youtubeVideoId: "",
+  // Vishen and Nora Cavani video: https://www.youtube.com/watch?v=s2spgmKPu58
+  youtubeVideoId: "s2spgmKPu58",
 
   // Calendar feed that holds the challenge dates and the live calls.
   // Edit calendar/fibre-challenge.ics to add the live calls; anyone who
