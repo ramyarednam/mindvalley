@@ -176,7 +176,7 @@ MASTERY = [
  ("Social Media", ("Hybrid, Mar", 78_200, 3_228_463), ("Free + VIP at 1BFS Dubai, Jan", 145_000, 2_103_778)),
  ("Manifesting", ("Hybrid paid + free, May", 54_000, 6_693_662), ("Free + VIP, May", 136_000, 4_030_921)),
  ("Speaking & Influence", ("Free, Jun", 48_800, 2_043_164), ("Free + VIP, Jun", 52_300, 1_525_416)),
- ("AI", ("Hybrid, Jul", 170_000, 7_079_975), ("Free + VIP, Mar", 120_000, 5_069_628)),
+ ("AI", ("Free, Jul", 170_000, 7_079_975), ("Free + VIP, Mar", 120_000, 5_069_628)),
  ("Entrepreneurship / Expert to Authority", ("Hybrid, Sep", 52_000, 2_519_566), ("Free + VIP, Sep", 35_000, 2_760_353)),
  ("Spiritual / AI for Founders", ("Free, Nov", 96_800, 1_441_356), ("Free + VIP, Oct", 40_000, 1_969_762)),
 ]

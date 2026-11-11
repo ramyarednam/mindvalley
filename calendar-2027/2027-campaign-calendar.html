@@ -77,6 +77,7 @@ td.mtot2 { background:var(--bg-muted) }
 .small { font-size:11.5px; color:var(--fg-subtle); font-family:var(--font); white-space:normal; display:block }
 tr.dim td { color:var(--fg-subtle) } tr.dim td strong { color:var(--fg-muted); font-weight:500 }
 tr.total td { background:var(--bg-muted); font-weight:700; border-top:2px solid var(--border) }
+tr.sub td { background:var(--brand-light); font-weight:700; border-bottom:2px solid var(--border) } tr.sub td.small2 { font-weight:400; font-size:12.5px }
 table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wrap:anywhere } table.plan .chip { margin-top:6px; white-space:normal } table.quests { min-width:800px } table.sheet { min-width:1500px; font-size:12.5px }
 .chip { display:inline-block; font-size:11.5px; font-weight:500; padding:3px 10px; border-radius:128px; white-space:nowrap }
 .chip-sheet { background:var(--bg-subtle); color:var(--fg); border:1px solid var(--border) } .chip-jd { background:var(--brand-light); color:var(--brand) } .chip-new { background:var(--tag-bg); color:var(--tag-fg) }
@@ -99,25 +100,16 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <section class="first">
 <div class="eyebrow">Mindvalley · Strategy day · prepared 11 Nov 2026 · data to 10 Nov 2026</div>
 <h1>How the 2027 calendar was built</h1>
-<p class="lede">Only launch campaigns count. Every number on this page is revenue from orders that carry a Product Launch tag at checkout, pulled from Metabase. Evergreen membership, programs, class starts and quest releases are left out. 2027 targets are 30% above what the same campaign did in 2026.</p>
+<p class="lede">Only launch campaigns count. Every number on this page is revenue from orders that carry a Product Launch tag at checkout, pulled from Metabase. Evergreen membership, programs, class starts and quest releases are left out. Where a product never carries a tag (MVU tickets, States on Shopify, event tickets) the product's own sales in the campaign window are used and the row says so. 2027 targets are 30% above what the same campaign did in 2026.</p>
 <div class="tiles">
  <div class="tile"><div class="k">2025 campaign revenue</div><div class="v">$36.2M</div><div class="d">Launch-tagged orders, all business units. Academy $21.2M, Membership $14.6M (of which Black Friday + Cyber Monday $8.1M), Events $0.4M.</div></div>
  <div class="tile"><div class="k">2026 to 10 Nov</div><div class="v">$18.9M</div><div class="d">Same window in 2025: $26.2M (-28%). Academy $14.8M, Membership $4.1M.</div></div>
  <div class="tile"><div class="k">2026 projected</div><div class="v">$25–$29M</div><div class="d">Adds Black Friday, Cyber Monday, Q5, Lifebook and the rest of AI for Founders. Low end: Q4 at 65% of 2025 (membership base is down 40%). High end: Q4 repeats 2025. Your working number is $35M.</div></div>
- <div class="tile hero"><div class="k">2027 forecast from the proposed calendar</div><div class="v">$40.66M</div><div class="d">23 campaigns, each at 1.3× its own 2026 result (2025 where it did not run in 2026; $1M where you set it). Bar to clear: $33.0M–$37.6M on the data, $45.5M on $35M.</div></div>
+ <div class="tile hero"><div class="k">2027 forecast from the proposed calendar</div><div class="v">$39.62M</div><div class="d">23 campaigns, each at 1.3× its own 2026 result (2025 where it did not run in 2026; $1M where you set it). Bar to clear: $33.0M–$37.6M on the data, $45.5M on $35M.</div></div>
 </div>
 </section>
 
-<section>
-<div class="eyebrow">How it works</div>
-<h2>Three rules</h2>
-<ol class="rules">
- <li><strong>Only launch campaigns count.</strong> Revenue on this page is from orders that carry a Product Launch tag at checkout: summits, cert launches, Black Friday, Q5, quest webinars. Evergreen membership, programs, class starts and States are not campaign revenue.</li>
- <li><strong>Month by month, as in the official calendar.</strong> Each month lists the calendar's campaigns, what each made, the month's campaign total and the month's total revenue from every order.</li>
- <li><strong>2027 target = 30% above what the same campaign made in 2026.</strong> If it did not run in 2026, 30% above 2025. Challenges and the Porto accelerators are $1M each on your instruction.</li>
-</ol>
-<div class="note">One thing to know about the tags: about 45% of Academy launch orders (deposits, payment plans) carry no launch tag, so a $1.17M cert cohort shows as $0.27M here. The tables say so where it matters. Tagging every checkout would lift reported campaign revenue by roughly $6M a year without changing a sale.</div>
-</section>
+
 
 <section>
 <div class="eyebrow">Why 2026 is lower</div>
@@ -202,10 +194,10 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 </div>
 <p>Like-for-like (1 Jan to 10 Nov) campaign revenue fell from $26.2M to $18.9M. In campaign terms, five things explain it.</p>
 <div class="findings">
- <div class="finding"><div class="n">01</div><h4>AI Summit: hybrid in July became free in March</h4><div class="big">$6.25M → $3.23M</div><p>Launch-tagged AI Mastery orders, Jul-Aug 2025 vs Mar-Apr 2026. 170k sign-ups in 2025 vs 120k; paid tickets and a July slot after the Manifesting cohort. The biggest single swing of the year.</p></div>
+ <div class="finding"><div class="n">01</div><h4>AI Summit: July became March, with 50k fewer sign-ups</h4><div class="big">$6.29M → $3.25M</div><p>Launch-tagged AI Mastery orders, Jul-Aug 2025 vs Mar-Apr 2026. Both summits were free. 2025 had 170k sign-ups and a July slot after the Manifesting cohort had closed; 2026 had 120k and ran six weeks after Social Media. The biggest single swing of the year.</p></div>
  <div class="finding"><div class="n">02</div><h4>No Future Human in 2026</h4><div class="big">−$2.44M</div><p>January 2025's festival sold $1.57M of the Future Human Mastery bundle, $0.71M of Total Mastery and $0.16M of virtual passes, all tagged to the event. 2026 had no January festival and no bundle.</p></div>
- <div class="finding"><div class="n">03</div><h4>Manifesting Summit: in person became free</h4><div class="big">$3.45M → $2.15M</div><p>Apr-Jun tagged orders. 2026 had 136k sign-ups to 2025's 54k and still made $1.3M less: $124 per sign-up in 2025, $30 in 2026.</p></div>
- <div class="finding"><div class="n">04</div><h4>Membership ran fewer campaigns</h4><div class="big">$5.9M → $4.1M</div><p>Jan-10 Nov membership launch-tagged. 2025 had the Best of Mindvalley summit (Feb), two promos (Jan, Apr-May), the June renewal promo ($1.07M) and the Membership Summit (Aug, $0.42M). 2026 kept only the June promo ($0.62M). The 2027 plan keeps one Membership Summit and drops every promo except Black Friday and Q5, as you asked.</p></div>
+ <div class="finding"><div class="n">03</div><h4>Manifesting Summit: in person became free</h4><div class="big">$3.45M → $2.20M</div><p>Apr-Jun tagged orders. 2026 had 136k sign-ups to 2025's 54k and still made $1.3M less: $124 per sign-up in 2025, $30 in 2026.</p></div>
+ <div class="finding"><div class="n">04</div><h4>Membership ran fewer campaigns</h4><div class="big">$5.9M → $4.1M</div><p>Jan-10 Nov membership launch-tagged. 2025 had the Best of Mindvalley summit (Feb, $0.36M in summit week), two promos (Jan, Apr-May), the June renewal promo ($1.13M) and the Membership Summit (Aug, $0.22M in summit week). 2026 kept only the June promo ($0.70M). The 2027 plan keeps one Membership Summit and drops every promo except Black Friday and Q5, as you asked.</p></div>
  <div class="finding"><div class="n">05</div><h4>Certifications: one launch fewer, no Business Coach</h4><div class="big">$1.45M → $1.06M</div><p>Tagged cert orders Jan-10 Nov. 2025: CLC Feb, Business Coach Apr, Hypnotherapist Sep plus deposits through the year. 2026: CLC Feb and Hypnotherapist Aug. Business Coach is dropped for 2027 on your call.</p></div>
  <div class="finding"><div class="n">06</div><h4>What 2026 added</h4><div class="big">+$1.9M</div><p>Accelerators ($0.40M AI, $0.09M AI Clones, $0.32M Wealth Code, $0.22M Priestley, $0.08M Manifesting Blocks), Expert to Authority ($2.42M vs Entrepreneurship $2.24M), WildFit back ($0.23M) and AI for Founders already at $1.22M with the class not yet started.</p></div>
 </div>
@@ -257,136 +249,136 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <section>
 <div class="eyebrow">2025, month by month</div>
 <h2>2025 calendar with launch-tagged revenue</h2>
-<p>Every campaign the official 2025 calendar lists, minus programs and class starts. Rows in grey could not be matched to tagged orders. The last two columns are the month's totals: all launch-tagged orders, and all revenue from every order.</p>
-<div class="tw"><table class="months"><thead><tr><th>Month</th><th>Campaigns in the official 2025 calendar</th><th>Dates</th><th class="num">Launch-tagged revenue</th><th>Where the number comes from</th><th class="num">Month: all launch-tagged</th><th class="num">Month: total revenue</th></tr></thead><tbody>
+<p>Every campaign the official 2025 calendar lists, minus programs, class starts and quest releases. Campaign revenue is launch-tagged orders; where the row says untagged it is the product's own sales in the window. The last two columns are the month's totals: all launch-tagged orders, and all revenue from every order.</p>
+<div class="tw"><table class="months"><thead><tr><th>Month</th><th>Campaigns in the official 2025 calendar</th><th>Dates</th><th class="num">Campaign revenue</th><th>Where the number comes from</th><th class="num">Month: all launch-tagged</th><th class="num">Month: total revenue (all orders)</th></tr></thead><tbody>
 <tr class="">
 <td rowspan="4" class="mcell"><strong>Jan</strong></td>
-<td><strong>FutureHuman Festival</strong></td><td class="dates">Jan 10-12</td><td class="num">$2.44M</td><td class="muted">Future Human Mastery bundle $1.57M + Total Mastery $0.71M + virtual pass $0.16M, all tagged to the festival. Tickets ($1.15M) carry no launch tag.</td>
+<td><strong>FutureHuman Festival</strong></td><td class="dates">Jan 10-12</td><td class="num">$2.45M</td><td class="muted">Future Human Mastery bundle, Total Mastery and virtual pass, tagged to the festival. Tickets ($1.15M) carry no launch tag and are not included.</td>
 <td rowspan="4" class="num mtot">$2.95M</td><td rowspan="4" class="num mtot2">$8.76M</td>
 </tr>
-<tr class="dim">
-<td><strong>Masters of Manifesting live seminar</strong></td><td class="dates">Jan 18-19</td><td class="num">—</td><td class="muted">No tagged orders in January; the &#x27;Masters of Manifesting&#x27; product sold $0.16M in Feb.</td>
+<tr class="">
+<td><strong>Masters of Manifesting live seminar</strong></td><td class="dates">Jan 18-19</td><td class="num">$31k</td><td class="muted">Seminar tickets sold through Bizzabo, no launch tag: $31k in Jan ($40k incl. Dec 2024).</td>
 </tr>
 <tr class="">
-<td><strong>Membership - New Features promo</strong></td><td class="dates">Jan 22</td><td class="num">$190k</td><td class="muted">mqaa + qaap promo orders. No lift over the January baseline.</td>
+<td><strong>Membership - New Features promo</strong></td><td class="dates">Jan 22</td><td class="num">$311k</td><td class="muted">All membership launch-tagged orders in January. No lift over the January baseline.</td>
 </tr>
 <tr class="">
-<td><strong>Certified Life Coach (Jan cohort deposits)</strong></td><td class="dates">Jan</td><td class="num">$103k</td><td class="muted">CLC deposits and conversions tagged to the launch.</td>
+<td><strong>Certified Life Coach (Jan cohort)</strong></td><td class="dates">Jan</td><td class="num">$153k</td><td class="muted">CLC $113k + MCH deposits $41k tagged.</td>
 </tr>
 <tr class="">
 <td rowspan="3" class="mcell"><strong>Feb</strong></td>
-<td><strong>Best of Mindvalley Summit</strong></td><td class="dates">Feb 8-9</td><td class="num">$255k</td><td class="muted">qaap, mqaa and Modern Mystic promo orders in summit week. 55k sign-ups.</td>
+<td><strong>Best of Mindvalley Summit</strong></td><td class="dates">Feb 8-9</td><td class="num">$363k</td><td class="muted">Membership launch-tagged orders in Feb ($363k; $363k of it in summit week Feb 8-14). 55k sign-ups.</td>
 <td rowspan="3" class="num mtot">$874k</td><td rowspan="3" class="num mtot2">$5.43M</td>
 </tr>
 <tr class="">
-<td><strong>Certified Life Coach seminar + webinar</strong></td><td class="dates">Feb 23, 25</td><td class="num">$259k</td><td class="muted">Tagged CLC orders in Feb. The Mar-2025 cohort finished at $1.28M, most of it untagged.</td>
+<td><strong>Certified Life Coach seminar + webinar</strong></td><td class="dates">Feb 23, 25</td><td class="num">$268k</td><td class="muted">Tagged CLC orders in Feb. The Mar-2025 cohort finished at $1.28M, most of it untagged.</td>
 </tr>
 <tr class="">
-<td><strong>Master of Manifesting promo</strong></td><td class="dates">Feb 28</td><td class="num">$160k</td><td class="muted">Masters of Manifesting product, 780 orders.</td>
+<td><strong>Master of Manifesting promo</strong></td><td class="dates">Feb 28</td><td class="num">$173k</td><td class="muted">Masters of Manifesting membership product, 853 tagged orders.</td>
 </tr>
-<tr class="dim">
+<tr class="">
 <td rowspan="5" class="mcell"><strong>Mar</strong></td>
-<td><strong>States email funnel</strong></td><td class="dates">Mar 3</td><td class="num">—</td><td class="muted">States orders carry no launch tag ($22k States revenue in March).</td>
+<td><strong>States email funnel</strong></td><td class="dates">Mar 3</td><td class="num">$22k</td><td class="muted">States sells through Shopify with no launch tag: this is all States revenue in March.</td>
 <td rowspan="5" class="num mtot">$2.05M</td><td rowspan="5" class="num mtot2">$7.64M</td>
 </tr>
-<tr class="dim">
-<td><strong>MVU event campaign</strong></td><td class="dates">Mar 10-27</td><td class="num">—</td><td class="muted">MVU tickets carry no launch tag. MVU 2025 sold $0.31M in March.</td>
+<tr class="">
+<td><strong>MVU event campaign</strong></td><td class="dates">Mar 10-27</td><td class="num">$308k</td><td class="muted">MVU 2025 tickets sold in March. Tickets carry no launch tag.</td>
 </tr>
 <tr class="">
-<td><strong>Wildfit live webinar</strong></td><td class="dates">Mar 11</td><td class="num">$15k</td><td class="muted">wf_product promo orders. 13k sign-ups.</td>
+<td><strong>Wildfit live webinar</strong></td><td class="dates">Mar 11</td><td class="num">$17k</td><td class="muted">WildFit tagged orders. 13k sign-ups.</td>
 </tr>
 <tr class="">
-<td><strong>Social Media Summit</strong></td><td class="dates">Mar 28-30</td><td class="num">$1.55M</td><td class="muted">Social Media Mastery tagged orders in March. Cohort total $3.23M.</td>
+<td><strong>Social Media Summit</strong></td><td class="dates">Mar 28-30</td><td class="num">$1.55M</td><td class="muted">Social Media Mastery tagged in March. Cohort total $3.23M.</td>
 </tr>
 <tr class="">
 <td><strong>CLC rolling cohort</strong></td><td class="dates">Mar</td><td class="num">$132k</td><td class="muted"></td>
 </tr>
 <tr class="">
 <td rowspan="5" class="mcell"><strong>Apr</strong></td>
-<td><strong>Social Media Summit Highlights</strong></td><td class="dates">Apr 6</td><td class="num">$384k</td><td class="muted">Social Media Mastery tagged orders in April.</td>
+<td><strong>Social Media Summit Highlights</strong></td><td class="dates">Apr 6</td><td class="num">$384k</td><td class="muted">Social Media Mastery tagged in April.</td>
 <td rowspan="5" class="num mtot">$1.19M</td><td rowspan="5" class="num mtot2">$7.20M</td>
 </tr>
 <tr class="">
-<td><strong>Business Coach seminar + webinar</strong></td><td class="dates">Apr 13, 15</td><td class="num">$176k</td><td class="muted">CBC tagged. Cohort total $0.71M.</td>
+<td><strong>Business Coach seminar + webinar</strong></td><td class="dates">Apr 13, 15</td><td class="num">$204k</td><td class="muted">CBC tagged. Cohort total $0.71M.</td>
 </tr>
-<tr class="dim">
-<td><strong>MVU event campaign + MVU webinar</strong></td><td class="dates">Apr 15-30</td><td class="num">—</td><td class="muted">Untagged; MVU 2025 sold $0.22M in April.</td>
+<tr class="">
+<td><strong>MVU event campaign + MVU webinar</strong></td><td class="dates">Apr 15-30</td><td class="num">$216k</td><td class="muted">MVU 2025 tickets sold in April (untagged).</td>
 </tr>
 <tr class="">
 <td><strong>Manifesting Summit ticket pre-sale</strong></td><td class="dates">Apr</td><td class="num">$106k</td><td class="muted">Virtual tickets tagged to the summit.</td>
 </tr>
 <tr class="">
-<td><strong>Membership promo</strong></td><td class="dates">Apr 30</td><td class="num">$282k</td><td class="muted">mqaa promo orders (Apr 30 - May 2 window $0.54M total).</td>
+<td><strong>Membership promo</strong></td><td class="dates">Apr 30</td><td class="num">$420k</td><td class="muted">All membership launch-tagged orders in April.</td>
 </tr>
 <tr class="">
 <td rowspan="3" class="mcell"><strong>May</strong></td>
-<td><strong>Membership promo (cont.)</strong></td><td class="dates">May 1</td><td class="num">$221k</td><td class="muted">mqaa promo orders.</td>
+<td><strong>Membership promo (May 1-2)</strong></td><td class="dates">May 1</td><td class="num">$339k</td><td class="muted">All membership launch-tagged orders in May.</td>
 <td rowspan="3" class="num mtot">$2.84M</td><td rowspan="3" class="num mtot2">$10.00M</td>
 </tr>
 <tr class="">
-<td><strong>Manifesting Summit</strong></td><td class="dates">May 17-18</td><td class="num">$2.40M</td><td class="muted">Manifesting Mastery $2.09M + virtual tickets $0.31M tagged in May. Cohort total $5.69M + $1.0M tickets.</td>
+<td><strong>Manifesting Summit</strong></td><td class="dates">May 17-18</td><td class="num">$2.41M</td><td class="muted">Manifesting Mastery + virtual tickets tagged in May. Cohort total $5.69M + $1.0M tickets.</td>
 </tr>
-<tr class="dim">
-<td><strong>MVU event campaign</strong></td><td class="dates">May 21</td><td class="num">—</td><td class="muted">Untagged; MVU 2025 sold $0.10M in May.</td>
+<tr class="">
+<td><strong>MVU event campaign</strong></td><td class="dates">May 21</td><td class="num">$97k</td><td class="muted">MVU 2025 tickets sold in May (untagged).</td>
 </tr>
 <tr class="">
 <td rowspan="5" class="mcell"><strong>Jun</strong></td>
-<td><strong>Manifesting Summit Highlights</strong></td><td class="dates">Jun 1</td><td class="num">$937k</td><td class="muted">Manifesting Mastery tagged orders in June.</td>
+<td><strong>Manifesting Summit Highlights</strong></td><td class="dates">Jun 1</td><td class="num">$937k</td><td class="muted">Manifesting Mastery tagged in June.</td>
 <td rowspan="5" class="num mtot">$3.18M</td><td rowspan="5" class="num mtot2">$11.02M</td>
 </tr>
-<tr class="dim">
-<td><strong>MVU event campaign + virtual tickets</strong></td><td class="dates">Jun 5-30</td><td class="num">—</td><td class="muted">Untagged; MVU 2025 sold $0.39M in June.</td>
+<tr class="">
+<td><strong>MVU event campaign + virtual tickets</strong></td><td class="dates">Jun 5-30</td><td class="num">$387k</td><td class="muted">MVU 2025 tickets sold in June (untagged).</td>
 </tr>
 <tr class="">
-<td><strong>June renewal promo</strong></td><td class="dates">Jun 1-10</td><td class="num">$1.07M</td><td class="muted">mqaa $0.84M + qaap $0.14M + other membership promo orders.</td>
+<td><strong>June renewal promo</strong></td><td class="dates">Jun 1-10</td><td class="num">$1.13M</td><td class="muted">All membership launch-tagged orders in June.</td>
 </tr>
 <tr class="">
-<td><strong>Speaking Summit</strong></td><td class="dates">Jun 14-15</td><td class="num">$969k</td><td class="muted">Influence Mastery tagged orders in June. Cohort total $2.04M.</td>
+<td><strong>Speaking Summit</strong></td><td class="dates">Jun 14-15</td><td class="num">$973k</td><td class="muted">Influence Mastery tagged in June. Cohort total $2.04M.</td>
 </tr>
 <tr class="">
 <td><strong>Supercoach / Coaching Business Accelerator</strong></td><td class="dates">Jun 22</td><td class="num">$58k</td><td class="muted"></td>
 </tr>
-<tr class="dim">
+<tr class="">
 <td rowspan="4" class="mcell"><strong>Jul</strong></td>
-<td><strong>MVU virtual tickets</strong></td><td class="dates">Jul</td><td class="num">—</td><td class="muted">Untagged; $0.15M of online passes + $0.31M MVU tickets.</td>
+<td><strong>MVU virtual tickets</strong></td><td class="dates">Jul</td><td class="num">$421k</td><td class="muted">MVU 2025 tickets $310k + online passes $110k (untagged).</td>
 <td rowspan="4" class="num mtot">$4.73M</td><td rowspan="4" class="num mtot2">$11.39M</td>
 </tr>
 <tr class="">
-<td><strong>AI Summit</strong></td><td class="dates">Jul 25-26</td><td class="num">$4.10M</td><td class="muted">AI Mastery tagged orders in July. Cohort total $7.08M.</td>
+<td><strong>AI Summit</strong></td><td class="dates">Jul 25-26</td><td class="num">$4.13M</td><td class="muted">AI Mastery tagged in July. Cohort total $7.08M. Free summit.</td>
 </tr>
 <tr class="">
 <td><strong>Speaking Summit tail</strong></td><td class="dates">Jul</td><td class="num">$151k</td><td class="muted">Influence Mastery.</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Jul</td><td class="num">$227k</td><td class="muted">Always-on mqaa/qaap orders that carry a launch tag.</td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Jul</td><td class="num">$327k</td><td class="muted">Always-on membership orders that carry a launch tag.</td>
 </tr>
 <tr class="">
 <td rowspan="5" class="mcell"><strong>Aug</strong></td>
-<td><strong>AI Mastery Highlights</strong></td><td class="dates">Aug 3</td><td class="num">$2.15M</td><td class="muted">AI Mastery tagged orders in August.</td>
+<td><strong>AI Mastery Highlights</strong></td><td class="dates">Aug 3</td><td class="num">$2.16M</td><td class="muted">AI Mastery tagged in August.</td>
 <td rowspan="5" class="num mtot">$3.54M</td><td rowspan="5" class="num mtot2">$11.07M</td>
 </tr>
 <tr class="">
-<td><strong>MVU Amsterdam</strong></td><td class="dates">Aug 4-17</td><td class="num">$678k</td><td class="muted">Future Human Mastery bundle $0.65M + Total Mastery $0.03M sold at MVU. MVU 2026 presale ($0.99M) is untagged.</td>
+<td><strong>MVU Amsterdam</strong></td><td class="dates">Aug 4-17</td><td class="num">$680k</td><td class="muted">Future Human Mastery bundle + Total Mastery sold at MVU (tagged). MVU 2026 presale $986k is untagged and not included.</td>
 </tr>
 <tr class="">
-<td><strong>Membership Summit</strong></td><td class="dates">Aug 9</td><td class="num">$422k</td><td class="muted">Quest Only $0.18M + mqaa $0.25M promo orders. 20k sign-ups.</td>
-</tr>
-<tr class="dim">
-<td><strong>Supercoach Summit</strong></td><td class="dates">Aug 9-10</td><td class="num">—</td><td class="muted">Tickets untagged ($0.04M).</td>
+<td><strong>Membership Summit</strong></td><td class="dates">Aug 9</td><td class="num">$555k</td><td class="muted">All membership launch-tagged orders in Aug ($221k in summit week Aug 9-16). 20k sign-ups.</td>
 </tr>
 <tr class="">
-<td><strong>Certified Hypnotherapy seminar</strong></td><td class="dates">Aug 31</td><td class="num">$43k</td><td class="muted">MCH deposits tagged in August.</td>
+<td><strong>Supercoach Summit</strong></td><td class="dates">Aug 9-10</td><td class="num">$9k</td><td class="muted">Tickets, untagged.</td>
+</tr>
+<tr class="">
+<td><strong>Certified Hypnotherapy seminar</strong></td><td class="dates">Aug 31</td><td class="num">$68k</td><td class="muted">MCH deposits tagged in August.</td>
 </tr>
 <tr class="">
 <td rowspan="3" class="mcell"><strong>Sep</strong></td>
-<td><strong>Certified Hypnotherapy webinar</strong></td><td class="dates">Sep 2</td><td class="num">$370k</td><td class="muted">MCH tagged orders in Sep. Cohort total $2.10M.</td>
+<td><strong>Certified Hypnotherapy webinar</strong></td><td class="dates">Sep 2</td><td class="num">$370k</td><td class="muted">MCH tagged in Sep. Cohort total $2.10M.</td>
 <td rowspan="3" class="num mtot">$2.32M</td><td rowspan="3" class="num mtot2">$8.60M</td>
 </tr>
 <tr class="">
-<td><strong>Entrepreneurship Summit</strong></td><td class="dates">Sep 26-28</td><td class="num">$1.40M</td><td class="muted">Entrepreneurship Mastery tagged in Sep. Cohort total $2.52M.</td>
+<td><strong>Entrepreneurship Summit</strong></td><td class="dates">Sep 26-28</td><td class="num">$1.39M</td><td class="muted">Entrepreneurship Mastery tagged in Sep. Cohort total $2.52M.</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Sep</td><td class="num">$355k</td><td class="muted">Tagged mqaa orders.</td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Sep</td><td class="num">$450k</td><td class="muted">Tagged membership orders.</td>
 </tr>
 <tr class="">
 <td rowspan="3" class="mcell"><strong>Oct</strong></td>
@@ -397,44 +389,47 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <td><strong>Speaking Academy live workshop</strong></td><td class="dates">Oct 23</td><td class="num">$140k</td><td class="muted">Speaking Academy seats ($10k each).</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Oct</td><td class="num">$393k</td><td class="muted">Tagged mqaa + Quest Only orders.</td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Oct</td><td class="num">$544k</td><td class="muted">Tagged membership orders.</td>
 </tr>
 <tr class="">
 <td rowspan="5" class="mcell"><strong>Nov</strong></td>
-<td><strong>Black Friday</strong></td><td class="dates">Nov 1-30</td><td class="num">$6.46M</td><td class="muted">All membership launch-tagged orders in November: Quest Only $2.18M, mqaa $1.77M, qaap $0.99M, upgrades $0.42M, other locales $0.5M+.</td>
+<td><strong>Black Friday</strong></td><td class="dates">Nov 1-30</td><td class="num">$6.45M</td><td class="muted">All membership launch-tagged orders in November.</td>
 <td rowspan="5" class="num mtot">$7.22M</td><td rowspan="5" class="num mtot2">$12.56M</td>
 </tr>
 <tr class="">
 <td><strong>Speaking Academy luxury retreat</strong></td><td class="dates">Nov 10-14</td><td class="num">$48k</td><td class="muted"></td>
 </tr>
 <tr class="">
-<td><strong>Last chance to become a life coach</strong></td><td class="dates">Nov 16</td><td class="num">$21k</td><td class="muted">CLC tagged.</td>
+<td><strong>Last chance to become a life coach</strong></td><td class="dates">Nov 16</td><td class="num">$30k</td><td class="muted">CLC tagged.</td>
 </tr>
 <tr class="">
-<td><strong>Spiritual Summit</strong></td><td class="dates">Nov 22-23</td><td class="num">$374k</td><td class="muted">Spiritual Mastery tagged in Nov. Cohort total $1.05M.</td>
+<td><strong>Spiritual Summit</strong></td><td class="dates">Nov 22-23</td><td class="num">$391k</td><td class="muted">Spiritual Mastery tagged in Nov. Cohort total $1.05M.</td>
 </tr>
 <tr class="">
 <td><strong>Manifesting Cert</strong></td><td class="dates">Nov</td><td class="num">$228k</td><td class="muted">Manifesting Coaching Certification tagged.</td>
 </tr>
 <tr class="">
-<td rowspan="6" class="mcell"><strong>Dec</strong></td>
-<td><strong>Cyber Monday (BF extended)</strong></td><td class="dates">Dec 1-2</td><td class="num">$1.68M</td><td class="muted">Membership launch-tagged orders Dec 1-7.</td>
-<td rowspan="6" class="num mtot">$3.75M</td><td rowspan="6" class="num mtot2">$7.89M</td>
+<td rowspan="7" class="mcell"><strong>Dec</strong></td>
+<td><strong>Cyber Monday (BF extended)</strong></td><td class="dates">Dec 1-7</td><td class="num">$1.67M</td><td class="muted">Membership launch-tagged Dec 1-7.</td>
+<td rowspan="7" class="num mtot">$3.75M</td><td rowspan="7" class="num mtot2">$7.89M</td>
 </tr>
 <tr class="">
-<td><strong>Spiritual Summit Highlights + Spiritual &amp; Manifesting bundle</strong></td><td class="dates">Dec 7</td><td class="num">$493k</td><td class="muted">Spiritual Mastery $0.26M + bundle $0.23M.</td>
+<td><strong>Spiritual Summit Highlights + Spiritual &amp; Manifesting bundle</strong></td><td class="dates">Dec 7</td><td class="num">$284k</td><td class="muted">Spiritual Mastery + bundle tagged.</td>
+</tr>
+<tr class="">
+<td><strong>Manifesting Mastery 2026 early sales</strong></td><td class="dates">Dec</td><td class="num">$261k</td><td class="muted">Tagged Manifesting Mastery 2026 orders.</td>
 </tr>
 <tr class="">
 <td><strong>Manifesting Cert webinar</strong></td><td class="dates">Dec 8</td><td class="num">$86k</td><td class="muted"></td>
 </tr>
-<tr class="dim">
-<td><strong>7 Sacred States challenge</strong></td><td class="dates">Dec 18-24</td><td class="num">—</td><td class="muted">No product of its own; its orders land in Q5 and Lifebook.</td>
+<tr class="">
+<td><strong>Lifebook 2.0 webinar</strong></td><td class="dates">Dec 28</td><td class="num">$735k</td><td class="muted">Lifebook tagged in Dec; a further $151k in Jan 2026.</td>
 </tr>
 <tr class="">
-<td><strong>Lifebook 2.0 webinar</strong></td><td class="dates">Dec 28</td><td class="num">$727k</td><td class="muted">Lifebook Online tagged in Dec; a further $0.14M in Jan 2026.</td>
+<td><strong>Q5 Promo</strong></td><td class="dates">Dec 29-31</td><td class="num">$438k</td><td class="muted">Membership launch-tagged Dec 28 - Jan 1, Lifebook excluded.</td>
 </tr>
 <tr class="">
-<td><strong>Q5 Promo</strong></td><td class="dates">Dec 29-31</td><td class="num">$1.28M</td><td class="muted">Membership launch-tagged Dec 28 - Jan 1.</td>
+<td><strong>Membership, rest of Dec</strong></td><td class="dates">Dec 8-27</td><td class="num">$218k</td><td class="muted">Tagged membership orders outside the promos.</td>
 </tr>
 <tr class="total"><td></td><td colspan="4">2025 total</td><td class="num">$36.21M</td><td class="num">$108.09M</td></tr>
 </tbody></table></div>
@@ -443,26 +438,20 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <section>
 <div class="eyebrow">2026, month by month</div>
 <h2>2026 calendar with launch-tagged revenue (to 10 Nov)</h2>
-<div class="tw"><table class="months"><thead><tr><th>Month</th><th>Campaigns in the official 2026 calendar</th><th>Dates</th><th class="num">Launch-tagged revenue</th><th>Where the number comes from</th><th class="num">Month: all launch-tagged</th><th class="num">Month: total revenue</th></tr></thead><tbody>
+<div class="tw"><table class="months"><thead><tr><th>Month</th><th>Campaigns in the official 2026 calendar</th><th>Dates</th><th class="num">Campaign revenue</th><th>Where the number comes from</th><th class="num">Month: all launch-tagged</th><th class="num">Month: total revenue (all orders)</th></tr></thead><tbody>
 <tr class="">
-<td rowspan="7" class="mcell"><strong>Jan</strong></td>
-<td><strong>Social Media Summit at 1BFS (Dubai)</strong></td><td class="dates">Jan 9-11</td><td class="num">$1.39M</td><td class="muted">Social Media Mastery 2026 tagged in Jan. Cohort total $2.10M. 145k sign-ups.</td>
-<td rowspan="7" class="num mtot">$2.10M</td><td rowspan="7" class="num mtot2">$7.31M</td>
+<td rowspan="5" class="mcell"><strong>Jan</strong></td>
+<td><strong>Social Media Summit at 1BFS (Dubai)</strong></td><td class="dates">Jan 9-11</td><td class="num">$1.44M</td><td class="muted">Social Media Mastery 2026 tagged in Jan. Cohort total $2.10M. 145k sign-ups.</td>
+<td rowspan="5" class="num mtot">$2.10M</td><td rowspan="5" class="num mtot2">$7.31M</td>
 </tr>
 <tr class="">
-<td><strong>Q5 tail</strong></td><td class="dates">Jan 1</td><td class="num">$290k</td><td class="muted">Membership promo orders on Jan 1-2.</td>
+<td><strong>Q5 tail + membership</strong></td><td class="dates">Jan</td><td class="num">$389k</td><td class="muted">Membership launch-tagged in Jan ($85k on Jan 1).</td>
 </tr>
 <tr class="">
-<td><strong>Lifebook 2.0 tail</strong></td><td class="dates">Jan</td><td class="num">$143k</td><td class="muted">Lifebook Online from the Dec 28 webinar.</td>
+<td><strong>Lifebook 2.0 tail</strong></td><td class="dates">Jan</td><td class="num">$151k</td><td class="muted">Lifebook Online from the Dec 28 webinar.</td>
 </tr>
 <tr class="">
 <td><strong>Manifesting Cert (Seville)</strong></td><td class="dates">Jan 17-19</td><td class="num">$29k</td><td class="muted">Tagged; product total $0.47M, mostly untagged.</td>
-</tr>
-<tr class="dim">
-<td><strong>Self Reset</strong></td><td class="dates">Jan 18</td><td class="num">—</td><td class="muted">Nothing in Metabase.</td>
-</tr>
-<tr class="dim">
-<td><strong>SMS Highlights + Academy webinar</strong></td><td class="dates">Jan 18, 21</td><td class="num">—</td><td class="muted">Inside the Social Media Mastery figure.</td>
 </tr>
 <tr class="">
 <td><strong>AI Accelerator webinar</strong></td><td class="dates">Jan 31</td><td class="num">$50k</td><td class="muted">First AI Accelerator orders.</td>
@@ -473,74 +462,74 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <td rowspan="4" class="num mtot">$900k</td><td rowspan="4" class="num mtot2">$4.41M</td>
 </tr>
 <tr class="">
-<td><strong>Certified Life Coach seminar + webinar</strong></td><td class="dates">Feb 13, 22</td><td class="num">$242k</td><td class="muted">CLC tagged in Feb. Cohort total $1.17M.</td>
-</tr>
-<tr class="dim">
-<td><strong>States Box Set offer</strong></td><td class="dates">Feb 16-17</td><td class="num">—</td><td class="muted">States carries no launch tag ($60k States revenue in Feb).</td>
+<td><strong>Certified Life Coach seminar + webinar</strong></td><td class="dates">Feb 13, 22</td><td class="num">$278k</td><td class="muted">CLC tagged in Feb. Cohort total $1.17M.</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Feb</td><td class="num">$128k</td><td class="muted">Tagged mqaa/qaap orders.</td>
-</tr>
-<tr class="dim">
-<td rowspan="4" class="mcell"><strong>Mar</strong></td>
-<td><strong>Negotiate with Confidence webinar</strong></td><td class="dates">Mar 3</td><td class="num">—</td><td class="muted">Quest; not isolatable.</td>
-<td rowspan="4" class="num mtot">$2.91M</td><td rowspan="4" class="num mtot2">$6.47M</td>
+<td><strong>States Box Set offer</strong></td><td class="dates">Feb 16-17</td><td class="num">$70k</td><td class="muted">States sells through Shopify with no launch tag: all States revenue in Feb.</td>
 </tr>
 <tr class="">
-<td><strong>AI Summit</strong></td><td class="dates">Mar 20-22</td><td class="num">$2.62M</td><td class="muted">AI Mastery $2.14M + deposits $0.18M + VIP $0.30M tagged in Mar. Cohort total $5.07M. 120k sign-ups.</td>
-</tr>
-<tr class="dim">
-<td><strong>AI Summit Highlights</strong></td><td class="dates">Mar 28</td><td class="num">—</td><td class="muted">Inside the AI Mastery figure.</td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Feb</td><td class="num">$220k</td><td class="muted">Tagged membership orders.</td>
 </tr>
 <tr class="">
-<td><strong>CLC tail</strong></td><td class="dates">Mar</td><td class="num">$29k</td><td class="muted"></td>
+<td rowspan="3" class="mcell"><strong>Mar</strong></td>
+<td><strong>AI Summit</strong></td><td class="dates">Mar 20-22</td><td class="num">$2.64M</td><td class="muted">AI Mastery + deposits + VIP tagged in Mar. Cohort total $5.07M. 120k sign-ups. Free summit.</td>
+<td rowspan="3" class="num mtot">$2.91M</td><td rowspan="3" class="num mtot2">$6.47M</td>
+</tr>
+<tr class="">
+<td><strong>CLC tail</strong></td><td class="dates">Mar</td><td class="num">$42k</td><td class="muted"></td>
+</tr>
+<tr class="">
+<td><strong>Membership (no promo)</strong></td><td class="dates">Mar</td><td class="num">$186k</td><td class="muted"></td>
 </tr>
 <tr class="">
 <td rowspan="5" class="mcell"><strong>Apr</strong></td>
-<td><strong>AI Mastery tail</strong></td><td class="dates">Apr</td><td class="num">$607k</td><td class="muted">AI Mastery + deposits tagged in Apr.</td>
+<td><strong>AI Mastery tail</strong></td><td class="dates">Apr</td><td class="num">$608k</td><td class="muted">AI Mastery + deposits tagged in Apr.</td>
 <td rowspan="5" class="num mtot">$1.06M</td><td rowspan="5" class="num mtot2">$5.24M</td>
 </tr>
 <tr class="">
-<td><strong>AI Clones Accelerator (downsell + class)</strong></td><td class="dates">Apr 21 - May 3</td><td class="num">$94k</td><td class="muted">AI Accelerator 2026 tagged. Product total $0.12M.</td>
+<td><strong>AI Clones Accelerator (downsell + class)</strong></td><td class="dates">Apr 21 - May 3</td><td class="num">$104k</td><td class="muted">AI Accelerator 2026 tagged. Product total $0.12M.</td>
 </tr>
 <tr class="">
-<td><strong>Manifesting Summit VIP pre-sale</strong></td><td class="dates">Apr</td><td class="num">$59k</td><td class="muted">VIP upgrades tagged in Apr.</td>
-</tr>
-<tr class="dim">
-<td><strong>MVU Webinar</strong></td><td class="dates">Apr 29</td><td class="num">—</td><td class="muted">MVU tickets carry no launch tag; MVU 2026 sold $0.20M in Apr.</td>
+<td><strong>Manifesting Summit VIP pre-sale</strong></td><td class="dates">Apr</td><td class="num">$63k</td><td class="muted">VIP upgrades tagged in Apr.</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Apr</td><td class="num">$136k</td><td class="muted"></td>
+<td><strong>MVU Webinar</strong></td><td class="dates">Apr 29</td><td class="num">$200k</td><td class="muted">MVU 2026 tickets sold in April (untagged).</td>
+</tr>
+<tr class="">
+<td><strong>Membership (no promo)</strong></td><td class="dates">Apr</td><td class="num">$241k</td><td class="muted"></td>
 </tr>
 <tr class="">
 <td rowspan="3" class="mcell"><strong>May</strong></td>
-<td><strong>Manifesting Summit</strong></td><td class="dates">May 15-17</td><td class="num">$1.86M</td><td class="muted">Manifesting Mastery $1.73M + VIP $0.13M tagged in May. Cohort total $3.79M + $0.24M VIP. 136k sign-ups.</td>
+<td><strong>Manifesting Summit</strong></td><td class="dates">May 15-17</td><td class="num">$1.88M</td><td class="muted">Manifesting Mastery + VIP tagged in May. Cohort total $3.79M + $0.24M VIP. 136k sign-ups.</td>
 <td rowspan="3" class="num mtot">$2.15M</td><td rowspan="3" class="num mtot2">$6.98M</td>
 </tr>
-<tr class="dim">
-<td><strong>Manifesting Summit Highlights</strong></td><td class="dates">May 23</td><td class="num">—</td><td class="muted">Inside the Manifesting figure.</td>
+<tr class="">
+<td><strong>MVU ticket sales</strong></td><td class="dates">May</td><td class="num">$217k</td><td class="muted">MVU 2026 tickets (untagged).</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">May</td><td class="num">$117k</td><td class="muted"></td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">May</td><td class="num">$200k</td><td class="muted"></td>
 </tr>
 <tr class="">
-<td rowspan="4" class="mcell"><strong>Jun</strong></td>
+<td rowspan="5" class="mcell"><strong>Jun</strong></td>
+<td><strong>June renewal promo</strong></td><td class="dates">Jun 1-10</td><td class="num">$698k</td><td class="muted">All membership launch-tagged orders in June.</td>
+<td rowspan="5" class="num mtot">$1.63M</td><td rowspan="5" class="num mtot2">$5.04M</td>
+</tr>
+<tr class="">
 <td><strong>Manifesting Pathway Downsell (72h)</strong></td><td class="dates">Jun 3-5</td><td class="num">$81k</td><td class="muted">Manifesting Blocks accelerator.</td>
-<td rowspan="4" class="num mtot">$1.63M</td><td rowspan="4" class="num mtot2">$5.04M</td>
 </tr>
 <tr class="">
-<td><strong>June renewal promo</strong></td><td class="dates">Jun 1-10</td><td class="num">$622k</td><td class="muted">mqaa $0.48M + qaap $0.09M + other.</td>
+<td><strong>Manifesting Mastery tail</strong></td><td class="dates">Jun</td><td class="num">$247k</td><td class="muted"></td>
 </tr>
 <tr class="">
-<td><strong>Manifesting Mastery tail</strong></td><td class="dates">Jun</td><td class="num">$232k</td><td class="muted"></td>
+<td><strong>Speaking &amp; Influence Summit</strong></td><td class="dates">Jun 26-28</td><td class="num">$555k</td><td class="muted">S&amp;I Mastery + VIP tagged in Jun. Cohort total $1.44M + VIP $0.09M.</td>
 </tr>
 <tr class="">
-<td><strong>Speaking &amp; Influence Summit</strong></td><td class="dates">Jun 26-28</td><td class="num">$539k</td><td class="muted">S&amp;I Mastery $0.48M + VIP $0.06M tagged in Jun. Cohort total $1.44M + VIP $0.09M.</td>
+<td><strong>MVU ticket sales</strong></td><td class="dates">Jun</td><td class="num">$261k</td><td class="muted">MVU 2026 tickets (untagged).</td>
 </tr>
 <tr class="">
-<td rowspan="7" class="mcell"><strong>Jul</strong></td>
-<td><strong>S&amp;I Summit Highlights</strong></td><td class="dates">Jul 7</td><td class="num">$786k</td><td class="muted">S&amp;I Mastery tagged in Jul.</td>
-<td rowspan="7" class="num mtot">$1.80M</td><td rowspan="7" class="num mtot2">$5.44M</td>
+<td rowspan="5" class="mcell"><strong>Jul</strong></td>
+<td><strong>S&amp;I Summit Highlights</strong></td><td class="dates">Jul 7</td><td class="num">$797k</td><td class="muted">S&amp;I Mastery tagged in Jul.</td>
+<td rowspan="5" class="num mtot">$1.80M</td><td rowspan="5" class="num mtot2">$5.44M</td>
 </tr>
 <tr class="">
 <td><strong>Daniel Priestley webinar + 2-day accelerator</strong></td><td class="dates">Jul 6, 18-19</td><td class="num">$223k</td><td class="muted">Science of Growing Customers, 424 orders.</td>
@@ -549,75 +538,57 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <td><strong>Regan Hillyer webinar + Wealth Code accelerator</strong></td><td class="dates">Jul 16, 25-26</td><td class="num">$321k</td><td class="muted">624 orders.</td>
 </tr>
 <tr class="">
-<td><strong>MVU Estonia</strong></td><td class="dates">Jul 20 - Aug 2</td><td class="num">$160k</td><td class="muted">Total Mastery sold at MVU. MVU 2027 presale ($0.60M) is untagged.</td>
-</tr>
-<tr class="dim">
-<td><strong>Vishen / Jeffrey Allen / Jim Kwik 1-day accelerators</strong></td><td class="dates">Jul 22-30</td><td class="num">—</td><td class="muted">No product tagged in Metabase.</td>
-</tr>
-<tr class="dim">
-<td><strong>Be Extraordinary masterclass email</strong></td><td class="dates">Jul 23-24</td><td class="num">—</td><td class="muted">Membership; $13k attributed to leads.</td>
+<td><strong>MVU Estonia</strong></td><td class="dates">Jul 20 - Aug 2</td><td class="num">$495k</td><td class="muted">Total Mastery sold at MVU $160k (tagged) + MVU 2026 tickets $276k + MVU 2027 presale $59k (untagged).</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Jul</td><td class="num">$155k</td><td class="muted"></td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Jul</td><td class="num">$230k</td><td class="muted"></td>
 </tr>
 <tr class="">
-<td rowspan="5" class="mcell"><strong>Aug</strong></td>
-<td><strong>Certified Hypnotherapy seminar + webinar</strong></td><td class="dates">Aug 9, 18</td><td class="num">$492k</td><td class="muted">MCH tagged in Aug incl. $29 seminar tickets ($34k). Cohort total $1.43M; MCH orders Aug-Sep $1.88M.</td>
-<td rowspan="5" class="num mtot">$1.04M</td><td rowspan="5" class="num mtot2">$6.33M</td>
-</tr>
-<tr class="dim">
-<td><strong>Vishen - Expert &amp; Authority 1-day</strong></td><td class="dates">Aug 1</td><td class="num">—</td><td class="muted">No product tagged.</td>
+<td rowspan="3" class="mcell"><strong>Aug</strong></td>
+<td><strong>Certified Hypnotherapy seminar + webinar</strong></td><td class="dates">Aug 9, 18</td><td class="num">$496k</td><td class="muted">MCH tagged in Aug incl. $29 seminar tickets. Cohort total $1.43M; MCH orders Aug-Sep $1.88M.</td>
+<td rowspan="3" class="num mtot">$1.04M</td><td rowspan="3" class="num mtot2">$6.33M</td>
 </tr>
 <tr class="">
-<td><strong>MVU Estonia tail</strong></td><td class="dates">Aug</td><td class="num">$225k</td><td class="muted">Total Mastery.</td>
-</tr>
-<tr class="dim">
-<td><strong>Jim Kwik book promo</strong></td><td class="dates">Aug 15-16</td><td class="num">—</td><td class="muted">Brand.</td>
+<td><strong>MVU Estonia tail + MVU 2027 presale</strong></td><td class="dates">Aug</td><td class="num">$766k</td><td class="muted">Total Mastery $225k (tagged) + MVU 2027 presale $541k (untagged).</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Aug</td><td class="num">$252k</td><td class="muted"></td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Aug</td><td class="num">$294k</td><td class="muted"></td>
 </tr>
 <tr class="">
-<td rowspan="4" class="mcell"><strong>Sep</strong></td>
-<td><strong>Expert to Authority Summit</strong></td><td class="dates">Sep 18-20</td><td class="num">$2.29M</td><td class="muted">E2A Mastery $2.24M + VIP $0.05M tagged in Sep. Cohort total $2.54M. 35k unique sign-ups.</td>
-<td rowspan="4" class="num mtot">$2.72M</td><td rowspan="4" class="num mtot2">$6.01M</td>
-</tr>
-<tr class="dim">
-<td><strong>Authority Guild webinars</strong></td><td class="dates">Sep 23, 28</td><td class="num">—</td><td class="muted">Guild orders land in Oct.</td>
-</tr>
-<tr class="dim">
-<td><strong>Brand content / tests / book promo</strong></td><td class="dates">Sep</td><td class="num">—</td><td class="muted">Brand.</td>
+<td rowspan="3" class="mcell"><strong>Sep</strong></td>
+<td><strong>Expert to Authority Summit</strong></td><td class="dates">Sep 18-20</td><td class="num">$2.32M</td><td class="muted">E2A Mastery + VIP + Mastermind tagged in Sep. Cohort total $2.54M. 35k unique sign-ups.</td>
+<td rowspan="3" class="num mtot">$2.72M</td><td rowspan="3" class="num mtot2">$6.01M</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Sep</td><td class="num">$227k</td><td class="muted"></td>
+<td><strong>MVU 2027 presale</strong></td><td class="dates">Sep</td><td class="num">$139k</td><td class="muted">Untagged.</td>
+</tr>
+<tr class="">
+<td><strong>Membership (no promo)</strong></td><td class="dates">Sep</td><td class="num">$300k</td><td class="muted"></td>
 </tr>
 <tr class="">
 <td rowspan="5" class="mcell"><strong>Oct</strong></td>
-<td><strong>WildFit webinar + cohort</strong></td><td class="dates">Oct 6-12</td><td class="num">$232k</td><td class="muted">WildFit tagged. 12k sign-ups.</td>
+<td><strong>WildFit webinar + cohort</strong></td><td class="dates">Oct 6-12</td><td class="num">$234k</td><td class="muted">WildFit tagged. 12k sign-ups.</td>
 <td rowspan="5" class="num mtot">$951k</td><td rowspan="5" class="num mtot2">$4.29M</td>
 </tr>
 <tr class="">
-<td><strong>Authority Guild</strong></td><td class="dates">Oct 14</td><td class="num">$22k</td><td class="muted">Guild tagged; product total $0.13M.</td>
+<td><strong>Authority Guild + E2A tail</strong></td><td class="dates">Oct 14</td><td class="num">$151k</td><td class="muted">Guild + E2A tagged in Oct.</td>
 </tr>
 <tr class="">
-<td><strong>E2A tail</strong></td><td class="dates">Oct</td><td class="num">$112k</td><td class="muted"></td>
+<td><strong>AI for Founders Summit</strong></td><td class="dates">Oct 30 - Nov 1</td><td class="num">$169k</td><td class="muted">AIFM tagged in Oct; most orders land in Nov. 40k unique sign-ups.</td>
 </tr>
 <tr class="">
-<td><strong>AI for Founders Summit</strong></td><td class="dates">Oct 30 - Nov 1</td><td class="num">$159k</td><td class="muted">AIFM tagged in Oct; most orders land in Nov. 40k unique sign-ups.</td>
+<td><strong>MVU 2027 presale</strong></td><td class="dates">Oct</td><td class="num">$116k</td><td class="muted">Untagged.</td>
 </tr>
 <tr class="">
-<td><strong>Membership (no promo)</strong></td><td class="dates">Oct</td><td class="num">$290k</td><td class="muted"></td>
+<td><strong>Membership (no promo)</strong></td><td class="dates">Oct</td><td class="num">$384k</td><td class="muted"></td>
 </tr>
 <tr class="">
-<td rowspan="3" class="mcell"><strong>Nov</strong></td>
-<td><strong>AI for Founders Summit (cont.)</strong></td><td class="dates">to Nov 10</td><td class="num">$1.06M</td><td class="muted">AIFM tagged Nov 1-10; class starts Nov 17, still selling.</td>
-<td rowspan="3" class="num mtot">$1.64M<br><span class=small>to 10 Nov</span></td><td rowspan="3" class="num mtot2">$3.13M</td>
+<td rowspan="2" class="mcell"><strong>Nov</strong></td>
+<td><strong>AI for Founders Summit (cont.)</strong></td><td class="dates">to Nov 10</td><td class="num">$1.07M</td><td class="muted">AIFM tagged Nov 1-10; class starts Nov 17, still selling.</td>
+<td rowspan="2" class="num mtot">$1.64M<br><span class=small>to 10 Nov</span></td><td rowspan="2" class="num mtot2">$3.13M</td>
 </tr>
 <tr class="">
-<td><strong>Black Friday presale</strong></td><td class="dates">Nov 1-10</td><td class="num">$443k</td><td class="muted">Membership launch-tagged Nov 1-10. Black Friday proper runs Nov 16-30 (confirmed).</td>
-</tr>
-<tr class="dim">
-<td><strong>3-year offer, Fibre challenge, AIFM class, BOGO, AI Guild, Lifebook Dec 27, Q5</strong></td><td class="dates">Nov 16 - Dec 31</td><td class="num">—</td><td class="muted">Confirmed, not yet run.</td>
+<td><strong>Black Friday presale</strong></td><td class="dates">Nov 1-10</td><td class="num">$550k</td><td class="muted">Membership launch-tagged Nov 1-10. Black Friday proper runs Nov 16-30 (confirmed).</td>
 </tr>
 <tr class="total"><td></td><td colspan="4">2026 total (to 10 Nov)</td><td class="num">$18.91M</td><td class="num">$60.65M</td></tr>
 </tbody></table></div>
@@ -632,116 +603,116 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <h1>2027, month by month</h1>
 <p class="lede">Five rows are already in the 2027 sheet and are unchanged: Lifebook Digital Release (Jan 4, a class start, not counted), Social Media Summit 2027 at the 1 Billion Followers Summit (Jan 8-10), WildFit webinar (July), Mindvalley U Porto (Jul 12-18) and Future Human Dubai (Nov 5-7). Jaideep's Academy timeline sets the four mastery summits and the two certification launches. Everything else is proposed, including four quest-release webinars for Membership. Each row shows what the same campaign did in 2026 (or 2025), the 2027 target at 1.3× that, and why it is there.</p>
 <div class="tiles">
- <div class="tile hero"><div class="k">2027 forecast</div><div class="v">$40.66M</div><div class="d">Sum of the 23 targets below. $37.72M on launch tags alone.</div></div>
+ <div class="tile hero"><div class="k">2027 forecast</div><div class="v">$39.62M</div><div class="d">Sum of the 23 targets below. $36.68M on launch tags alone.</div></div>
  <div class="tile"><div class="k">Bar: 30% above 2026</div><div class="v">$33.0M–$37.6M</div><div class="d">On the data projection of 2026 ($25.4M–$28.9M). On your $35M view the bar is $45.5M, which this calendar misses by $45.5M.</div></div>
  <div class="tile"><div class="k">Where the gap would close</div><div class="v">3 rows</div><div class="d">AI Summit back to its 2025 level (+$2.0M), Black Friday re-set once 2026 closes, Future Human tickets on top of the bundle (+$1.2M).</div></div>
 </div>
 <div class="bars">
- <div class="bar"><span>2025 campaign revenue</span><div class="track"><div class="fill h" style="width:89%"></div><span class="lab">$36.2M</span></div></div>
- <div class="bar"><span>2026 to 10 Nov</span><div class="track"><div class="fill" style="width:46%"></div><span class="lab">$18.9M</span></div></div>
- <div class="bar"><span>2026 projected (high)</span><div class="track"><div class="fill" style="width:71%; opacity:.5"></div><span class="lab">$28.9M</span></div></div>
- <div class="bar"><span>Bar: 1.3 × 2026 projected</span><div class="track"><div class="fill g" style="width:92%"></div><span class="lab">$37.6M</span></div></div>
- <div class="bar"><span>2027 forecast (this calendar)</span><div class="track"><div class="fill" style="width:100%"></div><span class="lab">$40.66M</span></div></div>
+ <div class="bar"><span>2025 campaign revenue</span><div class="track"><div class="fill h" style="width:91%"></div><span class="lab">$36.2M</span></div></div>
+ <div class="bar"><span>2026 to 10 Nov</span><div class="track"><div class="fill" style="width:48%"></div><span class="lab">$18.9M</span></div></div>
+ <div class="bar"><span>2026 projected (high)</span><div class="track"><div class="fill" style="width:73%; opacity:.5"></div><span class="lab">$28.9M</span></div></div>
+ <div class="bar"><span>Bar: 1.3 × 2026 projected</span><div class="track"><div class="fill g" style="width:95%"></div><span class="lab">$37.6M</span></div></div>
+ <div class="bar"><span>2027 forecast (this calendar)</span><div class="track"><div class="fill" style="width:100%"></div><span class="lab">$39.62M</span></div></div>
 </div>
 </section>
 <section>
 <h2>The calendar</h2>
-<p>Status: ■ already in the sheet · ▲ Jaideep's Academy timeline · ● proposed. Month target is the sum of that month's campaign targets; the last two columns show what the same month made in 2026 and 2025 on launch tags.</p>
-<div class="tw"><table class="plan"><thead><tr><th style="width:9%">Month</th><th style="width:20%">Campaign</th><th style="width:19%">What it made before (launch-tagged)</th><th class="num" style="width:8%">2027 target</th><th style="width:28%">Why it is on the calendar</th><th class="num" style="width:6%">Month target</th><th class="num" style="width:5%">2026</th><th class="num" style="width:5%">2025</th></tr></thead><tbody>
+<p>Status: ■ already in the sheet · ▲ Jaideep's Academy timeline · ● proposed. For each campaign: what it made in 2025, what it made in 2026, and the 2027 target (1.3 × the 2026 figure, or 1.3 × 2025 where it did not run in 2026). A dash means the campaign did not run, or ran without a launch tag so nothing can be measured. Each month ends with a total row.</p>
+<div class="tw"><table class="plan"><thead><tr><th style="width:9%">Month</th><th style="width:23%">Campaign</th><th class="num" style="width:8%">2025</th><th class="num" style="width:8%">2026</th><th class="num" style="width:9%">2027 target</th><th style="width:43%">Why it is on the calendar, and what the 2025 / 2026 numbers are</th></tr></thead><tbody>
 <tr>
-<td rowspan="2" class="mcell"><strong>Jan</strong></td>
-<td><strong>1 Billion Followers Summit (Social Media Summit 2027), Dubai</strong><span class="small">Jan 8-10 · Highlights Jan 17</span><span class="small">Sells: Social Media Mastery 2027 + VIP / in-person tickets</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="muted">Jan-Feb 2026 tagged $1.41M (cohort $2.10M, 145k sign-ups)</td><td class="num strong">$1.83M<span class="small">1.3 × 2026</span></td><td class="muted">Organiser confirms 8-10 Jan 2027, the dates already in the sheet. 2026 doubled sign-ups but had six weeks of runway over Christmas and $0.48M of refunds. Open promo 25 Nov, add a VIP tier, keep the Jan 17 highlights webinar.</td>
-<td rowspan="2" class="num mtot">$2.18M</td><td rowspan="2" class="num">$2.10M</td><td rowspan="2" class="num">$2.95M</td>
+<td rowspan="3" class="mcell"><strong>Jan</strong></td>
+<td><strong>1 Billion Followers Summit (Social Media Summit 2027), Dubai</strong><span class="small">Jan 8-10 · Highlights Jan 17</span><span class="small">Sells: Social Media Mastery 2027 + VIP / in-person tickets</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="num">$1.94M</td><td class="num">$1.46M</td><td class="num strong">$1.90M<span class="small">1.3 × 2026</span></td><td class="muted">Organiser confirms 8-10 Jan 2027, the dates already in the sheet. 2026 doubled sign-ups but had six weeks of runway over Christmas and $0.48M of refunds. Open promo 25 Nov, add a VIP tier, keep the Jan 17 highlights webinar.<br><span class="small">Numbers: Social Media Mastery tagged: Mar-Apr 2025 $1.94M; Jan-Feb 2026 $1.46M (cohort $2.10M, 145k sign-ups).</span></td>
 </tr>
 <tr>
-<td><strong>Certified Life Coach launch</strong><span class="small">Seminar Jan 23 · webinar Feb 2 (cohort Feb 22)</span><span class="small">Sells: CLC Feb-2027 cohort</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="muted">Feb-Mar 2026 tagged $0.27M (cohort $1.17M, 41k sign-ups)</td><td class="num strong">$0.35M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: January campaign, February cohort. 2026 pulled 41k sign-ups vs 25k in 2025 but fewer seats; the fix is seminar-to-webinar follow-up, not more leads. Most CLC orders carry no launch tag, so the tagged number understates it.</td>
+<td><strong>Certified Life Coach launch</strong><span class="small">Seminar Jan 23 · webinar Feb 2 (cohort Feb 22)</span><span class="small">Sells: CLC Feb-2027 cohort</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="num">$0.40M</td><td class="num">$0.32M</td><td class="num strong">$0.42M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: January campaign, February cohort. 2026 pulled 41k sign-ups vs 25k in 2025 but fewer seats; the fix is seminar-to-webinar follow-up, not more leads. Most CLC orders carry no launch tag, so the tagged number understates it.<br><span class="small">Numbers: CLC tagged: Feb-Mar 2025 $0.40M; Feb-Mar 2026 $0.32M (cohort $1.17M, 41k sign-ups).</span></td>
+</tr>
+<tr class="sub"><td class="muted">Jan total</td><td class="num">$2.34M</td><td class="num">$1.78M</td><td class="num strong">$2.32M</td><td class="muted small2">Sum of the rows above. $2.95M was all launch-tagged revenue in Jan 2025; $2.10M in Jan 2026.</td></tr>
+<tr>
+<td rowspan="3" class="mcell"><strong>Feb</strong></td>
+<td><strong>AI Accelerator (7-day virtual)</strong><span class="small">Webinar Jan 30 · class Feb 8-14</span><span class="small">Sells: AI Accelerator</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">$0.40M</td><td class="num strong">$0.52M<span class="small">1.3 × 2026</span></td><td class="muted">Ran in the same slot in 2026 and was the cheapest half-million of the year. Warms the list for AI Summit VIP.<br><span class="small">Numbers: Jan-Feb 2026 tagged $0.40M (568 orders, 29k sign-ups). Did not exist in 2025.</span></td>
 </tr>
 <tr>
-<td rowspan="2" class="mcell"><strong>Feb</strong></td>
-<td><strong>AI Accelerator (7-day virtual)</strong><span class="small">Webinar Jan 30 · class Feb 8-14</span><span class="small">Sells: AI Accelerator</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Jan-Feb 2026 tagged $0.40M (568 orders, 29k sign-ups)</td><td class="num strong">$0.52M<span class="small">1.3 × 2026</span></td><td class="muted">Ran in the same slot in 2026 and was the cheapest half-million of the year. Warms the list for AI Summit VIP.</td>
-<td rowspan="2" class="num mtot">$1.52M</td><td rowspan="2" class="num">$900k</td><td rowspan="2" class="num">$874k</td>
+<td><strong>Challenge 1 (7-day, Mind pathway)</strong><span class="small">Feb 15-21</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Target set at $1M per your instruction. Slot is the gap between CLC and the Manifesting promo; the 1BFS list (145k in 2026) is fresh.<br><span class="small">Numbers: No tagged challenge on record (7 Sacred States Dec 2025: 25.5k sign-ups, $0.43M lead-attributed).</span></td>
+</tr>
+<tr class="sub"><td class="muted">Feb total</td><td class="num">—</td><td class="num">$0.40M</td><td class="num strong">$1.52M</td><td class="muted small2">Sum of the rows above. $874k was all launch-tagged revenue in Feb 2025; $900k in Feb 2026.</td></tr>
+<tr>
+<td rowspan="2" class="mcell"><strong>Mar</strong><div class=small>Manifesting Summit promotion runs from Feb 15; MVU Porto ticket campaign opens Mar 1.</div></td>
+<td><strong>Quest release webinar: Silva Ultramind</strong><span class="small">Mar 9</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Silva is the biggest membership funnel ($5.4M in 2026, 87k sign-ups). The Feb 2026 webinar was untagged, so it cannot be measured; tag this one. Benchmark is the WildFit live webinar ($0.23M tagged).<br><span class="small">Numbers: Feb 2026 Silva webinar was untagged. Benchmark: WildFit live webinar Oct 2026, $0.23M tagged.</span></td>
+</tr>
+<tr class="sub"><td class="muted">Mar total</td><td class="num">—</td><td class="num">—</td><td class="num strong">$0.30M</td><td class="muted small2">Sum of the rows above. $2.05M was all launch-tagged revenue in Mar 2025; $2.91M in Mar 2026.</td></tr>
+<tr>
+<td rowspan="2" class="mcell"><strong>Apr</strong></td>
+<td><strong>Manifesting Summit, in person + virtual</strong><span class="small">Apr 16-18 · Highlights Apr 25 (class May 10)</span><span class="small">Sells: Manifesting Mastery 2027 + tickets + VIP</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="num">$3.45M</td><td class="num">$2.20M</td><td class="num strong">$2.85M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Feb-Mar campaign, April summit, in person. 2025&#x27;s paid summit made $124 per sign-up; 2026&#x27;s free one $30. Promo opens Feb 15 for a 60-day window.<br><span class="small">Numbers: Manifesting Mastery + tickets tagged: Apr-Jun 2025 $3.45M (in person); Apr-Jun 2026 $2.20M (free; cohort $3.79M + VIP $0.24M, 136k sign-ups).</span></td>
+</tr>
+<tr class="sub"><td class="muted">Apr total</td><td class="num">$3.45M</td><td class="num">$2.20M</td><td class="num strong">$2.85M</td><td class="muted small2">Sum of the rows above. $1.19M was all launch-tagged revenue in Apr 2025; $1.06M in Apr 2026.</td></tr>
+<tr>
+<td rowspan="2" class="mcell"><strong>May</strong></td>
+<td><strong>Membership Summit (moved to Q2)</strong><span class="small">May 22-23</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="num">$0.22M</td><td class="num">—</td><td class="num strong">$0.29M<span class="small">1.3 × 2025</span></td><td class="muted">You asked for it in Q2 rather than August. May 22-23 sits after the Manifesting class start (May 10) and before the AI Summit promo opens (May 24); nothing else is live that fortnight. Check against the final AI promo date.<br><span class="small">Numbers: Membership tagged in summit week Aug 9-16 2025: $0.22M (20k sign-ups). Not run in 2026.</span></td>
+</tr>
+<tr class="sub"><td class="muted">May total</td><td class="num">$0.22M</td><td class="num">—</td><td class="num strong">$0.29M</td><td class="muted small2">Sum of the rows above. $2.84M was all launch-tagged revenue in May 2025; $2.15M in May 2026.</td></tr>
+<tr>
+<td rowspan="3" class="mcell"><strong>Jun</strong><div class=small>AI Summit promotion opens May 24; E2A promotion opens Jun 18.</div></td>
+<td><strong>Quest release webinar: Superbrain relaunch (Jim Kwik)</strong><span class="small">Jun 8</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Superbrain fell from $6.0M in 2025 to $2.5M in 2026, the biggest drop of any quest. A live relaunch with Jim Kwik is the obvious fix; pair it with the book promo.<br><span class="small">Numbers: Same benchmark as the Silva webinar.</span></td>
 </tr>
 <tr>
-<td><strong>Challenge 1 (7-day, Mind pathway)</strong><span class="small">Feb 15-21</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Dec 2025 7 Sacred States: 25.5k sign-ups, $0.43M attributed</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Target set at $1M per your instruction. Slot is the gap between CLC and the Manifesting promo; the 1BFS list (145k in 2026) is fresh.</td>
+<td><strong>Certified Hypnotherapist launch (August cohort)</strong><span class="small">Seminar Jun 26 · webinar Jul 6 (cohort Aug 2)</span><span class="small">Sells: MCH Aug-2027 cohort</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="num">$0.44M</td><td class="num">$0.54M</td><td class="num strong">$0.70M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Jun-Jul campaign, August cohort. 2025&#x27;s webinar pulled 30k cold leads and the cohort did $2.10M; 2026 leaned on members. Run both audiences.<br><span class="small">Numbers: MCH tagged: Aug-Sep 2025 $0.44M (cohort $2.10M); Jul-Aug 2026 $0.54M (cohort $1.43M; 38k unique sign-ups).</span></td>
+</tr>
+<tr class="sub"><td class="muted">Jun total</td><td class="num">$0.44M</td><td class="num">$0.54M</td><td class="num strong">$1.00M</td><td class="muted small2">Sum of the rows above. $3.18M was all launch-tagged revenue in Jun 2025; $1.63M in Jun 2026.</td></tr>
+<tr>
+<td rowspan="5" class="mcell"><strong>Jul</strong></td>
+<td><strong>WildFit webinar + cohort</strong><span class="small">Webinar Jul 6 · cohort Jul 19</span><span class="small">Sells: WildFit program</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="num">$0.02M</td><td class="num">$0.23M</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Already in the sheet for July 2027. Keep the Eric + Vishen live class from October 2026.<br><span class="small">Numbers: WildFit tagged: Mar 2025 $0.02M; Oct 2026 $0.23M (12k sign-ups).</span></td>
 </tr>
 <tr>
-<td rowspan="1" class="mcell"><strong>Mar</strong><div class=small>Manifesting Summit promotion runs from Feb 15; MVU Porto ticket campaign opens Mar 1.</div></td>
-<td><strong>Quest release webinar: Silva Ultramind</strong><span class="small">Mar 9</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="muted">No tagged quest webinar on record; WildFit live webinar Oct 2026 $0.23M tagged</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Silva is the biggest membership funnel ($5.4M in 2026, 87k sign-ups). The Feb 2026 webinar was untagged, so it cannot be measured; tag this one. Benchmark is the WildFit live webinar ($0.23M tagged).</td>
-<td rowspan="1" class="num mtot">$0.30M</td><td rowspan="1" class="num">$2.91M</td><td rowspan="1" class="num">$2.05M</td>
+<td><strong>Mindvalley U Porto 2027</strong><span class="small">Jul 12-18 · ticket campaign from Mar 1 · webinar Apr 28</span><span class="small">Sells: MVU 2027 tickets, MVU 2028 presale at the event</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="num">$1.96M</td><td class="num">$2.26M</td><td class="num strong">$2.94M<span class="small">1.3 × 2026</span></td><td class="muted">Already in the sheet. MVU orders carry no launch tag, so this row uses ticket revenue. The presale at the previous MVU is the engine.<br><span class="small">Numbers: MVU tickets (no launch tag): MVU 2025 $1.96M; MVU 2026 $2.26M. MVU 2027 already $0.87M presold.</span></td>
 </tr>
 <tr>
-<td rowspan="1" class="mcell"><strong>Apr</strong></td>
-<td><strong>Manifesting Summit, in person + virtual</strong><span class="small">Apr 16-18 · Highlights Apr 25 (class May 10)</span><span class="small">Sells: Manifesting Mastery 2027 + tickets + VIP</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="muted">Apr-Jun 2026 tagged $2.15M (cohort $3.79M + VIP $0.24M, 136k sign-ups). 2025 in person: tagged $3.45M</td><td class="num strong">$2.80M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Feb-Mar campaign, April summit, in person. 2025&#x27;s paid summit made $124 per sign-up; 2026&#x27;s free one $30. Promo opens Feb 15 for a 60-day window.</td>
-<td rowspan="1" class="num mtot">$2.80M</td><td rowspan="1" class="num">$1.06M</td><td rowspan="1" class="num">$1.19M</td>
+<td><strong>In-person accelerators at MVU Porto (to be determined)</strong><span class="small">Jul 13-17</span><span class="small">Sells: 2-day and 1-day accelerators</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">$0.54M</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Line-up to be determined. 2026 did $0.54M with two accelerators in one week; $1M needs three to four sessions or a higher ticket.<br><span class="small">Numbers: Jul 2026 at MVU Estonia: Priestley $0.22M + Wealth Code $0.32M tagged.</span></td>
 </tr>
 <tr>
-<td rowspan="1" class="mcell"><strong>May</strong></td>
-<td><strong>Membership Summit (moved to Q2)</strong><span class="small">May 22-23</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Aug 2025 Membership Summit: $0.42M tagged, 20k sign-ups. Not run in 2026</td><td class="num strong">$0.55M<span class="small">1.3 × 2025</span></td><td class="muted">You asked for it in Q2 rather than August. May 22-23 sits after the Manifesting class start (May 10) and before the AI Summit promo opens (May 24); nothing else is live that fortnight. Check against the final AI promo date.</td>
-<td rowspan="1" class="num mtot">$0.55M</td><td rowspan="1" class="num">$2.15M</td><td rowspan="1" class="num">$2.84M</td>
+<td><strong>AI Summit, paid ticket + free</strong><span class="small">Jul 23-25 · Highlights Aug 1 (class Aug 10)</span><span class="small">Sells: AI Mastery 2027 + paid tickets + VIP</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="num">$6.29M</td><td class="num">$3.25M</td><td class="num strong">$4.22M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline and Vishen&#x27;s call: paid ticket, July. Both past runs were free; the July 2025 run is the biggest launch of the two years and the March 2026 run was half of it. Back to July, with a paid ticket on top. Promo opens May 24.<br><span class="small">Numbers: AI Mastery tagged: Jul-Aug 2025 $6.29M (free, July); Mar-Apr 2026 $3.25M (free, March; cohort $4.33M + VIP $0.47M).</span></td>
+</tr>
+<tr class="sub"><td class="muted">Jul total</td><td class="num">$8.27M</td><td class="num">$6.28M</td><td class="num strong">$8.46M</td><td class="muted small2">Sum of the rows above. $4.73M was all launch-tagged revenue in Jul 2025; $1.80M in Jul 2026.</td></tr>
+<tr>
+<td rowspan="3" class="mcell"><strong>Aug</strong><div class=small>E2A promotion running; AI for Founders promotion opens Jul 30; Future Human ticket campaign opens Sep 1.</div></td>
+<td><strong>Quest release webinar: Duality (Jeffrey Allen)</strong><span class="small">Aug 24</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Duality is the second-largest funnel ($3.5M in 2026, 203k sign-ups). August is otherwise empty.<br><span class="small">Numbers: Same benchmark as the Silva webinar.</span></td>
 </tr>
 <tr>
-<td rowspan="2" class="mcell"><strong>Jun</strong><div class=small>AI Summit promotion opens May 24; E2A promotion opens Jun 18.</div></td>
-<td><strong>Quest release webinar: Superbrain relaunch (Jim Kwik)</strong><span class="small">Jun 8</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Same benchmark as the Silva webinar</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Superbrain fell from $6.0M in 2025 to $2.5M in 2026, the biggest drop of any quest. A live relaunch with Jim Kwik is the obvious fix; pair it with the book promo.</td>
-<td rowspan="2" class="num mtot">$0.96M</td><td rowspan="2" class="num">$1.63M</td><td rowspan="2" class="num">$3.18M</td>
+<td><strong>Challenge 2 (7-day, Longevity pathway)</strong><span class="small">Aug 15-21</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Target set at $1M per your instruction. August is otherwise empty between the AI class start and the E2A summit.<br><span class="small">Numbers: No tagged challenge on record.</span></td>
+</tr>
+<tr class="sub"><td class="muted">Aug total</td><td class="num">—</td><td class="num">—</td><td class="num strong">$1.30M</td><td class="muted small2">Sum of the rows above. $3.54M was all launch-tagged revenue in Aug 2025; $1.04M in Aug 2026.</td></tr>
+<tr>
+<td rowspan="2" class="mcell"><strong>Sep</strong></td>
+<td><strong>Expert to Authority Summit + Authority Guild</strong><span class="small">Sep 17-19 · Guild webinars Sep 22, 27 (class Oct 5, Guild Oct 13)</span><span class="small">Sells: E2A Mastery 2027 + VIP + Authority Guild</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="num">$2.24M</td><td class="num">$2.48M</td><td class="num strong">$3.22M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Jun-Aug campaign, September summit. The only mastery that grew in 2026. Add a paid in-person day as Entrepreneurship 2025 had.<br><span class="small">Numbers: Tagged Sep-Oct: Entrepreneurship 2025 $2.24M; Expert to Authority + Guild 2026 $2.48M (cohort $2.54M, 35k unique sign-ups).</span></td>
+</tr>
+<tr class="sub"><td class="muted">Sep total</td><td class="num">$2.24M</td><td class="num">$2.48M</td><td class="num strong">$3.22M</td><td class="muted small2">Sum of the rows above. $2.32M was all launch-tagged revenue in Sep 2025; $2.72M in Sep 2026.</td></tr>
+<tr>
+<td rowspan="2" class="mcell"><strong>Oct</strong><div class=small>Black Friday promotion running from Sep 17 (presale Nov 1).</div></td>
+<td><strong>AI for Founders Summit + AI Guild</strong><span class="small">Oct 29-31 (class Nov 16 · AI Guild webinar Dec 4)</span><span class="small">Sells: AI for Founders Mastery 2027 + VIP + AI Guild</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="num">—</td><td class="num">$1.23M</td><td class="num strong">$1.60M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Jul-Sep campaign, late-October summit. The 2026 basis is partial; it will rise once the Nov 17 class closes. Promo opens Jul 30 so it does not overlap E2A.<br><span class="small">Numbers: AIFM tagged Oct 1 - Nov 10 2026: $1.23M, class not yet started (40k unique sign-ups). New in 2026.</span></td>
+</tr>
+<tr class="sub"><td class="muted">Oct total</td><td class="num">—</td><td class="num">$1.23M</td><td class="num strong">$1.60M</td><td class="muted small2">Sum of the rows above. $1.57M was all launch-tagged revenue in Oct 2025; $951k in Oct 2026.</td></tr>
+<tr>
+<td rowspan="5" class="mcell"><strong>Nov</strong></td>
+<td><strong>Quest release webinar: Art of Manifesting (into Black Friday)</strong><span class="small">Nov 9</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">The Art of Manifesting funnel doubled its sign-ups in 2026 (158k, up from 77k). A live session the week before Black Friday warms the biggest list of the year.<br><span class="small">Numbers: Same benchmark as the Silva webinar.</span></td>
 </tr>
 <tr>
-<td><strong>Certified Hypnotherapist launch (August cohort)</strong><span class="small">Seminar Jun 26 · webinar Jul 6 (cohort Aug 2)</span><span class="small">Sells: MCH Aug-2027 cohort</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="muted">Jul-Aug 2026 tagged $0.51M (cohort $1.43M; MCH orders Aug-Sep $1.88M; 38k unique sign-ups)</td><td class="num strong">$0.66M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Jun-Jul campaign, August cohort. 2025&#x27;s webinar pulled 30k cold leads and the cohort did $2.10M; 2026 leaned on members. Run both audiences.</td>
+<td><strong>Future Human Dubai 2027</strong><span class="small">Nov 5-7 · ticket campaign from Sep 1</span><span class="small">Sells: FH tickets + Future Human Mastery bundle + Total Mastery + MVU 2028 presale</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="num">$2.45M</td><td class="num">—</td><td class="num strong">$3.18M<span class="small">1.3 × 2025</span></td><td class="muted">Already in the sheet (Nov 5-7; Jaideep&#x27;s deck says December). Future Human is the identity the four masteries build toward: sell the bundle on site as in January 2025.<br><span class="small">Numbers: Jan 2025 tagged $2.45M (FH Mastery bundle + Total Mastery + virtual pass). Tickets $1.15M untagged, not included. No event in 2026.</span></td>
 </tr>
 <tr>
-<td rowspan="4" class="mcell"><strong>Jul</strong></td>
-<td><strong>WildFit webinar + cohort</strong><span class="small">Webinar Jul 6 · cohort Jul 19</span><span class="small">Sells: WildFit program</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="muted">Oct 2026 tagged $0.23M (WildFit product $0.33M, 12k sign-ups)</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Already in the sheet for July 2027. Keep the Eric + Vishen live class from October 2026.</td>
-<td rowspan="4" class="num mtot">$8.44M</td><td rowspan="4" class="num">$1.80M</td><td rowspan="4" class="num">$4.73M</td>
+<td><strong>Black Friday + Cyber Monday + 3-year offer</strong><span class="small">Nov 15 - Dec 2 · promo from Sep 17</span><span class="small">Sells: Membership (new, upgrades, renewals), 3-year membership</span><span class="chip chip-new">● Proposed</span></td><td class="num">$8.12M</td><td class="num">$0.55M</td><td class="num strong">$10.56M<span class="small">1.3 × 2025</span></td><td class="muted">The only membership promo of the year besides Q5. Mirror the confirmed 2026 structure. Target is built on 2025 because the 2026 sale has not run yet.<br><span class="small">Numbers: 2025: Nov $6.45M + Cyber Monday Dec 1-7 $1.67M tagged. 2026 presale $0.55M to Nov 10; the sale runs Nov 16-30, so re-set the target to 1.3x the 2026 result in December.</span></td>
 </tr>
 <tr>
-<td><strong>Mindvalley U Porto 2027</strong><span class="small">Jul 12-18 · ticket campaign from Mar 1 · webinar Apr 28</span><span class="small">Sells: MVU 2027 tickets, MVU 2028 presale at the event</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="muted">MVU 2026 tickets $2.26M (untagged; $1.08M presold in 2025). MVU 2027 already $0.87M presold</td><td class="num strong">$2.94M<span class="small">1.3 × 2026</span></td><td class="muted">Already in the sheet. MVU orders carry no launch tag, so this row uses ticket revenue. The presale at the previous MVU is the engine.</td>
+<td><strong>Challenge 3 (30-day, with Black Friday)</strong><span class="small">Nov 16 - Dec 16</span><span class="small">Sells: Membership / Black Friday lead engine</span><span class="chip chip-new">● Proposed</span></td><td class="num">—</td><td class="num">—</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Target set at $1M per your instruction. Same slot as the 2026 Fibre Challenge.<br><span class="small">Numbers: Slot of the confirmed 2026 Fibre Challenge (Nov 16 - Dec 16), not yet run.</span></td>
+</tr>
+<tr class="sub"><td class="muted">Nov total</td><td class="num">$10.57M</td><td class="num">$0.55M</td><td class="num strong">$15.04M</td><td class="muted small2">Sum of the rows above. $7.22M was all launch-tagged revenue in Nov 2025; $1.64M in Nov 2026 (to 10 Nov).</td></tr>
+<tr>
+<td rowspan="3" class="mcell"><strong>Dec</strong></td>
+<td><strong>Lifebook New Year webinar</strong><span class="small">Dec 27</span><span class="small">Sells: Lifebook Online (Jan 2028 release)</span><span class="chip chip-new">● Proposed</span></td><td class="num">$0.89M</td><td class="num">—</td><td class="num strong">$1.15M<span class="small">1.3 × 2025</span></td><td class="muted">Lifebook only at year end, as you asked. Same slot as the confirmed Dec 27, 2026 webinar.<br><span class="small">Numbers: Dec 28 2025 webinar: $0.73M tagged in Dec + $0.15M in Jan (39.5k sign-ups). 2026 edition confirmed for Dec 27, not yet run.</span></td>
 </tr>
 <tr>
-<td><strong>In-person accelerators at MVU Porto (to be determined)</strong><span class="small">Jul 13-17</span><span class="small">Sells: 2-day and 1-day accelerators</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Jul 2026 at MVU Estonia: Science of Growing Customers $0.22M + Wealth Code $0.32M (plus $0.39M Total Mastery sold on site)</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Line-up to be determined. 2026 did $0.54M with two accelerators in one week; $1M needs three to four sessions or a higher ticket.</td>
+<td><strong>Q5 promo</strong><span class="small">Dec 28-31</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="num">$0.44M</td><td class="num">—</td><td class="num strong">$0.57M<span class="small">1.3 × 2025</span></td><td class="muted">Same slot as the confirmed Dec 28-31, 2026 promo.<br><span class="small">Numbers: Dec 28 2025 - Jan 1 2026: $0.44M membership tagged (Lifebook excluded). 2026 edition confirmed for Dec 28-31, not yet run.</span></td>
 </tr>
-<tr>
-<td><strong>AI Summit, paid ticket + free</strong><span class="small">Jul 23-25 · Highlights Aug 1 (class Aug 10)</span><span class="small">Sells: AI Mastery 2027 + paid tickets + VIP</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="muted">Mar-Apr 2026 tagged $3.23M (cohort $4.33M + VIP $0.47M, 120k sign-ups). Jul-Aug 2025 tagged $6.25M</td><td class="num strong">$4.20M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline and Vishen&#x27;s call: paid ticket, July. The July 2025 run is the biggest launch of the two years; March 2026 (free) was 48% lower on tags. Promo opens May 24.</td>
-</tr>
-<tr>
-<td rowspan="2" class="mcell"><strong>Aug</strong><div class=small>E2A promotion running; AI for Founders promotion opens Jul 30; Future Human ticket campaign opens Sep 1.</div></td>
-<td><strong>Quest release webinar: Duality (Jeffrey Allen)</strong><span class="small">Aug 24</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Same benchmark as the Silva webinar</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">Duality is the second-largest funnel ($3.5M in 2026, 203k sign-ups). August is otherwise empty.</td>
-<td rowspan="2" class="num mtot">$1.30M</td><td rowspan="2" class="num">$1.04M</td><td rowspan="2" class="num">$3.54M</td>
-</tr>
-<tr>
-<td><strong>Challenge 2 (7-day, Longevity pathway)</strong><span class="small">Aug 15-21</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Same basis as Challenge 1</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Target set at $1M per your instruction. August is otherwise empty between the AI class start and the E2A summit.</td>
-</tr>
-<tr>
-<td rowspan="1" class="mcell"><strong>Sep</strong></td>
-<td><strong>Expert to Authority Summit + Authority Guild</strong><span class="small">Sep 17-19 · Guild webinars Sep 22, 27 (class Oct 5, Guild Oct 13)</span><span class="small">Sells: E2A Mastery 2027 + VIP + Authority Guild</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="muted">Sep-Oct 2026 tagged $2.42M (cohort $2.54M + VIP + Guild $0.13M, 35k unique sign-ups)</td><td class="num strong">$3.15M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Jun-Aug campaign, September summit. The only mastery that grew in 2026. Add a paid in-person day as Entrepreneurship 2025 had.</td>
-<td rowspan="1" class="num mtot">$3.15M</td><td rowspan="1" class="num">$2.72M</td><td rowspan="1" class="num">$2.32M</td>
-</tr>
-<tr>
-<td rowspan="1" class="mcell"><strong>Oct</strong><div class=small>Black Friday promotion running from Sep 17 (presale Nov 1).</div></td>
-<td><strong>AI for Founders Summit + AI Guild</strong><span class="small">Oct 29-31 (class Nov 16 · AI Guild webinar Dec 4)</span><span class="small">Sells: AI for Founders Mastery 2027 + VIP + AI Guild</span><span class="chip chip-jd">▲ Jaideep's Academy timeline</span></td><td class="muted">Oct 1 - Nov 10 2026 tagged $1.22M with the class not yet started (40k unique sign-ups)</td><td class="num strong">$1.59M<span class="small">1.3 × 2026</span></td><td class="muted">Jaideep&#x27;s timeline: Jul-Sep campaign, late-October summit. The 2026 basis is partial; it will rise once the Nov 17 class closes. Promo opens Jul 30 so it does not overlap E2A.</td>
-<td rowspan="1" class="num mtot">$1.59M</td><td rowspan="1" class="num">$951k</td><td rowspan="1" class="num">$1.57M</td>
-</tr>
-<tr>
-<td rowspan="4" class="mcell"><strong>Nov</strong></td>
-<td><strong>Quest release webinar: Art of Manifesting (into Black Friday)</strong><span class="small">Nov 9</span><span class="small">Sells: Membership (quest release webinar, launch-tagged)</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Same benchmark as the Silva webinar</td><td class="num strong">$0.30M<span class="small">1.3 × 2026</span></td><td class="muted">The Art of Manifesting funnel doubled its sign-ups in 2026 (158k, up from 77k). A live session the week before Black Friday warms the biggest list of the year.</td>
-<td rowspan="4" class="num mtot">$15.07M</td><td rowspan="4" class="num">$1.64M<span class=small>to 10 Nov</span></td><td rowspan="4" class="num">$7.22M</td>
-</tr>
-<tr>
-<td><strong>Future Human Dubai 2027</strong><span class="small">Nov 5-7 · ticket campaign from Sep 1</span><span class="small">Sells: FH tickets + Future Human Mastery bundle + Total Mastery + MVU 2028 presale</span><span class="chip chip-sheet">■ In the 2027 sheet · unchanged</span></td><td class="muted">Jan 2025 tagged $2.44M (bundle $1.57M + Total Mastery $0.71M + virtual $0.16M). Tickets $1.15M untagged</td><td class="num strong">$3.17M<span class="small">1.3 × 2025</span></td><td class="muted">Already in the sheet (Nov 5-7; Jaideep&#x27;s deck says December). Future Human is the identity the four masteries build toward: sell the bundle on site as in January 2025.</td>
-</tr>
-<tr>
-<td><strong>Black Friday + Cyber Monday + 3-year offer</strong><span class="small">Nov 15 - Dec 2 · promo from Sep 17</span><span class="small">Sells: Membership (new, upgrades, renewals), 3-year membership</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Nov 2025 $6.47M + Dec 1-7 $1.68M tagged. 2026 result lands in three weeks; the target should be re-set to 1.3x that</td><td class="num strong">$10.60M<span class="small">1.3 × 2025</span></td><td class="muted">The only membership promo of the year besides Q5. Mirror the confirmed 2026 structure. Placeholder uses 2025 because 2026 has not run yet.</td>
-</tr>
-<tr>
-<td><strong>Challenge 3 (30-day, with Black Friday)</strong><span class="small">Nov 16 - Dec 16</span><span class="small">Sells: Membership / Black Friday lead engine</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Pattern of the confirmed 2026 Fibre Challenge (Nov 16 - Dec 16)</td><td class="num strong">$1.00M<span class="small">set by you</span></td><td class="muted">Target set at $1M per your instruction. Same slot as the 2026 Fibre Challenge.</td>
-</tr>
-<tr>
-<td rowspan="2" class="mcell"><strong>Dec</strong></td>
-<td><strong>Lifebook New Year webinar</strong><span class="small">Dec 27</span><span class="small">Sells: Lifebook Online (Jan 2028 release)</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Dec 28 2025 webinar: $0.73M tagged in Dec + $0.14M in Jan; 39.5k sign-ups</td><td class="num strong">$1.13M<span class="small">1.3 × 2025</span></td><td class="muted">Lifebook only at year end, as you asked. Same slot as the confirmed Dec 27, 2026 webinar.</td>
-<td rowspan="2" class="num mtot">$2.80M</td><td rowspan="2" class="num">n/a</td><td rowspan="2" class="num">$3.75M</td>
-</tr>
-<tr>
-<td><strong>Q5 promo</strong><span class="small">Dec 28-31</span><span class="small">Sells: Membership</span><span class="chip chip-new">● Proposed</span></td><td class="muted">Dec 28 2025 - Jan 1 2026 tagged $1.29M</td><td class="num strong">$1.67M<span class="small">1.3 × 2025</span></td><td class="muted">Same slot as the confirmed Dec 28-31, 2026 promo.</td>
-</tr>
-<tr class="total"><td></td><td colspan="2">2027 forecast if every campaign hits target (23 campaigns)</td><td class="num strong">$40.66M</td><td class="muted">$37.72M on launch tags alone; MVU Porto ($2.94M) is ticket revenue with no launch tag.</td><td class="num">$40.66M</td><td class="num">$18.91M<span class="small">to 10 Nov</span></td><td class="num">$36.21M</td></tr>
+<tr class="sub"><td class="muted">Dec total</td><td class="num">$1.33M</td><td class="num">—</td><td class="num strong">$1.72M</td><td class="muted small2">Sum of the rows above. $3.75M was all launch-tagged revenue in Dec 2025; n/a in Dec 2026.</td></tr>
+<tr class="total"><td></td><td>Total, 23 campaigns</td><td class="num">$28.86M</td><td class="num">$15.46M</td><td class="num strong">$39.62M</td><td class="muted">2025 and 2026 columns add up only the campaigns on this calendar (the same campaigns made $28.86M in 2025 and $15.46M in 2026 to 10 Nov). All launch-tagged revenue was $36.21M in 2025 and $18.91M in 2026 to 10 Nov. The 2027 figure includes MVU Porto ($2.94M), which has no launch tag.</td></tr>
 </tbody></table></div>
 <h3>1 Billion Followers Summit, campaign one</h3>
 <p>The fifth edition runs <strong>8 to 10 January 2027</strong> across Emirates Towers, DIFC and the Museum of the Future in Dubai, organised by the UAE Government Media Office with 500+ speakers. The 2027 sheet's Social Media Summit row already carries those dates. The 2026 edition in Metabase: 145k sign-ups (100k from paid media), 444 Social Media Mastery orders, $1.41M launch-tagged in Jan-Feb ($2.10M by cohort), promo opened 25 November. Target $1.83M on tags.</p>
@@ -755,7 +726,7 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <section>
 <div class="eyebrow">Membership campaigns in 2027</div>
 <h2>What Membership runs next year</h2>
-<p>Black Friday and Q5 are the only promos. The rest of the membership calendar is built on the quests that already bring the most people in: one live, launch-tagged release webinar per quarter on a top quest, a Membership Summit in May, three challenges and WildFit in July. The 2026 quest releases (Healing from Heartbreak, Maestro's Guide, Silva webinar, Negotiate with Confidence, Bold Conversations) were untagged emails, so none of them can be measured; the 2027 ones must carry a launch tag.</p>
+<p>Black Friday and Q5 are the only promos. The rest of the membership calendar is built on the quests that already bring the most people in: one live, launch-tagged release webinar per quarter on a top quest, a Membership Summit in May, three challenges and WildFit in July. The 2026 quest releases (Healing from Heartbreak, Maestro's Guide, Silva webinar, Negotiate with Confidence, Bold Conversations) were untagged, so none can be measured; the 2027 ones must carry a launch tag.</p>
 <div class="tw"><table class="quests"><thead><tr><th>Quest funnel</th><th class="num">2025 revenue</th><th class="num">2026 revenue (to 10 Nov)</th><th class="num">2026 sign-ups</th><th>2027 move</th></tr></thead><tbody>
 <tr><td><strong>Silva Ultramind (sums)</strong></td><td class="num">$9.22M</td><td class="num">$5.39M</td><td class="num">87k</td><td>Live release webinar Mar 9. Biggest funnel in the company; the Feb 2026 webinar was untagged.</td></tr>
 <tr><td><strong>Duality (du)</strong></td><td class="num">$5.42M</td><td class="num">$3.47M</td><td class="num">203k</td><td>Live release webinar Aug 24. Most sign-ups of any quest.</td></tr>
@@ -772,25 +743,25 @@ table.plan { min-width:1150px; table-layout:fixed } table.plan td { overflow-wra
 <h2>Rows to add to the 2027 calendar sheet</h2>
 <p>Same columns as the official calendar. The five rows already in the sheet are not repeated. Status is Proposal for proposed rows and Confirmed for Jaideep's timeline rows; $ Rev target is the 2027 target above.</p>
 <div class="tw"><table class="sheet"><thead><tr><th>Name of project</th><th>Unique Name</th><th>Status</th><th>Ticket</th><th>Event type</th><th>Month</th><th>Year</th><th>Start date</th><th>End Date</th><th>Promotions Start Date</th><th>Medium</th><th>💿 Production Type</th><th>Type</th><th>Promotions Duration</th><th>Responsible</th><th>$ Rev target</th></tr></thead><tbody>
-<tr><td>Certified Life Coach launch | 💻 Cert Online 1 Day Seminar | Jan 2027</td><td>Certified Life Coach launch</td><td>Confirmed</td><td>Free,Paid</td><td>💻 Cert Online 1 Day Seminar</td><td>Jan</td><td>2027</td><td>23 January 2027</td><td>2 February 2027</td><td>January 11, 2027</td><td>🎥 Studio</td><td>🏃 Coach</td><td>Online Seminar</td><td>15</td><td>Jaideep Chagger</td><td>$350000</td></tr>
+<tr><td>Certified Life Coach launch | 💻 Cert Online 1 Day Seminar | Jan 2027</td><td>Certified Life Coach launch</td><td>Confirmed</td><td>Free,Paid</td><td>💻 Cert Online 1 Day Seminar</td><td>Jan</td><td>2027</td><td>23 January 2027</td><td>2 February 2027</td><td>January 11, 2027</td><td>🎥 Studio</td><td>🏃 Coach</td><td>Online Seminar</td><td>15</td><td>Jaideep Chagger</td><td>$420000</td></tr>
 <tr><td>AI Accelerator | 📈 7 Day Accelerator (Virtual) | Feb 2027</td><td>AI Accelerator</td><td>Proposal</td><td>Paid</td><td>📈 7 Day Accelerator (Virtual)</td><td>Feb</td><td>2027</td><td>8 February 2027</td><td>14 February 2027</td><td>January 25, 2027</td><td>📺 Zoom</td><td>🎓 Mastery</td><td>Class Start</td><td>15</td><td>Jaideep Chagger</td><td>$520000</td></tr>
 <tr><td>Challenge 1 | ⏱️ Challenge | Feb 2027</td><td>Challenge 1</td><td>Proposal</td><td>Free</td><td>⏱️ Challenge</td><td>Feb</td><td>2027</td><td>15 February 2027</td><td>21 February 2027</td><td>February 5, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>10</td><td>Ramya Rednam</td><td>$1000000</td></tr>
 <tr><td>Quest release webinar: Silva Ultramind | 💻 Quest Release Webinar | Mar 2027</td><td>Quest release webinar: Silva Ultramind</td><td>Proposal</td><td>Free</td><td>💻 Quest Release Webinar</td><td>Mar</td><td>2027</td><td>9 March 2027</td><td></td><td>February 27, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>10</td><td>Daniel Savov</td><td>$300000</td></tr>
-<tr><td>Manifesting Summit, in person + virtual | 🌐 Mastery Hybrid Summit - Paid + Free | Apr 2027</td><td>Manifesting Summit, in person + virtual</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Hybrid Summit - Paid + Free</td><td>Apr</td><td>2027</td><td>16 April 2027</td><td>18 April 2027</td><td>February 15, 2027</td><td>💃 Large Event (&gt; 500)</td><td>🎙️Summit</td><td>Summit</td><td>60</td><td>Jaideep Chagger</td><td>$2800000</td></tr>
-<tr><td>Membership Summit | 🌐 Membership Summit  | May 2027</td><td>Membership Summit</td><td>Proposal</td><td>Free</td><td>🌐 Membership Summit </td><td>May</td><td>2027</td><td>22 May 2027</td><td>23 May 2027</td><td>May 4, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Summit</td><td>18</td><td>Daniel Savov</td><td>$550000</td></tr>
+<tr><td>Manifesting Summit, in person + virtual | 🌐 Mastery Hybrid Summit - Paid + Free | Apr 2027</td><td>Manifesting Summit, in person + virtual</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Hybrid Summit - Paid + Free</td><td>Apr</td><td>2027</td><td>16 April 2027</td><td>18 April 2027</td><td>February 15, 2027</td><td>💃 Large Event (&gt; 500)</td><td>🎙️Summit</td><td>Summit</td><td>60</td><td>Jaideep Chagger</td><td>$2850000</td></tr>
+<tr><td>Membership Summit | 🌐 Membership Summit  | May 2027</td><td>Membership Summit</td><td>Proposal</td><td>Free</td><td>🌐 Membership Summit </td><td>May</td><td>2027</td><td>22 May 2027</td><td>23 May 2027</td><td>May 4, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Summit</td><td>18</td><td>Daniel Savov</td><td>$290000</td></tr>
 <tr><td>Quest release webinar: Superbrain relaunch | 💻 Quest Release Webinar | Jun 2027</td><td>Quest release webinar: Superbrain relaunch</td><td>Proposal</td><td>Free</td><td>💻 Quest Release Webinar</td><td>Jun</td><td>2027</td><td>8 June 2027</td><td></td><td>May 29, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>10</td><td>Daniel Savov</td><td>$300000</td></tr>
-<tr><td>Certified Hypnotherapist launch | 💻 Cert Online 1 Day Seminar | Jun 2027</td><td>Certified Hypnotherapist launch</td><td>Confirmed</td><td>Free,Paid</td><td>💻 Cert Online 1 Day Seminar</td><td>Jun</td><td>2027</td><td>26 June 2027</td><td>6 July 2027</td><td>June 12, 2027</td><td>🎥 Studio</td><td>🏃 Coach</td><td>Online Seminar</td><td>15</td><td>Jaideep Chagger</td><td>$660000</td></tr>
+<tr><td>Certified Hypnotherapist launch | 💻 Cert Online 1 Day Seminar | Jun 2027</td><td>Certified Hypnotherapist launch</td><td>Confirmed</td><td>Free,Paid</td><td>💻 Cert Online 1 Day Seminar</td><td>Jun</td><td>2027</td><td>26 June 2027</td><td>6 July 2027</td><td>June 12, 2027</td><td>🎥 Studio</td><td>🏃 Coach</td><td>Online Seminar</td><td>15</td><td>Jaideep Chagger</td><td>$700000</td></tr>
 <tr><td>In-person accelerators at MVU Porto | 📈 2 Day Accelerator (In Person) | Jul 2027</td><td>In-person accelerators at MVU Porto</td><td>Proposal</td><td>Paid</td><td>📈 2 Day Accelerator (In Person)</td><td>Jul</td><td>2027</td><td>13 July 2027</td><td>17 July 2027</td><td>June 28, 2027</td><td>🏖️ Small Event (&lt; 500)</td><td>🎓 Mastery</td><td>Class Start</td><td>15</td><td>Jaideep Chagger</td><td>$1000000</td></tr>
-<tr><td>AI Summit, paid ticket + free | 🌐 Mastery Hybrid Summit - Paid + Free | Jul 2027</td><td>AI Summit, paid ticket + free</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Hybrid Summit - Paid + Free</td><td>Jul</td><td>2027</td><td>23 July 2027</td><td>25 July 2027</td><td>May 24, 2027</td><td>💃 Large Event (&gt; 500)</td><td>🎙️Summit</td><td>Summit</td><td>60</td><td>Jaideep Chagger</td><td>$4200000</td></tr>
+<tr><td>AI Summit, paid ticket + free | 🌐 Mastery Hybrid Summit - Paid + Free | Jul 2027</td><td>AI Summit, paid ticket + free</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Hybrid Summit - Paid + Free</td><td>Jul</td><td>2027</td><td>23 July 2027</td><td>25 July 2027</td><td>May 24, 2027</td><td>💃 Large Event (&gt; 500)</td><td>🎙️Summit</td><td>Summit</td><td>60</td><td>Jaideep Chagger</td><td>$4220000</td></tr>
 <tr><td>Quest release webinar: Duality | 💻 Quest Release Webinar | Aug 2027</td><td>Quest release webinar: Duality</td><td>Proposal</td><td>Free</td><td>💻 Quest Release Webinar</td><td>Aug</td><td>2027</td><td>24 August 2027</td><td></td><td>August 14, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>10</td><td>Daniel Savov</td><td>$300000</td></tr>
 <tr><td>Challenge 2 | ⏱️ Challenge | Aug 2027</td><td>Challenge 2</td><td>Proposal</td><td>Free</td><td>⏱️ Challenge</td><td>Aug</td><td>2027</td><td>15 August 2027</td><td>21 August 2027</td><td>August 5, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>10</td><td>Ramya Rednam</td><td>$1000000</td></tr>
-<tr><td>Expert to Authority Summit + Authority Guild | 🌐 Mastery Hybrid Summit - Paid + Free | Sep 2027</td><td>Expert to Authority Summit + Authority Guild</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Hybrid Summit - Paid + Free</td><td>Sep</td><td>2027</td><td>17 September 2027</td><td>19 September 2027</td><td>June 18, 2027</td><td>💃 Large Event (&gt; 500)</td><td>🎙️Summit</td><td>Summit</td><td>90</td><td>Jaideep Chagger</td><td>$3150000</td></tr>
-<tr><td>AI for Founders Summit + AI Guild | 🌐 Mastery Online Summit - Free  | Oct 2027</td><td>AI for Founders Summit + AI Guild</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Online Summit - Free </td><td>Oct</td><td>2027</td><td>29 October 2027</td><td>31 October 2027</td><td>July 30, 2027</td><td></td><td>🎓 Mastery</td><td>Summit</td><td>90</td><td>Jaideep Chagger</td><td>$1590000</td></tr>
+<tr><td>Expert to Authority Summit + Authority Guild | 🌐 Mastery Hybrid Summit - Paid + Free | Sep 2027</td><td>Expert to Authority Summit + Authority Guild</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Hybrid Summit - Paid + Free</td><td>Sep</td><td>2027</td><td>17 September 2027</td><td>19 September 2027</td><td>June 18, 2027</td><td>💃 Large Event (&gt; 500)</td><td>🎙️Summit</td><td>Summit</td><td>90</td><td>Jaideep Chagger</td><td>$3220000</td></tr>
+<tr><td>AI for Founders Summit + AI Guild | 🌐 Mastery Online Summit - Free  | Oct 2027</td><td>AI for Founders Summit + AI Guild</td><td>Confirmed</td><td>Free,Paid</td><td>🌐 Mastery Online Summit - Free </td><td>Oct</td><td>2027</td><td>29 October 2027</td><td>31 October 2027</td><td>July 30, 2027</td><td></td><td>🎓 Mastery</td><td>Summit</td><td>90</td><td>Jaideep Chagger</td><td>$1600000</td></tr>
 <tr><td>Quest release webinar: Art of Manifesting | 💻 Quest Release Webinar | Nov 2027</td><td>Quest release webinar: Art of Manifesting</td><td>Proposal</td><td>Free</td><td>💻 Quest Release Webinar</td><td>Nov</td><td>2027</td><td>9 November 2027</td><td></td><td>October 30, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>10</td><td>Daniel Savov</td><td>$300000</td></tr>
-<tr><td>Black Friday + Cyber Monday + 3-year offer | 🛍️ Membership Major Sale | Nov 2027</td><td>Black Friday + Cyber Monday + 3-year offer</td><td>Proposal</td><td>Paid</td><td>🛍️ Membership Major Sale</td><td>Nov</td><td>2027</td><td>15 November 2027</td><td>2 December 2027</td><td>September 17, 2027</td><td>📹 Video</td><td>⛰️ Quests (Membership)</td><td>Sale</td><td>45</td><td>Daniel Savov</td><td>$10600000</td></tr>
+<tr><td>Black Friday + Cyber Monday + 3-year offer | 🛍️ Membership Major Sale | Nov 2027</td><td>Black Friday + Cyber Monday + 3-year offer</td><td>Proposal</td><td>Paid</td><td>🛍️ Membership Major Sale</td><td>Nov</td><td>2027</td><td>15 November 2027</td><td>2 December 2027</td><td>September 17, 2027</td><td>📹 Video</td><td>⛰️ Quests (Membership)</td><td>Sale</td><td>45</td><td>Daniel Savov</td><td>$10560000</td></tr>
 <tr><td>Challenge 3 | ⏱️ Challenge | Nov 2027</td><td>Challenge 3</td><td>Proposal</td><td>Free</td><td>⏱️ Challenge</td><td>Nov</td><td>2027</td><td>16 November 2027</td><td>16 December 2027</td><td>November 2, 2027</td><td>📺 Zoom</td><td>⛰️ Quests (Membership)</td><td>Webinar</td><td>15</td><td>Ramya Rednam</td><td>$1000000</td></tr>
-<tr><td>Lifebook New Year webinar | 💻 Lifebook Live Webinar | Dec 2027</td><td>Lifebook New Year webinar</td><td>Proposal</td><td>Free</td><td>💻 Lifebook Live Webinar</td><td>Dec</td><td>2027</td><td>27 December 2027</td><td></td><td>December 12, 2027</td><td>📺 Zoom</td><td>📖 Lifebook</td><td>Webinar</td><td>15</td><td>Ramya Rednam</td><td>$1130000</td></tr>
-<tr><td>Q5 promo | 🪽 Membership Promo Campaign | Dec 2027</td><td>Q5 promo</td><td>Proposal</td><td>Free</td><td>🪽 Membership Promo Campaign</td><td>Dec</td><td>2027</td><td>28 December 2027</td><td>31 December 2027</td><td>September 28, 2027</td><td>📧 Email</td><td>⛰️ Quests (Membership)</td><td>Advertising</td><td>3</td><td>Daniel Savov</td><td>$1670000</td></tr>
+<tr><td>Lifebook New Year webinar | 💻 Lifebook Live Webinar | Dec 2027</td><td>Lifebook New Year webinar</td><td>Proposal</td><td>Free</td><td>💻 Lifebook Live Webinar</td><td>Dec</td><td>2027</td><td>27 December 2027</td><td></td><td>December 12, 2027</td><td>📺 Zoom</td><td>📖 Lifebook</td><td>Webinar</td><td>15</td><td>Ramya Rednam</td><td>$1150000</td></tr>
+<tr><td>Q5 promo | 🪽 Membership Promo Campaign | Dec 2027</td><td>Q5 promo</td><td>Proposal</td><td>Free</td><td>🪽 Membership Promo Campaign</td><td>Dec</td><td>2027</td><td>28 December 2027</td><td>31 December 2027</td><td>September 28, 2027</td><td>📧 Email</td><td>⛰️ Quests (Membership)</td><td>Advertising</td><td>3</td><td>Daniel Savov</td><td>$570000</td></tr>
 </tbody></table></div>
 <p class="src">Sources: Metabase MV BigQuery, l3_sales.fact_sales_order (campaign_type = Product Launch, MV staff excluded), l3_common.dim_product, l3_common.dim_product_cohort, l3_leads.fact_lead; queried 11 Nov 2026, data through 10 Nov 2026. 1 Billion Followers Summit 2027 dates from 1billionsummit.com and Khaleej Times (8-10 Jan 2027). Jaideep's 2027 Academy timeline and Future Human identity model from his strategy deck.</p>
 </section>

@@ -70,12 +70,14 @@ def chart_mastery():
 
 # ---------- Month tables ----------
 def month_table(cal, pl, tot, year, partial_note=None):
-    out = [f'<div class="tw"><table class="months"><thead><tr><th>Month</th><th>Campaigns in the official {year} calendar</th><th>Dates</th><th class="num">Launch-tagged revenue</th><th>Where the number comes from</th><th class="num">Month: all launch-tagged</th><th class="num">Month: total revenue</th></tr></thead><tbody>']
+    out = [f'<div class="tw"><table class="months"><thead><tr><th>Month</th><th>Campaigns in the official {year} calendar</th><th>Dates</th><th class="num">Campaign revenue</th><th>Where the number comes from</th><th class="num">Month: all launch-tagged</th><th class="num">Month: total revenue (all orders)</th></tr></thead><tbody>']
     for m in MONTHS:
         if m not in pl: continue
         items = cal.get(m, [])
         n = max(len(items),1)
         first = True
+        items = [it for it in items if it[2]]
+        n = max(len(items),1)
         for (name, dates, rev, note) in (items or [("", "", None, "")]):
             cls = "" if rev else "dim"
             out.append(f'<tr class="{cls}">')
@@ -89,24 +91,28 @@ def month_table(cal, pl, tot, year, partial_note=None):
     out.append('</tbody></table></div>')
     return "\n".join(out)
 
+def fm(x):
+    return "—" if x is None else f"${x:.2f}M"
 def plan_table():
-    out = ['<div class="tw"><table class="plan"><thead><tr><th style="width:9%">Month</th><th style="width:20%">Campaign</th><th style="width:19%">What it made before (launch-tagged)</th><th class="num" style="width:8%">2027 target</th><th style="width:28%">Why it is on the calendar</th><th class="num" style="width:6%">Month target</th><th class="num" style="width:5%">2026</th><th class="num" style="width:5%">2025</th></tr></thead><tbody>']
+    out = ['<div class="tw"><table class="plan"><thead><tr><th style="width:9%">Month</th><th style="width:23%">Campaign</th><th class="num" style="width:8%">2025</th><th class="num" style="width:8%">2026</th><th class="num" style="width:9%">2027 target</th><th style="width:43%">Why it is on the calendar, and what the 2025 / 2026 numbers are</th></tr></thead><tbody>']
+    t25 = t26 = t27 = 0.0
     for m in MONTHS:
-        items = PLAN[m]; n = max(len(items),1); first = True
-        mcell = f'<td rowspan="{n}" class="mcell"><strong>{m}</strong>{("<div class=small>"+E(PROMO_NOTES[m])+"</div>") if m in PROMO_NOTES else ""}</td>'
+        items = PLAN[m]
         if not items:
-            out.append(f'<tr class="dim">{mcell.replace(f"rowspan=\"{n}\" ","")}<td colspan="4" class="muted">{E(PROMO_NOTES.get(m,"Nothing live."))}</td><td class="num mtot">—</td><td class="num">{E(M(PL_2026.get(m)))}</td><td class="num">{E(M(PL_2025[m]))}</td></tr>')
+            out.append(f'<tr class="dim"><td class="mcell"><strong>{m}</strong></td><td colspan="5" class="muted">{E(PROMO_NOTES.get(m,"Nothing live."))}</td></tr>')
             continue
+        first = True
         for r in items:
             lab, cls, glyph = STATUS[r["status"]]
-            tgt = f'{Mm(r["target"])}' + ('<span class="small">set by you</span>' if r.get("user_set") else f'<span class="small">1.3 × {r["basis_year"]}</span>')
+            tgt = f'{fm(r["target"])}<span class="small">{"set by you" if r.get("user_set") else ("1.3 × " + r["basis_year"])}</span>'
             out.append('<tr>')
-            if first: out.append(mcell)
-            out.append(f'<td><strong>{E(r["name"])}</strong><span class="small">{E(r["dates"])}</span><span class="small">Sells: {E(r["sells"])}</span><span class="chip {cls}">{glyph} {lab}</span></td><td class="muted">{E(r["basis_note"])}</td><td class="num strong">{tgt}</td><td class="muted">{E(r["why"])}</td>')
-            if first:
-                out.append(f'<td rowspan="{n}" class="num mtot">{Mm(month27[m])}</td><td rowspan="{n}" class="num">{E(M(PL_2026.get(m)))}{"<span class=small>to 10 Nov</span>" if m=="Nov" else ""}</td><td rowspan="{n}" class="num">{E(M(PL_2025[m]))}</td>')
+            if first: out.append(f'<td rowspan="{len(items)+1}" class="mcell"><strong>{m}</strong>{("<div class=small>"+E(PROMO_NOTES[m])+"</div>") if m in PROMO_NOTES else ""}</td>')
+            out.append(f'<td><strong>{E(r["name"])}</strong><span class="small">{E(r["dates"])}</span><span class="small">Sells: {E(r["sells"])}</span><span class="chip {cls}">{glyph} {lab}</span></td><td class="num">{fm(r["y2025"])}</td><td class="num">{fm(r["y2026"])}</td><td class="num strong">{tgt}</td><td class="muted">{E(r["why"])}<br><span class="small">Numbers: {E(r["basis_note"])}.</span></td>')
             out.append('</tr>'); first = False
-    out.append(f'<tr class="total"><td></td><td colspan="2">2027 forecast if every campaign hits target ({len(rows27)} campaigns)</td><td class="num strong">{Mm(fc_total)}</td><td class="muted">{Mm(fc_tagged)} on launch tags alone; MVU Porto ($2.94M) is ticket revenue with no launch tag.</td><td class="num">{Mm(fc_total)}</td><td class="num">{E(M(pl26))}<span class="small">to 10 Nov</span></td><td class="num">{E(M(pl25))}</td></tr>')
+        s25 = sum(r["y2025"] or 0 for r in items); s26 = sum(r["y2026"] or 0 for r in items); s27 = sum(r["target"] for r in items)
+        t25 += s25; t26 += s26; t27 += s27
+        out.append(f'<tr class="sub"><td class="muted">{m} total</td><td class="num">{fm(s25) if s25 else "—"}</td><td class="num">{fm(s26) if s26 else "—"}</td><td class="num strong">{fm(s27)}</td><td class="muted small2">Sum of the rows above. {E(M(PL_2025[m]))} was all launch-tagged revenue in {m} 2025; {E(M(PL_2026.get(m)))} in {m} 2026{" (to 10 Nov)" if m=="Nov" else ""}.</td></tr>')
+    out.append(f'<tr class="total"><td></td><td>Total, {len(rows27)} campaigns</td><td class="num">{fm(t25)}</td><td class="num">{fm(t26)}</td><td class="num strong">{fm(t27)}</td><td class="muted">2025 and 2026 columns add up only the campaigns on this calendar (the same campaigns made {fm(t25)} in 2025 and {fm(t26)} in 2026 to 10 Nov). All launch-tagged revenue was {E(M(pl25))} in 2025 and {E(M(pl26))} in 2026 to 10 Nov. The 2027 figure includes MVU Porto ($2.94M), which has no launch tag.</td></tr>')
     out.append('</tbody></table></div>')
     return "\n".join(out)
 
@@ -207,6 +213,7 @@ td.mtot2 {{ background:var(--bg-muted) }}
 .small {{ font-size:11.5px; color:var(--fg-subtle); font-family:var(--font); white-space:normal; display:block }}
 tr.dim td {{ color:var(--fg-subtle) }} tr.dim td strong {{ color:var(--fg-muted); font-weight:500 }}
 tr.total td {{ background:var(--bg-muted); font-weight:700; border-top:2px solid var(--border) }}
+tr.sub td {{ background:var(--brand-light); font-weight:700; border-bottom:2px solid var(--border) }} tr.sub td.small2 {{ font-weight:400; font-size:12.5px }}
 table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-wrap:anywhere }} table.plan .chip {{ margin-top:6px; white-space:normal }} table.quests {{ min-width:800px }} table.sheet {{ min-width:1500px; font-size:12.5px }}
 .chip {{ display:inline-block; font-size:11.5px; font-weight:500; padding:3px 10px; border-radius:128px; white-space:nowrap }}
 .chip-sheet {{ background:var(--bg-subtle); color:var(--fg); border:1px solid var(--border) }} .chip-jd {{ background:var(--brand-light); color:var(--brand) }} .chip-new {{ background:var(--tag-bg); color:var(--tag-fg) }}
@@ -229,7 +236,7 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 <section class="first">
 <div class="eyebrow">Mindvalley · Strategy day · prepared 11 Nov 2026 · data to 10 Nov 2026</div>
 <h1>How the 2027 calendar was built</h1>
-<p class="lede">Only launch campaigns count. Every number on this page is revenue from orders that carry a Product Launch tag at checkout, pulled from Metabase. Evergreen membership, programs, class starts and quest releases are left out. 2027 targets are 30% above what the same campaign did in 2026.</p>
+<p class="lede">Only launch campaigns count. Every number on this page is revenue from orders that carry a Product Launch tag at checkout, pulled from Metabase. Evergreen membership, programs, class starts and quest releases are left out. Where a product never carries a tag (MVU tickets, States on Shopify, event tickets) the product's own sales in the campaign window are used and the row says so. 2027 targets are 30% above what the same campaign did in 2026.</p>
 <div class="tiles">
  <div class="tile"><div class="k">2025 campaign revenue</div><div class="v">{M(pl25,1)}</div><div class="d">Launch-tagged orders, all business units. Academy $21.2M, Membership $14.6M (of which Black Friday + Cyber Monday $8.1M), Events $0.4M.</div></div>
  <div class="tile"><div class="k">2026 to 10 Nov</div><div class="v">{M(pl26,1)}</div><div class="d">Same window in 2025: {M(PL_2025_YTD,1)} ({(pl26/PL_2025_YTD-1)*100:.0f}%). Academy $14.8M, Membership $4.1M.</div></div>
@@ -238,16 +245,7 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 </div>
 </section>
 
-<section>
-<div class="eyebrow">How it works</div>
-<h2>Three rules</h2>
-<ol class="rules">
- <li><strong>Only launch campaigns count.</strong> Revenue on this page is from orders that carry a Product Launch tag at checkout: summits, cert launches, Black Friday, Q5, quest webinars. Evergreen membership, programs, class starts and States are not campaign revenue.</li>
- <li><strong>Month by month, as in the official calendar.</strong> Each month lists the calendar's campaigns, what each made, the month's campaign total and the month's total revenue from every order.</li>
- <li><strong>2027 target = 30% above what the same campaign made in 2026.</strong> If it did not run in 2026, 30% above 2025. Challenges and the Porto accelerators are $1M each on your instruction.</li>
-</ol>
-<div class="note">One thing to know about the tags: about 45% of Academy launch orders (deposits, payment plans) carry no launch tag, so a $1.17M cert cohort shows as $0.27M here. The tables say so where it matters. Tagging every checkout would lift reported campaign revenue by roughly $6M a year without changing a sale.</div>
-</section>
+
 
 <section>
 <div class="eyebrow">Why 2026 is lower</div>
@@ -259,10 +257,10 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 </div>
 <p>Like-for-like (1 Jan to 10 Nov) campaign revenue fell from {M(PL_2025_YTD,1)} to {M(pl26,1)}. In campaign terms, five things explain it.</p>
 <div class="findings">
- <div class="finding"><div class="n">01</div><h4>AI Summit: hybrid in July became free in March</h4><div class="big">$6.25M → $3.23M</div><p>Launch-tagged AI Mastery orders, Jul-Aug 2025 vs Mar-Apr 2026. 170k sign-ups in 2025 vs 120k; paid tickets and a July slot after the Manifesting cohort. The biggest single swing of the year.</p></div>
+ <div class="finding"><div class="n">01</div><h4>AI Summit: July became March, with 50k fewer sign-ups</h4><div class="big">$6.29M → $3.25M</div><p>Launch-tagged AI Mastery orders, Jul-Aug 2025 vs Mar-Apr 2026. Both summits were free. 2025 had 170k sign-ups and a July slot after the Manifesting cohort had closed; 2026 had 120k and ran six weeks after Social Media. The biggest single swing of the year.</p></div>
  <div class="finding"><div class="n">02</div><h4>No Future Human in 2026</h4><div class="big">−$2.44M</div><p>January 2025's festival sold $1.57M of the Future Human Mastery bundle, $0.71M of Total Mastery and $0.16M of virtual passes, all tagged to the event. 2026 had no January festival and no bundle.</p></div>
- <div class="finding"><div class="n">03</div><h4>Manifesting Summit: in person became free</h4><div class="big">$3.45M → $2.15M</div><p>Apr-Jun tagged orders. 2026 had 136k sign-ups to 2025's 54k and still made $1.3M less: $124 per sign-up in 2025, $30 in 2026.</p></div>
- <div class="finding"><div class="n">04</div><h4>Membership ran fewer campaigns</h4><div class="big">$5.9M → $4.1M</div><p>Jan-10 Nov membership launch-tagged. 2025 had the Best of Mindvalley summit (Feb), two promos (Jan, Apr-May), the June renewal promo ($1.07M) and the Membership Summit (Aug, $0.42M). 2026 kept only the June promo ($0.62M). The 2027 plan keeps one Membership Summit and drops every promo except Black Friday and Q5, as you asked.</p></div>
+ <div class="finding"><div class="n">03</div><h4>Manifesting Summit: in person became free</h4><div class="big">$3.45M → $2.20M</div><p>Apr-Jun tagged orders. 2026 had 136k sign-ups to 2025's 54k and still made $1.3M less: $124 per sign-up in 2025, $30 in 2026.</p></div>
+ <div class="finding"><div class="n">04</div><h4>Membership ran fewer campaigns</h4><div class="big">$5.9M → $4.1M</div><p>Jan-10 Nov membership launch-tagged. 2025 had the Best of Mindvalley summit (Feb, $0.36M in summit week), two promos (Jan, Apr-May), the June renewal promo ($1.13M) and the Membership Summit (Aug, $0.22M in summit week). 2026 kept only the June promo ($0.70M). The 2027 plan keeps one Membership Summit and drops every promo except Black Friday and Q5, as you asked.</p></div>
  <div class="finding"><div class="n">05</div><h4>Certifications: one launch fewer, no Business Coach</h4><div class="big">$1.45M → $1.06M</div><p>Tagged cert orders Jan-10 Nov. 2025: CLC Feb, Business Coach Apr, Hypnotherapist Sep plus deposits through the year. 2026: CLC Feb and Hypnotherapist Aug. Business Coach is dropped for 2027 on your call.</p></div>
  <div class="finding"><div class="n">06</div><h4>What 2026 added</h4><div class="big">+$1.9M</div><p>Accelerators ($0.40M AI, $0.09M AI Clones, $0.32M Wealth Code, $0.22M Priestley, $0.08M Manifesting Blocks), Expert to Authority ($2.42M vs Entrepreneurship $2.24M), WildFit back ($0.23M) and AI for Founders already at $1.22M with the class not yet started.</p></div>
 </div>
@@ -277,7 +275,7 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 <section>
 <div class="eyebrow">2025, month by month</div>
 <h2>2025 calendar with launch-tagged revenue</h2>
-<p>Every campaign the official 2025 calendar lists, minus programs and class starts. Rows in grey could not be matched to tagged orders. The last two columns are the month's totals: all launch-tagged orders, and all revenue from every order.</p>
+<p>Every campaign the official 2025 calendar lists, minus programs, class starts and quest releases. Campaign revenue is launch-tagged orders; where the row says untagged it is the product's own sales in the window. The last two columns are the month's totals: all launch-tagged orders, and all revenue from every order.</p>
 {month_table(CAL_2025, PL_2025, TOTAL_2025, 2025)}
 </section>
 
@@ -310,7 +308,7 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 </section>
 <section>
 <h2>The calendar</h2>
-<p>Status: ■ already in the sheet · ▲ Jaideep's Academy timeline · ● proposed. Month target is the sum of that month's campaign targets; the last two columns show what the same month made in 2026 and 2025 on launch tags.</p>
+<p>Status: ■ already in the sheet · ▲ Jaideep's Academy timeline · ● proposed. For each campaign: what it made in 2025, what it made in 2026, and the 2027 target (1.3 × the 2026 figure, or 1.3 × 2025 where it did not run in 2026). A dash means the campaign did not run, or ran without a launch tag so nothing can be measured. Each month ends with a total row.</p>
 {plan_table()}
 <h3>1 Billion Followers Summit, campaign one</h3>
 <p>The fifth edition runs <strong>8 to 10 January 2027</strong> across Emirates Towers, DIFC and the Museum of the Future in Dubai, organised by the UAE Government Media Office with 500+ speakers. The 2027 sheet's Social Media Summit row already carries those dates. The 2026 edition in Metabase: 145k sign-ups (100k from paid media), 444 Social Media Mastery orders, $1.41M launch-tagged in Jan-Feb ($2.10M by cohort), promo opened 25 November. Target $1.83M on tags.</p>
@@ -324,7 +322,7 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
 <section>
 <div class="eyebrow">Membership campaigns in 2027</div>
 <h2>What Membership runs next year</h2>
-<p>Black Friday and Q5 are the only promos. The rest of the membership calendar is built on the quests that already bring the most people in: one live, launch-tagged release webinar per quarter on a top quest, a Membership Summit in May, three challenges and WildFit in July. The 2026 quest releases (Healing from Heartbreak, Maestro's Guide, Silva webinar, Negotiate with Confidence, Bold Conversations) were untagged emails, so none of them can be measured; the 2027 ones must carry a launch tag.</p>
+<p>Black Friday and Q5 are the only promos. The rest of the membership calendar is built on the quests that already bring the most people in: one live, launch-tagged release webinar per quarter on a top quest, a Membership Summit in May, three challenges and WildFit in July. The 2026 quest releases (Healing from Heartbreak, Maestro's Guide, Silva webinar, Negotiate with Confidence, Bold Conversations) were untagged, so none can be measured; the 2027 ones must carry a launch tag.</p>
 <div class="tw"><table class="quests"><thead><tr><th>Quest funnel</th><th class="num">2025 revenue</th><th class="num">2026 revenue (to 10 Nov)</th><th class="num">2026 sign-ups</th><th>2027 move</th></tr></thead><tbody>
 <tr><td><strong>Silva Ultramind (sums)</strong></td><td class="num">$9.22M</td><td class="num">$5.39M</td><td class="num">87k</td><td>Live release webinar Mar 9. Biggest funnel in the company; the Feb 2026 webinar was untagged.</td></tr>
 <tr><td><strong>Duality (du)</strong></td><td class="num">$5.42M</td><td class="num">$3.47M</td><td class="num">203k</td><td>Live release webinar Aug 24. Most sign-ups of any quest.</td></tr>
