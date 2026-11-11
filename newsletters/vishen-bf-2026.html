@@ -1,0 +1,266 @@
+<title>Vishen's Black Friday Newsletter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Inter+Tight:wght@500;600;700&display=swap">
+<style>
+/* Layout: an inbox-style reading column; a two-tab switch picks the audience, each version reads as one email */
+:root {
+  --bg: #eef0f5;
+  --paper: #ffffff;
+  --ink: #1d1f2b;
+  --muted: #5d6275;
+  --line: #d9dce6;
+  --accent: #5b3fd1;
+  --accent-ink: #ffffff;
+  --mark: #fff1c2;
+  --mark-ink: #6b4e00;
+  --f-body: "Literata", Georgia, "Times New Roman", serif;
+  --f-ui: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12131a; --paper: #1b1d27; --ink: #e8e9f0; --muted: #a2a6b8; --line: #2e3140;
+    --accent: #a593ff; --accent-ink: #14121f; --mark: #3d3215; --mark-ink: #f3d98a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12131a; --paper: #1b1d27; --ink: #e8e9f0; --muted: #a2a6b8; --line: #2e3140;
+  --accent: #a593ff; --accent-ink: #14121f; --mark: #3d3215; --mark-ink: #f3d98a; color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+.wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+.tabs { display: flex; gap: 6px; padding: 4px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; align-self: flex-start; flex-wrap: wrap; }
+.tabs button {
+  font-family: var(--f-ui); font-weight: 600; font-size: 14px; border: 0; cursor: pointer;
+  padding: 9px 18px; border-radius: 999px; background: transparent; color: var(--muted);
+}
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+.tabs button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mail { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.head { padding: 22px 28px; border-bottom: 1px solid var(--line); display: grid; gap: 10px; font-family: var(--f-ui); font-size: 14px; }
+.row { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: baseline; }
+.row > * { min-width: 0; }
+.lbl { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+.subj { font-weight: 700; font-size: 16px; }
+.alts { color: var(--muted); font-weight: 500; }
+.alts span { display: block; }
+article { padding: 32px 28px 40px; font-size: 18px; line-height: 1.7; }
+article p { margin: 0 0 1em; max-width: 62ch; }
+article h1 { font-size: 30px; line-height: 1.2; margin: 0 0 24px; text-wrap: balance; font-weight: 700; }
+article h2 { font-family: var(--f-ui); font-size: 21px; line-height: 1.3; margin: 40px 0 14px; text-wrap: balance; }
+article h3 { font-size: 18px; margin: 28px 0 6px; font-weight: 700; }
+article ul { margin: 0 0 1em; padding-left: 1.2em; }
+article li { margin-bottom: .4em; }
+.cta { margin: 24px 0; }
+.cta a {
+  display: inline-block; font-family: var(--f-ui); font-weight: 700; font-size: 16px; text-decoration: none;
+  background: var(--accent); color: var(--accent-ink); padding: 14px 24px; border-radius: 10px;
+}
+.fill { background: var(--mark); color: var(--mark-ink); font-family: var(--f-ui); font-size: .78em; font-weight: 600; padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+.ps { font-style: italic; border-top: 1px solid var(--line); padding-top: 20px; margin-top: 28px; }
+.sign { margin-top: 24px; }
+.sign strong { font-size: 22px; }
+@media (max-width: 480px) {
+  .head, article { padding-left: 18px; padding-right: 18px; }
+  .row { grid-template-columns: 1fr; gap: 2px; }
+  article { font-size: 17px; }
+  article h1 { font-size: 25px; }
+}
+</style>
+
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="Audience">
+    <button id="tab-non-members" role="tab" aria-selected="true" aria-controls="non-members">Non-members · 60% off</button>
+    <button id="tab-members" role="tab" aria-selected="false" aria-controls="members">Members · Lifetime</button>
+  </div>
+
+  <!-- VERSION A -->
+  <section class="mail" id="non-members" role="tabpanel" aria-labelledby="tab-non-members">
+    <div class="head">
+      <div class="row"><span class="lbl">From</span><span>Vishen Lakhiani</span></div>
+      <div class="row"><span class="lbl">Subject</span><span><span class="subj">Some men buy a Ferrari at 50. I did this instead.</span><span class="alts"><span>Alt: I turned 50 and started building apps</span><span>Alt: The fastest year in Mindvalley's history</span></span></span></div>
+      <div class="row"><span class="lbl">Preheader</span><span>What we've been building for you, why we're moving this fast, and a door I'm holding open this week.</span></div>
+    </div>
+    <article>
+      <h1>The Fastest Year in Mindvalley's History</h1>
+      <p>Last Thursday, I was on a call with my team about YouTube channels.</p>
+      <p>Halfway through, I said, "Give me ten minutes. I'm uploading the new meditation app to TestFlight."</p>
+      <p>A few people laughed. They thought I was joking.</p>
+      <p>I wasn't.</p>
+      <p>I turned 50 this year. And apparently, when men turn 50, there are three traditional options. Buy a Ferrari. Buy a motorcycle. Or do something regrettable with your hair.</p>
+      <p>I chose a fourth option.</p>
+      <p><strong>I started building.</strong></p>
+      <p>And I want to tell you what I've been building, and why. Because this has been the fastest year of development in Mindvalley's 23-year history, and almost all of it is for you.</p>
+
+      <h2>A promise I made a long time ago</h2>
+      <p>Years ago, I wrote down a number on a whiteboard in our office in Kuala Lumpur.</p>
+      <p><strong>One billion.</strong></p>
+      <p>That's how many lives I want Mindvalley to touch. Not to sell to. To change.</p>
+      <p>And for a long time, I'll be honest with you, that number felt more like a prayer than a plan.</p>
+      <p>Here's why.</p>
+      <p>Personal growth has always had a delivery problem. We give you a brilliant teacher, a beautiful program, a powerful idea. And then life happens. The kids need breakfast. The inbox explodes. The program sits in your library, 40% complete, quietly judging you.</p>
+      <p>I know because I've done it too.</p>
+      <p>To reach a billion people, growth can't be an event you attend. It has to become a companion that walks with you. Something that knows you, meets you at 7am when you have exactly nine minutes, and gets wiser about you every single day.</p>
+      <p>For most of our history, building that was simply too expensive.</p>
+      <p>A few years ago, one of our apps cost us $600,000 and close to 50 developers.</p>
+      <p>This year, we rebuilt it with AI in one month, for $20,000.</p>
+      <p>And last month, standing in a terrible New York hotel gym, I built a working fitness app in eight hours, using nothing but WhatsApp on my iPhone.</p>
+      <p><strong>The cost of turning an idea into something real has collapsed.</strong></p>
+      <p>So we're doing what any company with a ridiculous mission should do when that happens.</p>
+      <p>We're building everything we always wished existed.</p>
+
+      <h2>What's on my workbench right now</h2>
+      <h3>1. A meditation that knows how many minutes you have.</h3>
+      <p>Most meditation apps hand you a library of thousands of tracks and wish you luck.</p>
+      <p>Our new meditation app, <strong>Omvana</strong>, starts with a simpler question: <em>How many minutes do you have today?</em></p>
+      <p>Then it picks one meditation for you and tells you why.</p>
+      <p>I rebuilt the recommendation engine myself one afternoon. It draws on what years of Mindvalley listening have taught us about which meditations actually help which people. And for those of you who love it, it goes deeper: numerology, human design and moon phases, woven into what it suggests.</p>
+      <p>I've also argued with my team about the design of the timer more times than I'd like to admit. Some things matter.</p>
+      <h3>2. A health companion that finally connects the dots.</h3>
+      <p>Last Black Friday, I told you about yogurt.</p>
+      <p>Remember? I'd built myself a little AI food tracker. On Day 5 it told me I was severely deficient in fibre. I added one tiny habit, yogurt with chia, psyllium and berries, and started losing a centimetre off my waist every week.</p>
+      <p>That experiment didn't stay an experiment.</p>
+      <p>It became <strong>Vibrantly</strong>: a personal health companion that understands your meals, your bloodwork and your body in one place. You can ask questions of an AI that actually knows <em>you</em>.</p>
+      <h3>3. A body with a CEO.</h3>
+      <p>Coming soon is <strong>Body CEO</strong>, an AI personal trainer and health guide shaped by teachers like Ben Greenfield and Gary Brecka. It's built for people who want to stay strong, lean and full of energy for decades, not just until January.</p>
+      <h3>4. EVE, who remembers your journey.</h3>
+      <p>EVE is our AI companion inside Mindvalley. Ask her for a meditation, a program, a way through a hard week. She knows the library better than any of us, and she's learning more every day.</p>
+      <h3>5. And the one thing AI will never replace: each other.</h3>
+      <p>Here's what surprised me most this year.</p>
+      <p>The more technology we build, the more I realise <strong>humans want humans.</strong> That's why we keep pouring into our community, Finer Minds, and into gatherings like Mindvalley University. The AI handles the friction, so that you can spend more of your life in rooms full of people who want to grow.</p>
+      <p>This is the thing I want you to understand.</p>
+      <p><strong>AI first means human first.</strong></p>
+      <p>None of this exists to keep you on your phone. It exists to give you back the time, energy and clarity to live the life you actually came here for.</p>
+
+      <h2>Why I'm telling you this</h2>
+      <p>Personal growth has changed more in the last two years than in the twenty before it.</p>
+      <p>It used to be: read the book, go to the seminar, feel the high, crash on Monday.</p>
+      <p>Now it can be daily. Personal. With you at 7am, and still with you at 11pm.</p>
+      <p>I want Mindvalley to be the place where that future gets built responsibly. It should be built with teachers who've spent their lives on this work, not just algorithms that want your attention.</p>
+      <p>And honestly? Building it has made me feel 25 again.</p>
+      <p>One billion lives. For years I said it as a dream.</p>
+      <p><strong>This year, for the first time, I can see the road.</strong></p>
+
+      <h2>An invitation</h2>
+      <p>Once a year, at Black Friday, I get to hold the door open a little wider.</p>
+      <p>I won't tell you it's the deal of the century. It's simply the lowest price we offer all year, and the one time I can take price out of the conversation.</p>
+      <p><strong>This week, Mindvalley Membership is 60% off.</strong></p>
+      <p>Here's what that means:</p>
+      <ul>
+        <li>Every Quest and program in Mindvalley: <span class="fill">X programs · X lessons · X hours</span></li>
+        <li>Our full meditation app included at no extra cost (it's <span class="fill">$69.99</span> on its own)</li>
+        <li>EVE, live sessions with our teachers, and our global community</li>
+        <li>Everything new that we add to Membership as we keep building</li>
+      </ul>
+      <p>And when you renew, your price stays at 60% off for as long as you remain a member.</p>
+      <div class="cta"><a href="#non-members">Join Mindvalley at 60% off →</a></div>
+      <p><em>This offer closes <span class="fill">DATE, TIME</span>. You can start with a 15-day risk-free trial.</em></p>
+      <p>If you've been standing at the edge of Mindvalley for a while, this is my invitation to step in. Not because of the discount, but because of what we're about to build together.</p>
+      <p class="ps"><strong>P.S.</strong> I'm curious. Of everything I've shared, which would change your mornings the most? Tell me in the comments on the blog. I read them, and my team builds from them.</p>
+      <div class="sign"><p>To the next chapter,</p><p><strong>Vishen</strong></p></div>
+    </article>
+  </section>
+
+  <!-- VERSION B -->
+  <section class="mail" id="members" role="tabpanel" aria-labelledby="tab-members" hidden>
+    <div class="head">
+      <div class="row"><span class="lbl">From</span><span>Vishen Lakhiani</span></div>
+      <div class="row"><span class="lbl">Subject</span><span><span class="subj">You paid for this. Thank you.</span><span class="alts"><span>Alt: What your membership has been building (a letter)</span><span>Alt: Some men buy a Ferrari at 50. I did this instead.</span></span></span></div>
+      <div class="row"><span class="lbl">Preheader</span><span>A founder's update on everything we've built this year, and a way to never pay for Mindvalley again.</span></div>
+    </div>
+    <article>
+      <h1>The Fastest Year in Mindvalley's History</h1>
+      <p>Last Thursday, I was on a call with my team about YouTube channels.</p>
+      <p>Halfway through, I said, "Give me ten minutes. I'm uploading the new meditation app to TestFlight."</p>
+      <p>A few people laughed. They thought I was joking.</p>
+      <p>I wasn't.</p>
+      <p>I turned 50 this year. Apparently, when men turn 50, the traditional options are a Ferrari, a motorcycle, or something regrettable with your hair.</p>
+      <p>I chose a fourth option.</p>
+      <p><strong>I started building.</strong></p>
+      <p>Before I tell you what, I want to say something I don't say often enough.</p>
+      <p><strong>Thank you.</strong></p>
+      <p>Every month you've stayed a member, you've been funding the boldest year of development in Mindvalley's 23-year history. You've been the investor in everything I'm about to show you. So you deserve the first look and a proper founder's update.</p>
+
+      <h2>A promise I made a long time ago</h2>
+      <p>Years ago, I wrote down a number on a whiteboard in our office in Kuala Lumpur.</p>
+      <p><strong>One billion.</strong></p>
+      <p>That's how many lives I want Mindvalley to touch.</p>
+      <p>For a long time, that number felt more like a prayer than a plan, because personal growth has always had a delivery problem.</p>
+      <p>You know this better than anyone. We give you a brilliant teacher and a beautiful program. And then life happens. The program sits in your library, 40% complete, quietly judging you.</p>
+      <p>I know because I've done it too.</p>
+      <p>To reach a billion people, growth has to stop being an event and become a companion. It should know you, meet you at 7am when you have exactly nine minutes, and get wiser about you every day.</p>
+      <p>For most of our history, that was too expensive to build.</p>
+      <p>A few years ago, one of our apps cost us $600,000 and close to 50 developers. This year, we rebuilt it with AI in one month, for $20,000. And last month, I built a working fitness app in eight hours, from WhatsApp on my iPhone, in a New York hotel gym.</p>
+      <p><strong>The cost of turning an idea into something real has collapsed.</strong></p>
+      <p>And because of you, we've been able to pour everything we save straight back into building.</p>
+
+      <h2>What's on my workbench right now</h2>
+      <h3>1. A meditation that knows how many minutes you have.</h3>
+      <p>Our new meditation app, <strong>Omvana</strong>, starts with a simple question: <em>How many minutes do you have today?</em> Then it picks one meditation and tells you why.</p>
+      <p>I rebuilt the recommendation engine myself one afternoon. It's shaped by years of what you, our members, have actually listened to and loved. For those of you who enjoy it, it goes deeper with numerology, human design and moon phases.</p>
+      <p>And this Black Friday, the full meditation app comes as part of Mindvalley Membership.</p>
+      <h3>2. A health companion that connects the dots.</h3>
+      <p>Last Black Friday, I told you about yogurt: the AI food tracker I built that spotted my fibre deficiency on Day 5, and the one tiny habit that took a centimetre off my waist every week.</p>
+      <p>That experiment became <strong>Vibrantly</strong>, a personal health companion that understands your meals, your bloodwork and your body in one place.</p>
+      <h3>3. A body with a CEO.</h3>
+      <p>Coming soon is <strong>Body CEO</strong>, an AI personal trainer and health guide shaped by teachers like Ben Greenfield and Gary Brecka.</p>
+      <h3>4. EVE, who remembers your journey.</h3>
+      <p>Many of you already talk to EVE every week. She's getting sharper at helping you find the right program, the right meditation, the right next step.</p>
+      <h3>5. And the one thing AI will never replace: each other.</h3>
+      <p>The more we build, the more I realise <strong>humans want humans.</strong> That's why we keep investing in Finer Minds and in gatherings like Mindvalley University. Many of you have told me your closest friendships started there.</p>
+      <p><strong>AI first means human first.</strong> None of this exists to keep you on a screen. It exists to give you back your time, your energy, your life.</p>
+
+      <h2>The question I keep getting from members</h2>
+      <p>When I share all this, members ask me some version of:</p>
+      <p><em>"Vishen, it's amazing. But will my membership keep up with how fast you're moving?"</em></p>
+      <p>Here's my honest answer.</p>
+      <p>The Mindvalley you'll be using three years from now will look very different from the one you're using today. More personal. More alive. More <em>yours.</em></p>
+      <p>So this year, for the first time at Black Friday, I want to offer you a way to stop thinking about renewals altogether.</p>
+
+      <h2>An invitation: Mindvalley for life</h2>
+      <p><strong>Lifetime access to Mindvalley Membership.</strong> One payment of <span class="fill">$999</span>. No renewals, ever.</p>
+      <p>That means:</p>
+      <ul>
+        <li>Every Quest and program in Mindvalley: <span class="fill">X programs · X lessons · X hours</span></li>
+        <li>The full meditation app, EVE, live sessions and our community</li>
+        <li><strong>Everything that becomes part of Mindvalley Membership from here on, for as long as Mindvalley exists</strong></li>
+      </ul>
+      <p>Last week, we quietly offered this to a small group of members, side by side with a three-year plan. <strong>Nine out of ten chose lifetime.</strong></p>
+      <p>I understand why. When you know where this is going, "for life" stops feeling like a purchase. It starts to feel like a decision about who you're going to be.</p>
+      <div class="cta"><a href="#members">Upgrade to Lifetime →</a></div>
+      <p><em>Or go to Billing &amp; Subscriptions in your Mindvalley app and choose "Lifetime." If you're mid-subscription, the unused part of your current plan is refunded on a prorated basis. Offer closes <span class="fill">DATE, TIME</span>.</em></p>
+      <p>Whatever you decide, thank you for being part of this. You're not a customer of Mindvalley. You're one of the reasons it exists.</p>
+      <p class="ps"><strong>P.S.</strong> You've been with us while we built all of this, so I want your input on what comes next. Which of these would change your mornings most? Tell me in the comments on the blog. I read them, and my team builds from them.</p>
+      <div class="sign"><p>To the next chapter,</p><p><strong>Vishen</strong></p></div>
+    </article>
+  </section>
+</div>
+
+<script>
+(function () {
+  var ids = ["non-members", "members"];
+  function show(id) {
+    if (ids.indexOf(id) < 0) id = ids[0];
+    ids.forEach(function (k) {
+      document.getElementById(k).hidden = k !== id;
+      document.getElementById("tab-" + k).setAttribute("aria-selected", String(k === id));
+    });
+  }
+  ids.forEach(function (k) {
+    document.getElementById("tab-" + k).addEventListener("click", function () {
+      if (location.hash !== "#" + k) location.hash = k; else show(k);
+      window.scrollTo(0, 0);
+    });
+  });
+  document.querySelectorAll(".cta a").forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); });
+  });
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
+  show(location.hash.slice(1));
+})();
+</script>
