@@ -332,11 +332,6 @@ table.plan {{ min-width:1150px; table-layout:fixed }} table.plan td {{ overflow-
  <div class="tile"><div class="k">2027 target · 30% above 2026</div><div class="v">{M(target27,1)}</div><div class="d">1.3 × {M(camp26_full,1)}.</div></div>
  <div class="tile hero"><div class="k">This calendar adds up to</div><div class="v">{M(plan27*1e6,1)}</div><div class="d">{len(rows27)} campaigns. The same campaigns made {fm(p26)} in 2026 (to date, incl. Black Friday at its $4.0M target) and {fm(p25)} in 2025.</div></div>
 </div>
-<div class="chart">
- <div class="legend"><span style="--sw:var(--s26)">Mastery summits</span><span class="k25">Certifications</span><span style="--sw:var(--s26); opacity:.55">Accelerators, Guilds</span><span style="--sw:var(--bg-subtle); outline:1px solid var(--fg)">Events</span><span style="--sw:var(--grey)">Membership, Lifebook, WildFit</span></div>
- {gantt()}
- <div class="cap">Faint bar = campaign window before the live dates. Solid bar = live dates. Read it against Jaideep's "3-month campaign, then the summit" slide: Manifesting Feb-Apr, AI May-Jul, Expert to Authority Jun-Sep, AI for Founders Aug-Oct.</div>
-</div>
 </section>
 <section>
 <div class="eyebrow">The progression</div>
