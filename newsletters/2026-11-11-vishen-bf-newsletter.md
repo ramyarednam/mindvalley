@@ -30,7 +30,7 @@ Both versions use the same founder story, so Vishen only has to approve one voic
 
 **Segmentation:** Send A to non-members and suppress active members and BF 2026 buyers. Send B to active members and suppress lifetime purchasers.
 
-**Word count:** A ≈ 1,350 words; B ≈ 1,300 words. Both are under the 1,500 clip limit.
+**Word count (including headers and subject lines):** A ≈ 1,220 words; B ≈ 1,060 words. Both are under the 1,500 clip limit.
 
 ---
 ---
