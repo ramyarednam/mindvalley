@@ -146,3 +146,9 @@ When the project is initialized and has actual content, update this CLAUDE.md to
 
 *Last updated: 2026-01-25*
 *Status: Awaiting project initialization*
+
+## Working with Ramya (email copy)
+
+- **Always deliver the final, complete email.** When a change is requested, return the whole email again with the change applied, not a fragment to splice in. The only exception is a change of a line or two, where quoting the changed line is enough.
+- Approve before sending: show any Slack message or external post in full and wait for a "send" before it goes out.
+- When sharing an artifact link with someone, say plainly that it must be shared from the page's Share menu first; the agent cannot change sharing.
