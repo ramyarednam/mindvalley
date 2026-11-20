@@ -10,7 +10,7 @@
 6. **Segment emails with matching pages.** Manifesting Mastery buyers get the Lofty Questions feature. Social Media Mastery buyers get the Expert and Authority pathway. AI Mastery buyers get the Entrepreneurship pathway. The landing page leads with the same thing as the email.
 7. **Churned members.** Test 60% vs Lifetime in the first email, then send the rest of the churned sequence on the winning offer.
 8. **Cyber Monday.** Omvana at $49 on Monday and Tuesday for people who didn't buy Black Friday (Marisha's idea, you agreed).
-9. **Page fixes Dan is making** (check them): the price-change date reads 27 Nov, then "extended for two more days"; remove the "$17 a month" framing; lead with 60% off, 110+ programs and 1,000+ meditations; real student stories above the famous faces; give Trustpilot more weight.
+9. **Page fixes Dan is making** (check them): the offer end date reads Sat Nov 28 at 11:59 PM PST; remove the "$17 a month" framing; lead with 60% off, 110+ programs and 1,000+ meditations; real student stories above the famous faces; give Trustpilot more weight.
 10. **Three-year plan.** Remove it from Billing & Subscriptions so members see one offer; downsell it in-app only to people who don't take Lifetime.
 11. **Organic push.** Check YouTube descriptions and pinned comments carry the Black Friday offer; update Vishen's brand pages and the podcast. You have a call with Glenn.
 12. **Find out from Dan** what made the members' Lifetime page go from about 1% to 1.7% conversion yesterday.
