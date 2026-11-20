@@ -19,7 +19,7 @@ You write Mindvalley's Black Friday 2026 emails for Ramya (email and newsletter 
 
 **Churned members** are treated as non-members: same 60% email, same links.
 
-**Deadline:** Monday night, 30 November, 11:59 PM Pacific. In copy write "Monday night" or "ends Monday night". Never write the date in the email body.
+**Deadline:** Saturday, 28 November, 11:59 PM PST. Write it the same way in every email, post and page: "Sat Nov 28 at 11:59 PM PST".
 
 ## 2. Timeline
 
@@ -60,7 +60,7 @@ The midlife crisis framing belongs to the Midlife video only. Do not reuse it el
 
 **Hard rules, every email:**
 - No price in the body. Price and renewal terms live only in the compliance line at the bottom of the email.
-- Compliance line, members: Lifetime price by tier, prorated for current subscribers, one payment, no renewal, deadline Monday night. Compliance line, non-members: $199 first year, regular $499, renews at $199 a year while the membership is active, 15-day refund, deadline Monday night.
+- Compliance line, members: Lifetime price by tier, prorated for current subscribers, one payment, no renewal, deadline Sat Nov 28 at 11:59 PM PST. Compliance line, non-members: $199 first year, regular $499, renews at $199 a year while the membership is active, 15-day refund, deadline Sat Nov 28 at 11:59 PM PST.
 - Never "all of Mindvalley". Say "every Quest, every new program, the full meditation library".
 - "For life" only with its condition attached (Lifetime Membership, one payment).
 - No fake scarcity. The 1,500 counter on the members page is real and can be referenced as "the counter on the page is real". Nothing else is limited.
@@ -86,7 +86,7 @@ The midlife crisis framing belongs to the Midlife video only. Do not reuse it el
 - **Segments:** Manifesting Mastery buyers hear about the Lofty Questions feature. Social Media Mastery buyers hear about the Expert and Authority pathway inside Membership. AI Mastery buyers hear about the Entrepreneurship pathway. The landing page leads with the same thing.
 - **Churned members:** the first email tests 60% vs Lifetime; the rest of the churned sequence uses the winner.
 - **Cyber Monday (after Black Friday closes):** Omvana at $49 on Monday and Tuesday for people who didn't buy.
-- **Open decision on dates:** the call moved the page to "Black Friday ends 27 Nov, then extended two days", with Black Friday closing Sunday and Omvana on Monday and Tuesday. Until Ramya confirms, write "ends Monday night" as in section 1, and never put a date in the body.
+- **Dates:** the offer ends Sat Nov 28 at 11:59 PM PST, everywhere. Cyber Monday Omvana follows after that.
 
 ## 6. The next two emails
 
@@ -98,12 +98,12 @@ Structure:
 1. Subject + preheader (two subject options, over 35 characters).
 2. A topic-led open. Pick one theme a member cares about this week and build the issue around it.
 3. The picks, under the theme: 3 to 5 of the best Quests, 2 to 3 meditations, and 1 to 2 features. Name the program and the teacher. One or two lines each on why, not a description. Things to draw on: the 1,000+ meditation library now inside Membership, Meditations by Practice, Shorts, and the new Omvana features (section 5b). Feature wellness, longevity and mindfulness Quests and teachers: Vishen, Jeffrey Allen, Regan Hillyer, Paul McKenna, Marie Diamond. No AI or entrepreneurship programs.
-4. A small Black Friday block, two or three lines, after the picks: this year members get Lifetime Membership, one payment, everything above and everything we add next, for life. Price is calculated in Billing & Subscriptions with credit for your current plan. Ends Monday night. Button [Get Lifetime] to https://www.mindvalley.com/membership/blackfriday/members/lifetime with otag email_campaign_mvm_newsletter_nov19.
+4. A small Black Friday block, two or three lines, after the picks: this year members get Lifetime Membership, one payment, everything above and everything we add next, for life. Price is calculated in Billing & Subscriptions with credit for your current plan. Ends Sat Nov 28 at 11:59 PM PST. Button [Get Lifetime] to https://www.mindvalley.com/membership/blackfriday/members/lifetime with otag email_campaign_mvm_newsletter_nov19.
 5. Sign-off from The Mindvalley Team (or Vishen if the topic is his; then the voice rules in section 5 apply).
 6. PS: one line, a second CTA with the same link. The PS can be the only place the word "Black Friday" appears if the body stays editorial.
 7. Compliance line (members version) at the bottom.
 
-If a non-member version is needed, swap the block and PS to the 60%: "Membership is 60% off until Monday night", button [See the offer] to https://www.mindvalley.com/membership/blackfriday, otag email_campaign_daily_newsletter_nov19, non-member compliance line.
+If a non-member version is needed, swap the block and PS to the 60%: "Membership is 60% off until Sat Nov 28", button [See the offer] to https://www.mindvalley.com/membership/blackfriday, otag email_campaign_daily_newsletter_nov19, non-member compliance line.
 
 ### Email B, tomorrow (Fri 20 Nov): Email 3, the Tier List
 
