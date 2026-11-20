@@ -73,6 +73,21 @@ The midlife crisis framing belongs to the Midlife video only. Do not reuse it el
 
 **Lists:** non-members (daily, highlights, weekly), members (mvm), churned (folded into non-members), coach, Vishen's newsletter list. Members and non-members always get separate versions when the offer appears, because the offer is different.
 
+## 5b. Vishen's direction (call on 20 Nov) — applies to every email from now on
+
+- **Wellness only.** Mindvalley is wellness, longevity and mindfulness. No AI, entrepreneurship or social media marketing in Mindvalley-branded copy, and no Naveen Jain. Lead with Vishen, Jeffrey Allen, Regan Hillyer, Paul McKenna, Marie Diamond.
+- **Because why.** Every discount carries a reason. For members, use tenure: "because you've been with us for three years".
+- **What's new: Omvana.** Mindvalley has launched new features; the membership is more than it was. The three features, in this order of importance:
+  1. Tell it how you want to feel and it creates a custom meditation, hypnotherapy or affirmation for you, built from Mindvalley's own methods. It even designs the cover.
+  2. It remembers you: it knows what you've done and recommends what you need next.
+  3. Record your own voice and blend it with 250+ new soundscapes made with world-class musicians, to create your own affirmations or Lofty Questions.
+- **Omvana is a bonus, never the lead.** People are buying Membership or Lifetime. Lead with the offer; Omvana gets one line ("As a bonus, Omvana is included") plus one feature. Do not describe the new Mindvalley app.
+- **Super short emails** to a strong custom landing page. One idea, one button.
+- **Segments:** Manifesting Mastery buyers hear about the Lofty Questions feature. Social Media Mastery buyers hear about the Expert and Authority pathway inside Membership. AI Mastery buyers hear about the Entrepreneurship pathway. The landing page leads with the same thing.
+- **Churned members:** the first email tests 60% vs Lifetime; the rest of the churned sequence uses the winner.
+- **Cyber Monday (after Black Friday closes):** Omvana at $49 on Monday and Tuesday for people who didn't buy.
+- **Open decision on dates:** the call moved the page to "Black Friday ends 27 Nov, then extended two days", with Black Friday closing Sunday and Omvana on Monday and Tuesday. Until Ramya confirms, write "ends Monday night" as in section 1, and never put a date in the body.
+
 ## 6. The next two emails
 
 ### Email A, today (Thu 19 Nov): the membership newsletter
@@ -82,7 +97,7 @@ Audience: members. A real newsletter with a strong editorial topic, not a promo.
 Structure:
 1. Subject + preheader (two subject options, over 35 characters).
 2. A topic-led open. Pick one theme a member cares about this week and build the issue around it.
-3. The picks, under the theme: 3 to 5 of the best Quests, 2 to 3 meditations, and 1 to 2 features. Name the program and the teacher. One or two lines each on why, not a description. Things to draw on: Eve (the AI guide inside the app that picks your next Quest), the 1,000+ meditation library now inside Membership, Meditations by Practice, Shorts, the new Quests on longevity, money and AI. Add the Quests you know perform best for members.
+3. The picks, under the theme: 3 to 5 of the best Quests, 2 to 3 meditations, and 1 to 2 features. Name the program and the teacher. One or two lines each on why, not a description. Things to draw on: the 1,000+ meditation library now inside Membership, Meditations by Practice, Shorts, and the new Omvana features (section 5b). Feature wellness, longevity and mindfulness Quests and teachers: Vishen, Jeffrey Allen, Regan Hillyer, Paul McKenna, Marie Diamond. No AI or entrepreneurship programs.
 4. A small Black Friday block, two or three lines, after the picks: this year members get Lifetime Membership, one payment, everything above and everything we add next, for life. Price is calculated in Billing & Subscriptions with credit for your current plan. Ends Monday night. Button [Get Lifetime] to https://www.mindvalley.com/membership/blackfriday/members/lifetime with otag email_campaign_mvm_newsletter_nov19.
 5. Sign-off from The Mindvalley Team (or Vishen if the topic is his; then the voice rules in section 5 apply).
 6. PS: one line, a second CTA with the same link. The PS can be the only place the word "Black Friday" appears if the body stays editorial.
