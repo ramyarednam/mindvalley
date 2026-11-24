@@ -195,7 +195,12 @@ LISTS = [("Daily", "daily", nonmember),
          ("Lifebook Customers", "lbcust", nonmember),
          ("WildFit Customers", "wfcust", nonmember),
          ("Members", "mvm", member),
-         ("Churned Members", "churned", churned)]
+         ("Churned Members", "churned", churned),
+         # Spanish and German lists get the English receipt, linked to their own landing pages
+         ("Spanish Non Members", "spanish_nmvm", dict(nonmember, url="https://www.mindvalley.com/es/membership/blackfriday")),
+         ("Spanish Members", "spanish_mvm", dict(member, url="https://www.mindvalley.com/membership/blackfriday/members/lifetime-es")),
+         ("German Non Members", "german_nmvm", dict(nonmember, url="https://www.mindvalley.com/de/membership/blackfriday")),
+         ("German Members", "german_mvm", dict(member, url="https://www.mindvalley.com/membership/blackfriday/members/lifetime-de"))]
 
 for list_name, code, v in LISTS:
     out = build(dict(v, url=tracked(v["url"], code)))
