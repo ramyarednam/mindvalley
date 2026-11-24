@@ -168,7 +168,7 @@ member = dict(
     disclaimer='    <tr><td style="padding:16px 8px 0;font-family:Verdana,Arial,sans-serif;font-size:13px;font-style:italic;line-height:20px;color:#5b6170;text-align:center;">{{content_blocks.${Email_Disclaimer_MV_Member}}}</td></tr>',
 )
 
-EMAIL = "email5c"  # Email 5, test variation C (receipt). A = long form, B = short form.
+EMAIL = "email5C"  # Email 5, test variation C (receipt). A = long form, B = short form.
 CAMPAIGN = "launch_bfcm_nov_2026"
 
 def tracked(base, list_code):
@@ -176,14 +176,27 @@ def tracked(base, list_code):
     return (f"{base}?utm_source={src}&amp;utm_campaign={CAMPAIGN}&amp;utm_content=content_wwww"
             f"&amp;utm_medium=lp&amp;otag={src}&amp;otag={CAMPAIGN}")
 
-# one file per Braze list: (file suffix, list code used in the otag, version)
-LISTS = [("members", "mvm", member),
-         ("daily", "daily", nonmember),
-         ("highlights", "highlights", nonmember),
-         ("coach", "coach", nonmember)]
+churned = dict(member,
+    prices=[p for p in member["prices"] if p[0] != "Your current plan"],
+    fine="One payment, no renewals. Limited places. Offer ends Sat Nov 28, 11:59 PM PST.",
+    disclaimer="")
 
-for suffix, code, v in LISTS:
+# one file per Braze list: (list name as in the sheet, otag code, version)
+LISTS = [("Daily", "daily", nonmember),
+         ("Highlights", "highlights", nonmember),
+         ("Weekly", "weekly", nonmember),
+         ("Events", "events", nonmember),
+         ("Vishens List", "vl", nonmember),
+         ("Coach", "coach", nonmember),
+         ("Meditations Customers", "medcust", nonmember),
+         ("All Mastery Customers", "mas", nonmember),
+         ("Lifebook Customers", "lbcust", nonmember),
+         ("WildFit Customers", "wfcust", nonmember),
+         ("Members", "mvm", member),
+         ("Churned Members", "churned", churned)]
+
+for list_name, code, v in LISTS:
     out = build(dict(v, url=tracked(v["url"], code)))
-    name = f"bf26_email5c_receipt_{suffix}.html"
+    name = "Email5C_Receipt_" + list_name.replace(" ", "_") + ".html"
     open(os.path.join(OUT, name), "w").write(out)
     print("wrote", name, len(out))
