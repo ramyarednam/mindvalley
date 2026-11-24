@@ -143,7 +143,7 @@ nonmember = dict(
             ("Black Friday &minus;60%", "&minus;$300.00", "font-weight:bold;"),
             ("Every renewal, locked", "$199.00", "font-weight:bold;color:#0c8a4f;")],
     total="$199", total_note="60% off every year you stay a member.",
-    url="https://www.mindvalley.com/membership/blackfriday?[OTAG]",
+    url="https://www.mindvalley.com/membership/blackfriday",
     cta="Claim 60% off now",
     under_cta="15-day money-back guarantee",
     barcode_note=BAR,
@@ -160,7 +160,7 @@ member = dict(
             ("Renewals", "$0.00", "font-weight:bold;"),
             ("Future price increases", "none", "font-weight:bold;")],
     total="1 payment", total_note="Then never again.",
-    url="https://www.mindvalley.com/membership/blackfriday/members/lifetime?[OTAG]",
+    url="https://www.mindvalley.com/membership/blackfriday/members/lifetime",
     cta="Upgrade to Lifetime now",
     under_cta="Limited places",
     barcode_note=BAR,
@@ -168,6 +168,22 @@ member = dict(
     disclaimer='    <tr><td style="padding:16px 8px 0;font-family:Verdana,Arial,sans-serif;font-size:13px;font-style:italic;line-height:20px;color:#5b6170;text-align:center;">{{content_blocks.${Email_Disclaimer_MV_Member}}}</td></tr>',
 )
 
-for name, v in [("bf26_receipt_nonmembers.html", nonmember), ("bf26_receipt_members.html", member)]:
-    open(os.path.join(OUT, name), "w").write(build(v))
-    print("wrote", name, len(build(v)))
+EMAIL = "email5c"  # Email 5, test variation C (receipt). A = long form, B = short form.
+CAMPAIGN = "launch_bfcm_nov_2026"
+
+def tracked(base, list_code):
+    src = f"email_campaign_{list_code}_{EMAIL}"
+    return (f"{base}?utm_source={src}&amp;utm_campaign={CAMPAIGN}&amp;utm_content=content_wwww"
+            f"&amp;utm_medium=lp&amp;otag={src}&amp;otag={CAMPAIGN}")
+
+# one file per Braze list: (file suffix, list code used in the otag, version)
+LISTS = [("members", "mvm", member),
+         ("daily", "daily", nonmember),
+         ("highlights", "highlights", nonmember),
+         ("coach", "coach", nonmember)]
+
+for suffix, code, v in LISTS:
+    out = build(dict(v, url=tracked(v["url"], code)))
+    name = f"bf26_email5c_receipt_{suffix}.html"
+    open(os.path.join(OUT, name), "w").write(out)
+    print("wrote", name, len(out))
