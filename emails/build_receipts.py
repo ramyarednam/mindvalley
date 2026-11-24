@@ -32,6 +32,7 @@ def dashed():
     return '<tr><td colspan="2" style="padding:12px 0;"><div style="border-top:2px dashed #c9c3d6;font-size:0;line-height:0;">&nbsp;</div></td></tr>'
 
 def build(v):
+    sub = f'<br><span style="font-size:22px;line-height:30px;">{v["h1b"]}</span>' if v.get("h1b") else ""
     items = "\n".join(item(x) for x in v["items"])
     prices = "\n".join(line(*p) for p in v["prices"])
     return f'''<!doctype html>
@@ -76,7 +77,7 @@ def build(v):
     <!-- Headline -->
     <tr><td align="center" style="padding:0 8px 24px;">
       <a href="https://www.mindvalley.com/" target="_blank" style="display:inline-block;"><img src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/7990193d60ff4babbc6b3c28c9e3bcaa/mv-wings-only.png" width="55" height="24" alt="Mindvalley" style="display:block;margin:0 auto;border:0;width:55px;height:24px;"></a>
-      <div class="h1" style="font-family:{SANS};font-size:34px;line-height:40px;color:#0f131a;padding-top:10px;"><strong>{v["h1a"]}</strong><br><span style="font-size:22px;line-height:30px;">{v["h1b"]}</span></div>
+      <div class="h1" style="font-family:{SANS};font-size:34px;line-height:40px;color:#0f131a;padding-top:10px;"><strong>{v["h1a"]}</strong>{sub}</div>
     </td></tr>
 
     <!-- Receipt -->
@@ -179,7 +180,8 @@ def tracked(base, list_code):
 churned = dict(member,
     prices=[p for p in member["prices"] if p[0] != "Your current plan"],
     fine="One payment, no renewals. Limited places. Offer ends Sat Nov 28, 11:59 PM PST.",
-    disclaimer="")
+    disclaimer="",
+    h1b="")  # churned members are not current members
 
 # one file per Braze list: (list name as in the sheet, otag code, version)
 LISTS = [("Daily", "daily", nonmember),
