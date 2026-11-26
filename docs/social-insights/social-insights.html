@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Social Insights</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Content Studio shell, dark-first. Layout: left nav, one page header, eight tabs; every tab opens with the answer, then the detail. */
+:root{
+  --bg:#0F131A; --surface:#181D26; --surface-2:#1D222C; --nav:#0B0E14;
+  --text:#FFFFFF; --muted:#B3B8C1; --subtle:#979CA5;
+  --border:#2E333D; --border-muted:#232833; --chip:#292D38; --chip-ink:#CED1D7;
+  --brand:#9B37F2; --brand-ink:#C79BFF; --brand-light:#2A1840; --brand-dark:#4F0C8A;
+  --pink:#F72C84; --orange:#FF931F; --green:#18C176; --green-light:#0F2A1E; --blue:#329DFF; --blue-light:#0F1F38;
+  --red:#F34747; --red-light:#3A1426; --amber:#F2B233; --amber-light:#2E2410;
+  --ig:#E1306C; --fb:#1877F2; --yt:#FF0000; --li:#0A66C2; --tt:#69C9D0;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --font:"Google Sans",Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#F4F5F8;--surface:#FFFFFF;--surface-2:#F0F1F5;--nav:#FFFFFF;--text:#14171D;--muted:#4A4F58;--subtle:#6B7180;--border:#DADDE4;--border-muted:#E6E8EE;--chip:#ECEEF3;--chip-ink:#2B2F38;--brand-light:#EFE4FF;--brand-ink:#6E1FC2;--green-light:#E3F6EC;--blue-light:#E4EFFC;--red-light:#FDE7E7;--amber-light:#FBF1DA;--shadow:0 10px 30px rgba(20,23,29,.12);color-scheme:light}}
+:root[data-theme="light"]{--bg:#F4F5F8;--surface:#FFFFFF;--surface-2:#F0F1F5;--nav:#FFFFFF;--text:#14171D;--muted:#4A4F58;--subtle:#6B7180;--border:#DADDE4;--border-muted:#E6E8EE;--chip:#ECEEF3;--chip-ink:#2B2F38;--brand-light:#EFE4FF;--brand-ink:#6E1FC2;--green-light:#E3F6EC;--blue-light:#E4EFFC;--red-light:#FDE7E7;--amber-light:#FBF1DA;--shadow:0 10px 30px rgba(20,23,29,.12);color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:var(--brand-ink);text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+h1,h2,h3,h4{margin:0;text-wrap:balance;font-weight:700}
+h1{font-size:28px}h2{font-size:18px}h3{font-size:15px}
+h2 small,h3 small{font-weight:400;color:var(--subtle);font-size:12.5px;margin-left:8px}
+.small{font-size:12.5px}.muted{color:var(--muted)}.subtle{color:var(--subtle)}
+.num{font-variant-numeric:tabular-nums}
+.app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh}
+.nav{background:var(--nav);border-right:1px solid var(--border-muted);padding:18px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.brand .lg{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#9B37F2,#F72C84);display:grid;place-items:center;flex:none}
+.brand .lg svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.brand b{display:block;font-size:10px;letter-spacing:.12em;color:var(--subtle);font-weight:500}
+.brand span{font-size:15.5px;font-weight:700}
+.nav .sec{font-size:10.5px;letter-spacing:.12em;color:var(--subtle);font-weight:700;margin:16px 6px 6px}
+.nav a{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;color:var(--text);font-size:13.5px}
+.nav a:hover{background:var(--surface-2)}
+.nav a.active{background:linear-gradient(90deg,#7A12D4,#DF1A6F);color:#fff}
+.nav a .n{margin-left:auto;background:var(--brand-light);color:var(--brand-ink);font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px}
+.main{min-width:0;padding:0 max(24px,env(safe-area-inset-right,0px)) 60px max(24px,env(safe-area-inset-left,0px))}
+.topbar{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--border-muted);margin-bottom:18px;font-size:13px;color:var(--muted)}
+.topbar .sp{flex:1}
+.avatar{width:28px;height:28px;border-radius:50%;background:var(--brand-light);color:var(--brand-ink);display:grid;place-items:center;font-size:11px;font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:8px 14px;font-size:13px;font-weight:500;background:var(--surface);color:var(--text);white-space:nowrap}
+.btn:hover{border-color:var(--border-strong,#41464F)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.sm{padding:5px 11px;font-size:12.5px}
+.btn.ghost{background:transparent}
+.head{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px}
+.head>div:first-child{flex:1 1 380px;min-width:0}
+.head .eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);font-weight:700}
+.head p{color:var(--muted);margin:6px 0 0;max-width:70ch}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border-muted);border-radius:999px;padding:4px;margin-bottom:12px}
+.tabs button{padding:8px 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--muted)}
+.tabs button.active{background:var(--surface-2);color:var(--text);box-shadow:inset 0 0 0 1px var(--border)}
+.period{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:22px;font-size:13px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--border-muted);border-radius:999px;padding:3px}
+.seg button{padding:5px 12px;border-radius:999px;color:var(--muted);font-size:12.5px}
+.seg button.active{background:var(--surface-2);color:var(--text);box-shadow:inset 0 0 0 1px var(--border)}
+.datepick{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:999px;padding:5px 12px;background:var(--surface)}
+.fresh{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--subtle);font-size:12px}
+.fresh i{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block}
+.view[hidden]{display:none}
+.sec{margin-bottom:28px}
+.sec>h2{margin-bottom:10px}
+.lead{color:var(--muted);margin:0 0 12px;max-width:80ch}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tl{background:var(--surface);border:1px solid var(--border-muted);border-radius:14px;padding:14px 16px}
+.tl .v{font-size:26px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.1}
+.tl .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.tl .d{font-size:12px;margin-top:6px;font-variant-numeric:tabular-nums}
+.up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--subtle)}
+.card{background:var(--surface);border:1px solid var(--border-muted);border-radius:16px;padding:16px 18px;min-width:0}
+.card h3{margin-bottom:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--chip);color:var(--chip-ink);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:500;white-space:nowrap}
+.chip i{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+.chip.ok{background:var(--green-light);color:var(--green)}
+.chip.warn{background:var(--amber-light);color:var(--amber)}
+.chip.bad{background:var(--red-light);color:var(--red)}
+.chip.info{background:var(--blue-light);color:var(--blue)}
+.chip.brand{background:var(--brand-light);color:var(--brand-ink)}
+.chip.ex{background:var(--amber-light);color:var(--amber);font-size:11px}
+.pl{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.pl.ig{background:var(--ig)}.pl.fb{background:var(--fb)}.pl.yt{background:var(--yt)}.pl.li{background:var(--li)}.pl.tt{background:var(--tt)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:500;color:var(--subtle);font-size:12px;padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--border-muted);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;scrollbar-width:thin}
+.tbl table{min-width:560px}
+.bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;border-radius:999px;background:var(--brand)}
+.rowbar{display:flex;align-items:center;gap:10px}
+.rowbar .bar{flex:1}
+.chan{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--border-muted);border-radius:16px;padding:14px 16px;cursor:pointer}
+.chan:hover{border-color:var(--border)}
+.chan .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px}
+.chan .ico.ig{background:var(--ig)}.chan .ico.fb{background:var(--fb)}.chan .ico.yt{background:var(--yt)}.chan .ico.li{background:var(--li)}.chan .ico.tt{background:#111;border:1px solid var(--tt);color:var(--tt)}
+.chan .name{font-weight:700}
+.chan .meta{font-size:12px;color:var(--subtle);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap}
+.chan .kp{display:grid;grid-template-columns:repeat(4,auto);gap:14px;text-align:right}
+.chan .kp b{display:block;font-size:15px;font-variant-numeric:tabular-nums}
+.chan .kp span{font-size:11px;color:var(--subtle)}
+.chan .kp .sp{grid-column:span 4;height:28px}
+.chan.off{opacity:.75}
+.chan.off .kp b{color:var(--subtle)}
+.grp{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--subtle);font-weight:700;margin:18px 0 8px}
+.post{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-muted)}
+.post:last-child{border-bottom:0}
+.post .th{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--surface-2),var(--chip));display:grid;place-items:center;color:var(--subtle);font-size:11px}
+.post .cap{font-weight:500;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.post .m{font-size:12px;color:var(--subtle);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.post .r{text-align:right}
+.post .r b{display:block;font-size:17px;font-variant-numeric:tabular-nums}
+.post .r span{font-size:11.5px}
+.lrn{border-left:3px solid var(--green);padding:10px 14px;background:var(--surface-2);border-radius:0 12px 12px 0;margin-bottom:10px}
+.lrn b{display:block;margin-bottom:3px}
+.lrn .ev{font-size:12px;color:var(--subtle);margin-top:4px}
+.lrn.watch{border-left-color:var(--amber)}
+.idea{background:var(--surface);border:1px solid var(--border-muted);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.idea .who{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--subtle);font-weight:700}
+.idea .t{font-weight:700;line-height:1.3}
+.idea .x{font-size:22px;font-weight:700;color:var(--brand-ink)}
+.idea .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.rank{display:grid;grid-template-columns:28px auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-muted)}
+.rank:last-child{border-bottom:0}
+.rank .pos{font-weight:700;color:var(--subtle);font-variant-numeric:tabular-nums}
+.rank .v{font-weight:700;font-variant-numeric:tabular-nums;min-width:80px;text-align:right}
+.rank:nth-child(1) .pos{color:var(--amber)}
+.camp{background:var(--surface);border:1px solid var(--border-muted);border-radius:16px;padding:16px 18px;cursor:pointer}
+.camp:hover{border-color:var(--border)}
+.camp .st{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}.camp .st>div{min-width:0}
+.fmt{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.fmt span{background:var(--chip);border-radius:8px;padding:3px 8px;font-size:12px}
+.fmt span b{font-variant-numeric:tabular-nums}
+.svgwrap{width:100%;overflow:hidden}
+.svgwrap svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--subtle);margin-top:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:13px}
+.kv span:first-child{color:var(--subtle)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);background:var(--surface);border-left:1px solid var(--border);box-shadow:var(--shadow);z-index:40;transform:translateX(100%);transition:transform .2s;overflow:auto;padding:20px 22px calc(20px + env(safe-area-inset-bottom,0px))}
+.drawer.open{transform:none}
+.drawer .x{position:absolute;top:14px;right:14px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:39;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:grid;place-items:start center;padding:40px 16px;overflow:auto}
+.overlay[hidden]{display:none}
+.overlay .box{background:var(--surface);border:1px solid var(--border);border-radius:20px;max-width:980px;width:100%;padding:24px 26px;box-shadow:var(--shadow)}
+.ba{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.ba .col{background:var(--surface-2);border-radius:14px;padding:14px 16px}
+.ba .col h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-bottom:8px}
+.ba ul{margin:0;padding-left:18px}
+.ba li{margin:4px 0}
+.del{text-decoration:line-through;color:var(--subtle)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand-dark);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;z-index:60;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+.beta{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border-radius:999px;padding:5px 12px 5px 6px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.beta b{background:var(--brand);color:#fff;font-size:10.5px;letter-spacing:.06em;border-radius:999px;padding:2px 8px}
+.note{background:var(--surface-2);border-radius:12px;padding:10px 14px;font-size:12.5px;color:var(--muted)}
+:focus-visible{outline:2px solid var(--brand-ink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .nav{position:static;height:auto;display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-right:0;border-bottom:1px solid var(--border-muted);padding:12px 16px}
+  .nav .sec{display:none}.nav .brand{margin:0 8px 0 0}
+  .nav a{padding:6px 10px}
+  .chan{grid-template-columns:auto minmax(0,1fr)}
+  .chan .kp{grid-column:1/-1;text-align:left;grid-template-columns:repeat(4,1fr)}
+  .post{grid-template-columns:48px minmax(0,1fr)}.post .th{width:48px;height:48px}.post .r{text-align:left;grid-column:2}
+  .rank{grid-template-columns:24px auto minmax(0,1fr)}.rank .v{grid-column:2/4;text-align:left}
+  .fresh{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="nav">
+    <div class="brand"><div class="lg"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5"/></svg></div><div><b>MINDVALLEY</b><span>Content Studio</span></div></div>
+    <a href="#overview">Home</a>
+    <a href="#overview">Vishen's Shoots</a>
+    <a href="#overview">Chats</a>
+    <a href="#overview">Notes</a>
+    <a href="#overview">Pages</a>
+    <div class="sec">Requests &amp; prioritization</div>
+    <a href="#overview">Requests <span class="n">45</span></a>
+    <div class="sec">Campaigns</div>
+    <a href="#overview">Official Calendar</a>
+    <div class="sec">Social media</div>
+    <a href="#overview">Social Desk</a>
+    <a href="#overview">Social Brand Projects</a>
+    <a href="#overview">Podcasts</a>
+    <a class="active" href="#overview">Social Insights</a>
+    <div class="sec">Ads</div>
+    <a href="#overview">Ad performance</a>
+    <div class="sec">Email</div>
+    <a href="#overview">Email Creator</a>
+    <a href="#overview">Email performance</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar"><span>Logged in as <b>Admin</b></span><span class="sp"></span><span class="small subtle">Social data synced today 06:10</span><span class="avatar">RR</span><span>Ramya Rednam</span></div>
+
+    <header class="head">
+      <div>
+        <div class="eyebrow">Social media</div>
+        <h1>Social Insights</h1>
+        <p id="tabLead">Every channel Mindvalley and Vishen own, in one list: what is active, when it last posted, and what it brought in.</p>
+        <div class="beta"><b>PROPOSED</b><span>Redesign by <strong>Ramya</strong> for the Content Studio team. Figures marked <em>example</em> are placeholders; everything else is November 2026 data from Studio.</span></div>
+      </div>
+      <div><button class="btn ghost sm" id="whyBtn">What changed in this redesign</button></div>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button data-v="overview" class="active">Overview</button>
+      <button data-v="posts">Posts</button>
+      <button data-v="works">What works</button>
+      <button data-v="library">Library</button>
+      <button data-v="leaderboard">Leaderboard</button>
+      <button data-v="campaigns">Campaigns</button>
+      <button data-v="revenue">Revenue</button>
+      <button data-v="agencies">Agencies</button>
+    </nav>
+
+    <div class="period">
+      <div class="seg" id="periodSeg"><button data-p="week" class="active">Week</button><button data-p="month">Month</button><button>7 days</button><button>30 days</button><button>Custom</button></div>
+      <span class="datepick">‹ <b id="periodLabel">Oct 26 – Nov 1 2026</b> ›</span>
+      <span class="subtle small" id="periodVs">vs Oct 19 – 25</span>
+      <span class="fresh"><i></i> Hootsuite, Composio and Metabase · all live · through 25 Nov</span>
+    </div>
+
+    <!-- ================= OVERVIEW ================= -->
+    <section class="view" id="v-overview">
+      <div class="sec">
+        <div class="tiles" id="ovTiles"></div>
+      </div>
+      <div class="sec">
+        <h2>All channels we own <small id="chanCount"></small></h2>
+        <p class="lead">Grouped by brand. Active means a post in the last 7 days. Open a channel for its posts, best post and numbers over time.</p>
+        <div id="chanList"></div>
+      </div>
+    </section>
+
+    <!-- ================= POSTS ================= -->
+    <section class="view" id="v-posts" hidden>
+      <div class="sec">
+        <div class="seg" id="postChan" style="margin-bottom:14px"></div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Posts this period <small id="postCount"></small></h3>
+            <div id="postList"></div>
+          </div>
+          <div class="card">
+            <h3>Views per post, day by day <small>each dot is a post · line is the channel's typical post</small></h3>
+            <div class="svgwrap" id="postScatter"></div>
+            <div class="legend"><span><i style="background:var(--brand)"></i>Post, views at 72 hours</span><span><i style="background:var(--subtle)"></i>Typical post (median, last 60 days)</span></div>
+            <h3 style="margin-top:18px">By format <small>median views at 72 hours, last 60 days</small></h3>
+            <div id="postFormats"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHAT WORKS ================= -->
+    <section class="view" id="v-works" hidden>
+      <div class="sec">
+        <div class="seg" id="worksChan" style="margin-bottom:14px"></div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Key learnings <small id="worksPeriod">this week</small></h3>
+            <div id="worksList"></div>
+          </div>
+          <div>
+            <div class="card" style="margin-bottom:12px">
+              <h3>Make more of this <small>proven on enough posts to count</small></h3>
+              <div id="worksMake"></div>
+            </div>
+            <div class="card">
+              <h3>Watching <small>ahead, but too few posts to count yet</small></h3>
+              <div id="worksWatch"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LIBRARY ================= -->
+    <section class="view" id="v-library" hidden>
+      <div class="sec">
+        <p class="lead">Inspiration, not our own posts. Every Monday the scan stores competitor videos that beat their own channel's usual views, and offers running elsewhere. Shortlist one to send it to the Social Desk as an idea.</p>
+        <div class="seg" id="libFilter" style="margin-bottom:14px"><button data-f="all" class="active">All</button><button data-f="video">Viral videos</button><button data-f="offer">Offers and launches</button><button data-f="short">Shortlisted</button></div>
+        <div class="grid g3" id="libGrid"></div>
+      </div>
+    </section>
+
+    <!-- ================= LEADERBOARD ================= -->
+    <section class="view" id="v-leaderboard" hidden>
+      <div class="sec">
+        <p class="lead">Which channel is doing the most right now. Four measures only; pick one. Impressions and engagement come from each platform, leads and revenue from the orders and sign-ups credited to that channel's links.</p>
+        <div class="seg" id="lbSeg" style="margin-bottom:14px"><button data-m="revenue" class="active">Revenue</button><button data-m="leads">Leads</button><button data-m="eng">Engagement</button><button data-m="imp">Impressions</button></div>
+        <div class="grid g2">
+          <div class="card"><h3 id="lbTitle">Channels by revenue</h3><div id="lbList"></div></div>
+          <div class="card"><h3>Same four measures, every channel <small>rank in each column</small></h3><div class="tbl"><table id="lbTable"></table></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CAMPAIGNS ================= -->
+    <section class="view" id="v-campaigns" hidden>
+      <div class="sec">
+        <p class="lead">One box per campaign from the Official Calendar. What went out, in which formats, on which channels, and what it did inside the campaign window.</p>
+        <div class="grid g3" id="campGrid"></div>
+      </div>
+      <div class="sec" id="campDetail" hidden></div>
+    </section>
+
+    <!-- ================= REVENUE ================= -->
+    <section class="view" id="v-revenue" hidden>
+      <div class="sec">
+        <div class="tiles" id="revTiles"></div>
+      </div>
+      <div class="sec grid g2">
+        <div class="card">
+          <h3>Mindvalley channels vs Vishen channels <small>revenue credited to organic social, by week</small></h3>
+          <div class="svgwrap" id="revChart"></div>
+          <div class="legend"><span><i style="background:var(--brand)"></i>Mindvalley channels</span><span><i style="background:var(--pink)"></i>Vishen channels</span></div>
+        </div>
+        <div class="card">
+          <h3>By channel <small>this period</small></h3>
+          <div class="tbl"><table id="revTable"></table></div>
+          <p class="small subtle" style="margin:10px 0 0">Revenue = orders credited to organic social, each order once, amount paid. Sign-ups = organic social leads. Credited by the otag on the link, so a channel with untracked links shows low.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AGENCIES ================= -->
+    <section class="view" id="v-agencies" hidden>
+      <div class="sec">
+        <p class="lead">One card per agency, with the KPIs that matter on the platform it runs. Open one for its recent posts and the trend.</p>
+        <div class="grid g2" id="agGrid"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Detail"><button class="btn sm x" id="drawerX">×</button><div id="drawerBody"></div></aside>
+
+<div class="overlay" id="why" hidden>
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px">
+      <div><div class="eyebrow" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--subtle);font-weight:700">Social Insights</div><h2 style="font-size:22px">What changed in this redesign, and why</h2></div>
+      <button class="btn sm" id="whyX">Close</button>
+    </div>
+    <p class="lead">The current page tries to be a home for every person and every question at once. This version answers one question per tab and nothing else. Everything below the fold today (data freshness, how we counted, what we cannot tell yet, staff-only definitions) moves into an info icon or disappears.</p>
+    <div class="ba">
+      <div class="col"><h4>Removed</h4><ul>
+        <li><span class="del">See it as: Everyone, Glen's Home, Vidura's Home, an editor's Home, a shoot page, an agency</span>. Social Insights is performance. Personal homes and shoots live elsewhere.</li>
+        <li><span class="del">Channels tab</span>. Overview already lists every channel; Posts already filters by channel.</li>
+        <li><span class="del">Money</span>, renamed Revenue.</li>
+        <li><span class="del">Impressions, What changed, What the numbers say, Same post different place, Lead flows, How we'll know this works, What we can't tell yet, How we counted</span> as page sections. Their useful parts moved into the tabs below; the rest is an info icon.</li>
+      </ul></div>
+      <div class="col"><h4>The eight tabs</h4><ul>
+        <li><b>Overview</b>: every channel we own, active or not, last posted, with its numbers.</li>
+        <li><b>Posts</b>: what went out, per channel, against the channel's typical post.</li>
+        <li><b>What works</b>: key learnings by channel, this week and this month.</li>
+        <li><b>Library</b>: inspiration from competitors and viral ideas to try, not our own posts.</li>
+        <li><b>Leaderboard</b>: channels ranked on impressions, engagement, leads, revenue.</li>
+        <li><b>Campaigns</b>: per campaign, posts out by format and how each did.</li>
+        <li><b>Revenue</b>: total social revenue, then Mindvalley vs Vishen, then by channel.</li>
+        <li><b>Agencies</b>: per agency, the KPIs for its platform.</li>
+      </ul></div>
+      <div class="col"><h4>Rules the page follows</h4><ul>
+        <li>One number per tile, with the change against the period before. No paragraphs under tiles.</li>
+        <li>Platform counts are never added across platforms. Views stay per channel; only revenue and leads total.</li>
+        <li>Every chart has a scale and a comparison line. Dots are posts, lines are the typical post.</li>
+        <li>Not connected is a grey card with a one-line reason, not a text block.</li>
+        <li>Example figures are marked until the source is connected.</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  var fmt=function(n){if(n==null)return '—';if(typeof n==='string')return n;if(Math.abs(n)>=1e6)return (n/1e6).toFixed(2).replace(/\.?0+$/,'')+'M';if(Math.abs(n)>=1e4)return Math.round(n/1000)+'k';return n.toLocaleString();};
+  var money=function(n){return n==null?'—':'$'+Math.round(n).toLocaleString();};
+  var pct=function(a,b){if(a==null||b==null||!b)return null;return Math.round((a-b)/b*100);};
+  var delta=function(a,b,suffix){var p=pct(a,b);if(p==null)return '<span class="flat">not compared</span>';var c=p>0?'up':p<0?'down':'flat';return '<span class="'+c+'">'+(p>0?'▲ +':p<0?'▼ ':'')+p+'%'+(suffix?' '+suffix:'')+'</span>';};
+  var toast=function(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('on');},2200);};
+
+  /* ---------- data ---------- */
+  var P='pl';
+  var channels=[
+    {id:'ig-mv',brand:'Mindvalley',name:'Mindvalley Instagram',pf:'ig',handle:'@mindvalley',status:'active',last:'Nov 25',week:{posts:15,views:572713,reach:349556,eng:41900,leads:742,rev:9042,prevViews:400500},month:{posts:40,views:2894788,reach:1779977,eng:57285,leads:3110,rev:38400,prevViews:2268000},spark:[12,14,11,18,22,19,31,28,36,52,44,61]},
+    {id:'fb-mv',brand:'Mindvalley',name:'Mindvalley Facebook',pf:'fb',handle:'Mindvalley',status:'active',last:'Nov 25',week:{posts:18,views:129027,reach:99189,eng:6200,leads:903,rev:1569,prevViews:131660},month:{posts:39,views:612000,reach:1043425,eng:19800,leads:3620,rev:6900,prevViews:540000},spark:[9,8,10,9,11,10,12,14,13,18,21,19]},
+    {id:'yt-mv',brand:'Mindvalley',name:'Mindvalley YouTube',pf:'yt',handle:'@mindvalley',status:'active',last:'Nov 24',week:{posts:10,views:29049,reach:null,eng:1400,leads:264,rev:1001,prevViews:64500},month:{posts:13,views:118000,reach:null,eng:5100,leads:980,rev:4100,prevViews:140000},spark:[14,12,13,11,9,10,8,9,7,8,6,7]},
+    {id:'tt-mv',brand:'Mindvalley',name:'Mindvalley TikTok',pf:'tt',handle:'@mindvalley',status:'active',last:'Nov 22',week:{posts:4,views:2749,reach:2447,eng:210,leads:12,rev:0,prevViews:2270},month:{posts:18,views:14200,reach:5736,eng:980,leads:40,rev:0,prevViews:11800},spark:[2,3,2,4,3,5,4,6,5,7,6,8]},
+    {id:'li-mv',brand:'Mindvalley',name:'Mindvalley LinkedIn',pf:'li',handle:'Mindvalley',status:'off',reason:'Not connected. The organisation page reports impressions, clicks, likes, comments and shares per day through Composio; the connection is not set up.',last:'—'},
+    {id:'ig-de',brand:'Mindvalley',name:'Mindvalley Deutsch Instagram',pf:'ig',handle:'@mindvalley.de',status:'active',last:'Nov 24',ex:true,week:{posts:5,views:38200,reach:29100,eng:1900,leads:61,rev:0,prevViews:35600},month:{posts:21,views:171000,reach:126000,eng:8300,leads:260,rev:1900,prevViews:158000},spark:[4,5,4,6,5,6,7,6,8,7,9,8]},
+    {id:'ig-es',brand:'Mindvalley',name:'Mindvalley en Español Instagram',pf:'ig',handle:'@mindvalleyenespanol',status:'active',last:'Nov 25',ex:true,week:{posts:6,views:52400,reach:40200,eng:2600,leads:88,rev:0,prevViews:44100},month:{posts:24,views:229000,reach:171000,eng:11200,leads:370,rev:2700,prevViews:190000},spark:[5,6,6,7,6,8,9,8,10,9,11,12]},
+    {id:'ig-mf',brand:'Mindvalley',name:'Mindvalley Manifesting Instagram',pf:'ig',handle:'@mindvalley.manifesting',status:'dormant',last:'Oct 29',ex:true,week:{posts:0,views:4100,reach:3200,eng:140,leads:4,rev:0,prevViews:9800},month:{posts:3,views:21000,reach:16400,eng:700,leads:19,rev:0,prevViews:48000},spark:[8,7,6,5,5,4,3,3,2,2,1,1]},
+    {id:'ig-lv',brand:'Mindvalley',name:'Mindvalley Longevity Instagram',pf:'ig',handle:'@mindvalley.longevity',status:'dormant',last:'Nov 3',ex:true,week:{posts:1,views:6200,reach:4900,eng:230,leads:7,rev:0,prevViews:7100},month:{posts:4,views:24000,reach:19000,eng:900,leads:26,rev:0,prevViews:31000},spark:[6,6,5,5,4,4,4,3,3,3,2,2]},
+    {id:'ig-vl',brand:'Vishen',name:'Vishen Instagram',pf:'ig',handle:'@vishen',agency:'Rise Voice',status:'active',last:'Nov 25',week:{posts:29,views:497231,reach:317778,eng:28700,leads:0,rev:0,prevViews:106500},month:{posts:52,views:1420000,reach:719842,eng:71000,leads:1240,rev:11200,prevViews:1060000},spark:[10,11,9,14,12,18,16,24,22,31,28,34]},
+    {id:'fb-vl',brand:'Vishen',name:'Vishen Facebook',pf:'fb',handle:'Vishen Lakhiani',agency:'Rise Voice',status:'active',last:'Nov 25',week:{posts:18,views:338563,reach:204385,eng:9800,leads:0,rev:0,prevViews:423000},month:{posts:43,views:1105000,reach:728988,eng:33000,leads:890,rev:7400,prevViews:826000},spark:[9,12,10,13,11,15,14,19,17,22,20,25]},
+    {id:'yt-vl',brand:'Vishen',name:'Vishen Lakhiani YouTube',pf:'yt',handle:'@vishen',agency:'Talking Heads',status:'active',last:'Nov 22',week:{posts:17,views:21409,reach:null,eng:1100,leads:0,rev:0,prevViews:20800},month:{posts:32,views:96000,reach:null,eng:4700,leads:410,rev:2600,prevViews:88000},spark:[5,5,6,5,6,7,6,7,8,7,8,9]},
+    {id:'li-vl',brand:'Vishen',name:'Vishen LinkedIn',pf:'li',handle:'Vishen Lakhiani',agency:'Two Comma PR',status:'active',last:'Nov 25',week:{posts:5,views:3968,reach:3968,eng:290,leads:175,rev:284,prevViews:2984},month:{posts:39,views:31000,reach:4866,eng:2200,leads:610,rev:1400,prevViews:24000},spark:[2,2,3,3,3,4,4,5,5,6,6,7]},
+    {id:'tt-vl',brand:'Vishen',name:'Vishen TikTok',pf:'tt',handle:'@vishen',status:'off',reason:'Not measurable. No account is synced into Hootsuite and Composio has no organic TikTok toolkit. Unconfirmed whether the account exists.',last:'—'}
+  ];
+  var pfName={ig:'Instagram',fb:'Facebook',yt:'YouTube',li:'LinkedIn',tt:'TikTok'};
+  var periods={
+    week:{label:'Oct 26 – Nov 1 2026',vs:'vs Oct 19 – 25',key:'week',tiles:{rev:11896,prevRev:3343,orders:78,prevOrders:35,leads:2084,prevLeads:992,posts:116,prevPosts:98,views:'per channel',vpl:5.71,prevVpl:3.37}},
+    month:{label:'November 2026',vs:'vs October 2026',key:'month',tiles:{rev:74800,prevRev:58900,orders:412,prevOrders:300,leads:11590,prevLeads:9420,posts:436,prevPosts:402,views:'per channel',vpl:6.45,prevVpl:6.25},ex:true}
+  };
+  var period='week';
+
+  var posts=[
+    {ch:'ig-mv',date:'Nov 21',cap:'The kindest question you can ask a child might be teaching them the wrong thing. Follow & comment “TALKS” for his full talk.',views:831200,typ:17500,eng:73.1,fmt:'Reel',leads:412,counting:false,url:'https://instagram.com/reel/DgAHlxPFDLZ'},
+    {ch:'fb-mv',date:'Nov 21',cap:'The kindest question you can ask a child might be teaching them the wrong thing. Follow & comment “TALKS” for his full talk.',views:330334,typ:4861,eng:null,fmt:'Reel',leads:388,counting:false,url:'https://facebook.com/reel/2764923180666388'},
+    {ch:'fb-mv',date:'Nov 18',cap:'You’ll never have zero thoughts. Shi Heng Yi says that was never the point. Follow & comment “TALKS” for his full talk.',views:283957,typ:4861,eng:null,fmt:'Reel',leads:296,counting:false,url:'https://facebook.com/reel/1648570610140422'},
+    {ch:'ig-mv',date:'Nov 17',cap:'Comment your 3 words and we’ll send you a surprise meditation plus access to our meditation library.',views:247889,typ:17500,eng:27.6,fmt:'Reel',leads:1140,counting:false,url:'https://instagram.com/reel/Df14z8hy_3q'},
+    {ch:'ig-mv',date:'Nov 11',cap:'Follow & comment “1111” and we’ll send you a manifesting hypnotherapy session to help you bring your biggest dreams to life.',views:235067,typ:17500,eng:38.7,fmt:'Reel',leads:980,counting:false,url:'https://instagram.com/reel/Dfmj1YoyRx8'},
+    {ch:'fb-vl',date:'Nov 17',cap:'Authority isn\'t built in one viral moment. It\'s built in small, repeated signals. 1. Publish one strong opinion.',views:180754,typ:9736,eng:null,fmt:'Reel',leads:140,counting:false,url:'https://facebook.com/reel/1160753363195964'},
+    {ch:'ig-mv',date:'Nov 18',cap:'You’ll never have zero thoughts. Shi Heng Yi says that was never the point. Follow & comment “TALKS” for his full talk.',views:179704,typ:17500,eng:78.9,fmt:'Reel',leads:210,counting:false,url:'https://instagram.com/reel/Df4clU1DlvM'},
+    {ch:'fb-mv',date:'Nov 17',cap:'Comment your 3 words and we’ll send you a surprise meditation plus access to our meditation library.',views:158638,typ:4861,eng:null,fmt:'Reel',leads:720,counting:false,url:'https://facebook.com/reel/1055490647563988'},
+    {ch:'ig-mv',date:'Nov 25',cap:'Comment the first 3 words you see. Whatever jumped out at you is probably what you’re grateful for right now.',views:107942,typ:17500,eng:42.3,fmt:'Reel',leads:null,counting:true,url:'https://instagram.com/reel/DgKX6xeRpui'},
+    {ch:'ig-mv',date:'Oct 27',cap:'Comment the number you landed on, and we’ll send you its meaning plus the full rain and thunder sound healing track for free.',views:91589,typ:17500,eng:65.7,fmt:'Reel',leads:640,counting:false,url:'https://instagram.com/reel/De_uW5tg9hQ'},
+    {ch:'ig-vl',date:'Oct 28',cap:'The most powerful thing you can do in a room full of important people.',views:114198,typ:12082,eng:31,fmt:'Reel',leads:0,counting:false,url:'#'},
+    {ch:'ig-vl',date:'Nov 4',cap:'Most people get stuck at stage 3. The 5 stages of becoming the go-to expert in your niche.',views:38900,typ:12082,eng:22,fmt:'Reel',leads:0,counting:false,url:'#'},
+    {ch:'ig-vl',date:'Nov 12',cap:'I built a $140M company with no MBA and no investors. Here is the one rule.',views:54698,typ:12082,eng:19,fmt:'Graphic',leads:0,counting:false,url:'#'},
+    {ch:'ig-vl',date:'Nov 19',cap:'Longevity is not a supplement stack. It is three habits you already know.',views:26100,typ:12082,eng:17,fmt:'Reel',leads:0,counting:false,url:'#'},
+    {ch:'ig-vl',date:'Nov 24',cap:'Stop trying to learn AI. Learn to ask one question before every decision.',views:9800,typ:12082,eng:12,fmt:'Reel',leads:0,counting:true,url:'#'},
+    {ch:'fb-vl',date:'Oct 26',cap:'You can work hard your whole life and stay broke, because effort was never the thing.',views:192891,typ:9736,eng:null,fmt:'Video',leads:88,counting:false,url:'#'},
+    {ch:'yt-vl',date:'Nov 22',cap:'Altered states and the 40-day technique to access altered states of mind',views:21400,typ:6100,eng:null,fmt:'Long video',leads:62,counting:false,url:'#'},
+    {ch:'yt-vl',date:'Oct 30',cap:'Untitled video · Oct 30',views:2100,typ:1300,eng:null,fmt:'Short',leads:4,counting:false,url:'#'},
+    {ch:'yt-mv',date:'Nov 1',cap:'Untitled video · Nov 1',views:12100,typ:1700,eng:null,fmt:'Long video',leads:48,counting:false,url:'#'},
+    {ch:'li-vl',date:'Oct 28',cap:'Most people get stuck at stage 3',views:1949,typ:682,eng:null,fmt:'Text post',leads:31,counting:false,url:'#'},
+    {ch:'li-vl',date:'Nov 20',cap:'The 4 decisions that shaped Mindvalley\'s first $100M',views:1210,typ:682,eng:null,fmt:'Carousel',leads:19,counting:false,url:'#'},
+    {ch:'tt-mv',date:'Oct 27',cap:'The gap between where you are and where you are rich isn\'t strategy. It is one habit.',views:1136,typ:619,eng:null,fmt:'Video',leads:2,counting:false,url:'#'}
+  ];
+  var formats={
+    'ig-mv':[['Reel',17500,118],['Carousel',21400,16],['Photo',9800,9],['Story',null,25]],
+    'ig-vl':[['Graphic',41277,10],['Photo',54698,3],['Reel',11180,108],['Trial reel',273,10]],
+    'fb-vl':[['Photo',25598,3],['Video',8724,67]],
+    'fb-mv':[['Album',7489,12],['Video',4465,59]],
+    'yt-vl':[['Long video',6100,14],['Short',1300,18]],
+    'li-vl':[['Text post',682,24],['Carousel',910,8],['Video',540,7]]
+  };
+
+  var learnings={
+    'all':[
+      {t:'Reels that open with a how-to beat the channel by half again',e:'1.6× a usual post · 37 posts in 61 days on Vishen Instagram · views in each post\'s first 3 days against the 20 posts before it.',k:'make'},
+      {t:'"Comment the word" reels bring the leads, not the views',e:'Four of the five Mindvalley Instagram posts with the most sign-ups this month asked for a comment. The viral talk clip (831k views) brought 412 sign-ups; the 3-words reel (248k views) brought 1,140.',k:'learn'},
+      {t:'Vishen\'s typical post travelled 34% further this month',e:'Vishen Instagram 11,524 → 15,424 views at 72 hours on 52 posts; Vishen Facebook 7,980 → 10,677 on 43 posts. Measured at 72 hours on both periods, so it is not newer posts being younger.',k:'learn'},
+      {t:'Graphics beat video on Vishen Instagram',e:'Median 41,277 views at 72 hours for graphics (10 posts) against 12,082 for video (61 posts). Trial reels sit at 273.',k:'learn'},
+      {t:'Carousels reached more people than reels on Mindvalley Instagram',e:'Approved learning: carousels reached about two and a half times the usual; reels about the usual. From the last 90 days, each compared with every post published within two weeks of it.',k:'learn'}
+    ]
+  };
+  var watching=['Reels about longevity on Vishen Instagram: 15 posts, above the line, needs 20 to count.','Reels that open with a surprising claim on Mindvalley en Español Instagram: 11 posts, above the line, needs 20.','Reels about connection on Vishen Instagram: 10 posts, above the line, needs 20.','Reels that open with a question on Vishen Instagram: 7 posts, too few to tell.','Reels about soul on Mindvalley Deutsch Instagram: 6 posts, too few to tell.'];
+
+  var library=[
+    {who:'Hay House · YouTube',t:'Louise Hay: Change Your Inner Voice with "I Can Do It"',x:'9.8×',d:'40,613 views · seen 9 Nov',kind:'video',link:'https://www.youtube.com/watch?v=xKYDbAydTwA',idea:'A short affirmation led by an author, posted as the whole video. Try: Vishen reads one 6 Phase line to camera, no cuts.'},
+    {who:'Sadhguru · YouTube',t:'How to Experience Sadhguru All the Time',x:'3.7×',d:'255,981 views · seen 21 Nov',kind:'video',link:'https://www.youtube.com/watch?v=x0Pr3G3fHbk',idea:'Question-as-title. Try: "How to feel the 6 Phase effect all day".'},
+    {who:'Jessica Heslop · YouTube',t:'Do This For 5 Minutes Every Morning And Watch Your Life Shift',x:'6.2×',d:'3,920 views · seen 14 Nov',kind:'video',link:'https://www.youtube.com/watch?v=Z-Eq3W4Kc2A',idea:'Time-boxed how-to in the title. Matches our own "how-to opening" learning.'},
+    {who:'Rising Higher Meditation · YouTube',t:'Step Into Your Highest Timeline NOW 11:11 Portal',x:'3.9×',d:'158,766 views · seen 9 Nov',kind:'video',link:'https://www.youtube.com/watch?v=NkORIc6Ok_A',idea:'Date-hook content (11:11) spikes every year. Our "1111" reel did 235k. Plan 12:12 and 1:1 now.'},
+    {who:'Lofi Girl · YouTube',t:'christmas lofi radio · cozy ambience to relax to',x:'22.3×',d:'1,315,732 views · seen 3 Nov',kind:'video',link:'https://www.youtube.com/watch?v=4t4AQ15yj1M',idea:'Seasonal long-form ambient. Try: a 3-hour holiday 6 Phase ambient on Mindvalley YouTube.'},
+    {who:'Hay House · YouTube',t:'Why You Keep Self-Sabotaging | Bruce Lipton',x:'3.3×',d:'13,821 views · seen 14 Nov',kind:'video',link:'https://www.youtube.com/watch?v=n8U_IgREMMs',idea:'Author clip with a "why you" title. We have Bruce Lipton talks in the library.'},
+    {who:'Lavendaire · YouTube',t:'You\'re allowed to choose again | Diary of Becoming',x:'3.9×',d:'38,539 views · seen 4 Nov',kind:'video',link:'https://www.youtube.com/watch?v=tVH7fm3Rkag',idea:'Permission-giving title. Fits Vishen\'s "stop trying to learn AI" line.'},
+    {who:'Tony Robbins · offer',t:'Unleash 2027 at $1,195, buy one get one, plus a seat upgrade and a 50-year hat',x:'BOGO',d:'Holiday offer · seen 16 Nov',kind:'offer',link:'https://go.tonyrobbins.com/upw',idea:'Scarcity hook: "2026 sold out months in advance". Compare against our Black Friday framing.'},
+    {who:'Tony Robbins · offer',t:'Date With Destiny tied to Feeding America: at least 5 million meals',x:'Cause',d:'Nov 1 to Dec 31 · seen 16 Nov',kind:'offer',link:'https://go.tonyrobbins.com/dwd',idea:'Cause-tied ticket. Worth a test on MVU 2027 tickets.'},
+    {who:'Jay Shetty · offer',t:'Coaching school: no degree, no experience, six months at 5 to 7 hours a week',x:'Pitch',d:'Seen 16 Nov',kind:'offer',link:'https://www.jayshettycoaching.com/program',idea:'Low-barrier certification pitch. Compare with Mindvalley Certified Life Coach copy.'}
+  ];
+  var shortlisted={};
+
+  var campaigns=[
+    {id:'bf',name:'Black Friday 2026',when:'Nov 3 – Nov 30',status:'Live',posts:48,fmts:{Reel:22,Carousel:9,Static:11,Story:6},chans:['ig-mv','fb-mv','ig-vl','fb-vl','li-vl','yt-vl'],views:1420000,leads:3980,rev:41200,target:60000,ex:true,
+      rows:[['Vishen Instagram','Reel','Nov 18','BF for Vishen\'s channels: 60% off membership',41200,'+2.7×',380,4100],['Mindvalley Instagram','Carousel','Nov 20','5 programs you get at 60% off',38400,'+1.8×',520,6900],['Vishen LinkedIn','Text post','Nov 19','Why I price membership the way I do',1800,'+2.6×',44,900],['Vishen Lakhiani YouTube','Short','Nov 21','Black Friday: the one program to start with',6100,'+1.1×',62,1300],['Mindvalley Facebook','Static','Nov 22','60% off ends 30 Nov',12100,'+2.5×',310,3800]]},
+    {id:'aiffs',name:'AI for Founders Summit',when:'Oct 16 – Nov 1',status:'Measured',posts:31,fmts:{Reel:14,Carousel:6,Static:5,Story:4,'Long video':2},chans:['ig-vl','fb-vl','li-vl','yt-vl','ig-mv'],views:980000,leads:2410,rev:9800,target:12000,ex:true,
+      rows:[['Vishen Facebook','Video','Oct 26','You can work hard your whole life and stay broke',192891,'35.7×',88,2200],['Vishen Instagram','Reel','Oct 28','The most powerful thing you can do in a room full of important people',114198,'9.4×',310,3100],['Vishen LinkedIn','Text post','Oct 28','Most people get stuck at stage 3',1949,'2.9×',31,600],['Mindvalley YouTube','Long video','Nov 1','Summit day 3 recap',12100,'7.3×',48,1200]]},
+    {id:'fibre',name:'30/30/30 Fibre Challenge',when:'Nov 12 – 13 promo · runs Nov 16 – Dec 16',status:'Live',posts:9,fmts:{Reel:5,Carousel:2,Static:2},chans:['ig-mv','fb-mv','ig-de','ig-es'],views:146000,leads:1190,rev:0,target:null,ex:true,
+      rows:[['Mindvalley Instagram','Reel','Nov 12','Comment FIBRE and we\'ll send you the 30-day plan',64200,'+3.6×',710,0],['Mindvalley Facebook','Reel','Nov 13','30 grams, 30 plants, 30 days',41000,'+8.4×',380,0],['Mindvalley en Español','Reel','Nov 13','Reto de fibra: 30/30/30',18400,'+2.1×',72,0]]},
+    {id:'eas',name:'Expert to Authority Summit',when:'Sep 7 – Sep 20',status:'Measured',posts:27,fmts:{Reel:12,Carousel:7,Static:6,Story:2},chans:['ig-vl','fb-vl','li-vl','yt-vl'],views:640000,leads:1860,rev:14100,target:15000,ex:true,rows:[]}
+  ];
+
+  var agencies=[
+    {name:'Talking Heads',runs:'Vishen Lakhiani YouTube',pf:'yt',tag:'_talkingheads',status:'Live',last:'Nov 22',cadence:'2 long videos + 6 shorts a week',
+      kpis:[['Views (Nov)',96000,88000],['Watch time, hours',14200,11900],['Average view duration','6:12','5:40'],['Impressions click-through','4.8%','4.1%'],['Subscribers gained',2140,1760],['Leads on their links',410,320],['Revenue on their links',2600,1900]],
+      recent:{t:'Altered states and the 40-day technique to access altered states of mind',v:'21,400 views · 3.5× the channel\'s typical video',d:'Nov 22'},ex:true},
+    {name:'Rise Voice',runs:'Vishen Instagram, Vishen Facebook',pf:'ig',tag:'_simplex',status:'Live',last:'Nov 25',cadence:'Daily reel on both, 2 graphics a week',
+      kpis:[['Instagram reach (Nov)',719842,560000],['Instagram views',1420000,1060000],['Saves + shares',38400,27100],['Profile visits',61000,44000],['Follows gained',12800,9100],['Facebook reach',728988,610000],['Leads on their links',2130,1540],['Revenue on their links',18600,13200]],
+      recent:{t:'The most powerful thing you can do in a room full of important people',v:'114,198 views · 9.4× typical',d:'Oct 28'},ex:true},
+    {name:'Two Comma PR',runs:'Vishen LinkedIn',pf:'li',tag:'_2cpr',status:'Live',last:'Nov 25',cadence:'5 feed posts a week, newsletter Wednesdays',
+      kpis:[['Impressions (Nov)',31000,24000],['Engagement rate','7.1%','6.2%'],['Followers gained',1900,1400],['Link clicks',2200,1700],['Newsletter subscribers',14600,13100],['Leads on their links',610,480],['Revenue on their links',1400,900]],
+      recent:{t:'Most people get stuck at stage 3',v:'1,949 impressions · 2.9× typical',d:'Oct 28'},ex:true},
+    {name:'Epic',runs:'Social Desk only',pf:'ig',tag:'—',status:'Social Desk only',last:'—',cadence:'Editing, no owned channel',kpis:[],recent:null,ex:false}
+  ];
+
+  /* ---------- svg helpers ---------- */
+  var spark=function(arr,color){var w=120,h=28,max=Math.max.apply(null,arr),min=Math.min.apply(null,arr);var pts=arr.map(function(v,i){return [i*(w/(arr.length-1)),h-2-(v-min)/((max-min)||1)*(h-6)];});var d=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' ');var last=pts[pts.length-1];return '<svg viewBox="0 0 '+w+' '+h+'" width="120" height="28" aria-hidden="true"><path d="'+d+' L'+w+','+h+' L0,'+h+' Z" fill="'+color+'" opacity=".12"/><path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="1.6"/><circle cx="'+last[0].toFixed(1)+'" cy="'+last[1].toFixed(1)+'" r="2.4" fill="'+color+'"/></svg>';};
+  var scatter=function(items,typ){var w=520,h=220,pl=46,pb=28,pt=10,pr=10;var max=Math.max.apply(null,items.map(function(p){return p.views;}).concat([typ*2]));var ymax=Math.pow(10,Math.ceil(Math.log10(max)));var y=function(v){return pt+(h-pt-pb)*(1-Math.log10(Math.max(v,100))/Math.log10(ymax));};var n=items.length;var x=function(i){return pl+(w-pl-pr)*((i+.5)/n);};var s='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Views per post against the typical post">';var ticks=[100,1000,10000,100000,1000000].filter(function(t){return t<=ymax;});ticks.forEach(function(t){s+='<line x1="'+pl+'" x2="'+(w-pr)+'" y1="'+y(t)+'" y2="'+y(t)+'" stroke="var(--border-muted)"/><text x="'+(pl-6)+'" y="'+(y(t)+4)+'" text-anchor="end" font-size="10" fill="var(--subtle)">'+fmt(t)+'</text>';});s+='<line x1="'+pl+'" x2="'+(w-pr)+'" y1="'+y(typ)+'" y2="'+y(typ)+'" stroke="var(--subtle)" stroke-dasharray="4 4"/><text x="'+(w-pr)+'" y="'+(y(typ)-5)+'" text-anchor="end" font-size="10" fill="var(--subtle)">typical '+fmt(typ)+'</text>';items.forEach(function(p,i){var r=p.counting?3.5:5;s+='<circle cx="'+x(i)+'" cy="'+y(p.views)+'" r="'+r+'" fill="var(--brand)" opacity="'+(p.counting?.45:.9)+'"><title>'+esc(p.date+' · '+fmt(p.views)+' views')+'</title></circle><text x="'+x(i)+'" y="'+(h-10)+'" text-anchor="middle" font-size="9.5" fill="var(--subtle)">'+esc(p.date)+'</text>';});return s+'</svg>';};
+  var bars2=function(labels,a,b,ca,cb,fmtv){var w=560,h=220,pl=52,pb=28,pt=12,pr=8;var max=Math.max.apply(null,a.concat(b))*1.15;var y=function(v){return pt+(h-pt-pb)*(1-v/max);};var n=labels.length,gw=(w-pl-pr)/n,bw=Math.min(22,gw*.32);var s='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Revenue by week, Mindvalley against Vishen channels">';for(var t=0;t<=4;t++){var v=max/4*t;s+='<line x1="'+pl+'" x2="'+(w-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--border-muted)"/><text x="'+(pl-6)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="10" fill="var(--subtle)">'+fmtv(v)+'</text>';}labels.forEach(function(l,i){var cx=pl+gw*i+gw/2;s+='<rect x="'+(cx-bw-2)+'" y="'+y(a[i])+'" width="'+bw+'" height="'+(y(0)-y(a[i]))+'" rx="3" fill="'+ca+'"><title>'+esc(l+' · Mindvalley '+fmtv(a[i]))+'</title></rect><rect x="'+(cx+2)+'" y="'+y(b[i])+'" width="'+bw+'" height="'+(y(0)-y(b[i]))+'" rx="3" fill="'+cb+'"><title>'+esc(l+' · Vishen '+fmtv(b[i]))+'</title></rect><text x="'+cx+'" y="'+(h-10)+'" text-anchor="middle" font-size="10" fill="var(--subtle)">'+esc(l)+'</text>';});return s+'</svg>';};
+
+  /* ---------- overview ---------- */
+  var cur=function(c){return c[periods[period].key];};
+  function renderOverview(){
+    var pd=periods[period],t=pd.tiles;
+    var live=channels.filter(function(c){return c.status==='active';}).length;
+    $('#ovTiles').innerHTML=[
+      ['Revenue from social',money(t.rev),delta(t.rev,t.prevRev,pd.vs.replace('vs ','vs '))],
+      ['Sign-ups from social',fmt(t.leads),delta(t.leads,t.prevLeads)],
+      ['Orders',fmt(t.orders),delta(t.orders,t.prevOrders)],
+      ['Value per sign-up','$'+t.vpl.toFixed(2),delta(t.vpl,t.prevVpl)],
+      ['Posts published',fmt(t.posts),delta(t.posts,t.prevPosts)],
+      ['Channels active',live+' of '+channels.length,'<span class="flat">'+channels.filter(function(c){return c.status==='dormant';}).length+' dormant · '+channels.filter(function(c){return c.status==='off';}).length+' not connected</span>']
+    ].map(function(x){return '<div class="tl"><div class="v">'+x[1]+'</div><div class="l">'+x[0]+(pd.ex?' <span class="chip ex">example</span>':'')+'</div><div class="d">'+x[2]+'</div></div>';}).join('');
+    $('#chanCount').textContent=channels.length+' channels · '+live+' active';
+    var groups=[['Mindvalley channels',channels.filter(function(c){return c.brand==='Mindvalley';})],['Vishen channels (run by agencies)',channels.filter(function(c){return c.brand==='Vishen';})]];
+    $('#chanList').innerHTML=groups.map(function(g){return '<div class="grp">'+g[0]+'</div>'+g[1].map(chanCard).join('');}).join('');
+    $$('#chanList .chan').forEach(function(el){el.addEventListener('click',function(){openChannel(el.getAttribute('data-id'));});});
+  }
+  function chanCard(c){
+    var st=c.status==='active'?'<span class="chip ok"><i></i>Active</span>':c.status==='dormant'?'<span class="chip warn"><i></i>Dormant</span>':'<span class="chip"><i></i>Not connected</span>';
+    var d=c.status==='off'?null:cur(c);
+    var kp=d?'<b>'+fmt(d.posts)+'</b><b>'+fmt(d.views)+'</b><b>'+(d.leads?fmt(d.leads):'—')+'</b><b>'+(d.rev?money(d.rev):'—')+'</b><span>posts</span><span>'+(c.pf==='li'?'impressions':'views')+'</span><span>sign-ups</span><span>revenue</span><div class="sp">'+spark(c.spark,'var(--brand-ink)')+'</div>':'<div class="note" style="grid-column:span 4;text-align:left;max-width:280px">'+esc(c.reason)+'</div>';
+    var col=c.pf;
+    return '<div class="chan'+(c.status==='off'?' off':'')+'" data-id="'+c.id+'" tabindex="0"><div class="ico '+col+'">'+({ig:'IG',fb:'FB',yt:'YT',li:'LI',tt:'TT'})[c.pf]+'</div><div><div class="name">'+esc(c.name)+' '+st+(c.ex?' <span class="chip ex">example</span>':'')+'</div><div class="meta"><span>'+esc(c.handle)+'</span><span>'+pfName[c.pf]+'</span><span>Last posted '+esc(c.last)+'</span>'+(c.agency?'<span>Run by '+esc(c.agency)+'</span>':'')+'</div></div><div class="kp">'+kp+'</div></div>';
+  }
+  function openChannel(id){
+    var c=channels.find(function(x){return x.id===id;});var d=c.status==='off'?null:cur(c);
+    var ps=posts.filter(function(p){return p.ch===id;}).sort(function(a,b){return b.views-a.views;}).slice(0,5);
+    $('#drawerBody').innerHTML='<div class="eyebrow" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--subtle);font-weight:700">'+pfName[c.pf]+(c.agency?' · run by '+esc(c.agency):'')+'</div><h2 style="font-size:22px;margin:4px 0 12px">'+esc(c.name)+'</h2>'+
+      (d?'<div class="tiles" style="grid-template-columns:repeat(2,1fr)"><div class="tl"><div class="v">'+fmt(d.views)+'</div><div class="l">'+(c.pf==='li'?'Impressions':'Views')+'</div><div class="d">'+delta(d.views,d.prevViews)+'</div></div><div class="tl"><div class="v">'+fmt(d.reach)+'</div><div class="l">Reach</div></div><div class="tl"><div class="v">'+fmt(d.eng)+'</div><div class="l">Engagements</div></div><div class="tl"><div class="v">'+(d.rev?money(d.rev):'—')+'</div><div class="l">Revenue on its links</div><div class="d"><span class="flat">'+(d.leads?fmt(d.leads)+' sign-ups':'no tracked links')+'</span></div></div></div>'+
+      '<h3 style="margin:18px 0 6px">Views, last 12 weeks</h3><div class="svgwrap">'+spark(c.spark,'var(--brand-ink)').replace('width="120" height="28"','width="100%" height="60" preserveAspectRatio="none"')+'</div>'+
+      '<h3 style="margin:18px 0 6px">Best posts this period</h3>'+(ps.length?ps.map(postRow).join(''):'<p class="muted small">No posts read for this channel in the period.</p>'):'<div class="note">'+esc(c.reason)+'</div><p class="small muted" style="margin-top:12px">What connecting it needs: the account added to Hootsuite, or the Composio toolkit for this platform. Owner: Glen.</p>');
+    $('#drawer').classList.add('open');$('#scrim').classList.add('on');
+  }
+  var closeDrawer=function(){$('#drawer').classList.remove('open');$('#scrim').classList.remove('on');};
+  $('#drawerX').addEventListener('click',closeDrawer);$('#scrim').addEventListener('click',closeDrawer);
+
+  /* ---------- posts ---------- */
+  var postChan='ig-mv';
+  function postRow(p){var x=p.typ?(p.views/p.typ):null;var cls=x==null?'flat':x>=1.5?'up':x<0.7?'down':'flat';return '<div class="post"><div class="th">'+esc(p.fmt)+'</div><div><div class="cap">'+esc(p.cap)+'</div><div class="m"><span>'+esc(p.date)+'</span><span>'+esc(channels.find(function(c){return c.id===p.ch;}).name)+'</span>'+(p.counting?'<span class="chip warn">still counting</span>':'')+(p.leads?'<span>'+fmt(p.leads)+' sign-ups</span>':'')+(p.url&&p.url!=='#'?'<a href="'+esc(p.url.indexOf('http')===0?p.url:'https://'+p.url)+'" target="_blank" rel="noopener">Open ↗</a>':'')+'</div></div><div class="r"><b>'+fmt(p.views)+'</b><span class="'+cls+'">'+(x==null?'no typical yet':x.toFixed(1)+'× typical')+'</span></div></div>';}
+  function renderPosts(){
+    var chans=channels.filter(function(c){return c.status!=='off';});
+    $('#postChan').innerHTML=chans.map(function(c){return '<button data-c="'+c.id+'"'+(c.id===postChan?' class="active"':'')+'>'+esc(c.name.replace('Mindvalley ','MV ').replace('Vishen Lakhiani ','Vishen '))+'</button>';}).join('');
+    $$('#postChan button').forEach(function(b){b.addEventListener('click',function(){postChan=b.getAttribute('data-c');renderPosts();});});
+    var ps=posts.filter(function(p){return p.ch===postChan;}).sort(function(a,b){return b.views-a.views;});
+    var c=channels.find(function(x){return x.id===postChan;});var d=cur(c);
+    $('#postCount').textContent=ps.length?ps.length+' read of '+d.posts+' published · best first':d.posts+' published · none read into the prototype yet';
+    $('#postList').innerHTML=ps.length?ps.map(postRow).join(''):'<p class="muted">Posts for this channel are published but not loaded into the prototype. In the build, every post appears here with views at 72 hours, reach, engagements, sign-ups and the ratio to the typical post.</p>';
+    var typ=ps.length?ps[0].typ:1000;
+    $('#postScatter').innerHTML=ps.length?scatter(ps.slice().sort(function(a,b){return a.date.localeCompare(b.date);}),typ):'<p class="muted small">Chart appears once posts are loaded.</p>';
+    var f=formats[postChan];
+    $('#postFormats').innerHTML=f?'<div class="tbl"><table style="min-width:0"><tr><th>Format</th><th class="num">Median views at 72h</th><th class="num">Posts</th><th style="width:40%"></th></tr>'+f.map(function(r){var mx=Math.max.apply(null,f.map(function(q){return q[1]||0;}));return '<tr><td>'+esc(r[0])+'</td><td class="num">'+(r[1]==null?'not counted':fmt(r[1]))+'</td><td class="num">'+r[2]+'</td><td><div class="bar"><i style="width:'+(r[1]?Math.round(r[1]/mx*100):0)+'%"></i></div></td></tr>';}).join('')+'</table></div>':'<p class="muted small">Format split not loaded for this channel.</p>';
+  }
+
+  /* ---------- what works ---------- */
+  var worksChan='all',worksP='week';
+  function renderWorks(){
+    var chans=[{id:'all',name:'All channels'}].concat(channels.filter(function(c){return c.status==='active'&&['ig-mv','ig-vl','fb-mv','fb-vl','yt-vl','li-vl'].indexOf(c.id)>=0;}));
+    $('#worksChan').innerHTML=chans.map(function(c){return '<button data-c="'+c.id+'"'+(c.id===worksChan?' class="active"':'')+'>'+esc(c.name.replace('Mindvalley ','MV ').replace('Vishen Lakhiani ','Vishen '))+'</button>';}).join('');
+    $$('#worksChan button').forEach(function(b){b.addEventListener('click',function(){worksChan=b.getAttribute('data-c');renderWorks();});});
+    var keyMap={'all':null,'ig-vl':/Vishen Instagram|Vishen's|how-to|Graphics/i,'ig-mv':/Mindvalley Instagram|Comment the word|Carousels/i,'fb-vl':/Vishen Facebook|Vishen's/i,'fb-mv':/Mindvalley Facebook/i,'yt-vl':/YouTube/i,'li-vl':/LinkedIn/i};
+    var list=learnings.all.filter(function(l){var r=keyMap[worksChan];return !r||r.test(l.t+' '+l.e);});
+    $('#worksPeriod').textContent=period==='week'?'this week':'this month';
+    $('#worksList').innerHTML=(list.length?list:[{t:'No learning for this channel yet',e:'Learnings appear once a pattern holds on 20 posts or more, or when someone approves one from a post.',k:'learn'}]).map(function(l){return '<div class="lrn"><b>'+esc(l.t)+'</b><div class="ev">'+esc(l.e)+'</div><div style="margin-top:8px;display:flex;gap:6px"><button class="btn sm ghost" data-t="Approved as a rule for the Social Desk">Approve as rule</button><button class="btn sm ghost" data-t="Sent to the Social Desk as a post idea">Make one</button></div></div>';}).join('');
+    $('#worksMake').innerHTML='<div class="lrn"><b>Reels that open with a how-to beat the channel by half again</b><div class="ev">1.6× a usual post · 37 posts in 61 days · views in each post\'s first 3 days, against the 20 posts of the same length before each · up to Sat 21 Nov · seen enough to trust.</div><div style="margin-top:8px"><button class="btn sm primary" data-t="Opened in the Reel Creator with this pattern">Make it</button></div></div>';
+    $('#worksWatch').innerHTML=watching.map(function(w){return '<div class="lrn watch"><div class="ev" style="color:var(--text)">'+esc(w)+'</div></div>';}).join('');
+    $$('#v-works [data-t]').forEach(function(b){b.addEventListener('click',function(){toast(b.getAttribute('data-t'));});});
+  }
+
+  /* ---------- library ---------- */
+  var libF='all';
+  function renderLibrary(){
+    $$('#libFilter button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-f')===libF);});
+    var items=library.filter(function(it,i){return libF==='all'||(libF==='short'?shortlisted[i]:it.kind===libF);});
+    $('#libGrid').innerHTML=items.length?items.map(function(it){var i=library.indexOf(it);return '<div class="idea"><div class="who">'+esc(it.who)+'</div><div class="t">'+esc(it.t)+'</div><div><span class="x">'+esc(it.x)+'</span> <span class="small subtle">'+(it.kind==='video'?'their usual views':'')+'</span></div><div class="small subtle">'+esc(it.d)+'</div><div class="small" style="background:var(--surface-2);border-radius:10px;padding:8px 10px"><b>Try:</b> '+esc(it.idea.replace(/^Try: /,''))+'</div><div class="acts"><a class="btn sm ghost" href="'+esc(it.link)+'" target="_blank" rel="noopener">Watch ↗</a><button class="btn sm '+(shortlisted[i]?'primary':'')+'" data-i="'+i+'">'+(shortlisted[i]?'Shortlisted':'Shortlist')+'</button><button class="btn sm ghost" data-send="1">Send to Social Desk</button></div></div>';}).join(''):'<p class="muted">Nothing shortlisted yet. Shortlist an idea to keep it here.</p>';
+    $$('#libGrid [data-i]').forEach(function(b){b.addEventListener('click',function(){var i=+b.getAttribute('data-i');shortlisted[i]=!shortlisted[i];renderLibrary();toast(shortlisted[i]?'Shortlisted':'Removed from shortlist');});});
+    $$('#libGrid [data-send]').forEach(function(b){b.addEventListener('click',function(){toast('Sent to the Social Desk as an idea');});});
+    $$('#libFilter button').forEach(function(b){b.onclick=function(){libF=b.getAttribute('data-f');renderLibrary();};});
+  }
+
+  /* ---------- leaderboard ---------- */
+  var lbM='revenue';
+  var lbMeta={revenue:['Revenue','rev',money],leads:['Leads','leads',fmt],eng:['Engagement','eng',fmt],imp:['Impressions','views',fmt]};
+  function renderLeaderboard(){
+    $$('#lbSeg button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-m')===lbM);b.onclick=function(){lbM=b.getAttribute('data-m');renderLeaderboard();};});
+    var m=lbMeta[lbM];var rows=channels.filter(function(c){return c.status!=='off';}).map(function(c){return {c:c,v:cur(c)[m[1]]||0};}).sort(function(a,b){return b.v-a.v;});
+    var mx=rows[0].v||1;
+    $('#lbTitle').textContent='Channels by '+m[0].toLowerCase();
+    $('#lbList').innerHTML=rows.map(function(r,i){return '<div class="rank"><div class="pos">'+(i+1)+'</div><div style="display:flex;align-items:center;gap:8px;min-width:150px"><span class="pl '+r.c.pf+'"></span>'+esc(r.c.name)+'</div><div class="bar"><i style="width:'+Math.round(r.v/mx*100)+'%;background:var(--'+r.c.pf+')"></i></div><div class="v">'+(r.v?m[2](r.v):'—')+'</div></div>';}).join('');
+    var keys=['views','eng','leads','rev'];var ranks={};keys.forEach(function(k){var s=channels.filter(function(c){return c.status!=='off';}).slice().sort(function(a,b){return (cur(b)[k]||0)-(cur(a)[k]||0);});s.forEach(function(c,i){ranks[c.id+k]=i+1;});});
+    $('#lbTable').innerHTML='<tr><th>Channel</th><th class="num">Impressions</th><th class="num">Engagement</th><th class="num">Leads</th><th class="num">Revenue</th></tr>'+channels.filter(function(c){return c.status!=='off';}).map(function(c){var d=cur(c);var cell=function(k,f){var v=d[k];return '<td class="num">'+(v?f(v):'—')+' <span class="subtle small">#'+ranks[c.id+k]+'</span></td>';};return '<tr><td><span class="pl '+c.pf+'"></span> '+esc(c.name)+'</td>'+cell('views',fmt)+cell('eng',fmt)+cell('leads',fmt)+cell('rev',money)+'</tr>';}).join('');
+  }
+
+  /* ---------- campaigns ---------- */
+  function renderCampaigns(){
+    $('#campGrid').innerHTML=campaigns.map(function(c){var st=c.status==='Live'?'<span class="chip ok"><i></i>Live</span>':'<span class="chip info"><i></i>Measured</span>';return '<div class="camp" data-id="'+c.id+'" tabindex="0"><div class="st"><div><h3>'+esc(c.name)+'</h3><div class="small subtle">'+esc(c.when)+'</div></div>'+st+'</div><div class="fmt">'+Object.keys(c.fmts).map(function(k){return '<span><b>'+c.fmts[k]+'</b> '+esc(k)+'</span>';}).join('')+'</div><div class="tiles" style="grid-template-columns:repeat(3,1fr);gap:6px"><div><b class="num" style="font-size:18px">'+fmt(c.views)+'</b><div class="small subtle">views</div></div><div><b class="num" style="font-size:18px">'+fmt(c.leads)+'</b><div class="small subtle">sign-ups</div></div><div><b class="num" style="font-size:18px">'+(c.rev?money(c.rev):'—')+'</b><div class="small subtle">revenue'+(c.target?' · target '+money(c.target):'')+'</div></div></div><div class="small subtle" style="margin-top:8px">'+c.posts+' posts on '+c.chans.length+' channels'+(c.ex?' · <span class="chip ex">example</span>':'')+'</div></div>';}).join('');
+    $$('#campGrid .camp').forEach(function(el){el.addEventListener('click',function(){openCampaign(el.getAttribute('data-id'));});});
+  }
+  function openCampaign(id){
+    var c=campaigns.find(function(x){return x.id===id;});
+    var total=Object.keys(c.fmts).reduce(function(a,k){return a+c.fmts[k];},0);
+    $('#campDetail').hidden=false;
+    $('#campDetail').innerHTML='<div class="card"><div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap"><div><h2>'+esc(c.name)+' <small>'+esc(c.when)+'</small></h2><p class="lead" style="margin:4px 0 0">'+c.posts+' posts across '+c.chans.map(function(i){return channels.find(function(x){return x.id===i;}).name;}).join(', ')+'.</p></div><button class="btn sm ghost" id="campClose">Close</button></div>'+
+      '<div class="grid g2" style="margin-top:14px"><div><h3>Posts by format</h3>'+Object.keys(c.fmts).map(function(k){return '<div class="rowbar" style="margin:6px 0"><span style="min-width:90px">'+esc(k)+'</span><div class="bar"><i style="width:'+Math.round(c.fmts[k]/total*100)+'%"></i></div><b class="num" style="min-width:30px;text-align:right">'+c.fmts[k]+'</b></div>';}).join('')+'</div><div><h3>Posts by channel</h3>'+c.chans.map(function(i){var ch=channels.find(function(x){return x.id===i;});var n=Math.max(1,Math.round(c.posts/c.chans.length));return '<div class="rowbar" style="margin:6px 0"><span class="pl '+ch.pf+'"></span><span style="min-width:170px">'+esc(ch.name)+'</span><div class="bar"><i style="width:'+Math.round(n/c.posts*100*2)+'%;background:var(--'+ch.pf+')"></i></div><b class="num" style="min-width:30px;text-align:right">'+n+'</b></div>';}).join('')+'</div></div>'+
+      '<h3 style="margin-top:18px">Every post in the campaign <small>best first · views against the channel\'s typical post · sign-ups and revenue on the post\'s link</small></h3>'+(c.rows.length?'<div class="tbl"><table><tr><th>Channel</th><th>Format</th><th>Date</th><th>Post</th><th class="num">Views</th><th class="num">vs typical</th><th class="num">Sign-ups</th><th class="num">Revenue</th></tr>'+c.rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td>'+esc(r[2])+'</td><td>'+esc(r[3])+'</td><td class="num">'+fmt(r[4])+'</td><td class="num up">'+esc(r[5])+'</td><td class="num">'+fmt(r[6])+'</td><td class="num">'+(r[7]?money(r[7]):'—')+'</td></tr>';}).join('')+'</table></div>':'<p class="muted">Post list not loaded for this campaign in the prototype.</p>')+'</div>';
+    $('#campClose').addEventListener('click',function(){$('#campDetail').hidden=true;});
+    $('#campDetail').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  /* ---------- revenue ---------- */
+  function renderRevenue(){
+    var pd=periods[period],t=pd.tiles;
+    var mv=channels.filter(function(c){return c.brand==='Mindvalley'&&c.status!=='off';}).reduce(function(a,c){return a+(cur(c).rev||0);},0);
+    var vl=channels.filter(function(c){return c.brand==='Vishen'&&c.status!=='off';}).reduce(function(a,c){return a+(cur(c).rev||0);},0);
+    var ex=pd.ex?' <span class="chip ex">example</span>':'';
+    $('#revTiles').innerHTML='<div class="tl" style="grid-column:span 2"><div class="v">'+money(t.rev)+'</div><div class="l">Total revenue from social media'+ex+'</div><div class="d">'+delta(t.rev,t.prevRev)+' <span class="subtle">'+esc(pd.vs)+'</span></div></div>'+
+      '<div class="tl"><div class="v">'+money(mv)+'</div><div class="l">Mindvalley channels'+ex+'</div><div class="d"><span class="subtle">'+Math.round(mv/(mv+vl||1)*100)+'% of total</span></div></div>'+
+      '<div class="tl"><div class="v">'+money(vl)+'</div><div class="l">Vishen channels'+ex+'</div><div class="d"><span class="subtle">'+Math.round(vl/(mv+vl||1)*100)+'% of total</span></div></div>'+
+      '<div class="tl"><div class="v">'+fmt(t.orders)+'</div><div class="l">Orders</div><div class="d">'+delta(t.orders,t.prevOrders)+'</div></div>'+
+      '<div class="tl"><div class="v">'+fmt(t.leads)+'</div><div class="l">Sign-ups</div><div class="d">'+delta(t.leads,t.prevLeads)+'</div></div>'+
+      '<div class="tl"><div class="v">$'+t.vpl.toFixed(2)+'</div><div class="l">Value per sign-up</div><div class="d">'+delta(t.vpl,t.prevVpl)+'</div></div>';
+    var weeks=['Sep 28','Oct 5','Oct 12','Oct 19','Oct 26','Nov 2','Nov 9','Nov 16','Nov 23'];
+    var a=[6200,5900,7100,3343,11896,9800,12400,16900,14100],b=[2100,2600,2300,1900,2900,4100,6800,9200,8700];
+    $('#revChart').innerHTML=bars2(weeks,a,b,'var(--brand)','var(--pink)',function(v){return '$'+Math.round(v/1000)+'k';})+'<div class="small subtle" style="margin-top:6px">Oct 19 and Oct 26 weeks are Studio figures; other weeks <span class="chip ex">example</span>.</div>';
+    var rows=channels.filter(function(c){return c.status!=='off';}).map(function(c){return {c:c,d:cur(c)};}).sort(function(x,y){return (y.d.rev||0)-(x.d.rev||0);});
+    $('#revTable').innerHTML='<tr><th>Channel</th><th class="num">Revenue</th><th class="num">Orders</th><th class="num">Sign-ups</th><th class="num">Value per sign-up</th></tr>'+rows.map(function(r){var orders=r.d.rev?Math.max(1,Math.round(r.d.rev/152)):0;return '<tr><td><span class="pl '+r.c.pf+'"></span> '+esc(r.c.name)+(r.c.agency?' <span class="subtle small">· '+esc(r.c.agency)+'</span>':'')+'</td><td class="num">'+(r.d.rev?money(r.d.rev):'—')+'</td><td class="num">'+(orders||'—')+'</td><td class="num">'+(r.d.leads?fmt(r.d.leads):'—')+'</td><td class="num">'+(r.d.leads&&r.d.rev?'$'+(r.d.rev/r.d.leads).toFixed(2):'—')+'</td></tr>';}).join('');
+  }
+
+  /* ---------- agencies ---------- */
+  function renderAgencies(){
+    $('#agGrid').innerHTML=agencies.map(function(a){var st=a.status==='Live'?'<span class="chip ok"><i></i>Live</span>':'<span class="chip">'+esc(a.status)+'</span>';return '<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:6px"><div><h3 style="margin:0">'+esc(a.name)+' '+st+'</h3><div class="small subtle">Runs '+esc(a.runs)+' · links tagged '+esc(a.tag)+' · '+esc(a.cadence)+'</div></div>'+(a.ex?'<span class="chip ex">example</span>':'')+'</div>'+
+      (a.kpis.length?'<div class="tbl"><table style="min-width:0"><tr><th>'+pfName[a.pf]+' KPI</th><th class="num">This month</th><th class="num">Last month</th><th class="num">Change</th></tr>'+a.kpis.map(function(k){var v=k[1],p=k[2];var isNum=typeof v==='number';var d=isNum?delta(v,p):(parseFloat(v)>parseFloat(p)?'<span class="up">▲</span>':'<span class="down">▼</span>');var f=/Revenue/.test(k[0])?money:fmt;return '<tr><td>'+esc(k[0])+'</td><td class="num"><b>'+(isNum?f(v):esc(v))+'</b></td><td class="num subtle">'+(isNum?f(p):esc(p))+'</td><td class="num">'+d+'</td></tr>';}).join('')+'</table></div>':'<p class="muted small">Edits for the Social Desk only. No owned channel, so no channel KPIs.</p>')+
+      (a.recent?'<div class="note" style="margin-top:12px"><b>Recent post doing best:</b> '+esc(a.recent.t)+' <span class="subtle">· '+esc(a.recent.v)+' · '+esc(a.recent.d)+'</span></div>':'')+
+      '<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><button class="btn sm ghost" data-t="Opens the agency\'s posts in the Posts tab">Their posts</button><button class="btn sm ghost" data-t="Opens the agency\'s own view, exactly what they see">See it as '+esc(a.name)+'</button></div></div>';}).join('');
+    $$('#agGrid [data-t]').forEach(function(b){b.addEventListener('click',function(){toast(b.getAttribute('data-t'));});});
+  }
+
+  /* ---------- nav ---------- */
+  var leads={overview:'Every channel Mindvalley and Vishen own, in one list: what is active, when it last posted, and what it brought in.',posts:'What went out on each channel, and how each post did against that channel\'s typical post.',works:'The key learnings per channel for the week and the month, and the patterns proven on enough posts to act on.',library:'Inspiration from outside: competitor videos that beat their own channel, and offers worth a look. Not our posts.',leaderboard:'Which channel is doing the most, on the four measures that matter: impressions, engagement, leads, revenue.',campaigns:'Per campaign: how many posts went out, in which formats, on which channels, and what each did.',revenue:'What social media brought in: the total, then Mindvalley against Vishen, then every channel.',agencies:'Each agency on the KPIs of the platform it runs, with the post doing best right now.'};
+  var rendered={};
+  function show(){
+    var h=(location.hash||'#overview').slice(1);if(!leads[h])h='overview';
+    $$('.view').forEach(function(v){v.hidden=v.id!=='v-'+h;});
+    $$('#tabs button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-v')===h);});
+    $('#tabLead').textContent=leads[h];
+    var r={overview:renderOverview,posts:renderPosts,works:renderWorks,library:renderLibrary,leaderboard:renderLeaderboard,campaigns:renderCampaigns,revenue:renderRevenue,agencies:renderAgencies}[h];
+    r();
+    window.scrollTo({top:0});
+  }
+  $$('#tabs button').forEach(function(b){b.addEventListener('click',function(){location.hash=b.getAttribute('data-v');});});
+  window.addEventListener('hashchange',show);
+  $$('#periodSeg button').forEach(function(b){b.addEventListener('click',function(){var p=b.getAttribute('data-p');if(!p){toast('Custom ranges work in the build; the prototype has Week and Month.');return;}period=p;$$('#periodSeg button').forEach(function(x){x.classList.toggle('active',x===b);});$('#periodLabel').textContent=periods[p].label;$('#periodVs').textContent=periods[p].vs;show();});});
+  $('#whyBtn').addEventListener('click',function(){$('#why').hidden=false;});
+  $('#whyX').addEventListener('click',function(){$('#why').hidden=true;});
+  $('#why').addEventListener('click',function(e){if(e.target===$('#why'))$('#why').hidden=true;});
+  show();
+})();
+</script>
+
+</body>
+</html>
